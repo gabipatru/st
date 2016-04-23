@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+RewriteBase /
+
+# General rules for MVC
+RewriteRule ^$ website/index.php/website/homepage [L]
+
+</IfModule>
