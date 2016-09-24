@@ -105,7 +105,6 @@ class db {
                 trigger_error($sql);
                 echo'<pre>';print_r($mParams);echo'</pre>';
                 echo '<pre>';print_r($oStmt->errorInfo());echo '</pre>';
-                exit;
             }
             return false;
         }

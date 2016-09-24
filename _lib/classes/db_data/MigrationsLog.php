@@ -1,39 +1,14 @@
 <?php
-define('MIGRATIONS_TABLE_NAME', '_migrations');
-define('MIGRATIONS_ID_FIELD', 'migration_id');
-define('MIGRATIONS_STATUS', 'status');
+define('MIGRATIONS_LOG_TABLE_NAME', 'migrations_log');
+define('MIGRATIONS_LOG_ID_FIELD', 'migration_log_id');
 
-class Migrations extends dbDataModel {
-    function __construct($table = MIGRATIONS_TABLE_NAME, $id = MIGRATIONS_ID_FIELD, $status = MIGRATIONS_STATUS) {
+class MigrationsLog extends dbDataModel {
+    function __construct($table = MIGRATIONS_LOG_TABLE_NAME, $id = MIGRATIONS_LOG_ID_FIELD, $status = '') {
         parent::__construct($table, $id, $status);
     }
     
     public function onAdd($insertId) {
-        $file_name = time();
-        
-        // create migration file
-        if (file_exists(MIGRATIONS_DIR.'/'.$file_name.'.php')) {
-            return false;
-        }
-                
-        $fis = fopen(MIGRATIONS_DIR .'/'.$file_name.'.php', "w");
-        if (!$fis) {
-            return false;
-        }
-                
-        fputs($fis, '<?php');
-        fclose($fis);
-        
-        // update migration name
-        $data = array('name' => $file_name);
-        $r = $this->Edit($insertId, $data);
-        
-        if ($r) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return true;
     }
     public function onEdit($iId, $res) {
         return true;
