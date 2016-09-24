@@ -1,9 +1,10 @@
 <?php
-define('MIGRATIONS_LOG_TABLE_NAME', 'migrations_log');
-define('MIGRATIONS_LOG_ID_FIELD', 'migration_log_id');
 
 class MigrationsLog extends dbDataModel {
-    function __construct($table = MIGRATIONS_LOG_TABLE_NAME, $id = MIGRATIONS_LOG_ID_FIELD, $status = '') {
+    const TABLE_NAME    = 'migrations_log';
+    const ID_FIELD      = 'migration_log_id';
+    
+    function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {
         parent::__construct($table, $id, $status);
     }
     
