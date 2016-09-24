@@ -5,7 +5,8 @@ CREATE TABLE `_migrations` (
 	`migration_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) NOT NULL COLLATE 'latin1_general_ci',
 	`version` VARCHAR(255) NOT NULL COLLATE 'latin1_general_ci',
-	PRIMARY KEY (`migration_id`)
+	PRIMARY KEY (`migration_id`),
+    UNIQUE INDEX `_migrations_name` (`name`)
 )
 COLLATE='latin1_general_ci'
 ENGINE=InnoDB;

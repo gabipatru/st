@@ -35,20 +35,42 @@ class Migrations extends dbDataModel {
         // load current mirations status
         require_once(CONFIG_DIR . '/migrations.php');
         
+        db::startTransaction();
+        db::lock_transaction('migrations');
+        
         // load database version for all migrations
         $aDatabaseVersion = $this->simpleGet();
         if (!$aDatabaseVersion) {
             $this->deployMigrations('migrations', '000');
+            $aDatabaseVersion = $this->simpleGet();
+        }
+        
+        // create array with migration names from database
+        $aDatabaseMigrationNames = array();
+        foreach ($aDatabaseVersion as $aMigration) {
+            $aDatabaseMigrationNames[] = $aMigration['name'];
+        }
+        
+        // check if there are any new migration groups
+        foreach ($aMigrationsConfig as $migrationName => $latestVersion) {
+            if (!in_array($migrationName, $aDatabaseMigrationNames)) {
+                $this->deployMigrations($migrationName, '000');
+            }
         }
         
         // check for new migrations
         foreach ($aMigrationsConfig as $migrationName => $latestVersion) {
             foreach ($aDatabaseVersion as $migration_id => $aMigration) {
-                if ($aMigration['name'] == $migrationName && $aMigration['version'] != $latestVersion) {
-                    $this->deployMigrations($migrationName, $aMigration['version']);
+                if ($aMigration['name'] == $migrationName) {
+                    if ($aMigration['version'] != $latestVersion) {
+                        $this->deployMigrations($migrationName, $aMigration['version']);
+                    }
+                    break;
                 }
             }
         }
+        
+        db::commitTransaction();
     }
     
     /**
@@ -57,8 +79,6 @@ class Migrations extends dbDataModel {
     private function deployMigrations($migrationName, $currentVersion) {
         $folder = MIGRATIONS_DIR . '/' . $migrationName;
         $nextMigrationName = $this->getNextMigration($currentVersion);
-        
-        db::startTransaction();
         
         // while there are migrations, run them
         while (file_exists($folder . '/' . $this->getNextMigration($currentVersion) . '.php')) {
@@ -121,11 +141,8 @@ class Migrations extends dbDataModel {
             // update the migrations log table
             $this->updateMigrationLog($executedMigrations, $migrationId, $time);
             
-            
             $currentVersion = $nextMigrationName;
         }
-        
-        db::commitTransaction();
     }
     
     /**

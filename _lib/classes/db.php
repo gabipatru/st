@@ -227,12 +227,12 @@ class db {
 	 * Must have a table called _locks with id and name columns
 	 * 
 	 */
-	public function lock_transaction($sLockName) {
+	public static function lock_transaction($sLockName) {
 		if (!$sLockName) {
 			return false;
 		}
 		
-		$sql = "SELECT name FROM _locks WHERE name = ?";
+		$sql = "SELECT name FROM _locks WHERE name = ? FOR UPDATE";
 		self::query($sql, array($sLockName));
 		return true;
 	}
