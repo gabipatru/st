@@ -73,6 +73,8 @@ class Migrations extends dbDataModel {
             if (empty($migrationSql)) {
                 die('Failed to run migration ' . $migrationName . ' : ' . $nextMigrationName);
             }
+            
+            $timeStart = microtime(true);
 
             // run the migration(s)
             if (is_array($migrationSql)) {
@@ -113,8 +115,12 @@ class Migrations extends dbDataModel {
                 $migrationId = $aMigration['migration_id'];
             }
             
+            $timeEnd = microtime(true);
+            $time = $timeEnd - $timeStart;
+            
             // update the migrations log table
-            $this->updateMigrationLog($executedMigrations, $migrationId);
+            $this->updateMigrationLog($executedMigrations, $migrationId, $time);
+            
             
             $currentVersion = $nextMigrationName;
         }
@@ -125,8 +131,12 @@ class Migrations extends dbDataModel {
     /**
      * Update the migrations log
      */
-    private function updateMigrationLog($sql, $migrationId) {
-        $data = array('query' => $sql, 'migration_id' => $migrationId);
+    private function updateMigrationLog($sql, $migrationId, $time) {
+        $data = array(
+                'query' => $sql, 
+                'migration_id' => $migrationId, 
+                'duration' => $time
+        );
         $oMigrationLog = new MigrationsLog();
         $r = $oMigrationLog->Add($data);
         if (!$r) {
