@@ -2,7 +2,7 @@
 // filesystem-specific
 define('BASE_DIR', 				'/var/www/mvc');
 define('HTTP_PROTOCOL', 		'http://');
-define('HTTP', 					HTTP_PROTOCOL . 'mvc.dev');
+define('HTTP', 					HTTP_PROTOCOL . 'www.mvc.ro');
 define('HTTP_MAIN', 			HTTP);
 define('HTTPS_MAIN', 			HTTP);
 
