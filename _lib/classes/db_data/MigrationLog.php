@@ -1,7 +1,7 @@
 <?php
 
-class MigrationsLog extends dbDataModel {
-    const TABLE_NAME    = 'migrations_log';
+class MigrationLog extends dbDataModel {
+    const TABLE_NAME    = 'migration_log';
     const ID_FIELD      = 'migration_log_id';
     
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {

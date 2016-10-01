@@ -17,8 +17,8 @@ securityUpdateToken();
 
 try {
     db::connect();
-    $oMigrations = new Migrations();
-    $oMigrations->runMigrations();
+    $oMigration = new Migration();
+    $oMigration->runMigrations();
 }
 catch (Exception $e) {
     die("Could not connect to database");

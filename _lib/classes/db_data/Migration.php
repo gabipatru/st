@@ -4,8 +4,8 @@
  * Allow running migrations when a page is loaded
  */
 
-class Migrations extends dbDataModel {
-    const TABLE_NAME    = '_migrations';
+class Migration extends dbDataModel {
+    const TABLE_NAME    = '_migration';
     const ID_FIELD      = 'migration_id';
     
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {
@@ -33,7 +33,7 @@ class Migrations extends dbDataModel {
      */
     public function runMigrations() {
         // load current mirations status
-        require_once(CONFIG_DIR . '/migrations.php');
+        require_once(CONFIG_DIR . '/migration.php');
         
         db::startTransaction();
         db::lock_transaction('migrations');
@@ -154,7 +154,7 @@ class Migrations extends dbDataModel {
                 'migration_id' => $migrationId, 
                 'duration' => $time
         );
-        $oMigrationLog = new MigrationsLog();
+        $oMigrationLog = new MigrationLog();
         $r = $oMigrationLog->Add($data);
         if (!$r) {
             log_message('migrations.log', 'Failed to update migrations log with query '>$sql);
