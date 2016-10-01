@@ -2,9 +2,10 @@
 var gulp = require('gulp'); 
 
 // include plug-ins
-var jshint = require('gulp-jshint');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
+var jshint      = require('gulp-jshint');
+var concat      = require('gulp-concat');
+var uglify      = require('gulp-uglify');
+var size        = require('gulp-size');
 
 // default task - run all tasks
 gulp.task('default', ['jshint', 'javascript']);
@@ -19,7 +20,9 @@ gulp.task('jshint', function() {
 // Process javascript task - concat, uglify
 gulp.task('javascript', function() {
   gulp.src(['./src/script-vendors/**/*.js', './src/scripts/app.js','./src/scripts/**/*.js'])
+    .pipe(size())
     .pipe(concat('bundle.js'))
     .pipe(uglify())
+    .pipe(size())
     .pipe(gulp.dest('./../_static/js/'));
 });
