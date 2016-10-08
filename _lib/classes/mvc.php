@@ -5,13 +5,15 @@ class mvc {
 	static private $aVarAssigned = array();
 	static private $aVarAssignedRef = array();
 	static private $aSkip = array(
-			'JS' => false,
-			'CSS' => false,
-			'META' => false,
-			'HEADER' => false,
-			'FOOTER' => false,
-			'VISIBLE_HEADER' => false,
-			'VISIBLE_FOOTER' => false
+			'JS'               => false,
+			'CSS'              => false,
+	        'JS_BUNDLE'        => false,
+	        'CSS_BUNDLE'       => false,
+			'META'             => false,
+			'HEADER'           => false,
+			'FOOTER'           => false,
+			'VISIBLE_HEADER'   => false,
+			'VISIBLE_FOOTER'   => false
 		);
 	static private $aCSS = array();
 	static private $aJS = array();
@@ -146,11 +148,26 @@ class mvc {
 		self::setSkip('JS', $bSkip);
 	}
 	
+
+	/*
+	 * This function will skip the main js bundle
+	 */
+	public static function skipJSBundle($bSkip = true) {
+	    self::setSkip('JS_BUNDLE', $bSkip);
+	}
+	
 	/*
 	 * This function skips CSS includes
 	 */
 	public static function skipCSS($bSkip = true) {
 		self::setSkip('CSS', $bSkip);
+	}
+	
+	/*
+	 * This function will skip the main css bundle
+	 */
+	public static function skipCSSBundle($bSkip = true) {
+	    self::setSkip('CSS_BUNDLE', $bSkip);
 	}
 	
 	/*
@@ -179,6 +196,14 @@ class mvc {
 	*/
 	public static function skipVisibleFooter($bSkip = true) {
 		self::setSkip('VISIBLE_FOOTER', $bSkip);
+	}
+	
+	/*
+	 * This function will skip both css and js bundles
+	 */
+	public static function skipBundles($bSkip = true) {
+	    self::skipCSSBundle($bSkip);
+	    self::skipJSBundle($bSkip);
 	}
 	
 	/*

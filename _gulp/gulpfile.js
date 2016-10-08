@@ -10,17 +10,17 @@ var sass        = require('gulp-sass');
 var cleanCSS    = require('gulp-clean-css');
 
 // default task - run all tasks
-gulp.task('default', ['jshint', 'javascript', 'sass']);
+gulp.task('default', ['jshint', 'javascript-admin', 'javascript-website', 'sass-admin', 'sass-website']);
 
 // JS hint task - check for js errors
 gulp.task('jshint', function() {
-  gulp.src('./src/js/**/*.js')
+  gulp.src(['./src/js/app.js','./src/js-admin/**/*','./src/js/**/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-// Process javascript task - concat, uglify
-gulp.task('javascript', function() {
+// Process javascript task for website - concat, uglify
+gulp.task('javascript-website', function() {
   gulp.src(['./src/js-vendors/**/*.js', './src/js/app.js','./src/js/**/*.js'])
     .pipe(concat('bundle.js'))
     .pipe(uglify())
@@ -28,11 +28,30 @@ gulp.task('javascript', function() {
     .pipe(gulp.dest('./../_static/js/'));
 });
 
-// Sass task - concat
-gulp.task('sass', function () {
+// Process javascript task for admin - concat, uglify
+gulp.task('javascript-admin', function() {
+  gulp.src(['./src/js-vendors/**/*.js', './src/js/app.js','./src/js-admin/**/*.js'])
+    .pipe(concat('bundle-admin.js'))
+    .pipe(uglify())
+    .pipe(size())
+    .pipe(gulp.dest('./../_static/js/'));
+});
+
+// Sass task for website - concat, minify
+gulp.task('sass-website', function () {
   gulp.src('./src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle.css'))
+    .pipe(cleanCSS())
+    .pipe(size())
+    .pipe(gulp.dest('./../_static/css/'));
+});
+
+//Sass task for admin - concat, minify
+gulp.task('sass-admin', function () {
+  gulp.src('./src/sass-admin/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(concat('bundle-admin.css'))
     .pipe(cleanCSS())
     .pipe(size())
     .pipe(gulp.dest('./../_static/css/'));

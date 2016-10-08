@@ -8,7 +8,9 @@ var HTTP_MAIN 		= '<?php echo HTTP_MAIN;?>';
 var IS_LOGGED_IN 	= 0;
 </script>
 
+<?php if (!$_SKIP_JS && !$_SKIP_JS_BUNDLE):?>
 <script type="text/javascript" src="<?php echo ($https ? HTTPS_JS : HTTP_JS);?>/bundle.js"></script>
+<?php endif;?>
 
 <?php
 if (!$_SKIP_JS) {
