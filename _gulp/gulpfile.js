@@ -56,3 +56,8 @@ gulp.task('sass-admin', function () {
     .pipe(size())
     .pipe(gulp.dest('./../_static/css/'));
 });
+
+//Watch task - re-build on every save
+gulp.task('watch', function() {
+  gulp.watch('./src/**/*', ['default']);
+});
