@@ -27,8 +27,14 @@ $( 'document' ).ready( function() {
     if (Controllers[CONTROLLER_NAME] === undefined || Controllers[CONTROLLER_NAME] === null) {
         return;
     }
+    
+    // check for precontroller
+    if (typeof Controllers[CONTROLLER_NAME]._precontroller === 'function') {
+        Controllers[CONTROLLER_NAME]._precontroller();
+    }
+    
     // check for section prehook
-    if (typeof Controllers[CONTROLLER_NAME] !== undefined && typeof Controllers[CONTROLLER_NAME]._prehook === 'function') {
+    if (typeof Controllers[CONTROLLER_NAME]._prehook === 'function') {
         Controllers[CONTROLLER_NAME]._prehook();
     }
 
