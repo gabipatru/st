@@ -11,7 +11,7 @@ class FormValidation {
 		$this->_js_code = '<script type="text/javascript">';
 		$this->_js_code .= 'var aFormValidate = Array();';
 		// you need an object ValidateSubmit.submit() to handle submits
-		$this->_js_code .= 'aFormValidate["submitHandler"] = ValidateSubmit.submit;';
+		//$this->_js_code .= 'aFormValidate["submitHandler"] = ValidateSubmit.submit;';
 		$this->_js_code .= 'aFormValidate["rules"] = Array();';
 		$this->_js_code .= 'aFormValidate["messages"] = Array();';
 		foreach ($this->_aFormConfig['rules'] as $sField => $mRule) {

@@ -45,3 +45,5 @@
 			Current Articles
 		</div>
 		<!-- End Small Nav -->
+		
+		<?php include(VIEW_INCLUDES_DIR .'/messages.php');?>

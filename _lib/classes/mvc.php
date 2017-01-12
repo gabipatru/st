@@ -421,7 +421,7 @@ class mvc {
 		define('MVC_MODULE', $sPath);
 		define('MVC_ACTION', $sFunction);
 		define('MVC_MODULE_URL', HTTP_MAIN . '/' . MVC_MODULE);
-		define('MVC_ACTION_URL', MVC_MODULE_URL . '/' . MVC_ACTION . '.htm');
+		define('MVC_ACTION_URL', MVC_MODULE_URL . '/' . MVC_ACTION . '.html');
 		
 		// load the precontroller
 		require_once(CONTROLLER_DIR.'/_precontroller.php');
