@@ -24,11 +24,17 @@ function addAction(controllerName, actionName, object) {
 }
 
 $( 'document' ).ready( function() {
+    if (Controllers[CONTROLLER_NAME] === undefined || Controllers[CONTROLLER_NAME] === null) {
+        return;
+    }
     // check for section prehook
-    if (typeof Controllers[CONTROLLER_NAME]._prehook === 'function') {
+    if (typeof Controllers[CONTROLLER_NAME] !== undefined && typeof Controllers[CONTROLLER_NAME]._prehook === 'function') {
         Controllers[CONTROLLER_NAME]._prehook();
     }
-    
+
+    if (typeof Controllers[CONTROLLER_NAME][ACTION_NAME] === undefined || typeof Controllers[CONTROLLER_NAME][ACTION_NAME] === null) {
+        return;
+    }
     // check for consructor
     if (typeof Controllers[CONTROLLER_NAME][ACTION_NAME]._construct === 'function') {
         Controllers[CONTROLLER_NAME][ACTION_NAME]._construct();
