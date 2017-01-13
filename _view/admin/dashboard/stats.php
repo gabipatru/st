@@ -1,3 +1,12 @@
+     <div class="msg msg-error">
+		<p><strong>Error</strong></p>
+		<a href="#" class="close">close</a>
+	</div>
+	<div class="msg msg msg-ok">
+		<p><strong>Error</strong></p>
+		<a href="#" class="close">close</a>
+	</div>
+        
         <!-- Main -->
 		<div id="main">
 			<div class="cl">&nbsp;</div>
