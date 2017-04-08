@@ -56,7 +56,7 @@ class controller_admin_config {
             }
             
             message_set('Config added successfully');
-            http_redir(MVC_MODULE_URL . '/list.html');
+            http_redir(MVC_MODULE_URL . '/list_items.html');
         }
         
         mvc::assign('FV', $FV);
