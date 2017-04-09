@@ -8,3 +8,4 @@ sudo npm install --save-dev gulp-uglify
 sudo npm install --save-dev gulp-size
 sudo npm install --save-dev gulp-sass
 sudo npm install --save-dev gulp-clean-css
+sudo npm install --save-dev gulp-gzip

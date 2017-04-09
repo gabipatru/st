@@ -8,6 +8,7 @@ var uglify      = require('gulp-uglify');
 var size        = require('gulp-size');
 var sass        = require('gulp-sass');
 var cleanCSS    = require('gulp-clean-css');
+var gzip        = require('gulp-gzip');
 
 // default task - run all tasks
 gulp.task('default', ['jshint', 'javascript-admin', 'javascript-website', 'sass-admin', 'sass-website']);
@@ -24,6 +25,7 @@ gulp.task('javascript-website', function() {
   gulp.src(['./src/js-vendors/**/*.js', './src/js/app.js','./src/js/**/*.js'])
     .pipe(concat('bundle.js'))
     .pipe(uglify())
+    .pipe(gzip())
     .pipe(size({title: 'JavaScript Website Size: '}))
     .pipe(gulp.dest('./../_static/js/'));
 });
@@ -33,6 +35,7 @@ gulp.task('javascript-admin', function() {
   gulp.src(['./src/js-vendors/**/*.js', './src/js/app.js','./src/js-admin/**/*.js'])
     .pipe(concat('bundle-admin.js'))
     .pipe(uglify())
+    .pipe(gzip())
     .pipe(size({title: 'JavaScript Admin Size: '}))
     .pipe(gulp.dest('./../_static/js/'));
 });
@@ -43,6 +46,7 @@ gulp.task('sass-website', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle.css'))
     .pipe(cleanCSS())
+    .pipe(gzip())
     .pipe(size({title: 'CSS Website Size: '}))
     .pipe(gulp.dest('./../_static/css/'));
 });
@@ -53,6 +57,7 @@ gulp.task('sass-admin', function () {
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle-admin.css'))
     .pipe(cleanCSS())
+    .pipe(gzip())
     .pipe(size({title: 'CSS Admin Size: '}))
     .pipe(gulp.dest('./../_static/css/'));
 });
