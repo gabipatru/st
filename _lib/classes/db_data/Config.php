@@ -27,4 +27,38 @@ class Config extends dbDataModel {
     public function onDelete($iId) {
         return true;
     }
+    
+    // format the data from the database in a convenient format
+    public function sortData($data) {
+        if (!is_array($data)) {
+            return false;
+        }
+        
+        $aSortedData = array();
+        foreach ($data as $aConfigItem) {
+            $aConfigItem['path'] = trim($aConfigItem['path'], '/');
+            $aPath = explode('/', $aConfigItem['path']);
+            
+            // only valid paths are processed
+            if (count($aPath) != 3) {
+                continue;
+            }
+            
+            if (!isset($aSortedData[$aPath[0]])) {
+                $aSortedData[$aPath[0]] = array();
+            }
+            if (!isset($aSortedData[$aPath[0]][$aPath[1]])) {
+                $aSortedData[$aPath[0]][$aPath[1]] = array();
+            }
+            if (!isset($aSortedData[$aPath[0]][$aPath[1]][$aPath[2]])) {
+                $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]] = array();
+            }
+            $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]][] = array(
+                'config_id' => $aConfigItem['config_id'], 
+                'value' => $aConfigItem['value']
+            );
+        }
+        
+        return $aSortedData;
+    }
 }

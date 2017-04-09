@@ -126,6 +126,9 @@ textarea.size1 { height:180px; }
 
 .box-content { padding:10px; }
 
+.box-link { display: block; font-size: 13px; padding: 3px;}
+.box-link:hover { background-color: #f9ebae;}
+
 .sort { border-top:solid 1px #e0e0e0; padding-top:10px; margin-top:15px;   }
 .sort label{ display:block; font-weight: bold;}
 .sort .field{ display:block; margin-top:5px; }

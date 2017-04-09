@@ -13,11 +13,14 @@ class controller_admin_config {
     }
     
     function list_items() {
+        $filters = array();
+        $options = array();
+        $oConfig = new Config();
+        list($data, $nrItems, $maxPage) = $oConfig->Get($filters, $options);
         
-    }
-    
-    function save() {
+        $aSortedConfig = $oConfig->sortData($data);
         
+        mvc::assign_by_ref('aConfig', $aSortedConfig);
     }
     
     function add() {

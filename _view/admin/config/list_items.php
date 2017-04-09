@@ -19,6 +19,23 @@
 		<div class="cl">&nbsp;</div>
 		</div>
 	</div>
+	
+	<!-- Box -->
+	<div class="box">
+			
+		<!-- Box Head -->
+		<div class="box-head">
+			<h2>Config</h2>
+		</div>
+		<!-- End Box Head-->
+					
+		<div class="box-content">
+			<?php foreach ($aConfig as $configName => $ConfigItem):?>
+				<a href="<?php echo CURRENT_URL?>?name=<?php echo $configName?>" class="box-link"><?php echo $configName;?></a>
+			<?php endforeach;?>
+		<div class="cl">&nbsp;</div>
+		</div>
+	</div>
 	<!-- End Box -->
 	</div>
 	<!-- End Sidebar -->
