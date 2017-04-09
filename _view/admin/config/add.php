@@ -19,12 +19,12 @@
 					<p>
 						<span class="req">max 255 symbols</span>
 						<label>Path <span>(Required Field)</span></label>
-						<input type="text" class="field size1" name="path" />
+						<input type="text" class="field size1" name="path" value="<?php echo $FV->path;?>" />
 					</p>
 					
 					<p>
 						<label>Value</label>
-						<textarea rows="6" cols="107" name="value"></textarea>
+						<textarea rows="6" cols="107" name="value"><?php echo $FV->value;?></textarea>
 					</p>
 				
 				</div>

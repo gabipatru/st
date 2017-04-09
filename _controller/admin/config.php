@@ -23,7 +23,8 @@ class controller_admin_config {
     function add() {
         $FV = new FormValidation(array(
             'rules' => array(
-                'path'  => 'required'
+                'path'  => 'required',
+                'value' => ''
             ),
             'messages' => array(
                 'path'  => 'Please specify the config path'
@@ -41,22 +42,22 @@ class controller_admin_config {
             list($data, $nrItems, $maxPage) = $oConfig->Get($filters, $options);
             if ($nrItems > 0) {
                 message_set_error('A config with that path already exists');
-                http_redir(MVC_ACTION_URL);
             }
-            
-            // add to database
-            $data = array(
-                'path'  => $path,
-                'value' => $value
-            );
-            $r = $oConfig->Add($data);
-            if (!$r) {
-                message_set_error('An error occurred when adding to the database');
-                http_redir(MVC_ACTION_URL);
+            else {
+                // add to database
+                $data = array(
+                    'path'  => $path,
+                    'value' => $value
+                );
+                $r = $oConfig->Add($data);
+                if (!$r) {
+                    message_set_error('An error occurred when adding to the database');
+                    http_redir(MVC_ACTION_URL);
+                }
+                
+                message_set('Config added successfully');
+                http_redir(MVC_MODULE_URL . '/list_items.html');
             }
-            
-            message_set('Config added successfully');
-            http_redir(MVC_MODULE_URL . '/list_items.html');
         }
         
         mvc::assign('FV', $FV);
