@@ -9,10 +9,13 @@ class controller_admin_config {
     }
     
     function _posthook() {
-        mvc::assign_by_ref('_MESSAGES', message_get());
+        mvc::assign('_MESSAGES', message_get());
     }
     
     function list_items() {
+        // this is the config we will display
+        $configName = filter_get('name', 'string');
+        
         $filters = array();
         $options = array();
         $oConfig = new Config();
@@ -21,6 +24,7 @@ class controller_admin_config {
         $aSortedConfig = $oConfig->sortData($data);
         
         mvc::assign_by_ref('aConfig', $aSortedConfig);
+        mvc::assign('configName', $configName);
     }
     
     function add() {
@@ -35,8 +39,8 @@ class controller_admin_config {
         ));
         
         if ($FV->validate()) {
-            $path  = filter_post('path', 'string');
-            $value = filter_post('value', 'string');
+            $path  = filter_post('path', 'clean_html');
+            $value = filter_post('value', 'clean_html');
             
             // check if the path exists
             $filters = array('path' => $path);

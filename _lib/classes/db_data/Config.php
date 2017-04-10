@@ -53,7 +53,7 @@ class Config extends dbDataModel {
             if (!isset($aSortedData[$aPath[0]][$aPath[1]][$aPath[2]])) {
                 $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]] = array();
             }
-            $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]][] = array(
+            $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]] = array(
                 'config_id' => $aConfigItem['config_id'], 
                 'value' => $aConfigItem['value']
             );
