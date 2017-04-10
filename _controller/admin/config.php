@@ -30,6 +30,7 @@ class controller_admin_config {
     
     function save_all() {
         $aConfigIds = $_POST['config_ids'];
+        $configName = filter_post('configName', 'string');
         
         try {
             if (!is_array($aConfigIds)) {
@@ -52,11 +53,11 @@ class controller_admin_config {
         catch (Exception $e) {
             message_set_error($e->getMessage());
             db::rollbackTransaction();
-            http_redir(href_admin('config/list_items'));
+            http_redir(href_admin('config/list_items') . '?name='.$configName);
         }
         
         message_set('All items were saved');
-        http_redir(href_admin('config/list_items'));
+        http_redir(href_admin('config/list_items') . '?name='.$configName);
     }
     
     function add() {

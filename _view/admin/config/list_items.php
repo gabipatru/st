@@ -7,6 +7,7 @@
 	
 	<?php if ($configName):?>
 	<form id="saveForm" action="<?php echo MVC_MODULE_URL?>/save_all.html" method="post">
+		<input type="hidden" name="configName" value="<?php echo $configName?>" />
 	<?php foreach ($aConfig[$configName] as $configKey => $aConfigItem):?>
 		<!-- Box -->
 		<div class="box">
@@ -59,7 +60,7 @@
 		<!-- End Box Head-->
 					
 		<div class="box-content">
-			<a href="<?php echo MVC_MODULE_URL . '/add.html'?>" class="add-button"><span>Add new Config</span></a>
+			<a href="<?php echo href_admin('config/add')?>" class="add-button"><span>Add new Config</span></a>
 		<div class="cl">&nbsp;</div>
 		</div>
 	</div>
@@ -75,7 +76,7 @@
 					
 		<div class="box-content">
 			<?php foreach ($aConfig as $configName => $ConfigItem):?>
-				<a href="<?php echo CURRENT_URL?>?name=<?php echo $configName?>" class="box-link"><?php echo $configName;?></a>
+				<a href="<?php echo MVC_ACTION_URL?>?name=<?php echo $configName?>" class="box-link"><?php echo $configName;?></a>
 			<?php endforeach;?>
 		<div class="cl">&nbsp;</div>
 		</div>
