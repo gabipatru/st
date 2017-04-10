@@ -6,6 +6,7 @@
 	<div id="content">
 	
 	<?php if ($configName):?>
+	<form id="saveForm" action="<?php echo MVC_MODULE_URL?>/save_all.html" method="post">
 	<?php foreach ($aConfig[$configName] as $configKey => $aConfigItem):?>
 		<!-- Box -->
 		<div class="box">
@@ -29,14 +30,17 @@
 					<td><h3><?php echo $itemName?></h3></td>
 					<td><input type="text" name="config<?php echo $aItem['config_id']?>" value="<?php echo $aItem['value']?>" /></td>
 				</tr>
+				<input type="hidden" name="config_ids[]" value="<?php echo $aItem['config_id']?>" />
 				<?php endforeach;?>
 				</table>
-			<!-- End Table -->
 			</div>
+			<!-- End Table -->
 		
 		</div>
 		<!-- End Box -->
 	<?php endforeach;?>
+		<input type="submit" class="button" value="Save" />
+	</form>
 	<?php endif;?>
 	
 	</div>

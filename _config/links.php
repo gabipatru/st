@@ -18,4 +18,23 @@ function href_website($sName, $sData = '') {
 	}
 }
 
+function href_admin($sName, $sData = '') {
+    if (strstr($sName, '/') !== false) {
+        $aPath = explode('/', $sName);
+        $sName = $aPath[0];
+    }
+    switch ($sName) {
+        case 'config':
+            switch ($aPath[1]) {
+                case 'list_items':
+                    return HTTP_MAIN.'/admin/config/list_items.html';
+                    break;
+                case 'add':
+                    return HTTP_MAIN.'/admin/config/add.html';
+                    break;
+            }
+            break;
+    }
+}
+
 ?>

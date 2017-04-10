@@ -9,7 +9,8 @@ class controller_admin_config {
     }
     
     function _posthook() {
-        mvc::assign('_MESSAGES', message_get());
+        $msg = message_get();
+        mvc::assign_by_ref('_MESSAGES', $msg);
     }
     
     function list_items() {
@@ -25,6 +26,37 @@ class controller_admin_config {
         
         mvc::assign_by_ref('aConfig', $aSortedConfig);
         mvc::assign('configName', $configName);
+    }
+    
+    function save_all() {
+        $aConfigIds = $_POST['config_ids'];
+        
+        try {
+            if (!is_array($aConfigIds)) {
+                throw new Exception('Incorrect input of config ids!');
+            }
+            
+            db::startTransaction();
+            
+            $oConfig = new Config();
+            foreach ($aConfigIds as $configId) {
+                $configValue = filter_post('config'.$configId, 'clean_html');
+                $r = $oConfig->Edit($configId, array('value' => $configValue));
+                if (!$r) {
+                    throw new Exception('Error whilesaving one of the config values');
+                }
+            }
+            
+            db::commitTransaction();
+        }
+        catch (Exception $e) {
+            message_set_error($e->getMessage());
+            db::rollbackTransaction();
+            http_redir(href_admin('config/list_items'));
+        }
+        
+        message_set('All items were saved');
+        http_redir(href_admin('config/list_items'));
     }
     
     function add() {
