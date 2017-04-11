@@ -16,4 +16,12 @@ function url_format($str) {
 	$str = str_replace('_', '-', $str);
 	return $str;
 }
+
+function isGET() {
+    return ($_SERVER['REQUEST_METHOD'] === 'GET');
+}
+
+function isPOST() {
+    return ($_SERVER['REQUEST_METHOD'] === 'POST');
+}
 ?>
