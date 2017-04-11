@@ -15,6 +15,9 @@ class FormValidation {
 		$this->_js_code .= 'aFormValidate["rules"] = Array();';
 		$this->_js_code .= 'aFormValidate["messages"] = Array();';
 		foreach ($this->_aFormConfig['rules'] as $sField => $mRule) {
+		    if (empty($mRule)) {
+		        continue;
+		    }
 			if (!is_array($mRule)) {
 				$this->_js_code .= 'aFormValidate["rules"]["'.$sField.'"] = "'.$mRule.'";';
 			}
