@@ -3,6 +3,7 @@ addAction(CONTROLLER_NAME, '_precontroller', function() {
     $( ".close" ).each( function() {
         $( this ).click( function() {
             $( this ).parent().slideUp();
+            return false;
         });
     });
 });

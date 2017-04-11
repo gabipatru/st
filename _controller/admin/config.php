@@ -67,7 +67,7 @@ class controller_admin_config {
                 'value' => ''
             ),
             'messages' => array(
-                'path'  => 'Please specify the config path'
+                'path'  => 'Please specify the config path',
             )
         ));
         

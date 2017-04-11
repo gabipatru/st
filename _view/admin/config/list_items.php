@@ -14,7 +14,7 @@
 		
 			<a href="#">
 			<!-- Box Head -->
-			<div class="box-head">
+			<div class="box-head js-slide">
 				<h2 class="left"><?php echo $configKey?></h2>
 				<div class="right">
 					<label>expand</label>
@@ -24,7 +24,7 @@
 			</a>
 			
 			<!-- Table -->
-			<div class="table">
+			<div class="table hidden" data-slided="false">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<?php foreach ($aConfigItem as $itemName => $aItem):?>
 				<tr>
