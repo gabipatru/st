@@ -71,23 +71,28 @@ class controller_admin_config {
             )
         ));
         
-        if ($FV->validate()) {
-            $path  = filter_post('path', 'clean_html');
-            $value = filter_post('value', 'clean_html');
-            
-            // check if the path exists
-            $filters = array('path' => $path);
-            $options = array();
-            $oConfig = new Config();
-            list($data, $nrItems, $maxPage) = $oConfig->Get($filters, $options);
-            if ($nrItems > 0) {
-                message_set_error('A config with that path already exists');
-            }
-            else {
+        if (isPOST()) {
+            try {
+                if (!$FV->validate()) {
+                    throw new Exception('Please make sure you filled all mandatory values');
+                }
+                
+                $path  = filter_post('path', 'clean_html');
+                $value = filter_post('value', 'clean_html');
+                
+                // check if the path exists
+                $filters = array('path' => $path);
+                $options = array();
+                $oConfig = new Config();
+                list($data, $nrItems, $maxPage) = $oConfig->Get($filters, $options);
+                if ($nrItems > 0) {
+                    throw new Exception('A config with that path already exists');
+                }
+                
                 // add to database
                 $data = array(
-                    'path'  => $path,
-                    'value' => $value
+                'path'  => $path,
+                'value' => $value
                 );
                 $r = $oConfig->Add($data);
                 if (!$r) {
@@ -97,6 +102,9 @@ class controller_admin_config {
                 
                 message_set('Config added successfully');
                 http_redir(MVC_MODULE_URL . '/list_items.html');
+            }
+            catch (Exception $e) {
+                message_set_error($e->getMessage());
             }
         }
         
