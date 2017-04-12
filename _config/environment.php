@@ -18,4 +18,5 @@ define('DB_DATABASE',			'mvc');
 // memcached-specific
 define('MEM_HOST',              '127.0.0.1');
 define('MEM_PORT',              11211);
+define('MEM_EXPIRE_TIME',       14400);             // 4 hours
 ?>

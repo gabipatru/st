@@ -49,6 +49,10 @@ class controller_admin_config {
             }
             
             db::commitTransaction();
+            
+            // clear config values from memcache
+            $Memcache = Mcache::getInstance();
+            $Memcache->delete(Config::MEMCACHE_KEY);
         }
         catch (Exception $e) {
             message_set_error($e->getMessage());
