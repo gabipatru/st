@@ -34,6 +34,13 @@ function href_admin($sName, $sData = '') {
                     break;
             }
             break;
+        case 'cache':
+            switch ($aPath[1]) {
+                case 'list_cache':
+                    return HTTP_MAIN.'/admin/cache/list_cache.html';
+                case 'memcached':
+                    return HTTP_MAIN.'/admin/cache/memcached.html';
+            }
     }
 }
 
