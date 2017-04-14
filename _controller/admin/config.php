@@ -20,9 +20,9 @@ class controller_admin_config {
         $filters = array();
         $options = array();
         $oConfig = new Config();
-        list($data, $nrItems, $maxPage) = $oConfig->Get($filters, $options);
+        $oConfigCollection = $oConfig->Get($filters, $options);
         
-        $aSortedConfig = $oConfig->sortData($data);
+        $aSortedConfig = $oConfig->sortData($oConfigCollection);
         
         mvc::assign_by_ref('aConfig', $aSortedConfig);
         mvc::assign('configName', $configName);
@@ -42,7 +42,11 @@ class controller_admin_config {
             $oConfig = new Config();
             foreach ($aConfigIds as $configId) {
                 $configValue = filter_post('config'.$configId, 'clean_html');
-                $r = $oConfig->Edit($configId, array('value' => $configValue));
+                
+                $oItem = new SetterGetter();
+                $oItem->setValue($configValue);
+                
+                $r = $oConfig->Edit($configId, $oItem);
                 if (!$r) {
                     throw new Exception('Error whilesaving one of the config values');
                 }
@@ -75,30 +79,34 @@ class controller_admin_config {
             )
         ));
         
+        $validateResult = $FV->validate();
         if (isPOST()) {
             try {
-                if (!$FV->validate()) {
+                if (!$validateResult) {
                     throw new Exception('Please make sure you filled all mandatory values');
                 }
                 
                 $path  = filter_post('path', 'clean_html');
                 $value = filter_post('value', 'clean_html');
                 
+                if (count(explode('/', trim($path, '/'))) != 3) {
+                    throw new Exception('You did not write the config properly');
+                }
+                
                 // check if the path exists
                 $filters = array('path' => $path);
                 $options = array();
                 $oConfig = new Config();
-                list($data, $nrItems, $maxPage) = $oConfig->Get($filters, $options);
-                if ($nrItems > 0) {
+                $oConfigCollection = $oConfig->Get($filters, $options);
+                if (count($oConfigCollection) > 0) {
                     throw new Exception('A config with that path already exists');
                 }
                 
                 // add to database
-                $data = array(
-                'path'  => $path,
-                'value' => $value
-                );
-                $r = $oConfig->Add($data);
+                $oItem = new SetterGetter();
+                $oItem->setPath($path);
+                $oItem->setValue($value);
+                $r = $oConfig->Add($oItem);
                 if (!$r) {
                     message_set_error('An error occurred when adding to the database');
                     http_redir(MVC_ACTION_URL);

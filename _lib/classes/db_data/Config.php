@@ -10,6 +10,12 @@ class Config extends dbDataModel {
     
     const MEMCACHE_KEY  = 'CONFIG_ALL_DATA';
     
+    protected $aFields = array(
+        'config_id',
+        'path',
+        'value'
+    );
+    
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {
         parent::__construct($table, $id, $status);
     }
@@ -42,31 +48,33 @@ class Config extends dbDataModel {
             $config = $Memcache->get(self::MEMCACHE_KEY);
             if ($config) {
                 $aConfig = json_decode($config, true);
-                return array($aConfig, 0, 0);
+                $oConfig = new Collection();
+                $oConfig->fromArray($aConfig);
+                return $oConfig;
             }
             
             // no data in memcache, fetch from DB and save to memcache
-            list($aConfig, $nrItems, $maxPage) = parent::Get($filters, $options);
-            if ($aConfig) {
-                $config = json_encode($aConfig);
+            $oConfig = parent::Get($filters, $options);
+            if (count($oConfig)) {
+                $config = json_encode($oConfig->toArray());
                 $Memcache->set(self::MEMCACHE_KEY, $config, MEM_EXPIRE_TIME);
             }
-            return array($aConfig, $nrItems, $maxPage);
+            return $oConfig;
         }
         
         return parent::Get($filters, $options);
     }
     
     // format the data from the database in a convenient format
-    public function sortData($data) {
-        if (!is_array($data)) {
+    public function sortData($oConfigCollection) {
+        if (!is_object($oConfigCollection)) {
             return false;
         }
         
         $aSortedData = array();
-        foreach ($data as $aConfigItem) {
-            $aConfigItem['path'] = trim($aConfigItem['path'], '/');
-            $aPath = explode('/', $aConfigItem['path']);
+        foreach ($oConfigCollection as $oItem) {
+            $path = trim($oItem->getPath(), '/');
+            $aPath = explode('/', $path);
             
             // only valid paths are processed
             if (count($aPath) != 3) {
@@ -83,8 +91,8 @@ class Config extends dbDataModel {
                 $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]] = array();
             }
             $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]] = array(
-                'config_id' => $aConfigItem['config_id'], 
-                'value' => $aConfigItem['value']
+                'config_id' => $oItem->getConfigId(), 
+                'value' => $oItem->getValue()
             );
         }
         

@@ -8,6 +8,12 @@ class Migration extends dbDataModel {
     const TABLE_NAME    = '_migration';
     const ID_FIELD      = 'migration_id';
     
+    protected $aFields = array(
+        'migration_id',
+        'name',
+        'version'
+    );
+    
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {
         parent::__construct($table, $id, $status);
     }
@@ -39,16 +45,16 @@ class Migration extends dbDataModel {
         db::lock_transaction('migrations');
         
         // load database version for all migrations
-        $aDatabaseVersion = $this->simpleGet();
-        if (!$aDatabaseVersion) {
+        $oDatabaseVersion = $this->Get();
+        if (!count($oDatabaseVersion)) {
             $this->deployMigrations('migrations', '000');
-            $aDatabaseVersion = $this->simpleGet();
+            $oDatabaseVersion = $this->Get();
         }
-        
+
         // create array with migration names from database
         $aDatabaseMigrationNames = array();
-        foreach ($aDatabaseVersion as $aMigration) {
-            $aDatabaseMigrationNames[] = $aMigration['name'];
+        foreach ($oDatabaseVersion as $oMigration) {
+            $aDatabaseMigrationNames[] = $oMigration->getName();
         }
         
         // check if there are any new migration groups
@@ -60,10 +66,10 @@ class Migration extends dbDataModel {
         
         // check for new migrations
         foreach ($aMigrationsConfig as $migrationName => $latestVersion) {
-            foreach ($aDatabaseVersion as $migration_id => $aMigration) {
-                if ($aMigration['name'] == $migrationName) {
-                    if ($aMigration['version'] != $latestVersion) {
-                        $this->deployMigrations($migrationName, $aMigration['version']);
+            foreach ($oDatabaseVersion as $oMigration) {
+                if ($oMigration->getName() == $migrationName) {
+                    if ($oMigration->getVersion() != $latestVersion) {
+                        $this->deployMigrations($migrationName, $oMigration->getVersion());
                     }
                     break;
                 }
@@ -79,7 +85,7 @@ class Migration extends dbDataModel {
     private function deployMigrations($migrationName, $currentVersion) {
         $folder = MIGRATIONS_DIR . '/' . $migrationName;
         $nextMigrationName = $this->getNextMigration($currentVersion);
-        
+
         // while there are migrations, run them
         while (file_exists($folder . '/' . $this->getNextMigration($currentVersion) . '.php')) {
             // never run the previous migration
@@ -93,7 +99,7 @@ class Migration extends dbDataModel {
             if (empty($migrationSql)) {
                 die('Failed to run migration ' . $migrationName . ' : ' . $nextMigrationName);
             }
-            
+
             $timeStart = microtime(true);
 
             // run the migration(s)
@@ -116,7 +122,12 @@ class Migration extends dbDataModel {
             
             // migration ran, update the database version
             if ($nextMigrationName === '001') {
-                $r = $this->Add(array('version' => $nextMigrationName, 'name' => $migrationName));
+                
+                $oItem = new SetterGetter();
+                $oItem->setName($migrationName);
+                $oItem->setVersion($nextMigrationName);
+                
+                $r = $this->Add($oItem);
                 if (!$r) {
                     die('Failed to add migration name : ' . $migrationName);
                 }
@@ -124,15 +135,19 @@ class Migration extends dbDataModel {
             }
             else {
                 $filters = array('name' => $migrationName);
-                $aMigration = $this->singleGet($filters);
-                if (!$aMigration) {
+                $oMigration = $this->Get($filters);
+                if (!count($oMigration)) {
                     die('Failed to fetch migration name : ' . $migrationName);
                 }
-                $r = $this->Edit($aMigration['migration_id'], array('version' => $nextMigrationName));
+                
+                $oItem = new SetterGetter();
+                $oItem->setVersion($nextMigrationName);
+                
+                $r = $this->Edit($oMigration->getMigrationId(), $oItem);
                 if (!$r) {
                     die('Failed to update migration version : ' . $migrationName);
                 }
-                $migrationId = $aMigration['migration_id'];
+                $migrationId = $oMigration->getMigrationId();
             }
             
             $timeEnd = microtime(true);
@@ -149,13 +164,13 @@ class Migration extends dbDataModel {
      * Update the migrations log
      */
     private function updateMigrationLog($sql, $migrationId, $time) {
-        $data = array(
-                'query' => $sql, 
-                'migration_id' => $migrationId, 
-                'duration' => $time
-        );
+        $oItem = new SetterGetter();
+        $oItem->setMigrationId($migrationId);
+        $oItem->setQuery($sql);
+        $oItem->setDuration($time);
+        
         $oMigrationLog = new MigrationLog();
-        $r = $oMigrationLog->Add($data);
+        $r = $oMigrationLog->Add($oItem);
         if (!$r) {
             log_message('migrations.log', 'Failed to update migrations log with query '>$sql);
             return false;

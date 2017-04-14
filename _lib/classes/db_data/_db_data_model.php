@@ -42,10 +42,30 @@ abstract class dbDataModel {
 	}
 	
 	/*
+	 * Special function to help translating field names from collection to table
+	 */
+	protected function columnNames($aData) {
+	    if (!is_array($aData)) {
+	        return false;
+	    }
+	    
+	    $aColumns = array_flip($this->aFields);
+	    
+	    foreach ($aColumns as $realColumnName => $value) {
+	        $aColumns[$realColumnName] = str_replace('_', '', $realColumnName);
+	        if (!isset($aData[$aColumns[$realColumnName]])) {
+	           unset($aColumns[$realColumnName]);
+	        }
+	    }
+	    
+	    return $aColumns;
+	}
+	
+	/*
 	 * Add function - adds data to the database
 	 */
-	public function Add($aData) {
-		if (!is_array($aData)) {
+	public function Add($oItem) {
+		if (!is_object($oItem)) {
 			return false;
 		}
 		
@@ -54,8 +74,9 @@ abstract class dbDataModel {
 		$sValues = '';
 		$aParams = array();
 		$aMarkers = array();
+		$aData = get_object_vars($oItem);
 		
-		$aFields = array_keys($aData);
+		$aFields = array_keys($this->columnNames($aData));
 		$sFields = implode(',', $aFields);
 		foreach ($aData as $field => $value) {
 			$aParams[] = $value;
@@ -68,7 +89,7 @@ abstract class dbDataModel {
 				." (".$sFields.")"
 				." VALUES (".$sValues.")";
 		$res = db::query($sql, $aParams);
-		if ($res->errorCode() != '00000') {
+		if (!$res || $res->errorCode() != '00000') {
 			return false;
 		}
 		$iLastId = db::lastInsertId();
@@ -80,8 +101,8 @@ abstract class dbDataModel {
 	/*
 	 * EDIT function - performs updates in the database
 	 */
-	public function Edit($iId, $aData) {
-		if (!is_array($aData)) {
+	public function Edit($iId, $oItem) {
+		if (!is_object($oItem)) {
 			return false;
 		}
 		if (!$iId) {
@@ -92,10 +113,12 @@ abstract class dbDataModel {
 		$sFields = '';
 		$aFields = array();
 		$aParams = array();
+		$aData = get_object_vars($oItem);
 		foreach ($aData as $field => $value) {
 			$aParams[] = $value;
 			$aFields[] = $field.' = ?';
 		}
+		$aFields = array_keys($this->columnNames($aData));
 		$sFields = implode(',', $aFields);
 		$aParams[] = $iId;
 		
@@ -193,10 +216,10 @@ abstract class dbDataModel {
 	 */
 	public function Get($filters = array(), $options = array()) {
 		if (!is_array($filters)) {
-			return false;
+			return new Collection();
 		}
 		if (!is_array($options)) {
-			return false;
+			return new Collection();
 		}
 		
 		$iNrItems = $this->Count($filters, $options);
@@ -224,7 +247,7 @@ abstract class dbDataModel {
 				.$sLimit;
 		$res = db::query($sql, $aParams);
 		if (!$res || $res->errorCode() != '00000') {
-			return false;
+			return new Collection();
 		}
 		
 		// compute the max page
@@ -236,24 +259,23 @@ abstract class dbDataModel {
 			}
 		}
 		
-		$aData = array();
+		$oCollection = new Collection();
 		while ($row = db::fetchAssoc($res)) {
-			$aData[$row[$this->getIdField()]] = $row;
+		    $oCollection->add($row[$this->getIdField()], $row);
 		}
 		
-		return array($aData, $iNrItems, $iMaxPage);
+		$oCollection->setMaxPage($iMaxPage);
+		$oCollection->setItemsNo($iNrItems);
+		
+		return $oCollection;
 	}
 	
 	/*
 	 * Some wrappers for Get
 	 */
-	public function simpleGet($filters = array(), $options = array()) {
-		list($aData, $iNr, $iMaxPage) = $this->Get($filters, $options);
-		return $aData;
-	}
 	public function singleGet($filters = array(), $options = array()) {
-		list($aData, $iNr, $iMaxPage) = $this->Get($filters, $options);
-		return current($aData);
+		$oCollection = $this->Get($filters, $options);
+		return $oCollection->getItem();
 	}
     
 }
