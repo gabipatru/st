@@ -15,6 +15,7 @@ require_once(FUNCTIONS_DIR . '/security_token.php');
 
 securityUpdateToken();
 
+// database connection
 try {
     db::connect();
     $oMigration = new Migration();
@@ -23,5 +24,11 @@ try {
 catch (Exception $e) {
     die("Could not connect to database");
 }
+
+// config setup
+$oConfig = new Config();
+$oConfigCollection = $oConfig->Get();
+$oRegsitry = Registry::getInstance();
+$oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
 
 ?>

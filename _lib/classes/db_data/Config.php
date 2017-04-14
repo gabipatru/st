@@ -9,6 +9,7 @@ class Config extends dbDataModel {
     const ID_FIELD      = 'config_id';
     
     const MEMCACHE_KEY  = 'CONFIG_ALL_DATA';
+    const REGISTRY_KEY  = 'CONFIG';
     
     protected $aFields = array(
         'config_id',
@@ -42,6 +43,12 @@ class Config extends dbDataModel {
     // rewrite function for memcache support
     public function Get($filters = array(), $options = array()) {
         if (!$filters && !$options) {
+            // try fetching from Registry
+            $oRegistry = Registry::getInstance();
+            $oConfigCollection = $oRegistry->get(self::REGISTRY_KEY);
+            if (count($oConfigCollection)) {
+                return $oConfigCollection;
+            }
             
             // try fetching from memcache
             $Memcache = Mcache::getInstance();
