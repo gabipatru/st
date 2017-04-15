@@ -29,6 +29,7 @@ class controller_admin_cache {
         
         $memcache = Mcache::getInstance();
         $aMemcacheStats = current($memcache->getStats());
+        Mcache::prettyStats($aMemcacheStats);
 
         mvc::assign_by_ref('aMemcacheStats', $aMemcacheStats);
         mvc::assign('FV', $FV);

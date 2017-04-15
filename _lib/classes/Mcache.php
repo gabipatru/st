@@ -31,4 +31,18 @@ class Mcache {
         return static::$instance->connection;
     }
     
+    public static function prettyStats(&$aMemcacheStats) {
+        if (!is_array($aMemcacheStats)) {
+            return false;
+        }
+        
+        $aMemcacheStats['limit_maxbytes'] = display_bytes($aMemcacheStats['limit_maxbytes']);
+        $aMemcacheStats['bytes'] = display_bytes($aMemcacheStats['bytes']);
+        $aMemcacheStats['bytes_read'] = display_bytes($aMemcacheStats['bytes_read']);
+        $aMemcacheStats['bytes_written'] = display_bytes($aMemcacheStats['bytes_written']);
+        
+        $aMemcacheStats['hit_ratio'] = $aMemcacheStats['get_hits'] / ($aMemcacheStats['get_hits'] + $aMemcacheStats['get_misses']) *100;
+        $aMemcacheStats['hit_ratio'] = sprintf('%3.2f', $aMemcacheStats['hit_ratio']) . '%';
+    }
+    
 }
