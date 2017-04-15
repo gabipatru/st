@@ -7,6 +7,9 @@ class controller_admin_cache {
         mvc::addCSS('/bundle-admin.css');
         mvc::addJS('/bundle-admin.js');
         
+        $Breadcrumbs = Breadcrumbs::getSingleton();
+        $Breadcrumbs->Add('Cache', href_admin('cache/list_cache'));
+        
         mvc::assign('menu', 'cache');
     }
     
@@ -32,6 +35,9 @@ class controller_admin_cache {
         $memcache = Mcache::getInstance();
         $aMemcacheStats = current($memcache->getStats());
         Mcache::prettyStats($aMemcacheStats);
+        
+        $Breadcrumbs = Breadcrumbs::getSingleton();
+        $Breadcrumbs->Add('Memcached', MVC_ACTION_URL);
 
         mvc::assign_by_ref('aMemcacheStats', $aMemcacheStats);
         mvc::assign('FV', $FV);

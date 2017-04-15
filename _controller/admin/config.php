@@ -26,6 +26,12 @@ class controller_admin_config {
         
         $aSortedConfig = $oConfig->sortData($oConfigCollection);
         
+        $Breadcrumbs = Breadcrumbs::getSingleton();
+        $Breadcrumbs->Add('Config', MVC_ACTION_URL);
+        if ($configName) {
+            $Breadcrumbs->Add($configName, CURRENT_URL);
+        }
+        
         mvc::assign_by_ref('aConfig', $aSortedConfig);
         mvc::assign('configName', $configName);
     }

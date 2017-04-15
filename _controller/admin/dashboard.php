@@ -12,6 +12,7 @@ class controller_admin_dashboard {
     }
     
     function stats() {
-        
+        $Breadcrumbs = Breadcrumbs::getSingleton();
+        $Breadcrumbs->Add('Dashboard', MVC_ACTION_URL);
     }
 }

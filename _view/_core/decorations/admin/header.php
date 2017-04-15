@@ -35,12 +35,6 @@
 <div id="container">
 	<div class="shell">
 	
-	    <!-- Small Nav -->
-		<div class="small-nav">
-			<a href="#">Dashboard</a>
-			<span>&gt;</span>
-			Current Articles
-		</div>
-		<!-- End Small Nav -->
+	    <?php include(VIEW_INCLUDES_DIR . '/breadcrumbs.php');?>
 		
 		<?php include(VIEW_INCLUDES_DIR .'/messages.php');?>
