@@ -22,7 +22,6 @@
 					<td><h3><?php echo $statName?></h3></td>
 					<td><?php echo $statValue?></td>
 				</tr>
-				<input type="hidden" name="config_ids[]" value="<?php echo $aItem['config_id']?>" />
 				<?php endforeach;?>
 				</table>
 			</div>
