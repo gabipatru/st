@@ -5,4 +5,9 @@ Contains:
 - CRUD
 - File Uploader
 - From validation for JS and PHP
-- Grod filters
+- Grid filters
+- Gulp
+- Javascript structure which uses a routher similar to MVC
+- Translations
+- Images embedded in CSS files
+- Memcached support
