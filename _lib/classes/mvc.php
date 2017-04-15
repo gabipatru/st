@@ -35,16 +35,23 @@ class mvc {
 	* It is initialized from run()
 	*/
 	public static function autoload($sClassName) {
+	    // some special cases
+	    if ($sClassName == 'dbDataModel') {
+	        require_once(CLASSES_DIR . '/db_data/_db_data_model.php');
+	        return;
+	    }
+	    if ($sClassName == 'ControllerAdminModel') {
+	        require_once(CONTROLLER_DIR . '/admin/_controller_admin_model.php');
+	        return;
+	    }
+	    
+	    // normal autoload
 		if (file_exists(CLASSES_DIR . '/' . $sClassName . '.php')) {
 			require_once(CLASSES_DIR . '/' . $sClassName . '.php');
 			return;
 		}
 		if (file_exists(CLASSES_DIR . '/db_data/' . $sClassName . '.php')) {
 			require_once(CLASSES_DIR . '/db_data/' . $sClassName . '.php');
-			return;
-		}
-		if ($sClassName == 'dbDataModel') {
-			require_once(CLASSES_DIR . '/db_data/_db_data_model.php');
 			return;
 		}
 	}

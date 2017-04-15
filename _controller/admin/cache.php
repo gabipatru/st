@@ -1,21 +1,12 @@
 <?php
-class controller_admin_cache {
+class controller_admin_cache extends ControllerAdminModel {
     function _prehook() {
-        mvc::setDecorations('admin');
-        mvc::skipBundles(true);
-    
-        mvc::addCSS('/bundle-admin.css');
-        mvc::addJS('/bundle-admin.js');
+        parent::_prehook();
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add('Cache', href_admin('cache/list_cache'));
         
         mvc::assign('menu', 'cache');
-    }
-    
-    function _posthook() {
-        $msg = message_get();
-        mvc::assign_by_ref('_MESSAGES', $msg);
     }
     
     function list_cache() {

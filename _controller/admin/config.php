@@ -1,18 +1,9 @@
 <?php
-class controller_admin_config {
+class controller_admin_config extends ControllerAdminModel {
     function _prehook() {
-        mvc::setDecorations('admin');
-        mvc::skipBundles(true);
-    
-        mvc::addCSS('/bundle-admin.css');
-        mvc::addJS('/bundle-admin.js');
+        parent::_prehook();
         
         mvc::assign('menu', 'config');
-    }
-    
-    function _posthook() {
-        $msg = message_get();
-        mvc::assign_by_ref('_MESSAGES', $msg);
     }
     
     function list_items() {
