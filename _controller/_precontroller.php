@@ -35,7 +35,7 @@ catch (Exception $e) {
 $oConfig = new Config();
 $oConfigCollection = $oConfig->Get();
 
-$oRegsitry = Registry::getInstance();
+$oRegsitry = Registry::getSingleton();
 $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
 
 ?>

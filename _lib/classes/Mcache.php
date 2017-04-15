@@ -21,7 +21,7 @@ class Mcache {
         
     }
     
-    public static function getInstance() {
+    public static function getSingleton() {
         if (!static::$instance) {
             static::$instance = new static;
             static::$instance->connection = new Memcached();

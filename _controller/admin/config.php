@@ -63,7 +63,7 @@ class controller_admin_config {
             db::commitTransaction();
             
             // clear config values from memcache
-            $Memcache = Mcache::getInstance();
+            $Memcache = Mcache::getSingleton();
             $Memcache->delete(Config::MEMCACHE_KEY);
         }
         catch (Exception $e) {

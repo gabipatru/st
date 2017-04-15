@@ -32,7 +32,7 @@ class controller_admin_cache {
             )
         ));
         
-        $memcache = Mcache::getInstance();
+        $memcache = Mcache::getSingleton();
         $aMemcacheStats = current($memcache->getStats());
         Mcache::prettyStats($aMemcacheStats);
         
@@ -62,7 +62,7 @@ class controller_admin_cache {
                 
                 $key = filter_post('memcached_key', 'string');
                 
-                $memcache = Mcache::getInstance();
+                $memcache = Mcache::getSingleton();
                 $memcache->delete($key);
                 
                 message_set('Key '. $key .' deleted !');
@@ -76,7 +76,7 @@ class controller_admin_cache {
     }
     
     function flush_all_memcached() {
-        $memcache = Mcache::getInstance();
+        $memcache = Mcache::getSingleton();
         $memcache->flush();
         
         message_set('Memcached keys flushed');

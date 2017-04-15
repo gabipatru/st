@@ -22,7 +22,7 @@ class Config extends dbDataModel {
     }
     
     public function onAdd($insertId) {
-        $Memcache = Mcache::getInstance();
+        $Memcache = Mcache::getSingleton();
         $Memcache->delete(self::MEMCACHE_KEY);
         
         return true;
@@ -44,14 +44,14 @@ class Config extends dbDataModel {
     public function Get($filters = array(), $options = array()) {
         if (!$filters && !$options) {
             // try fetching from Registry
-            $oRegistry = Registry::getInstance();
+            $oRegistry = Registry::getSingleton();
             $oConfigCollection = $oRegistry->get(self::REGISTRY_KEY);
             if (count($oConfigCollection)) {
                 return $oConfigCollection;
             }
             
             // try fetching from memcache
-            $Memcache = Mcache::getInstance();
+            $Memcache = Mcache::getSingleton();
             $config = $Memcache->get(self::MEMCACHE_KEY);
             if ($config) {
                 $aConfig = json_decode($config, true);
