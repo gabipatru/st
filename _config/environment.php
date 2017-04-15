@@ -12,7 +12,7 @@ define('ENVIRONMENT',			'local');
 // db-specific
 define('DB_HOST',				'localhost');
 define('DB_USER',				'root');
-define('DB_PASS',				'qwqwqw');
+define('DB_PASS',				'qwqwq');
 define('DB_DATABASE',			'mvc');
 
 // memcached-specific

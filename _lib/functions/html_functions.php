@@ -335,4 +335,10 @@ function display_bytes($iBytes) {
 	return $sBytes;
 }
 
+// for translations
+function __($msg) {
+    $oTranslations = Translations::getSingleton();
+    return $oTranslations->__($msg);
+}
+
 ?>

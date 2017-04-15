@@ -9,11 +9,17 @@ require_once(CONFIG_DIR . '/constants.php');
 
 require_once(FUNCTIONS_DIR . '/messages.php');
 require_once(FUNCTIONS_DIR . '/http_functions.php');
+require_once(FUNCTIONS_DIR . '/html_functions.php');
 require_once(FUNCTIONS_DIR . '/filter.php');
 require_once(FUNCTIONS_DIR . '/log.php');
 require_once(FUNCTIONS_DIR . '/security_token.php');
 
 securityUpdateToken();
+
+// load common translations
+$oTranslations = Translations::getSingleton();
+$oTranslations->setLanguage('ro_RO');
+$oTranslations->setModule('common');
 
 // database connection
 try {
@@ -22,12 +28,13 @@ try {
     $oMigration->runMigrations();
 }
 catch (Exception $e) {
-    die("Could not connect to database");
+    die(__("Could not connect to database"));
 }
 
 // config setup
 $oConfig = new Config();
 $oConfigCollection = $oConfig->Get();
+
 $oRegsitry = Registry::getInstance();
 $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
 

@@ -14,6 +14,7 @@ define('STATIC_DIR', 			BASE_DIR.'/_static');
 define('CSS_DIR', 				STATIC_DIR.'/css');
 define('JS_DIR', 				STATIC_DIR.'/js');
 define('FILES_DIR', 			BASE_DIR.'/files');
+define('TRANSLATIONS_DIR',      BASE_DIR.'/_translations');
 
 define('HTTP_STATIC', 			HTTP_MAIN.'/_static');
 define('HTTPS_STATIC', 			HTTPS_MAIN.'/_static');
