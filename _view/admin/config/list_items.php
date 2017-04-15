@@ -16,9 +16,7 @@
 			<!-- Box Head -->
 			<div class="box-head js-slide">
 				<h2 class="left"><?php echo $configKey?></h2>
-				<div class="right">
-					<label>expand</label>
-				</div>
+				<div class="right img-open-box"></div>
 			</div>
 			<!-- End Box Head -->
 			</a>
