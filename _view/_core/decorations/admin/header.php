@@ -21,12 +21,9 @@
 		<!-- Main Nav -->
 		<div id="navigation">
 			<ul>
-			    <li><a href="#" class="active"><span>Dashboard</span></a></li>
-			    <li><a href="#"><span>New Articles</span></a></li>
-			    <li><a href="#"><span>User Management</span></a></li>
-			    <li><a href="#"><span>Photo Gallery</span></a></li>
-			    <li><a href="#"><span>Products</span></a></li>
-			    <li><a href="#"><span>Services Control</span></a></li>
+			    <li><a href="<?php echo href_admin('dashboard/stats')?>" class="<?php echo ($menu == 'dashboard' ? 'active' : '')?>"><span>Dashboard</span></a></li>
+			    <li><a href="<?php echo href_admin('config/list_items')?>" class="<?php echo ($menu == 'config' ? 'active' : '')?>"><span>Config</span></a></li>
+			    <li><a href="<?php echo href_admin('cache/list_cache')?>" class="<?php echo ($menu == 'cache' ? 'active' : '')?>"><span>Cache</span></a></li>
 			</ul>
 		</div>
 		<!-- End Main Nav -->

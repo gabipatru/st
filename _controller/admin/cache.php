@@ -6,6 +6,8 @@ class controller_admin_cache {
     
         mvc::addCSS('/bundle-admin.css');
         mvc::addJS('/bundle-admin.js');
+        
+        mvc::assign('menu', 'cache');
     }
     
     function _posthook() {

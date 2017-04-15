@@ -24,14 +24,18 @@ function href_admin($sName, $sData = '') {
         $sName = $aPath[0];
     }
     switch ($sName) {
+        case 'dashboard':
+            switch ($aPath[1]) {
+                case 'stats':
+                    return HTTP_MAIN.'/admin/dashboard/stats.html';
+            }
+            break;
         case 'config':
             switch ($aPath[1]) {
                 case 'list_items':
                     return HTTP_MAIN.'/admin/config/list_items.html';
-                    break;
                 case 'add':
                     return HTTP_MAIN.'/admin/config/add.html';
-                    break;
             }
             break;
         case 'cache':

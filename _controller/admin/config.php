@@ -6,6 +6,8 @@ class controller_admin_config {
     
         mvc::addCSS('/bundle-admin.css');
         mvc::addJS('/bundle-admin.js');
+        
+        mvc::assign('menu', 'config');
     }
     
     function _posthook() {

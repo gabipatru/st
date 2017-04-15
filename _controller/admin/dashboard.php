@@ -7,6 +7,8 @@ class controller_admin_dashboard {
         
         mvc::addCSS('/bundle-admin.css');
         mvc::addJS('/bundle-admin.js');
+        
+        mvc::assign('menu', 'dashboard');
     }
     
     function stats() {
