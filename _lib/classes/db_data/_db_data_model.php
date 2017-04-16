@@ -109,16 +109,19 @@ abstract class dbDataModel {
 			return false;
 		}
 		
-		// compose the SQL
+	// compose the SQL strings
 		$sFields = '';
-		$aFields = array();
+		$sValues = '';
 		$aParams = array();
 		$aData = get_object_vars($oItem);
-		foreach ($aData as $field => $value) {
-			$aParams[] = $value;
-			$aFields[] = $field.' = ?';
-		}
+		
 		$aFields = array_keys($this->columnNames($aData));
+		foreach ($aFields as $key => $value) {
+			$aFields[$key] = $value . ' = ?';
+		}
+		foreach ($aData as $key => $value) {
+		    $aParams[] = $value;
+		}
 		$sFields = implode(',', $aFields);
 		$aParams[] = $iId;
 		
