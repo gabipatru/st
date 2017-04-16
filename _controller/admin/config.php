@@ -18,7 +18,7 @@ class controller_admin_config extends ControllerAdminModel {
         $aSortedConfig = $oConfig->sortData($oConfigCollection);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add('Config', MVC_ACTION_URL);
+        $Breadcrumbs->Add(__('Config'), MVC_ACTION_URL);
         if ($configName) {
             $Breadcrumbs->Add($configName, CURRENT_URL);
         }
@@ -33,7 +33,7 @@ class controller_admin_config extends ControllerAdminModel {
         
         try {
             if (!is_array($aConfigIds)) {
-                throw new Exception('Incorrect input of config ids!');
+                throw new Exception(__('Incorrect input of config ids!'));
             }
             
             db::startTransaction();
@@ -47,7 +47,7 @@ class controller_admin_config extends ControllerAdminModel {
                 
                 $r = $oConfig->Edit($configId, $oItem);
                 if (!$r) {
-                    throw new Exception('Error whilesaving one of the config values');
+                    throw new Exception(__('Error while saving one of the config values'));
                 }
             }
             
@@ -63,7 +63,7 @@ class controller_admin_config extends ControllerAdminModel {
             http_redir(href_admin('config/list_items') . '?name='.$configName);
         }
         
-        message_set('All items were saved');
+        message_set(__('All items were saved'));
         http_redir(href_admin('config/list_items') . '?name='.$configName);
     }
     
@@ -74,7 +74,7 @@ class controller_admin_config extends ControllerAdminModel {
                 'value' => ''
             ),
             'messages' => array(
-                'path'  => 'Please specify the config path',
+                'path'  => __('Please specify the config path'),
             )
         ));
         
@@ -82,14 +82,14 @@ class controller_admin_config extends ControllerAdminModel {
         if (isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception('Please make sure you filled all mandatory values');
+                    throw new Exception(__('Please make sure you filled all mandatory values'));
                 }
                 
                 $path  = filter_post('path', 'clean_html');
                 $value = filter_post('value', 'clean_html');
                 
                 if (count(explode('/', trim($path, '/'))) != 3) {
-                    throw new Exception('You did not write the config properly');
+                    throw new Exception(__('You did not write the config properly'));
                 }
                 
                 // check if the path exists
@@ -98,7 +98,7 @@ class controller_admin_config extends ControllerAdminModel {
                 $oConfig = new Config();
                 $oConfigCollection = $oConfig->Get($filters, $options);
                 if (count($oConfigCollection) > 0) {
-                    throw new Exception('A config with that path already exists');
+                    throw new Exception(__('A config with that path already exists'));
                 }
                 
                 // add to database
@@ -107,11 +107,11 @@ class controller_admin_config extends ControllerAdminModel {
                 $oItem->setValue($value);
                 $r = $oConfig->Add($oItem);
                 if (!$r) {
-                    message_set_error('An error occurred when adding to the database');
+                    message_set_error(__('Error while saving to the database'));
                     http_redir(MVC_ACTION_URL);
                 }
                 
-                message_set('Config added successfully');
+                message_set(__('Config added successfully'));
                 http_redir(MVC_MODULE_URL . '/list_items.html');
             }
             catch (Exception $e) {

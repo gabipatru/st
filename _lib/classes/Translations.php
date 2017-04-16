@@ -38,11 +38,11 @@ class Translations {
             return false;
         }
         
+        $this->module = $module;
+        
         if ($load) {
             $this->loadTranslations();
         }
-        
-        $this->module = $module;
     }
     
     public function getModule() {
@@ -75,11 +75,6 @@ class Translations {
     public function loadTranslations() {
         $language   = $this->getLanguage();
         $module     = $this->getModule();
-        
-        // check if the treanslation is already loaded
-        if (!empty($this->translations[$module])) {
-            return;
-        }
         
         // load, process translation
         if (file_exists(TRANSLATIONS_DIR . '/' . $language . '/' . $module . '.csv')) {

@@ -9,6 +9,6 @@ class controller_admin_dashboard extends ControllerAdminModel {
     
     function stats() {
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add('Dashboard', MVC_ACTION_URL);
+        $Breadcrumbs->Add(__('Dashboard'), MVC_ACTION_URL);
     }
 }

@@ -4,7 +4,7 @@ class controller_admin_cache extends ControllerAdminModel {
         parent::_prehook();
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add('Cache', href_admin('cache/list_cache'));
+        $Breadcrumbs->Add(__('Cache'), href_admin('cache/list_cache'));
         
         mvc::assign('menu', 'cache');
     }
@@ -19,7 +19,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 'memcached_key' => 'required'
             ),
             'messages' => array(
-                'memcached_key' => 'Please specify the memcached key you want to delete'
+                'memcached_key' => __('Please specify the memcached key you want to delete')
             )
         ));
         
@@ -28,7 +28,7 @@ class controller_admin_cache extends ControllerAdminModel {
         Mcache::prettyStats($aMemcacheStats);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add('Memcached', MVC_ACTION_URL);
+        $Breadcrumbs->Add(__('Memcached'), MVC_ACTION_URL);
 
         mvc::assign_by_ref('aMemcacheStats', $aMemcacheStats);
         mvc::assign('FV', $FV);
@@ -40,7 +40,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 'memcached_key' => 'required'
             ),
             'messages' => array(
-                'memcached_key' => 'Please specify the memcached key you want to delete'
+                'memcached_key' => __('Please specify the memcached key you want to delete')
             )
         ));
         
@@ -48,7 +48,7 @@ class controller_admin_cache extends ControllerAdminModel {
         if (isPOST()) {
             try {
                 if (!$validate) {
-                    throw new Exception('Please make sure you filled all the required fields');
+                    throw new Exception(__('Please make sure you filled all the required fields'));
                 }
                 
                 $key = filter_post('memcached_key', 'string');
@@ -70,7 +70,7 @@ class controller_admin_cache extends ControllerAdminModel {
         $memcache = Mcache::getSingleton();
         $memcache->flush();
         
-        message_set('Memcached keys flushed');
+        message_set(__('Memcached keys flushed'));
         
         http_redir(href_admin('cache/memcached'));
     }

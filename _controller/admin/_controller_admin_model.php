@@ -9,6 +9,9 @@ class ControllerAdminModel {
     
         mvc::addCSS('/bundle-admin.css');
         mvc::addJS('/bundle-admin.js');
+        
+        $oTranslations = Translations::getSingleton();
+        $oTranslations->setModule('admin');
     }
     
     function _posthook() {
