@@ -10,7 +10,7 @@
 		
 			<!-- Box Head -->
 			<div class="box-head">
-				<h2 class="left">Memcache Stats</h2>
+				<h2 class="left"><?php echo __('Memcached Stats')?></h2>
 			</div>
 			<!-- End Box Head -->
 			
@@ -35,7 +35,7 @@
 			
 			<!-- Box Head -->
 			<div class="box-head">
-				<h2 class="left">Clear one Memcached key</h2>
+				<h2 class="left"><?php echo __('Clear one Memcached key')?></h2>
 			</div>
 			<!-- End Box Head -->
 			
@@ -44,7 +44,7 @@
 				<!-- Form -->
 				<div class="form">
 					<p>
-						<label>Flush one Memcached key <span>(Required Field)</span></label>
+						<label><?php echo __('Flush one Memcached key')?> <span>(<?php echo __('Required Field')?></span></label>
 						<input type="text" name="memcached_key" class="field size1" />
 					</p>
 				</div>
@@ -52,7 +52,7 @@
 				
 				<!-- Form Buttons -->
 				<div class="buttons">
-					<input type="submit" class="button" value="Flush !" />
+					<input type="submit" class="button" value="<?php echo __('Flush')?> !" />
 				</div>
 				<!-- End Form Buttons -->
 				<?php echo $FV->_js_code;?>
@@ -66,20 +66,20 @@
 		
 			<!-- Box Head -->
 			<div class="box-head">
-				<h2 class="left">Clear all Memcached keys</h2>
+				<h2 class="left"><?php echo __('Clear all Memcached keys')?></h2>
 			</div>
 			<!-- End Box Head -->
 			
 			<form id="memcacheAllFlush" action="<?php echo MVC_MODULE_URL?>/flush_all_memcached.html" method="post">
 				<!-- Form -->
 				<div class="form">
-					<p><label>Flush all Memcached keys ! </label></p>
+					<p><label><?php echo __('Flush all Memcached keys')?> ! </label></p>
 				</div>
 				<!-- End Form -->
 				
 				<!-- Form Buttons -->
 				<div class="buttons">
-					<input type="submit" class="button" value="Flush !" />
+					<input type="submit" class="button" value="<?php echo __('Flush')?> !" />
 				</div>
 				<!-- End Form Buttons -->
 			</form>

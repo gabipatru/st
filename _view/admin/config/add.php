@@ -9,7 +9,7 @@
 		<div class="box">
 			
 			<div class="box-head">
-				<h2>Add New Article</h2>
+				<h2><?php echo __('Add New Article')?></h2>
 			</div>
 			
 			<form id="addForm" action="<?php echo MVC_MODULE_URL?>/add.html" method="post">
@@ -17,13 +17,13 @@
 				<div class="form">
 				
 					<p>
-						<span class="req">max 255 symbols</span>
-						<label>Path <span>(Required Field)</span></label>
+						<span class="req"><?php echo __('max 255 symbols')?></span>
+						<label><?php echo __('Path')?> <span>(<?php echo __('Required Field')?>)</span></label>
 						<input type="text" class="field size1" name="path" value="<?php echo $FV->path;?>" />
 					</p>
 					
 					<p>
-						<label>Value</label>
+						<label><?php echo __('Value')?></label>
 						<textarea rows="6" cols="107" name="value"><?php echo $FV->value;?></textarea>
 					</p>
 				
@@ -31,7 +31,7 @@
 				<!-- End Form -->
 				
 				<div class="buttons">
-					<input type="submit" class="button" value="Save" />
+					<input type="submit" class="button" value="<?php echo __('Save')?>" />
 				</div>
 			</form>
 			<?php echo $FV->_js_code;?>

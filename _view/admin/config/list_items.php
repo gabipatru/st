@@ -53,12 +53,12 @@
 			
 		<!-- Box Head -->
 		<div class="box-head">
-			<h2>Management</h2>
+			<h2><?php echo __('Management')?></h2>
 		</div>
 		<!-- End Box Head-->
 					
 		<div class="box-content">
-			<a href="<?php echo href_admin('config/add')?>" class="add-button"><span>Add new Config</span></a>
+			<a href="<?php echo href_admin('config/add')?>" class="add-button"><span><?php echo __('Add new Config')?></span></a>
 		<div class="cl">&nbsp;</div>
 		</div>
 	</div>
@@ -68,7 +68,7 @@
 			
 		<!-- Box Head -->
 		<div class="box-head">
-			<h2>Config</h2>
+			<h2><?php echo __('Config')?></h2>
 		</div>
 		<!-- End Box Head-->
 					

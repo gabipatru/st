@@ -10,12 +10,12 @@
 		
 			<!-- Box Head -->
 			<div class="box-head">
-				<h2>Cache Management</h2>
+				<h2><?php echo __('Cache Management')?></h2>
 			</div>
 		    <!-- End Box Head-->
 		    
 		    <div class="box-content">
-				<a href="<?php echo href_admin('cache/memcached')?>" class="box-link">Memcached</a>
+				<a href="<?php echo href_admin('cache/memcached')?>" class="box-link"><?php echo __('Memcached')?></a>
 			<div class="cl">&nbsp;</div>
 			</div>
 		
