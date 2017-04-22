@@ -27,7 +27,7 @@ gulp.task('javascript-website', function() {
     .pipe(uglify())
     .pipe(gzip())
     .pipe(size({title: 'JavaScript Website Size: '}))
-    .pipe(gulp.dest('./../_static/js/'));
+    .pipe(gulp.dest('./../public_html/_static/js/'));
 });
 
 // Process javascript task for admin - concat, uglify
@@ -37,7 +37,7 @@ gulp.task('javascript-admin', function() {
     .pipe(uglify())
     .pipe(gzip())
     .pipe(size({title: 'JavaScript Admin Size: '}))
-    .pipe(gulp.dest('./../_static/js/'));
+    .pipe(gulp.dest('./../public_html/_static/js/'));
 });
 
 // Sass task for website - concat, minify
@@ -48,7 +48,7 @@ gulp.task('sass-website', function () {
     .pipe(cleanCSS())
     .pipe(gzip())
     .pipe(size({title: 'CSS Website Size: '}))
-    .pipe(gulp.dest('./../_static/css/'));
+    .pipe(gulp.dest('./../public_html/_static/css/'));
 });
 
 //Sass task for admin - concat, minify
@@ -59,7 +59,7 @@ gulp.task('sass-admin', function () {
     .pipe(cleanCSS())
     .pipe(gzip())
     .pipe(size({title: 'CSS Admin Size: '}))
-    .pipe(gulp.dest('./../_static/css/'));
+    .pipe(gulp.dest('./../public_html/_static/css/'));
 });
 
 //Watch task - re-build on every save
