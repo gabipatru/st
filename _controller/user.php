@@ -3,6 +3,9 @@ class controller_user {
     
     function _prehook() {
         mvc::setDecorations('website');
+        
+        $oTranslations = Translations::getSingleton();
+        $oTranslations->setModule('user');
     }
     
     function _posthook() {
@@ -39,12 +42,12 @@ class controller_user {
                 'last_name' => 'required'
             ),
             'messages' => array(
-                'email'         => _('Please fill a valid email address'),
-                'username'      => _('Please choose a username, at least 2 characters long'),
-                'password'      => _('Password is not strong enough'),
-                'password2'     => _('Passwords must be identical'),
-                'first_name'    => _('Please fill in your first name'),
-                'last_name'     => _('Please fill in your last name')
+                'email'         => __('Please enter a valid email address'),
+                'username'      => __('Please choose a username, at least 2 characters long'),
+                'password'      => __('Password is not strong enough'),
+                'password2'     => __('Passwords must be identical'),
+                'first_name'    => __('Please fill in your first name'),
+                'last_name'     => __('Please fill in your last name')
             ),
         ));
         
@@ -52,7 +55,7 @@ class controller_user {
         if (isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception(_('Please fill all the required fields'));
+                    throw new Exception(__('Please fill all the required fields'));
                 }
                 
                 $oItem = new SetterGetter();
@@ -69,7 +72,7 @@ class controller_user {
                 $options = array();
                 $Collection = $oUser->Get($filters, $options);
                 if (count($Collection)) {
-                    throw new Exception(_('This username is already taken. Please choose another'));
+                    throw new Exception(__('This username is already taken. Please choose another one'));
                 }
                 
                 // check if another user with that email exists
@@ -77,20 +80,20 @@ class controller_user {
                 $options = array();
                 $Collection = $oUser->Get($filters, $options);
                 if (count($Collection)) {
-                    throw new Exception(_('A user with that email already exists. Please use another email'));
+                    throw new Exception(__('A user with that email already exists. Please use another email'));
                 }
                 
                 // add the user
                 $r = $oUser->Add($oItem);
                 if (!$r) {
-                    throw new Exception('Error adding user to the database. Please try again later');
+                    throw new Exception(__('Error adding user to the database. Please try again later'));
                 }
                 
                 // @TODO: add confirmation if user is not active
                 
                 // @TODO: send welcome email
                 
-                message_set(_('User added to the database'));
+                message_set(__('User added to the database'));
             }
             catch (Exception $e) {
                 message_set_error($e->getMessage());
