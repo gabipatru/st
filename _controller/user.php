@@ -27,7 +27,7 @@ class controller_user {
                     'email' => true
                 ),
                 'username' => array(
-                    'required',
+                    'required' => true,
                     'minlength' => 2
                 ),
                 'password' => array(

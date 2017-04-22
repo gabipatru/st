@@ -1,5 +1,5 @@
 <h1>New user</h1>
-<form id="newuser" action="<?php echo MVC_ACTION_URL?>" method="post">
+<form id="newUser" action="<?php echo MVC_ACTION_URL?>" method="post">
 	<p>
 		<span><?php echo __('Email address')?>:</span>
 		<input type="text" name="email" value="<?php echo $FV->email?>">
@@ -33,3 +33,4 @@
 	
 	<input type="submit" value="<?php echo __('Create User')?>">
 </form>
+<?php echo $FV->_js_code;?>
