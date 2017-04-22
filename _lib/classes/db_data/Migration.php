@@ -4,7 +4,7 @@
  * Allow running migrations when a page is loaded
  */
 
-class Migration extends dbDataModel {
+class Migration extends DbData {
     const TABLE_NAME    = '_migration';
     const ID_FIELD      = 'migration_id';
     
@@ -16,22 +16,6 @@ class Migration extends dbDataModel {
     
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {
         parent::__construct($table, $id, $status);
-    }
-    
-    public function onAdd($insertId) {
-        return true;
-    }
-    public function onEdit($iId, $res) {
-        return true;
-    }
-    public function onSetStatus($iId) {
-        return true;
-    }
-    public function onBeforeDelete($iId) {
-        return true;
-    }
-    public function onDelete($iId) {
-        return true;
     }
     
     /**

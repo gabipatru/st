@@ -20,11 +20,19 @@ abstract class dbDataModel {
 	/*
 	 * The abstract functions: re-declare all of these when you extend
 	 */
-	abstract function onAdd($insertId);
-	abstract function onEdit($iId, $res);
-	abstract function onBeforeDelete($iId);
-	abstract function onDelete($iId);
-	abstract function onSetStatus($iId);
+	abstract protected function onBeforeAdd($oItem);
+	abstract protected function onAdd($insertId);
+	
+	abstract protected function onBeforeEdit($iId, $oItem);
+	abstract protected function onEdit($iId, $res);
+	
+	abstract protected function onBeforeDelete($iId);
+	abstract protected function onDelete($iId);
+	
+	abstract protected function onSetStatus($iId);
+	
+	abstract protected function onBeforeGet($filters, $options);
+	abstract protected function onGet($oCollection);
 	
 	/*
 	 * Some get functions for class data
@@ -69,6 +77,12 @@ abstract class dbDataModel {
 			return false;
 		}
 		
+		// call abstract function onBeforeAdd
+		$r = $this->onBeforeAdd($oItem);
+		if (!$r) {
+		    return false;
+		}
+		
 		// compose the SQL strings
 		$sFields = '';
 		$sValues = '';
@@ -109,7 +123,13 @@ abstract class dbDataModel {
 			return false;
 		}
 		
-	// compose the SQL strings
+		// call abstract function onBeforeAdd
+		$r = $this->onBeforeEdit($iId, $oItem);
+		if ($r) {
+		    return false;
+		}
+		
+	    // compose the SQL strings
 		$sFields = '';
 		$sValues = '';
 		$aParams = array();
@@ -225,6 +245,11 @@ abstract class dbDataModel {
 			return new Collection();
 		}
 		
+		$r = $this->onBeforeGet($filters, $options);
+		if (!$r) {
+		    return false;
+		}
+		
 		$iNrItems = $this->Count($filters, $options);
 		
 		list($whereCondition, $aParams) = db::filters($filters);
@@ -269,6 +294,11 @@ abstract class dbDataModel {
 		
 		$oCollection->setMaxPage($iMaxPage);
 		$oCollection->setItemsNo($iNrItems);
+		
+		$r = $this->onGet($oCollection);
+		if (!$r) {
+		    return false;
+		}
 		
 		return $oCollection;
 	}

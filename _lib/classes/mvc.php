@@ -36,12 +36,16 @@ class mvc {
 	*/
 	public static function autoload($sClassName) {
 	    // some special cases
-	    if ($sClassName == 'dbDataModel') {
-	        require_once(CLASSES_DIR . '/db_data/_db_data_model.php');
+	    if ($sClassName == 'DbData') {
+	        require_once(CLASSES_DIR . '/db_data/_db_data.php');
 	        return;
 	    }
 	    if ($sClassName == 'ControllerAdminModel') {
 	        require_once(CONTROLLER_DIR . '/admin/_controller_admin_model.php');
+	        return;
+	    }
+	    if ($sClassName == 'dbDataModel') {
+	        require_once(CLASSES_DIR . '/db_data/_db_data_model.php');
 	        return;
 	    }
 	    

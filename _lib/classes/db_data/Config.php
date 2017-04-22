@@ -4,7 +4,7 @@
  * Used for different config values
  */
 
-class Config extends dbDataModel {
+class Config extends DbData {
     const TABLE_NAME    = 'config';
     const ID_FIELD      = 'config_id';
     
@@ -25,18 +25,6 @@ class Config extends dbDataModel {
         $Memcache = Mcache::getSingleton();
         $Memcache->delete(self::MEMCACHE_KEY);
         
-        return true;
-    }
-    public function onEdit($iId, $res) {
-        return true;
-    }
-    public function onSetStatus($iId) {
-        return true;
-    }
-    public function onBeforeDelete($iId) {
-        return true;
-    }
-    public function onDelete($iId) {
         return true;
     }
     
