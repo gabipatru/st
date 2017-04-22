@@ -1,5 +1,5 @@
 <?php
-define('WEBSITE_SALT', 'gunpowder');
+define('WEBSITE_SALT', md5('gunpowder'));
 
 define('EMAIL_FROM', 'website@mvc.ro');
 define('EMAIL_FROM_NAME', 'MVC');
