@@ -8,6 +8,8 @@ class User extends DbData {
     const TABLE_NAME    = 'user';
     const ID_FIELD      = 'user_id';
     
+    const REGISTRY_KEY  = 'LOGGED_USER';
+    
     protected $aFields = array(
         'user_id',
         'email',
@@ -36,6 +38,16 @@ class User extends DbData {
     public static function theId() {
         if (!empty($_SESSION['user_id'])) {
             return $_SESSION['user_id'];
+        }
+        
+        return false;
+    }
+    
+    public static function theUser() {
+        $oRegsitry = Registry::getSingleton();
+        $oUser = $oRegsitry->get(self::REGISTRY_KEY);
+        if (is_object($oUser)) {
+            return $oUser;
         }
         
         return false;
