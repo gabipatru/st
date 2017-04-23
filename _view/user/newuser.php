@@ -12,7 +12,7 @@
 	</p>
 	<p>
 		<span><?php echo __('Password')?>:</span>
-		<input type="password" name="password">
+		<input type="password" name="password" id="password">
 		<label id="password-error" class="error" for="password"><?php echo $FV->password_error?></label>
 	</p>
 	<p>

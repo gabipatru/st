@@ -16,9 +16,50 @@ class controller_user {
     ## LOGIN PAGE
     ###############################################################################
     function login() {
+         $FV = new FormValidation(array(
+            'rules' => array(
+                'username' => 'required',
+                'password' => 'required'
+            ),
+            'messages' => array(
+                'username' => __('You need a username or email to login'),
+                'password' => __('You need a password to login')
+            )
+         ));
          
+         $validateResult = $FV->validate();
+         if (isPOST()) {
+             try {
+                 if (!$validateResult) {
+                     throw new Exception(__('Please fill all the required fields'));
+                 }
+                 if (!securityCheckToken(filter_post('token', 'string'))) {
+                     throw new Exception(__('The page delay was too long'));
+                 }
+                 
+                 $oItem = new SetterGetter();
+                 $oItem->setUsername(filter_post('username', 'string'));
+                 $oItem->setPassword(filter_post('password', 'string'));
+                 
+                 $oUser = new User();
+                 $oLoggedUser = $oUser->Login($oItem);
+                 if (!is_object($oLoggedUser)) {
+                     throw new Exception(__('Incorect username or password'));
+                 }
+                 
+                 http_redir(href_website('website/homepage'));
+             }
+             catch (Exception $e) {
+                 message_set_error($e->getMessage());
+             }
+         }
+         
+         mvc::assign('FV', $FV);
     }
     
+    ###############################################################################
+    ## NEW USER PAGE
+    ###############################################################################
     function newuser() {
         $FV = new FormValidation(array(
             'rules' => array(

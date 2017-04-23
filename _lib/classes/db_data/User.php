@@ -30,7 +30,7 @@ class User extends DbData {
     }
     
     public static function passwordHash($password) {
-        return password_hash($password . WEBSITE_SALT, PASSWORD_BCRYPT);
+        return sha1($password . WEBSITE_SALT, PASSWORD_BCRYPT);
     }
     
     public static function theId() {
@@ -65,7 +65,7 @@ class User extends DbData {
         $password = self::passwordHash($password);
         
         // search for the user
-        $query = "SELECT * FROM ". self::TABLE_NAME
+        $sql = "SELECT * FROM ". self::TABLE_NAME
                 ." WHERE password = ?"
                 ." AND (username = ? OR email = ?)";
         $aParams = array($password, $oItem->getUsername(), $oItem->getUsername());

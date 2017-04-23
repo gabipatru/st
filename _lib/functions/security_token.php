@@ -8,7 +8,7 @@ function securityGetToken() {
 		return $_SESSION['security_token']['value'];
 	}
 	else {
-		return md5(rand(0, 100));
+		return md5(rand(0, 99999));
 	}
 }
 
