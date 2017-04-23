@@ -13,7 +13,7 @@ class controller_user {
     }
     
     ###############################################################################
-    ## LOGIN PAGE
+    ## LOGIN PAGE, LOGOUT
     ###############################################################################
     function login() {
          $FV = new FormValidation(array(
@@ -55,6 +55,13 @@ class controller_user {
          }
          
          mvc::assign('FV', $FV);
+    }
+    
+    public function logout() {
+        $oUser = new User();
+        $oUser->logout();
+        
+        http_redir(href_website('website/homepage'));
     }
     
     ###############################################################################

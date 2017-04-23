@@ -39,5 +39,7 @@ $oRegsitry = Registry::getSingleton();
 $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
 
 // set up the logged in user
-$oRegsitry->set(User::REGISTRY_KEY, unserialize($_SESSION['user_data']));
+if (User::isLoggedIn()) {
+    $oRegsitry->set(User::REGISTRY_KEY, unserialize($_SESSION['user_data']));
+}
 ?>
