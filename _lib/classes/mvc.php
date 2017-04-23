@@ -15,6 +15,7 @@ class mvc {
 			'VISIBLE_HEADER'   => false,
 			'VISIBLE_FOOTER'   => false
 		);
+	static private $aCacheBuster = array();
 	static private $aCSS = array();
 	static private $aJS = array();
 	static private $aMETA = array();
@@ -108,16 +109,47 @@ class mvc {
 	}
 	
 	/*
+	 * This function add a cachebuster array, generated with gulp-bust
+	 */
+	public static function addCacheBuster($aCacheBuster) {
+	    if (is_array($aCacheBuster)) {
+	       self::$aCacheBuster = $aCacheBuster;
+	    }
+	}
+	
+	/*
 	 * This function adds a CSS file to be loaded
+	 * If the css file name matches a cachebuster key, the the css file is indexed by the cachebuster fingerprint
 	 */
 	public static function addCSS($sCssFileName) {
+	    $aCacheBuster = mvc::getCacheBuster();
+	    if (is_array($aCacheBuster)) {
+	        $arrayKeys = array_keys($aCacheBuster);
+	        foreach ($arrayKeys as $key) {
+	            if (strstr($key, $sCssFileName) !== false) {
+	                self::$aCSS[$aCacheBuster[$key]] = $sCssFileName;
+	                return;
+	            }
+	        }
+	    }
 		self::$aCSS[] = $sCssFileName;
 	}
 	
 	/*
 	 * This function adds a JS file to be loaded
+	 * If the js file name matches a cachebuster key, the the css file is indexed by the cachebuster fingerprint
 	 */
 	public static function addJS($sJsFileName) {
+	    $aCacheBuster = mvc::getCacheBuster();
+	    if (is_array($aCacheBuster)) {
+	        $arrayKeys = array_keys($aCacheBuster);
+	        foreach ($arrayKeys as $key) {
+	            if (strstr($key, $sJsFileName) !== false) {
+	                self::$aJS[$aCacheBuster[$key]] = $sJsFileName;
+	                return;
+	            }
+	        }
+	    }
 		self::$aJS[] = $sJsFileName;
 	}
 	
@@ -271,6 +303,13 @@ class mvc {
 	 */
 	public static function getDecorations() {
 		return self::$sDecorations;
+	}
+	
+	/*
+	 * This function fetches the cachebuster array
+	 */
+	public static function getCacheBuster() {
+	    return self::$aCacheBuster;
 	}
 	
 	###############################################################################

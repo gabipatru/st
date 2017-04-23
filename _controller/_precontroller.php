@@ -42,4 +42,9 @@ $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
 if (User::isLoggedIn()) {
     $oRegsitry->set(User::REGISTRY_KEY, unserialize($_SESSION['user_data']));
 }
+
+//set up cachebuster
+$busterJson = file_get_contents(STATIC_DIR . '/busters.json');
+$aCacheBuster = json_decode($busterJson, true);
+mvc::addCacheBuster($aCacheBuster);
 ?>

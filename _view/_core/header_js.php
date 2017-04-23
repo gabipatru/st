@@ -8,14 +8,8 @@ var HTTP_MAIN 		= '<?php echo HTTP_MAIN;?>';
 var IS_LOGGED_IN 	= 0;
 </script>
 
-<?php if (!$_SKIP_JS && !$_SKIP_JS_BUNDLE):?>
-<script type="text/javascript" src="<?php echo ($https ? HTTPS_JS : HTTP_JS);?>/bundle.js"></script>
+<?php if (!$_SKIP_JS): ?>
+	<?php foreach($_aJS as $key => $value): ?>
+		<script type="text/javascript" src="<?php echo ($https ? HTTPS_JS : HTTP_JS).$value?>?id=<?php echo $key?>"></script>
+	<?php endforeach;?>
 <?php endif;?>
-
-<?php
-if (!$_SKIP_JS) {
-	foreach($_aJS as $value) {
-		?><script type="text/javascript" src="<?php echo ($https ? HTTPS_JS : HTTP_JS).$value?>"></script>
-<?php }
-}
-?>

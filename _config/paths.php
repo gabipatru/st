@@ -10,7 +10,7 @@ define('MIGRATIONS_DIR',        BASE_DIR.'/_migrations');
 define('VIEW_DIR', 				BASE_DIR.'/_view');
 define('VIEW_INCLUDES_DIR', 	VIEW_DIR.'/_include');
 define('DECORATIONS_DIR', 		VIEW_DIR.'/_core/decorations');
-define('STATIC_DIR', 			BASE_DIR.'/_static');
+define('STATIC_DIR', 			BASE_DIR.'/public_html/_static');
 define('CSS_DIR', 				STATIC_DIR.'/css');
 define('JS_DIR', 				STATIC_DIR.'/js');
 define('FILES_DIR', 			BASE_DIR.'/files');

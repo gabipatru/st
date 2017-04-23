@@ -9,6 +9,7 @@ var size        = require('gulp-size');
 var sass        = require('gulp-sass');
 var cleanCSS    = require('gulp-clean-css');
 var gzip        = require('gulp-gzip');
+var cacheBuster = require('gulp-buster');
 var chalk       = require('chalk');
 const del       = require('del');
 
@@ -39,7 +40,9 @@ gulp.task('javascript-website', function() {
     .pipe(uglify())
     .pipe(gzip())
     .pipe(size({title: 'JavaScript Website Size: '}))
-    .pipe(gulp.dest('./../public_html/_static/js/'));
+    .pipe(gulp.dest('./../public_html/_static/js/'))
+    .pipe(cacheBuster())
+    .pipe(gulp.dest('./../public_html/_static/'));
 });
 
 // Process javascript task for admin - concat, uglify
@@ -49,7 +52,9 @@ gulp.task('javascript-admin', function() {
     .pipe(uglify())
     .pipe(gzip())
     .pipe(size({title: 'JavaScript Admin Size: '}))
-    .pipe(gulp.dest('./../public_html/_static/js/'));
+    .pipe(gulp.dest('./../public_html/_static/js/'))
+    .pipe(cacheBuster())
+    .pipe(gulp.dest('./../public_html/_static/'));
 });
 
 // Sass task for website - concat, minify
@@ -60,7 +65,9 @@ gulp.task('sass-website', function () {
     .pipe(cleanCSS())
     .pipe(gzip())
     .pipe(size({title: 'CSS Website Size: '}))
-    .pipe(gulp.dest('./../public_html/_static/css/'));
+    .pipe(gulp.dest('./../public_html/_static/css/'))
+    .pipe(cacheBuster())
+    .pipe(gulp.dest('./../public_html/_static/'));
 });
 
 //Sass task for admin - concat, minify
@@ -71,7 +78,9 @@ gulp.task('sass-admin', function () {
     .pipe(cleanCSS())
     .pipe(gzip())
     .pipe(size({title: 'CSS Admin Size: '}))
-    .pipe(gulp.dest('./../public_html/_static/css/'));
+    .pipe(gulp.dest('./../public_html/_static/css/'))
+    .pipe(cacheBuster())
+    .pipe(gulp.dest('./../public_html/_static/'));
 });
 
 //Watch task - re-build on every save
