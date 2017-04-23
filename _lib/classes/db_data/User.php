@@ -32,7 +32,7 @@ class User extends DbData {
     }
     
     public static function passwordHash($password) {
-        return sha1($password . WEBSITE_SALT, PASSWORD_BCRYPT);
+        return sha1($password . WEBSITE_SALT);
     }
     
     public static function theId() {
@@ -106,7 +106,7 @@ class User extends DbData {
         // update last login
         $oUpdate = new SetterGetter();
         $oUpdate->setLastLogin($lastLogin);
-        $this->Edit($oLoggedInUser->getId(), $oUpdate);
+        $this->Edit($oLoggedInUser->getUserId(), $oUpdate);
         
         return $oLoggedInUser;
     }

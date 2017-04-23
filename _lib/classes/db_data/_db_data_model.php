@@ -125,7 +125,7 @@ abstract class dbDataModel {
 		
 		// call abstract function onBeforeAdd
 		$r = $this->onBeforeEdit($iId, $oItem);
-		if ($r) {
+		if (!$r) {
 		    return false;
 		}
 		
