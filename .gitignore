@@ -2,3 +2,4 @@
 .project
 .settings/
 _gulp/node_modules/*
+files/*
