@@ -9,9 +9,21 @@ var size        = require('gulp-size');
 var sass        = require('gulp-sass');
 var cleanCSS    = require('gulp-clean-css');
 var gzip        = require('gulp-gzip');
+var chalk       = require('chalk');
+const del       = require('del');
 
 // default task - run all tasks
-gulp.task('default', ['jshint', 'javascript-admin', 'javascript-website', 'sass-admin', 'sass-website']);
+gulp.task('default', ['cleanup', 'jshint', 'javascript-admin', 'javascript-website', 'sass-admin', 'sass-website']);
+
+// cleanup task - delete old css and js files
+gulp.task('cleanup', function() {
+  del(['./../public_html/_static/js/**', '!./../public_html/_static/js'], {force: true}).then(paths => {
+    console.log(chalk.green('Deleted js files:\n', paths.join('\n')));
+  });
+  del(['./../public_html/_static/css/**', '!./../public_html/_static/css'], {force: true}).then(paths => {
+    console.log(chalk.green('Deleted css files:\n', paths.join('\n')));
+  });
+});
 
 // JS hint task - check for js errors
 gulp.task('jshint', function() {
