@@ -31,6 +31,7 @@
 		<label id="last_name-error" class="error" for="last_name"><?php echo $FV->last_name_error?></label>
 	</p>
 	
+	<input type="hidden" name="token" value="<?php echo securityGetToken()?>">
 	<input type="submit" value="<?php echo __('Create User')?>">
 </form>
 <?php echo $FV->_js_code;?>

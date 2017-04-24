@@ -108,6 +108,9 @@ class controller_user {
                 if (!$validateResult) {
                     throw new Exception(__('Please fill all the required fields'));
                 }
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
+                }
                 
                 $oItem = new SetterGetter();
                 $oItem->setEmail(filter_post('email', 'email'));
