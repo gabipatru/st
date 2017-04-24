@@ -38,6 +38,7 @@
 		</div>
 		<!-- End Box -->
 	<?php endforeach;?>
+		<input type="hidden" name="token" value="<?php echo securityGetToken()?>">
 		<input type="submit" class="button" value="Save" />
 	</form>
 	<?php endif;?>

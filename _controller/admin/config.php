@@ -35,6 +35,9 @@ class controller_admin_config extends ControllerAdminModel {
             if (!is_array($aConfigIds)) {
                 throw new Exception(__('Incorrect input of config ids!'));
             }
+            if (!securityCheckToken(filter_post('token', 'string'))) {
+                throw new Exception(__('The page delay was too long'));
+            }
             
             db::startTransaction();
             
@@ -83,6 +86,9 @@ class controller_admin_config extends ControllerAdminModel {
             try {
                 if (!$validateResult) {
                     throw new Exception(__('Please make sure you filled all mandatory values'));
+                }
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
                 }
                 
                 $path  = filter_post('path', 'clean_html');

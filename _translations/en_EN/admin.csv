@@ -27,5 +27,6 @@
 "Please specify the memcached key you want to delete","Please specify the memcached key you want to delete"
 "Required Field","Required Field"
 "Save","Save"
+"The page delay was too long","The page delay was too long"
 "Value","Value"
 "You did not write the config properly","You did not write the config properly"
