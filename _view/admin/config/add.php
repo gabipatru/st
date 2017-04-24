@@ -20,6 +20,7 @@
 						<span class="req"><?php echo __('max 255 symbols')?></span>
 						<label><?php echo __('Path')?> <span>(<?php echo __('Required Field')?>)</span></label>
 						<input type="text" class="field size1" name="path" value="<?php echo $FV->path;?>" />
+						<label id="path-error" class="error" for="path"><?php echo $FV->path_error?></label>
 					</p>
 					
 					<p>
