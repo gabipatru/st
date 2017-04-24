@@ -55,6 +55,7 @@
 					<input type="submit" class="button" value="<?php echo __('Flush')?> !" />
 				</div>
 				<!-- End Form Buttons -->
+				<input type="hidden" name="token" value="<?php echo securityGetToken()?>">
 				<?php echo $FV->_js_code;?>
 			</form>
 		
@@ -81,6 +82,7 @@
 				<div class="buttons">
 					<input type="submit" class="button" value="<?php echo __('Flush')?> !" />
 				</div>
+				<input type="hidden" name="token" value="<?php echo securityGetToken()?>">
 				<!-- End Form Buttons -->
 			</form>
 		

@@ -50,6 +50,9 @@ class controller_admin_cache extends ControllerAdminModel {
                 if (!$validate) {
                     throw new Exception(__('Please make sure you filled all the required fields'));
                 }
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
+                }
                 
                 $key = filter_post('memcached_key', 'string');
                 
@@ -67,10 +70,21 @@ class controller_admin_cache extends ControllerAdminModel {
     }
     
     function flush_all_memcached() {
-        $memcache = Mcache::getSingleton();
-        $memcache->flush();
-        
-        message_set(__('Memcached keys flushed'));
+        if (isPOST()) {
+            try {
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
+                }
+                
+                $memcache = Mcache::getSingleton();
+                $memcache->flush();
+                
+                message_set(__('Memcached keys flushed'));
+            }
+            catch (Exception $e) {
+                message_set_error($e->getMessage());
+            }
+        }
         
         http_redir(href_admin('cache/memcached'));
     }
