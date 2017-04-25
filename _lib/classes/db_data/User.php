@@ -18,6 +18,7 @@ class User extends DbData {
         'first_name',
         'last_name',
         'status',
+        'is_admin',
         'last_login',
         'created_at'
     );
@@ -97,6 +98,7 @@ class User extends DbData {
         $oLoggedInUser->setFirstName($row['first_name']);
         $oLoggedInUser->setLastName($row['last_name']);
         $oLoggedInUser->setLastLogin($lastLogin);
+        $oLoggedInUser->setIsAdmin($row['is_admin']);
         $oLoggedInUser->setCreatedAt($row['created_at']);
         
         // save to session
