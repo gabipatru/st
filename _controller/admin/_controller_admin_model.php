@@ -14,7 +14,6 @@ class ControllerAdminModel {
     }
     
     function _posthook() {
-        $msg = message_get();
-        mvc::assign_by_ref('_MESSAGES', $msg);
+
     }
 }
