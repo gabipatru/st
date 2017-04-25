@@ -36,6 +36,9 @@ class controller_user {
                  if (!$validateResult) {
                      throw new Exception(__('Please fill all the required fields'));
                  }
+                 if (User::isLoggedIn()) {
+                     throw new Exception('You are already logged in !');
+                 }
                  if (!securityCheckToken(filter_post('token', 'string'))) {
                      throw new Exception(__('The page delay was too long'));
                  }
@@ -107,6 +110,9 @@ class controller_user {
             try {
                 if (!$validateResult) {
                     throw new Exception(__('Please fill all the required fields'));
+                }
+                if (User::isLoggedIn()) {
+                    throw new Exception('You are already logged in !');
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
                     throw new Exception(__('The page delay was too long'));
