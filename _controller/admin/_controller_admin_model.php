@@ -4,6 +4,15 @@
  */
 class ControllerAdminModel {
     function _prehook() {
+        if (!User::isLoggedIn()) {
+            http_redir(href_website('user/login'));
+        }
+        
+        $theUser = User::theUser();
+        if (!$theUser->getIsAdmin()) {
+            http_redir(href_website('user/login'));
+        }
+        
         mvc::setDecorations('admin');
     
         mvc::addCSS('/bundle-admin.css');
