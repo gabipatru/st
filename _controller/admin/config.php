@@ -74,10 +74,12 @@ class controller_admin_config extends ControllerAdminModel {
         $FV = new FormValidation(array(
             'rules' => array(
                 'path'  => 'required',
+                'type'  => 'required',
                 'value' => ''
             ),
             'messages' => array(
                 'path'  => __('Please specify the config path'),
+                'type'  => __('Please select a config type')
             )
         ));
         

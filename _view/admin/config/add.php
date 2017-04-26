@@ -25,7 +25,29 @@
 					
 					<p>
 						<label><?php echo __('Value')?></label>
-						<textarea rows="6" cols="107" name="value"><?php echo $FV->value;?></textarea>
+						<div id="div-textarea" class="hidden">
+							<textarea rows="6" cols="107" name="value" class="field size1"><?php echo $FV->value;?></textarea>
+						</div>
+						<div id="div-text" class="hidden">
+							<input type="text" name="value" class="field size1" value="<?php echo $FV->value;?>" />
+						</div>
+						<div id="div-yesno" class="hidden">
+							<select name="value" class="field size3">
+								<option value="1"><?php echo __('Yes')?></option>
+								<option value="0"><?php echo __('No')?></option>
+							</select>
+						</div>
+					</p>
+					
+					<p>
+						<label><?php echo __('Type')?></label>
+						<select id="typeSelect" name="type" class="field size3">
+							<option value=""><?php echo __('Choose a type')?></option>
+							<option value="text"><?php echo __('Simple text config')?></option>
+							<option value="textarea"><?php echo __('Textarea config')?></option>
+							<option value="yesno"><?php echo __('Yes / No config')?></option>
+						</select>
+						<label id="type-error" class="error" for="type"><?php echo $FV->type_error?></label>
 					</p>
 				
 				</div>
