@@ -95,21 +95,21 @@ function filter($mVar, $sFilterType) {
 }
 
 function filter_get($sIndex, $sFilterType) {
-	if(empty($_GET[$sIndex])) {
+	if(!isset($_GET[$sIndex])) {
 		$_GET[$sIndex] = '';
 	}
 	return filter($_GET[$sIndex], $sFilterType);
 }
 
 function filter_post($sIndex, $sFilterType) {
-	if(empty($_POST[$sIndex])) {
+	if(!isset($_POST[$sIndex])) {
 		$_POST[$sIndex] = '';
 	}
 	return filter($_POST[$sIndex], $sFilterType);
 }
 
 function filter_request($sIndex, $sFilterType) {
-	if(empty($_REQUEST[$sIndex])) {
+	if(!isset($_REQUEST[$sIndex])) {
 		$_REQUEST[$sIndex] = '';
 	}
 	return filter($_REQUEST[$sIndex], $sFilterType);

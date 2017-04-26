@@ -26,13 +26,13 @@
 					<p>
 						<label><?php echo __('Value')?></label>
 						<div id="div-textarea" class="hidden">
-							<textarea rows="6" cols="107" name="value" class="field size1"><?php echo $FV->value;?></textarea>
+							<textarea id="config-textarea" name="value" class="field size1"><?php echo $FV->value;?></textarea>
 						</div>
 						<div id="div-text" class="hidden">
-							<input type="text" name="value" class="field size1" value="<?php echo $FV->value;?>" />
+							<input id="config-text" type="text" name="value" class="field size1" value="<?php echo $FV->value;?>" />
 						</div>
 						<div id="div-yesno" class="hidden">
-							<select name="value" class="field size3">
+							<select id="config-yesno" name="value" class="field size3">
 								<option value="1"><?php echo __('Yes')?></option>
 								<option value="0"><?php echo __('No')?></option>
 							</select>

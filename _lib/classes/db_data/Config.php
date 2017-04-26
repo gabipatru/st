@@ -14,7 +14,8 @@ class Config extends DbData {
     protected $aFields = array(
         'config_id',
         'path',
-        'value'
+        'value',
+        'type'
     );
     
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = '') {
@@ -87,6 +88,7 @@ class Config extends DbData {
             }
             $aSortedData[$aPath[0]][$aPath[1]][$aPath[2]] = array(
                 'config_id' => $oItem->getConfigId(), 
+                'type' => $oItem->getType(),
                 'value' => $oItem->getValue()
             );
         }

@@ -44,7 +44,7 @@ class controller_admin_config extends ControllerAdminModel {
             $oConfig = new Config();
             foreach ($aConfigIds as $configId) {
                 $configValue = filter_post('config'.$configId, 'clean_html');
-                
+
                 $oItem = new SetterGetter();
                 $oItem->setValue($configValue);
                 
@@ -95,6 +95,7 @@ class controller_admin_config extends ControllerAdminModel {
                 
                 $path  = filter_post('path', 'clean_html');
                 $value = filter_post('value', 'clean_html');
+                $type  = filter_post('type', 'string');
                 
                 if (count(explode('/', trim($path, '/'))) != 3) {
                     throw new Exception(__('You did not write the config properly'));
@@ -113,6 +114,7 @@ class controller_admin_config extends ControllerAdminModel {
                 $oItem = new SetterGetter();
                 $oItem->setPath($path);
                 $oItem->setValue($value);
+                $oItem->setType($type);
                 $r = $oConfig->Add($oItem);
                 if (!$r) {
                     message_set_error(__('Error while saving to the database'));

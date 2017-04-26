@@ -27,7 +27,20 @@
 				<?php foreach ($aConfigItem as $itemName => $aItem):?>
 				<tr>
 					<td><h3><?php echo $itemName?></h3></td>
-					<td><input type="text" name="config<?php echo $aItem['config_id']?>" value="<?php echo $aItem['value']?>" /></td>
+					<td>
+						<?php if ($aItem['type'] == 'text'):?>
+							<input type="text" name="config<?php echo $aItem['config_id']?>" value="<?php echo $aItem['value']?>" class="field size650" />
+						<?php endif;?>
+						<?php if ($aItem['type'] == 'textarea'):?>
+							<textarea name="config<?php echo $aItem['config_id']?>" class="field size650"><?php echo $aItem['value']?></textarea>
+						<?php endif;?>
+						<?php if ($aItem['type'] == 'yesno'):?>
+							<select name="config<?php echo $aItem['config_id']?>" class="field size3">
+								<option value="1" <?php echo ($aItem['value'] == "1" ? 'selected="SELECTED"' : '')?>><?php echo __('Yes')?></option>
+								<option value="0" <?php echo ($aItem['value'] == "0" ? 'selected="SELECTED"' : '')?>><?php echo __('No')?></option>
+							</select>
+						<?php endif;?>
+					</td>
 				</tr>
 				<input type="hidden" name="config_ids[]" value="<?php echo $aItem['config_id']?>" />
 				<?php endforeach;?>
