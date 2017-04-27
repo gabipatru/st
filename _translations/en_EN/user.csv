@@ -1,4 +1,7 @@
 "A user with that email already exists. Please use another email","A user with that email already exists. Please use another email"
+"Account could not be activated. Please try again later","Account could not be activated. Please try again later"
+"Activation code is not correct","Activation code is not correct"
+"Could not find the code. You need the activetion code to activate the account","Could not find the code. You need the activetion code to activate the account"
 "Create User","Create User"
 "Email address","Email address"
 "Error adding user to the database. Please try again later","Error adding user to the database. Please try again later"
@@ -22,3 +25,4 @@
 "You are already logged in !","You are already logged in !"
 "You need a password to login","You need a password to login"
 "You need a username or email to login","You need a username or email to login"
+"Your account is not active","Your account is not active"

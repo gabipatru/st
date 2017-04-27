@@ -8,8 +8,12 @@ class Config extends DbData {
     const TABLE_NAME    = 'config';
     const ID_FIELD      = 'config_id';
     
-    const MEMCACHE_KEY  = 'CONFIG_ALL_DATA';
-    const REGISTRY_KEY  = 'CONFIG';
+    const CONFIG_VALUE_YES  = '1';
+    const CONFIG_VALUE_NO   = '0';
+    
+    const MEMCACHE_KEY      = 'CONFIG_ALL_DATA';
+    const REGISTRY_KEY      = 'CONFIG';
+    const REGISTRY_KEY_PATH = 'CONFIG_PATH';
     
     protected $aFields = array(
         'config_id',
@@ -94,5 +98,28 @@ class Config extends DbData {
         }
         
         return $aSortedData;
+    }
+    
+    // fetch an array indexed by config path
+    public function indexByPath() {
+        $oCollection = $this->Get();
+        $aIndex = array();
+        
+        foreach ($oCollection as $oItem) {
+            $aIndex[$oItem->getPath()] = $oItem->getValue();
+        }
+        
+        return $aIndex;
+    }
+    
+    // get config by path
+    public static function configByPath($path) {
+        $oRegsitry = Registry::getSingleton();
+        $aIndex = $oRegsitry->get(Config::REGISTRY_KEY_PATH);
+
+        if (isset($aIndex[$path])) {
+            return $aIndex[$path];
+        }
+        return null;
     }
 }

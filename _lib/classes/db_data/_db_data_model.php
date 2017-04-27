@@ -247,7 +247,7 @@ abstract class dbDataModel {
 		
 		$r = $this->onBeforeGet($filters, $options);
 		if (!$r) {
-		    return false;
+		    return new Collection();
 		}
 		
 		$iNrItems = $this->Count($filters, $options);
@@ -297,7 +297,7 @@ abstract class dbDataModel {
 		
 		$r = $this->onGet($oCollection);
 		if (!$r) {
-		    return false;
+		    return new Collection();
 		}
 		
 		return $oCollection;

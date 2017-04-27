@@ -118,13 +118,23 @@ class controller_user {
                     throw new Exception(__('The page delay was too long'));
                 }
                 
+                // get user-related configs
+                $configUserConfirmation = Config::configByPath(User::CONFIG_USER_CONFIRMATION);
+                
+                // prepare data
                 $oItem = new SetterGetter();
                 $oItem->setEmail(filter_post('email', 'email'));
                 $oItem->setUsername(filter_post('username', 'clean_html'));
                 $oItem->setPassword(filter_post('password', 'string'));
                 $oItem->setFirstName(filter_post('first_name', 'clean_html'));
                 $oItem->setLastName(filter_post('last_name', 'clean_html'));
-                
+                if ($configUserConfirmation) {
+                    $oItem->setStatus(User::STATUS_NEW);
+                }
+                else {
+                    $oItem->setStatus(User::STATUS_ACTIVE);
+                }
+                                
                 $oUser = new User();
                 
                 // check if another user with that username exists
@@ -143,23 +153,79 @@ class controller_user {
                     throw new Exception(__('A user with that email already exists. Please use another email'));
                 }
                 
+                db::startTransaction();
+                
                 // add the user
                 $r = $oUser->Add($oItem);
                 if (!$r) {
                     throw new Exception(__('Error adding user to the database. Please try again later'));
                 }
                 
-                // @TODO: add confirmation if user is not active
+                db::commitTransaction();
                 
                 // @TODO: send welcome email
                 
                 message_set(__('User added to the database'));
             }
             catch (Exception $e) {
+                if (db::transactionLevel()) {
+                    db::rollbackTransaction();
+                }
                 message_set_error($e->getMessage());
             }
         }
         
         mvc::assign('FV', $FV);
+    }
+    
+    ###############################################################################
+    ## ACCOUNT CONFIRMATION PAGE
+    ###############################################################################
+    public function confirm() {
+        $code = filter_get('code', 'string');
+        
+        try {            
+            if (empty($code)) {
+                throw new Exception(__("Could not find the code. You need the activetion code to activate the account"));
+            }
+            
+            // search for the activation code in DB
+            $filters = array('code' => $code);
+            $options = array();
+            $oUserConf = new UserConfirmation();
+            $oCode = $oUserConf->singleGet($filters, $options);
+            if (!count($oCode)) {
+                throw new Exception(__('Activation code is not correct'));
+            }
+            
+            // activate user
+            $oItem = new SetterGetter();
+            $oItem->setStatus(User::STATUS_ACTIVE);
+            
+            db::startTransaction();
+            
+            $oUser = new User();
+            $r = $oUser->Edit($oCode->getUserId(), $oItem);
+            if (!$r) {
+                throw new Exception(__('Account could not be activated. Please try again later'));
+            }
+            
+            // delete the old confirmation code
+            $r = $oUserConf->Delete($oCode->getConfirmationId());
+            if (!$r) {
+                throw new Exception(__('Account could not be activated. Please try again later'));
+            }
+            
+            db::commitTransaction();
+            
+            message_set(__('Your account is not active'));
+        }
+        catch (Exception $e) {
+            if (db::transactionLevel()) {
+                db::rollbackTransaction();
+            }
+            message_set_error($e->getMessage());
+        }
+        
     }
 }

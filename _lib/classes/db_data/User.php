@@ -10,6 +10,13 @@ class User extends DbData {
     
     const REGISTRY_KEY  = 'LOGGED_USER';
     
+    const CONFIG_USER_CONFIRMATION      = '/Website/Users/Enable User Confirmation';
+    const CONFIG_CONFIRMATION_EXPIRY    = '/Website/Users/Confirmation expiry';
+    
+    const STATUS_NEW    = 'new';
+    const STATUS_ACTIVE = 'active';
+    const STATUS_BANNED = 'banned';
+    
     protected $aFields = array(
         'user_id',
         'email',
@@ -30,6 +37,26 @@ class User extends DbData {
     protected function onBeforeAdd($oItem) {
         $oItem->setPassword(self::passwordHash($oItem->getPassword()));
         return true;
+    }
+    
+    // add user confirmation
+    protected function onAdd($userId) {
+        $configConfirmation     = Config::configByPath(self::CONFIG_USER_CONFIRMATION);
+        $configConfirmationExp  = Config::configByPath(User::CONFIG_CONFIRMATION_EXPIRY);
+        
+        if ($configConfirmation === Config::CONFIG_VALUE_NO) {
+            return true;
+        }
+        
+        $oItem = new SetterGetter();
+        $oItem->setUserId($userId);
+        $oItem->setCode(md5(date('Y-m-d H:i:s') . WEBSITE_SALT));
+        $oItem->setExpiresAt(date('Y-m-d H:i:s', strtotime($configConfirmationExp)));
+        
+        $oUserConf = new UserConfirmation();
+        $r = $oUserConf->Add($oItem);
+        
+        return $r;
     }
     
     public static function passwordHash($password) {

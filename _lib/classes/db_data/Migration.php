@@ -119,11 +119,11 @@ class Migration extends DbData {
             }
             else {
                 $filters = array('name' => $migrationName);
-                $oMigration = $this->Get($filters);
+                $oMigration = $this->singleGet($filters);
                 if (!count($oMigration)) {
                     die('Failed to fetch migration name : ' . $migrationName);
                 }
-                
+
                 $oItem = new SetterGetter();
                 $oItem->setVersion($nextMigrationName);
                 

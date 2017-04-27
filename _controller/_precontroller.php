@@ -34,9 +34,11 @@ catch (Exception $e) {
 // config setup
 $oConfig = new Config();
 $oConfigCollection = $oConfig->Get();
+$aConfigIndex = $oConfig->indexByPath();
 
 $oRegsitry = Registry::getSingleton();
 $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
+$oRegsitry->set(Config::REGISTRY_KEY_PATH, $aConfigIndex);
 
 // set up the logged in user
 if (User::isLoggedIn()) {
