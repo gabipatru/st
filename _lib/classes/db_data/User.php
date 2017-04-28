@@ -12,6 +12,7 @@ class User extends DbData {
     
     const CONFIG_USER_CONFIRMATION      = '/Website/Users/Enable User Confirmation';
     const CONFIG_CONFIRMATION_EXPIRY    = '/Website/Users/Confirmation expiry';
+    const CONFIG_WELCOME_EMAIL			= '/Website/Users/Welcome Email';
     
     const STATUS_NEW    = 'new';
     const STATUS_ACTIVE = 'active';

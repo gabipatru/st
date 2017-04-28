@@ -91,7 +91,8 @@ abstract class dbDataModel {
 		$aData = get_object_vars($oItem);
 		
 		$aFields = array_keys($this->columnNames($aData));
-		$sFields = implode(',', $aFields);
+		$sFields = implode('`,`', $aFields);
+		$sFields = '`' . $sFields . '`';
 		foreach ($aData as $field => $value) {
 			$aParams[] = $value;
 			$aMarkers[] = '?';

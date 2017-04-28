@@ -25,3 +25,19 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES ('/Website/Users/Confirmation expiry', '1 day', 'text');
 ";
+
+// add config for welcome email to a new user
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Website/Users/Welcome Email', '1', 'yesno');
+";
+
+// add config for global email_form and email_from_name
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Email/Email Sending/Email From', 'website@mvc.ro', 'text');
+";
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Email/Email Sending/Email From Name', 'Website', 'text');
+";

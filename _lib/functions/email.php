@@ -10,8 +10,8 @@ function email($to, $subject, $body) {
 	
 	$mail->IsMail();
 	
-	$mail->SetFrom(EMAIL_FROM, EMAIL_FROM_NAME);
-	$mail->AddReplyTo(EMAIL_FROM, EMAIL_FROM_NAME);
+	$mail->SetFrom(Config::configByPath('/Email/Email Sending/Email From'));
+	$mail->AddReplyTo(Config::configByPath('/Email/Email Sending/Email From Name'));
 	
 	$mail->AddAddress($to);
 	
@@ -19,18 +19,28 @@ function email($to, $subject, $body) {
 	$mail->AltBody = strip_tags($body);
 	$mail->MsgHTML($body);
 	
-	// send the email
+	$mail->SMTPDebug = 1;
+	
+	// send the email with output buffering for debug info
+	ob_start();
+	
 	$r = $mail->Send();
 	
-	// log the data
-	$aData = array(
-		'subject' => $subject,
-		'text' => $body,
-		'debug' => ($r ? 'Mesaj Trimis' : 'Mesajul nu a fost trimis')
-	);
-	$oLogEmail = new LogEmail();
-	$oLogEmail->Add($aData);
+	$debug = ob_get_clean();
+	$status = ($r ? EmailLog::STATUS_SENT : EmailLog::STATUS_NOT_SENT);
 	
-	return true;
+	// log the data
+	$oItem = new SetterGetter();
+	$oItem->setTo($to);
+	$oItem->setSubject($subject);
+	$oItem->setBody($body);
+	$oItem->setStatus($status);
+	$oItem->setErrorInfo($mail->ErrorInfo);
+	$oItem->setDebug($debug);
+	
+	$oLogEmail = new EmailLog();
+	$oLogEmail->Add($oItem);
+	
+	return $r;
 }
 ?>

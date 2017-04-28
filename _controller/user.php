@@ -120,6 +120,7 @@ class controller_user {
                 
                 // get user-related configs
                 $configUserConfirmation = Config::configByPath(User::CONFIG_USER_CONFIRMATION);
+                $configWelcomeEmail		= Config::configByPath(User::CONFIG_WELCOME_EMAIL);
                 
                 // prepare data
                 $oItem = new SetterGetter();
@@ -161,9 +162,16 @@ class controller_user {
                     throw new Exception(__('Error adding user to the database. Please try again later'));
                 }
                 
-                db::commitTransaction();
+                if ($configWelcomeEmail) {
+                	require_once(FUNCTIONS_DIR . '/email.php');
+                	
+                	$r = email($oItem->getEmail(), 'Welcome, '. $oItem->getUsername(), 'Welcome to MVC.ro, '.$oItem->getUsername());
+                	if (!$r) {
+                		throw new Exception(__('Could not send confirmation email. Please try again later.'));
+                	}
+                }
                 
-                // @TODO: send welcome email
+                db::commitTransaction();
                 
                 message_set(__('User added to the database'));
             }
