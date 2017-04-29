@@ -14,6 +14,12 @@ $migrationSql[] ="
     ENGINE=InnoDB;
 ";
 
+// add config for Content Security Policy
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Website/Security/Content Security Policy', 'default-src \'self\' \'unsafe-inline\' \'nonce-29af2i\' data:', 'textarea');
+";
+
 // add config for user activation control
 $migrationSql[] = "
 INSERT INTO config (path, value, type)

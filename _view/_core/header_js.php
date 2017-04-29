@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script type="text/javascript" nonce="29af2i">
 var CONTROLLER_NAME	= '<?php echo mvc::getControllerClass(); ?>';
 var ACTION_NAME 	= '<?php echo mvc::getControllerFunction(); ?>';
 

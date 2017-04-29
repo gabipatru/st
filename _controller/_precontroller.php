@@ -49,4 +49,8 @@ if (User::isLoggedIn()) {
 $busterJson = file_get_contents(STATIC_DIR . '/busters.json');
 $aCacheBuster = json_decode($busterJson, true);
 mvc::addCacheBuster($aCacheBuster);
+
+// set up Content Security Policy
+$csp = Config::configByPath('/Website/Security/Content Security Policy');
+header("Content-Security-Policy: $csp");
 ?>
