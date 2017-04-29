@@ -162,6 +162,7 @@ class controller_user {
                     throw new Exception(__('Error adding user to the database. Please try again later'));
                 }
                 
+                // send confirmation email if necessary
                 if ($configWelcomeEmail) {
                 	require_once(FUNCTIONS_DIR . '/email.php');
                 	

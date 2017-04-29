@@ -2,16 +2,24 @@
 function email($to, $subject, $body) {
 	require_once(CLASSES_DIR . '/phpmailer/class.phpmailer.php');
 	
-	// configure PHPMailer
+	// configure PHPMaile
 	$mail=new PHPMailer();
 	$mail->CharSet = 'utf-8';
 	$mail->Encoding = "base64";
 	$mail->WordWrap = 50;
 	
-	$mail->IsMail();
+	$mail->isSMTP();
+	$mail->Host = SMTP_HOST;
+	$mail->SMTPAuth = true;
+	$mail->Port = SMTP_PORT;
+	$mail->Username = SMTP_USERNAME;
+	$mail->Password = SMTP_PASSWORD;
 	
-	$mail->SetFrom(Config::configByPath('/Email/Email Sending/Email From'));
-	$mail->AddReplyTo(Config::configByPath('/Email/Email Sending/Email From Name'));
+	$fromName	= Config::configByPath('/Email/Email Sending/Email From Name');
+	$fromEmail	= Config::configByPath('/Email/Email Sending/Email From');
+	
+	$mail->SetFrom($fromEmail, $fromName);
+	$mail->AddReplyTo($fromEmail);
 	
 	$mail->AddAddress($to);
 	
@@ -19,7 +27,7 @@ function email($to, $subject, $body) {
 	$mail->AltBody = strip_tags($body);
 	$mail->MsgHTML($body);
 	
-	$mail->SMTPDebug = 1;
+	$mail->SMTPDebug = 2;
 	
 	// send the email with output buffering for debug info
 	ob_start();

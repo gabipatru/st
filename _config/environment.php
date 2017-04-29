@@ -19,4 +19,11 @@ define('DB_DATABASE',			'mvc');
 define('MEM_HOST',              '127.0.0.1');
 define('MEM_PORT',              11211);
 define('MEM_EXPIRE_TIME',       14400);             // 4 hours
+
+//SMTP settings
+define('SMTP_HOST', 'smtp.mailtrap.io');
+define('SMTP_PORT', '2525');
+define('SMTP_USERNAME', '89ee358b9ac8f5');
+define('SMTP_PASSWORD', 'a1ec8e63feb328');
+
 ?>
