@@ -87,6 +87,9 @@ class User extends DbData {
         return ($userId ? true : false);
     }
     
+    ###############################################################################
+    ## THE LOGIN
+    ###############################################################################
     public function Login($oItem) {
         if (!is_object($oItem)) {
             return false;
@@ -110,6 +113,10 @@ class User extends DbData {
                 ." WHERE password = ?"
                 ." AND (username = ? OR email = ?)";
         $aParams = array($password, $oItem->getUsername(), $oItem->getUsername());
+        if (Config::configByPath(self::CONFIG_USER_CONFIRMATION)) {
+        	$sql .= " AND status = ?";
+        	$aParams[] = User::STATUS_ACTIVE;
+        }
         $res = db::query($sql, $aParams);
         if (!$res || $res->errorCode() != '00000' || db::rowCount($res) == 0) {
             return false;
@@ -144,5 +151,39 @@ class User extends DbData {
     public function logout() {
         unset($_SESSION['user_id']);
         unset($_SESSION['user_data']);
+    }
+    
+    ###############################################################################
+    ## CHECK USER STATUSES
+    ###############################################################################
+    protected function checkUserStatus($userName, $email, $status) {
+    	if (!$status) {
+    		return false;
+    	}
+    	if (!$userName && !$email) {
+    		return false;
+    	}
+    	
+    	// search for the user
+    	$sql = "SELECT * FROM ". self::TABLE_NAME
+    			." WHERE status = ?"
+    			." AND (username = ? OR email = ?)";
+    	$aParams = array($status, $userName, $email);
+    	
+    	$res = db::query($sql, $aParams);
+    	if (!$res || $res->errorCode() != '00000' || db::rowCount($res) == 0) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+    public function checkUserBanned($userName, $email) {
+    	return $this->checkUserStatus($userName, $email, User::STATUS_BANNED);
+    }
+    
+    public function checkUserInactive($userName, $email) {
+    	return $this->checkUserStatus($userName, $email, User::STATUS_NEW);
     }
 }

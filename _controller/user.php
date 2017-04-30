@@ -46,12 +46,24 @@ class controller_user {
                  }
                  
                  $returnUrl = filter_post('return', 'urldecode');
+                 $configUserConfirmation = Config::configByPath(User::CONFIG_USER_CONFIRMATION);
                  
                  $oItem = new SetterGetter();
                  $oItem->setUsername(filter_post('username', 'string'));
                  $oItem->setPassword(filter_post('password', 'string'));
                  
                  $oUser = new User();
+                 
+                 // check if the user is banned
+                 if ($oUser->checkUserBanned($oItem->getUsername(), $oItem->getUsername())) {
+                 	throw new Exception(__('This account is banned!'));
+                 }
+                 
+                 // check if the user is active
+                 if ($configUserConfirmation && $oUser->checkUserInactive($oItem->getUsername(), $oItem->getUsername())) {
+                 	throw new Exception(__('You must activate your account before logging in'));
+                 }
+                 
                  $oLoggedUser = $oUser->Login($oItem);
                  if (!is_object($oLoggedUser)) {
                      throw new Exception(__('Incorect username or password'));
