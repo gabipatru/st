@@ -11,7 +11,8 @@
 		<label id="password-error" class="error" for="password"><?php echo $FV->password_error?></label>
 	</p>
 	
-	<input type="hidden" name="token" value="<?php echo securityGetToken()?>">
-	<input type="submit" value="<?php echo __('Login')?>">
+	<input type="hidden" name="token" value="<?php echo securityGetToken()?>" />
+	<input type="hidden" name="return" value="<?php echo (!empty($FV->return) ? $FV->return : $return)?>" />
+	<input type="submit" value="<?php echo __('Login')?>" />
 </form>
 <?php echo $FV->_js_code;?>

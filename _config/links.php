@@ -17,7 +17,7 @@ function href_website($sName, $sData = '') {
 		case 'user':
 		    switch ($aPath[1]) {
 		        case 'login':
-		            return  HTTP_MAIN.'/user/login.html';
+		            return  HTTP_MAIN.'/user/login.html'. ($sData ? "?return=".urlencode($sData) : '');
 		    }
 	}
 }

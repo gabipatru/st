@@ -19,6 +19,8 @@ class controller_user {
     ## LOGIN PAGE, LOGOUT
     ###############################################################################
     function login() {
+    	 $return = filter_get('return', 'urldecode');
+    	 
          $FV = new FormValidation(array(
             'rules' => array(
                 'username' => 'required',
@@ -29,7 +31,7 @@ class controller_user {
                 'password' => __('You need a password to login')
             )
          ));
-         
+
          $validateResult = $FV->validate();
          if (isPOST()) {
              try {
@@ -43,6 +45,8 @@ class controller_user {
                      throw new Exception(__('The page delay was too long'));
                  }
                  
+                 $returnUrl = filter_post('return', 'urldecode');
+                 
                  $oItem = new SetterGetter();
                  $oItem->setUsername(filter_post('username', 'string'));
                  $oItem->setPassword(filter_post('password', 'string'));
@@ -52,14 +56,15 @@ class controller_user {
                  if (!is_object($oLoggedUser)) {
                      throw new Exception(__('Incorect username or password'));
                  }
-                 
-                 http_redir(href_website('website/homepage'));
+
+                 http_redir($returnUrl ? $returnUrl : href_website('website/homepage'));
              }
              catch (Exception $e) {
                  message_set_error($e->getMessage());
              }
          }
          
+         mvc::assign('return', $return);
          mvc::assign('FV', $FV);
     }
     
