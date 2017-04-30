@@ -18,6 +18,8 @@ function href_website($sName, $sData = '') {
 		    switch ($aPath[1]) {
 		        case 'login':
 		            return  HTTP_MAIN.'/user/login.html'. ($sData ? "?return=".urlencode($sData) : '');
+		        case 'logout':
+		        	return HTTP_MAIN.'/user/logout.html'. ($sData ? "?return=".urlencode($sData) : '');
 		    }
 	}
 }
