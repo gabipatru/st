@@ -1,0 +1,1 @@
+<p>Welcome to MVC.ro, <?php echo $username?></p>

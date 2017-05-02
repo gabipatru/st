@@ -19,10 +19,10 @@ class controller_user {
     ## LOGIN PAGE, LOGOUT
     ###############################################################################
     function login() {
-    	 $return = filter_get('return', 'urldecode');
+		$return = filter_get('return', 'urldecode');
     	 
-         $FV = new FormValidation(array(
-            'rules' => array(
+        $FV = new FormValidation(array(
+        	'rules' => array(
                 'username' => 'required',
                 'password' => 'required'
             ),
@@ -32,52 +32,52 @@ class controller_user {
             )
          ));
 
-         $validateResult = $FV->validate();
-         if (isPOST()) {
-             try {
-                 if (!$validateResult) {
-                     throw new Exception(__('Please fill all the required fields'));
-                 }
-                 if (User::isLoggedIn()) {
-                     throw new Exception('You are already logged in !');
-                 }
-                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                     throw new Exception(__('The page delay was too long'));
-                 }
+        $validateResult = $FV->validate();
+        if (isPOST()) {
+        	try {
+            	if (!$validateResult) {
+                    throw new Exception(__('Please fill all the required fields'));
+                }
+                if (User::isLoggedIn()) {
+                    throw new Exception('You are already logged in !');
+                }
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
+                }
                  
-                 $returnUrl = filter_post('return', 'urldecode');
-                 $configUserConfirmation = Config::configByPath(User::CONFIG_USER_CONFIRMATION);
+                $returnUrl = filter_post('return', 'urldecode');
+                $configUserConfirmation = Config::configByPath(User::CONFIG_USER_CONFIRMATION);
                  
-                 $oItem = new SetterGetter();
-                 $oItem->setUsername(filter_post('username', 'string'));
-                 $oItem->setPassword(filter_post('password', 'string'));
+                $oItem = new SetterGetter();
+                $oItem->setUsername(filter_post('username', 'string'));
+                $oItem->setPassword(filter_post('password', 'string'));
                  
-                 $oUser = new User();
+                $oUser = new User();
                  
-                 // check if the user is banned
-                 if ($oUser->checkUserBanned($oItem->getUsername(), $oItem->getUsername())) {
-                 	throw new Exception(__('This account is banned!'));
-                 }
+                // check if the user is banned
+                if ($oUser->checkUserBanned($oItem->getUsername(), $oItem->getUsername())) {
+                	throw new Exception(__('This account is banned!'));
+                }
                  
-                 // check if the user is active
-                 if ($configUserConfirmation && $oUser->checkUserInactive($oItem->getUsername(), $oItem->getUsername())) {
-                 	throw new Exception(__('You must activate your account before logging in'));
-                 }
+                // check if the user is active
+                if ($configUserConfirmation && $oUser->checkUserInactive($oItem->getUsername(), $oItem->getUsername())) {
+                	throw new Exception(__('You must activate your account before logging in'));
+                }
                  
-                 $oLoggedUser = $oUser->Login($oItem);
-                 if (!is_object($oLoggedUser)) {
-                     throw new Exception(__('Incorect username or password'));
-                 }
+                $oLoggedUser = $oUser->Login($oItem);
+                if (!is_object($oLoggedUser)) {
+                    throw new Exception(__('Incorect username or password'));
+                }
 
-                 http_redir($returnUrl ? $returnUrl : href_website('website/homepage'));
-             }
-             catch (Exception $e) {
-                 message_set_error($e->getMessage());
-             }
-         }
+                http_redir($returnUrl ? $returnUrl : href_website('website/homepage'));
+            }
+            catch (Exception $e) {
+                message_set_error($e->getMessage());
+            }
+        }
          
-         mvc::assign('return', $return);
-         mvc::assign('FV', $FV);
+        mvc::assign('return', $return);
+        mvc::assign('FV', $FV);
     }
     
     public function logout() {
@@ -183,7 +183,11 @@ class controller_user {
                 if ($configWelcomeEmail) {
                 	require_once(FUNCTIONS_DIR . '/email.php');
                 	
-                	$r = email($oItem->getEmail(), 'Welcome, '. $oItem->getUsername(), 'Welcome to MVC.ro, '.$oItem->getUsername());
+                	// create email
+                	$oEmailTemplate = new EmailTemplate('newuser.php');
+                	$oEmailTemplate->assign('username', $oItem->getUsername());
+                	
+                	$r = $oEmailTemplate->send($oItem->getEmail(), 'Welcome, '. $oItem->getUsername());
                 	if (!$r) {
                 		throw new Exception(__('Could not send confirmation email. Please try again later.'));
                 	}
