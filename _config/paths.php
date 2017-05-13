@@ -7,6 +7,7 @@ define('CLASSES_DIR', 			BASE_DIR.'/_lib/classes');
 define('FUNCTIONS_DIR', 		BASE_DIR.'/_lib/functions');
 define('CONTROLLER_DIR',		BASE_DIR.'/_controller');
 define('MIGRATIONS_DIR',        BASE_DIR.'/_migrations');
+define('SCRIPT_DIR',            BASE_DIR.'/_script');
 define('VIEW_DIR', 				BASE_DIR.'/_view');
 define('VIEW_INCLUDES_DIR', 	VIEW_DIR.'/_include');
 define('DECORATIONS_DIR', 		VIEW_DIR.'/_core/decorations');
@@ -27,6 +28,6 @@ define('HTTPS_JS', 				HTTPS_STATIC.'/js');
 define('HTTP_IMAGES', 			HTTP_STATIC.'/images');
 define('HTTP_ICONS',			HTTP_IMAGES.'/icons');
 
-define('CURRENT_URL', 			HTTP . $_SERVER['REQUEST_URI']);
+define('CURRENT_URL', 			(isset($_SERVER['REQUEST_URI']) ? HTTP . $_SERVER['REQUEST_URI'] : ''));
 define('CURRENT_URL_ENCODED',	urlencode(CURRENT_URL));
 ?>

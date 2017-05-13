@@ -15,4 +15,20 @@ class UserConfirmation extends DbData {
         parent::__construct($table, $id, $status);
     }
     
+    public function getExpiredUserConfirmations() {
+        $sql = "SELECT confirmation_id "
+                ." FROM ".UserConfirmation::TABLE_NAME
+                ." WHERE expires_at < NOW()";
+        $res = db::query($sql);
+        if (!$res || $res->errorCode() != '00000') {
+            return new Collection();
+        }
+        
+        $oCollection = new Collection();
+        while ($row = db::fetchAssoc($res)) {
+            $oCollection->add($row[$this->getIdField()], $row);
+        }
+        
+        return $oCollection;
+    }
 }
