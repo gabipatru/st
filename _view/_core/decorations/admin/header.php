@@ -24,6 +24,7 @@
 			    <li><a href="<?php echo href_admin('dashboard/stats')?>" class="<?php echo ($menu == 'dashboard' ? 'active' : '')?>"><span><?php echo __('Dashboard')?></span></a></li>
 			    <li><a href="<?php echo href_admin('config/list_items')?>" class="<?php echo ($menu == 'config' ? 'active' : '')?>"><span><?php echo __('Config')?></span></a></li>
 			    <li><a href="<?php echo href_admin('cache/list_cache')?>" class="<?php echo ($menu == 'cache' ? 'active' : '')?>"><span><?php echo __('Cache')?></span></a></li>
+			    <li><a href="<?php echo href_admin('users/list_users')?>" class="<?php echo ($menu == 'users' ? 'active' : '')?>"><span><?php echo __('Users')?></span></a></li>
 			</ul>
 		</div>
 		<!-- End Main Nav -->

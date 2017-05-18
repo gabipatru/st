@@ -51,6 +51,11 @@ function href_admin($sName, $sData = '') {
                 case 'memcached':
                     return HTTP_MAIN.'/admin/cache/memcached.html';
             }
+        case 'users':
+            switch ($aPath[1]) {
+                case 'list_users':
+                    return HTTP_MAIN.'/admin/users/list_users.html';
+            }
     }
 }
 
