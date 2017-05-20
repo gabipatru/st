@@ -13,7 +13,19 @@
 		
 			<!-- Box Head -->
 			<div class="box-head">
+			
+			<!-- Search and filters form -->
+			<form id="searchAndFilters" method="get" action="<?php echo MVC_ACTION_URL?>" >
 				<h2 class="left"><?php echo __('Users list')?></h2>
+				<div class="right">
+					<label><?php echo __('Search for users')?></label>
+					<input name="search" type="text" class="field small-field" value="<?php echo $search?>" />
+					<input type="submit" class="button" value="<?php echo __('Search')?>" />
+				</div>
+				<input type="hidden" name="page" value="<?php echo $oPagination->getPage()?>">
+			</form>	
+			<!-- End search and filters form -->
+			
 			</div>
 			<!-- End Box Head -->
 		

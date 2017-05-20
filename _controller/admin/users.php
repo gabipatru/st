@@ -7,7 +7,8 @@ class controller_admin_users extends ControllerAdminModel {
     }
     
     function list_users() {
-        $page = filter_get('page', 'int|min[1]');
+        $page       = filter_get('page', 'int|min[1]');
+        $search     = filter_get('search', 'string');
         
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
         
@@ -16,7 +17,12 @@ class controller_admin_users extends ControllerAdminModel {
         
         $oUser = new User();
         $filters = array();
-        $options = array('page' => $page, 'per_page' => $perPage);
+        $options = array(
+                'page' => $page, 
+                'per_page' => $perPage,
+                'search' => $search,
+                'search_fields' => array('username', 'email', 'first_name', 'last_name')
+        );
         $oUserCol = $oUser->Get($filters, $options);
         
         $oPagination = new Pagination();
@@ -28,5 +34,6 @@ class controller_admin_users extends ControllerAdminModel {
 
         mvc::assign('oUserCol', $oUserCol);
         mvc::assign('oPagination', $oPagination);
+        mvc::assign('search', $search);
     }
 }
