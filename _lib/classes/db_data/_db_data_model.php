@@ -225,6 +225,12 @@ abstract class dbDataModel {
 		}
 		
 		list($whereCondition, $aParams) = db::filters($filters);
+		list($searchCondition, $searchParams) = db::searchFilter($options);
+		
+		if (count($searchParams) > 0 && !empty($searchCondition)) {
+    		$whereCondition .= $searchCondition;
+    		$aParams = array_merge($aParams, $searchParams);
+		}
 		
 		$sql = "SELECT COUNT(*) AS cnt FROM ".$this->getTableName()
 				." WHERE ".$whereCondition;
@@ -254,7 +260,13 @@ abstract class dbDataModel {
 		$iNrItems = $this->Count($filters, $options);
 		
 		list($whereCondition, $aParams) = db::filters($filters);
+		list($searchCondition, $searchParams) = db::searchFilter($options);
 		
+		if (count($searchParams) > 0 && !empty($searchCondition)) {
+    		$whereCondition .= $searchCondition;
+    		$aParams = array_merge($aParams, $searchParams);
+		}
+
 		// ordering
 		$sOrder = '';
 		if (!empty ($options['order_field']) && !empty($options['order_type'])) {

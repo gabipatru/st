@@ -195,6 +195,31 @@ class db {
 	}
 	
 	/*
+	 * Compose the search part of a query based on some fields provided in the params
+	 */
+	static function searchFilter($options) {
+	    // sanity check
+	    if (!is_array($options) || empty($options['search']) || !is_array($options['search_fields'])) {
+	        return array('', array());
+	    }
+	    if (count($options['search_fields']) == 0) {
+	        return array('', array());
+	    }
+	    
+	    $searchSql = ' AND';
+	    $aSearch = array();
+	    $aParams = array();
+	    foreach ($options['search_fields'] as $field) {
+	        $aSearch[] = $field. " LIKE ?";
+	        $aParams[] = '%' . $options['search'] . '%';
+	    }
+	    
+	    $searchSql .= '(' . implode(' OR ', $aSearch) . ')';
+
+	    return array($searchSql, $aParams);
+	}
+	
+	/*
 	 * TRANSACTION FUNCTION: Begin a transaction
 	 */
 	public static function startTransaction() {
