@@ -47,3 +47,9 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES ('/Email/Email Sending/Email From Name', 'Website', 'text');
 ";
+
+// add config for pagination
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Website/Pagination/Per Page', '20', 'text');
+";
