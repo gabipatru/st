@@ -92,7 +92,7 @@ class GridFilters {
 	
 	// generate the sort params
 	function sortParams($sortField, $sortCrit) {
-	    if (empty($sortField) || empty($sortCrit)) {
+	    if (empty($sortField)) {
 	        return '';
 	    }
 	    
