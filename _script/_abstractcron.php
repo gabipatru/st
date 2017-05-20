@@ -71,7 +71,7 @@ abstract class AbstractCron extends SetterGetter {
         if ($this->getDebug()) {
             echo $message . "\n";
         } else {
-            log_message($this->getLogName(), $sMessage);
+            log_message($this->getLogName(), $message);
         }
     }
     
