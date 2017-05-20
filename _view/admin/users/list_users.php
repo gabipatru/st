@@ -11,6 +11,12 @@
 		<!-- Box -->
 		<div class="box">
 		
+			<!-- Box Head -->
+			<div class="box-head">
+				<h2 class="left"><?php echo __('Users list')?></h2>
+			</div>
+			<!-- End Box Head -->
+		
 		<!-- Table -->
 		<div class="table">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
