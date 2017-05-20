@@ -15,8 +15,15 @@ class controller_admin_users extends ControllerAdminModel {
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add(__('Users'), MVC_ACTION_URL);
         
+        $GF = new GridFilters(array(
+            'status' => array(
+                'default' => false,
+                'valid_values' => array(User::STATUS_ACTIVE, User::STATUS_NEW, User::STATUS_BANNED)
+            )
+        ));
+        
         $oUser = new User();
-        $filters = array();
+        $filters = $GF->filters();
         $options = array(
                 'page' => $page, 
                 'per_page' => $perPage,
@@ -26,14 +33,15 @@ class controller_admin_users extends ControllerAdminModel {
         $oUserCol = $oUser->Get($filters, $options);
         
         $oPagination = new Pagination();
-        $oPagination->setUrl(MVC_MODULE_URL.'/list_users.html?');
+        $oPagination->setUrl(MVC_MODULE_URL.'/list_users.html?' . $GF->GFHref());
         $oPagination->setPage($page);
         $oPagination->setPerPage($perPage);
         $oPagination->setItemsNo($oUserCol->getItemsNo());
         $oPagination->simple();
-
+        
         mvc::assign('oUserCol', $oUserCol);
         mvc::assign('oPagination', $oPagination);
         mvc::assign('search', $search);
+        mvc::assign('GF', $GF);
     }
 }

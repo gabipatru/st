@@ -5,7 +5,7 @@
  * It displays one or more select based on the config array
  */
 
-class grid_filters {
+class GridFilters {
 	private $aConfig;
 	
 	function __construct($aGF) {
@@ -43,6 +43,7 @@ class grid_filters {
 		
 		// HTML for select
 		$sRet = '<select name="'.$sField.'" id="'.$sField.'" class="js-gfselect">';
+		$sRet .= '<option value="">-- '.__('All').' --</option>';
 		foreach ($this->aConfig[$sField]['valid_values'] as $option) {
 			$aVal = each($aValues);
 			$sValueName = $aVal['value'];
@@ -60,8 +61,21 @@ class grid_filters {
 	function GFHref() {
 		$str = '';
 		foreach ($this->aConfig as $sField => $aData) {
-			$str .= '&'.$sField.'='.$this->$sField;
+		    if ($this->$sField !== false) {
+			    $str .= '&'.$sField.'='.$this->$sField;
+		    }
 		}
 		return $str;
+	}
+	
+	// generate the fields to be used in db model
+	function filters() {
+	    $aFilters = array();
+	    foreach ($this->aConfig as $sField => $aData) {
+	        if ($this->$sField !== false) {
+	            $aFilters[$sField] = $this->$sField;
+	        }
+	    }
+	    return $aFilters;
 	}
 }

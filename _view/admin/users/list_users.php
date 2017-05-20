@@ -22,6 +22,16 @@
 					<input name="search" type="text" class="field small-field" value="<?php echo $search?>" />
 					<input type="submit" class="button" value="<?php echo __('Search')?>" />
 				</div>
+				
+				<div class="cl">&nbsp;</div>
+				<div class="box-continue">
+					<h2 class="left"><?php echo __('Filter')?></h2>
+					<div class="right">
+						<label><?php echo __('Filter by status')?></label>
+						<span class="GF-select"><?php echo $GF->GFSelect('status');?></span>
+					</div>
+				</div>
+				
 				<input type="hidden" name="page" value="<?php echo $oPagination->getPage()?>">
 			</form>	
 			<!-- End search and filters form -->
