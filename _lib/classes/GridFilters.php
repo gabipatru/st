@@ -58,13 +58,24 @@ class GridFilters {
 	}
 	
 	// fetch a string of params to be used on a GET URL
-	function GFHref() {
+	function GFHref($page = false, $search = false, $sort = false) {
 		$str = '';
 		foreach ($this->aConfig as $sField => $aData) {
 		    if ($this->$sField !== false) {
 			    $str .= '&'.$sField.'='.$this->$sField;
 		    }
 		}
+		
+		if ($page == true && !empty($_GET['page'])) {
+		    $str .= '&page=' . $_GET['page'];
+		}
+		if ($search == true && !empty($_GET['search'])) {
+		    $str .= '&search=' . $_GET['search'];
+		}
+		if ($sort == true && !empty($_GET['sort']) && !empty($_GET['sort_crit'])) {
+		    $str .= '&sort=' . $_GET['sort'] . '&sort_crit=' . $_GET['sort_crit'];
+		}
+		
 		return $str;
 	}
 	
@@ -77,5 +88,14 @@ class GridFilters {
 	        }
 	    }
 	    return $aFilters;
+	}
+	
+	// generate the sort params
+	function sortParams($sortField, $sortCrit) {
+	    if (empty($sortField) || empty($sortCrit)) {
+	        return '';
+	    }
+	    
+	    return '&sort='. $sortField .'&sort_crit='. ($sortCrit == 'asc' ? 'desc' : 'asc');
 	}
 }

@@ -78,12 +78,9 @@ function filter($mVar, $sFilterType) {
 			case 'set':
 				$aSet = explode(',', $option);
 				if (is_array($aSet)) {
-					foreach($aSet as $setValue) {
-						if($setValue == $mVar) {
-							break;
-						}
+					if (!in_array($mVar, $aSet)) {
+					    $mVar = null;
 					}
-					$mVar = $aSet[0];
 				}
 				break;
 			case 'email':

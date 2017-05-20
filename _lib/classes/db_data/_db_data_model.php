@@ -269,7 +269,7 @@ abstract class dbDataModel {
 
 		// ordering
 		$sOrder = '';
-		if (!empty ($options['order_field']) && !empty($options['order_type'])) {
+		if (!empty ($options['order_field']) && !empty($options['order_type']) && in_array($options['order_field'], $this->aFields)) {
 			$sOrder = " ORDER BY ".$options['order_field']." ".$options['order_type'];
 		}
 		
