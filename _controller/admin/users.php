@@ -50,4 +50,38 @@ class controller_admin_users extends ControllerAdminModel {
         mvc::assign('sort', $sort);
         mvc::assign('sort_crit', $sort_crit);
     }
+    
+    function ajax_change_status() {
+        $userId     = filter_post('user_id', 'int');
+        $newStatus  = filter_post('new_status', 'string');
+        $sToken     = filter_post('token', 'string');
+        sleep(20);
+        try {
+            if (!$userId || !$newStatus) {
+                throw new Exception();
+            }
+            
+            if (!securityCheckToken($sToken)) {
+                throw new Exception();
+            }
+            
+            $oItem = new SetterGetter();
+            $oItem->setStatus($newStatus);
+            
+            $oUser = new User();
+            $r = $oUser->Edit($userId, $oItem);
+            if (!$r) {
+                throw new Exception();
+            }
+            
+            ajax_json::success();
+            ajax_json::output_json();
+        }
+        catch (Exception $e) {
+            ajax_json::error();
+            ajax_json::output_json();
+        }
+        
+        exit;
+    }
 }

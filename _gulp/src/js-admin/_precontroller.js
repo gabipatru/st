@@ -14,4 +14,12 @@ addAction(CONTROLLER_NAME, '_precontroller', function() {
     		return false;
     	});
     });
+    
+    // hook cancel button to dialog closing
+    $( ".js-dialog-cancel" ).each( function() {
+    	$( this ).click( function() {
+    		dialogId = $( this ).parent().attr( 'data-dialog' );
+    		$( "#"+dialogId ).dialog( "close" );
+    	});
+    });
 });

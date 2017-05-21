@@ -33,6 +33,8 @@
 			</div>
 			
 			<input type="hidden" name="page" value="<?php echo $oPagination->getPage()?>">
+			<input type="hidden" name="sort" value="<?php echo $sort?>" />
+			<input type="hidden" name="sort_crit" value="<?php echo $sort_crit?>" />
 		</form>	
 		<!-- End search and filters form -->
 		
@@ -86,6 +88,7 @@
 					<?php echo __('Last login')?>
 				</a>
 			</th>
+			<th><?php echo __('Actions')?></th>
 		</tr>
 	<?php foreach ($oUserCol as $user):?>
 		<tr>
@@ -97,6 +100,18 @@
 			<td><?php echo $user->getStatus()?></td>
 			<td><?php echo $user->getCreatedAt()?></td>
 			<td><?php echo $user->getLastLogin()?></td>
+			<td>
+				<a 
+					href="#" 
+					class="ico edit js-user-list-edit"
+					data-user-id="<?php echo $user->getUserId()?>"
+					data-user-username="<?php echo $user->getUsername()?>"
+					data-user-email="<?php echo $user->getEmail()?>"
+					data-user-status="<?php echo $user->getStatus()?>"
+				>
+					<?php echo __('Edit')?>
+				</a>
+			</td>
 		</tr>
 	<?php endforeach;?>
 	</table>
@@ -116,3 +131,25 @@
 
 </div>
 <!-- Main -->
+
+<!-- Dialog for editing users -->
+<div id="user-edit-dialog" class="hidden" title="<?php echo __('Edit user')?>">
+	<p>Username: <span class="dialog-data-span" id="dialog-username"></span></p>
+	<p>Email: <span class="dialog-data-span" id="dialog-email"></span></p>
+	<p>Status: <span class="dialog-data-span" id="dialog-status"></span></p>
+	<p>
+		<?php echo __('Change status to')?>:
+		<select id="dialog-new-status">
+			<option value="<?php echo User::STATUS_ACTIVE?>"><?php echo __('Active')?></option>
+			<option value="<?php echo User::STATUS_BANNED?>"><?php echo __('Banned')?></option>
+			<option value="<?php echo User::STATUS_NEW?>"><?php echo __('New')?></option>
+		</select>
+	</p>
+	<p class="dialog-actions" data-dialog="user-edit-dialog">
+		<button id="dialog-save" class="ui-button ui-widget ui-corner-all"><?php echo __('Save')?></button>
+		<button class="ui-button ui-widget ui-corner-all js-dialog-cancel"><?php echo __('Cancel')?></button>
+	</p>
+	<p id="dialog-ajax-spinner"></p>
+	<p id="dialog-ajax-error" class="dialog-ajax-error"></p>
+</div>
+<!-- End dialog  -->
