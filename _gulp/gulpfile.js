@@ -59,7 +59,7 @@ gulp.task('javascript-admin', function() {
 
 // Sass task for website - concat, minify
 gulp.task('sass-website', function () {
-  gulp.src('./src/sass/**/*.scss')
+  gulp.src(['./src/sass-vendors/**/*.css', './src/sass/**/*.scss'])
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle.css'))
     .pipe(cleanCSS())
@@ -72,7 +72,7 @@ gulp.task('sass-website', function () {
 
 //Sass task for admin - concat, minify
 gulp.task('sass-admin', function () {
-  gulp.src('./src/sass-admin/**/*.scss')
+  gulp.src(['./src/sass-vendors/**/*.css', './src/sass-admin/**/*.scss'])
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle-admin.css'))
     .pipe(cleanCSS())
