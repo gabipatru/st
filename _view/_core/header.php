@@ -9,5 +9,20 @@
 	<?php require_once(VIEW_DIR.'/_core/header_css.php');?>
         <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie/v8.css" /><![endif]-->
         <!--[if lte IE 8]><script src="assets/css/ie/respond.min.js"></script><![endif]-->
+        <script type="text/javascript">
+        	// this special function can only be declared here
+        	var ValidateSubmit = {
+		        isSubmitted: false,
+		        submit: function() {
+	                if (ValidateSubmit.isSubmitted) {
+			            return false;
+		            }
+		            ValidateSubmit.isSubmitted = true;
+		            $("input[type=submit]").attr("disabled", "disabled");
+		            form.submit();
+	            },
+		        END: null
+	        };
+        </script>
 	</head>
 <?php }?>

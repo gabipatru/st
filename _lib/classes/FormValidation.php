@@ -9,20 +9,6 @@ class FormValidation {
 		
 		// initialize javascript validation
 		$this->_js_code = '<script type="text/javascript" nonce="29af2i">';
-		$this->_js_code .= '
-		    var ValidateSubmit = {
-		        isSubmitted: false,
-		        submit: function() {
-	                if (ValidateSubmit.isSubmitted) {
-			            return false;
-		            }
-		            ValidateSubmit.isSubmitted = true;
-		            $("input[type=submit]").attr("disabled", "disabled");
-		            form.submit();
-	            },
-		        END: null
-	        };
-		';
 		$this->_js_code .= 'var aFormValidate = Array();';
 		// you need an object ValidateSubmit.submit() to handle submits
 		$this->_js_code .= 'aFormValidate["submitHandler"] = ValidateSubmit.submit;';
