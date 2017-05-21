@@ -55,7 +55,7 @@ class controller_admin_users extends ControllerAdminModel {
         $userId     = filter_post('user_id', 'int');
         $newStatus  = filter_post('new_status', 'string');
         $sToken     = filter_post('token', 'string');
-        sleep(20);
+        
         try {
             if (!$userId || !$newStatus) {
                 throw new Exception();
