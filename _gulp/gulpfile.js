@@ -28,14 +28,14 @@ gulp.task('cleanup', function() {
 
 // JS hint task - check for js errors
 gulp.task('jshint', function() {
-  gulp.src(['./src/js/app.js','./src/js-admin/**/*','./src/js/**/*.js'])
+  gulp.src(['./../_js/js-admin/**/*', './../_js/js-website/**/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
 // Process javascript task for website - concat, uglify
 gulp.task('javascript-website', function() {
-  gulp.src(['./src/js-vendors/**/*.js', './src/js/app.js','./src/js/**/*.js'])
+  gulp.src(['./../_js/js-vendors/**/*.js', './../_js/js-website/**/*.js'])
     .pipe(concat('bundle.js'))
     .pipe(uglify())
     .pipe(gzip())
@@ -47,7 +47,7 @@ gulp.task('javascript-website', function() {
 
 // Process javascript task for admin - concat, uglify
 gulp.task('javascript-admin', function() {
-  gulp.src(['./src/js-vendors/**/*.js', './src/js/app.js','./src/js-admin/**/*.js'])
+  gulp.src(['./../_js/js-vendors/**/*.js', './../_js/js-admin/**/*.js'])
     .pipe(concat('bundle-admin.js'))
     .pipe(uglify())
     .pipe(gzip())
@@ -59,7 +59,7 @@ gulp.task('javascript-admin', function() {
 
 // Sass task for website - concat, minify
 gulp.task('sass-website', function () {
-  gulp.src(['./src/sass-vendors/**/*.css', './src/sass/**/*.scss'])
+  gulp.src(['./../_css/sass-vendors/**/*.css', './../_css/sass-website/**/*.scss'])
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle.css'))
     .pipe(cleanCSS())
@@ -72,7 +72,7 @@ gulp.task('sass-website', function () {
 
 //Sass task for admin - concat, minify
 gulp.task('sass-admin', function () {
-  gulp.src(['./src/sass-vendors/**/*.css', './src/sass-admin/**/*.scss'])
+  gulp.src(['./../_css/sass-vendors/**/*.css', './../_css/sass-admin/**/*.scss'])
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle-admin.css'))
     .pipe(cleanCSS())
