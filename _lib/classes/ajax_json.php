@@ -10,8 +10,11 @@ class ajax_json {
 		self::$response = array('response' => 'success');
 	}
 	
-	public static function error() {
+	public static function error($msg = null) {
 		self::$response = array('response' => 'error');
+		if ($msg) {
+		    self::$response['error_message'] = __($msg);
+		}
 	}
 	
 	public static function output_json() {

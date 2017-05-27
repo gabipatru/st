@@ -27,8 +27,8 @@ addAction('controller_admin_users', 'list_users', {
 					$( "#user-edit-dialog" ).dialog( "close" );
 					location.reload();
 				},
-				onError: 	function() {
-					$( "#dialog-ajax-error" ).html( "There was an error While saving the new status" );
+				onError: 	function(errorMesage) {
+					$( "#dialog-ajax-error" ).html( errorMesage );
 				}
 			});
 		});

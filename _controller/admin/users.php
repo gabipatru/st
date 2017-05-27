@@ -58,11 +58,11 @@ class controller_admin_users extends ControllerAdminModel {
         
         try {
             if (!$userId || !$newStatus) {
-                throw new Exception();
+                throw new Exception('User id or new status are missing');
             }
             
             if (!securityCheckToken($sToken)) {
-                throw new Exception();
+                throw new Exception('The page delay was too long');
             }
             
             $oItem = new SetterGetter();
@@ -71,14 +71,14 @@ class controller_admin_users extends ControllerAdminModel {
             $oUser = new User();
             $r = $oUser->Edit($userId, $oItem);
             if (!$r) {
-                throw new Exception();
+                throw new Exception('Error while saving to the database');
             }
             
             ajax_json::success();
             ajax_json::output_json();
         }
         catch (Exception $e) {
-            ajax_json::error();
+            ajax_json::error($e->getMessage());
             ajax_json::output_json();
         }
         

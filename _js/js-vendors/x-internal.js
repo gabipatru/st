@@ -50,7 +50,7 @@ var JQ_AJAX = {
 				JQ_AJAX.onSuccess();
 			}
 			if (data['response'] == "error" && typeof(JQ_AJAX.onError) == "function") {
-				JQ_AJAX.onError();
+				JQ_AJAX.onError(data['error_message']);
 			}
 		}
 		if (JQ_AJAX.dataType == "html" && JQ_AJAX.element) {
