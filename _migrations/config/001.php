@@ -53,3 +53,10 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES ('/Website/Pagination/Per Page', '20', 'text');
 ";
+
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES
+('HTML/Header/Phone Number EN', '+44 7397 030 770', 'text'),
+('HTML/Header/Phone Number EN', '+40 766 248 430', 'text')
+";
