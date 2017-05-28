@@ -6,7 +6,7 @@
 				<div class="col-sm-6">
 					<div class="contactinfo">
 						<ul class="nav nav-pills">
-							<li><a href="#"><i class="fa fa-phone"></i> +44 7397 030 770</a></li>
+							<li><a href="#"><i class="fa fa-phone"></i><?php echo ($oTranslations->getLanguage() == 'en' ? Config::configByPath('HTML/Header/Phone Number EN') : Config::configByPath('HTML/Header/Phone Number RO'))?></a></li>
 						</ul>
 					</div>
 				</div>

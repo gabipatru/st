@@ -20,6 +20,7 @@ securityUpdateToken();
 $oTranslations = Translations::getSingleton();
 $oTranslations->setLanguage('ro_RO');
 $oTranslations->setModule('common');
+mvc::assign('oTranslations', $oTranslations);
 
 // database connection
 try {

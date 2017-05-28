@@ -5,8 +5,8 @@
 	<div class="footer-bottom">
 		<div class="container">
 			<div class="row">
-				<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-				<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				<p class="pull-left"><?php echo __('Copyright © 2017 Surprize Turbo. All rights reserved.')?></p>
+				<p class="pull-right"><?php echo __('Designed by Sutprize Turbo')?></p>
 			</div>
 		</div>
 	</div>

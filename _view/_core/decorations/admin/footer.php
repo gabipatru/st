@@ -5,9 +5,9 @@
 <!-- Footer -->
 <div id="footer">
 	<div class="shell">
-		<span class="left">&copy; 2010 - CompanyName</span>
+		<span class="left"><?php echo __('Copyright © 2017 Surprize Turbo. All rights reserved.')?></span>
 		<span class="right">
-			Design by <a href="http://chocotemplates.com" target="_blank" title="The Sweetest CSS Templates WorldWide">Chocotemplates.com</a>
+			<?php echo __('Designed by Sutprize Turbo')?>
 		</span>
 	</div>
 </div>
