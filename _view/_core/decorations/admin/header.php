@@ -7,7 +7,7 @@
 		<div id="top">
 			<h1><a href="#">Admin Surprize Turbo</a></h1>
 			<div id="top-navigation">
-				Welcome <a href="#"><strong><?php echo $userName?></strong></a>
+				<?php echo __('Welcome')?>, <a href="#"><strong><?php echo $userName?></strong></a>
 				<span>|</span>
 				<a href="<?php echo href_website('user/logout')?>">Log out</a>
 			</div>
