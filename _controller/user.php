@@ -181,8 +181,6 @@ class controller_user {
                 
                 // send confirmation email if necessary
                 if ($configWelcomeEmail) {
-                	require_once(FUNCTIONS_DIR . '/email.php');
-                	
                 	// create email
                 	$oEmailTemplate = new EmailTemplate('newuser.php');
                 	$oEmailTemplate->assign('username', $oItem->getUsername());

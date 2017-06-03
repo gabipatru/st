@@ -1,4 +1,4 @@
-<div id="contact-page" class="container">
+<div id="form-page">
 	<div class="bg">
 		<div class="row">    		
 			<div class="col-sm-12">    			   			
@@ -12,24 +12,29 @@
 	    	<div class="col-sm-8">
 	    		<div class="contact-form">
 	    			<h2 class="title text-center"><?php echo __('Get In Touch')?></h2>
-	    			<div class="status alert alert-success" style="display: none"></div>
-			    	<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
+			    	<form id="contact-form" class="contact-form row" name="contact-form" method="post">
 			            <div class="form-group col-md-6">
-			                <input type="text" name="name" class="form-control" placeholder="<?php echo __('Name')?>">
+			                <input type="text" name="name" class="form-control" placeholder="<?php echo __('Name')?>" value="<?php echo $FV->name?>">
+			                <label id="path-error" class="error" for="path"><?php echo $FV->name_error?></label>
 			            </div>
 			            <div class="form-group col-md-6">
-			                <input type="email" name="email" class="form-control" placeholder="<?php echo __('Email address')?>">
+			                <input type="email" name="email" class="form-control" placeholder="<?php echo __('Email address')?>" value="<?php echo $FV->email?>">
+			                <label id="path-error" class="error" for="path"><?php echo $FV->email_error?></label>
 			            </div>
 			            <div class="form-group col-md-12">
-			                <input type="text" name="subject" class="form-control" placeholder="<?php echo __('Subject')?>">
+			                <input type="text" name="subject" class="form-control" placeholder="<?php echo __('Subject')?>" value="<?php echo $FV->subject?>">
+			                <label id="path-error" class="error" for="path"><?php echo $FV->subject_error?></label>
 			            </div>
 			            <div class="form-group col-md-12">
-			                <textarea name="message" id="message" class="form-control" rows="8" placeholder="<?php echo __('Your Message')?>"></textarea>
+			                <textarea name="message" id="message" class="form-control" rows="8" placeholder="<?php echo __('Your Message')?>"><?php echo $FV->message?></textarea>
+			                <label id="path-error" class="error" for="path"><?php echo $FV->message_error?></label>
 			            </div>                        
 			            <div class="form-group col-md-12">
 			                <input type="submit" name="submit" class="btn btn-primary pull-right" value="<?php echo __('Send')?>">
 			            </div>
+			            <input type="hidden" name="token" value="<?php echo securityGetToken()?>">
 			        </form>
+			        <?php echo $FV->_js_code;?>
 	    		</div>
 	    	</div>
 	    	<div class="col-sm-4">
@@ -63,4 +68,4 @@
 	    </div>
 <?php endif;?>
 	</div> <!-- End bg -->
-</div><!-- End contact-page-->
+</div> <!-- End form page -->

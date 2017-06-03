@@ -13,6 +13,7 @@ require_once(FUNCTIONS_DIR . '/html_functions.php');
 require_once(FUNCTIONS_DIR . '/filter.php');
 require_once(FUNCTIONS_DIR . '/log.php');
 require_once(FUNCTIONS_DIR . '/security_token.php');
+require_once(FUNCTIONS_DIR . '/email.php');
 
 securityUpdateToken();
 

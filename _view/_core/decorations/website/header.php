@@ -84,3 +84,7 @@
 		</div>
 	</div>
 </header>
+
+<div class="container">
+
+<?php include(VIEW_INCLUDES_DIR .'/messages.php');?>

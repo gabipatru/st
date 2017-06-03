@@ -54,6 +54,7 @@ INSERT INTO config (path, value, type)
 VALUES ('/Website/Pagination/Per Page', '20', 'text');
 ";
 
+// add config for phone number
 $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES
@@ -61,16 +62,22 @@ VALUES
 ('HTML/Header/Phone Number EN', '+40 766 248 430', 'text')
 ";
 
+// add config for address
 $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES
 ('HTML/Contact Page/Address EN', '16 Birkbeck Road, N17 8NG', 'text'),
 ('HTML/Contact Page/Address RO', 'Str Turda Nr 100 Bl 30B Sc A Et 4 Ap 13, Sector 1', 'text')
 ";
-
 $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES
 ('HTML/Contact Page/City EN', 'London, United Kingdom', 'text'),
 ('HTML/Contact Page/City RO', 'Bucuresti, Romania', 'text')
+";
+
+// add config for contact email
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Email/Email Sending/Contact Email', 'contact@surptizeturbo.ro', 'text');
 ";
