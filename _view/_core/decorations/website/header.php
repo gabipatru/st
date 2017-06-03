@@ -47,8 +47,8 @@
 				<div class="col-sm-8">
 					<div class="shop-menu pull-right">
 						<ul class="nav navbar-nav">
-							<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-							<li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+							<li><a href="#"><i class="fa fa-user"></i> <?php echo __('Account')?></a></li>
+							<li><a href="login.html"><i class="fa fa-lock"></i> <?php echo __('Login')?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -70,14 +70,14 @@
 					</div>
 					<div class="mainmenu pull-left">
 						<ul class="nav navbar-nav collapse navbar-collapse">
-							<li><a href="<?php echo href_website('website/homepage')?>" class="active">Home</a></li>
-							<li><a href="contact-us.html">Contact</a></li>
+							<li><a href="<?php echo href_website('website/homepage')?>" class="active"><?php echo __('Home')?></a></li>
+							<li><a href="<?php echo href_website('website/contact')?>"><?php echo __('Contact')?></a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-sm-3">
 					<div class="search_box pull-right">
-						<input type="text" placeholder="Search"/>
+						<input type="text" placeholder="<?php echo __('Search')?>"/>
 					</div>
 				</div>
 			</div>

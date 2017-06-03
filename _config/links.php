@@ -12,6 +12,8 @@ function href_website($sName, $sData = '') {
 			switch ($aPath[1]) {
 				case 'homepage':
 					return HTTP_MAIN.'/website/homepage.html';
+				case 'contact':
+				    return HTTP_MAIN.'/website/contact.html';
 			}
 			break;
 		case 'user':
