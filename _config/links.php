@@ -22,6 +22,8 @@ function href_website($sName, $sData = '') {
 		            return  HTTP_MAIN.'/user/login.html'. ($sData ? "?return=".urlencode($sData) : '');
 		        case 'logout':
 		        	return HTTP_MAIN.'/user/logout.html'. ($sData ? "?return=".urlencode($sData) : '');
+		        case 'create_account':
+		            return HTTP_MAIN.'/user/newuser.html';
 		    }
 	}
 }

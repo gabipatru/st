@@ -6,6 +6,7 @@
 "Copyright © 2017 Surprize Turbo. All rights reserved.","Copyright © 2017 Surprize Turbo. Toate drepturile rezervate."
 "Could not connect to database","Nu a fost posibila conectarea la baza de date"
 "Could not send email. Please try again later.","Nu am putut trmite emailul. Incearca mai tarziu"
+"Create account","Creare cont"
 "Designed by Sutprize Turbo","Proiectat de Sutprize Turbo"
 "Edit","Modifica"
 "Email address","Adresa de email"
@@ -23,3 +24,4 @@
 "Send","Trimite"
 "Welcome","Bine ai venit"
 "Yes","Da"
+"You are already logged in !","Esti deja logat"

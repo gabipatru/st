@@ -47,8 +47,13 @@
 				<div class="col-sm-8">
 					<div class="shop-menu pull-right">
 						<ul class="nav navbar-nav">
+						<?php if (User::isLoggedIn()):?>
 							<li><a href="#"><i class="fa fa-user"></i> <?php echo __('Account')?></a></li>
-							<li><a href="<?php echo href_website('user/login')?>"><i class="fa fa-lock"></i> <?php echo __('Login')?></a></li>
+							<li><a href="<?php echo href_website('user/logout')?>"><i class="fa fa-share"></i> <?php echo __('Logout')?></a></li>
+						<?php else:?>
+							<li><a href="<?php echo href_website('user/login')?>"><i class="fa fa-key"></i> <?php echo __('Login')?></a></li>
+							<li><a href="<?php echo href_website('user/create_account')?>"><i class="fa fa-user"></i> <?php echo __('Create account')?></a></li>
+						<?php endif;?>
 						</ul>
 					</div>
 				</div>

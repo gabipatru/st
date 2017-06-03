@@ -19,6 +19,11 @@ class controller_user {
     ## LOGIN PAGE, LOGOUT
     ###############################################################################
     function login() {
+        if (User::isLoggedIn()) {
+            message_set(__('You are already logged in !'));
+            http_redir(href_website('website/homepage'));
+        }
+        
 		$return = filter_get('return', 'urldecode');
     	 
         $FV = new FormValidation(array(

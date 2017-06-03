@@ -6,6 +6,7 @@
 "Copyright © 2017 Surprize Turbo. All rights reserved.","Copyright © 2017 Surprize Turbo. All rights reserved."
 "Could not connect to database","Could not connect to database"
 "Could not send email. Please try again later.","Could not send email. Please try again later."
+"Create account","Create account"
 "Designed by Sutprize Turbo","Designed by Sutprize Turbo"
 "Edit","Edit"
 "Email address","Email address"
@@ -23,3 +24,4 @@
 "Send","Send"
 "Welcome","Welcome"
 "Yes","Yes"
+"You are already logged in !","You are already logged in !"
