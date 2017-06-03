@@ -1,8 +1,8 @@
 <?php
 // filesystem-specific
-define('BASE_DIR', 				'/var/www/mvc');
+define('BASE_DIR', 				'/var/www/st');
 define('HTTP_PROTOCOL', 		'http://');
-define('HTTP', 					HTTP_PROTOCOL . 'www.mvc.ro');
+define('HTTP', 					HTTP_PROTOCOL . 'www.st.ro');
 define('HTTP_MAIN', 			HTTP);
 define('HTTPS_MAIN', 			HTTP);
 
