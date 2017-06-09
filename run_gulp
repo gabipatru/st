@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /var/www/mvc/_gulp
+cd /var/www/st/_gulp
 gulp

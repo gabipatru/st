@@ -31,4 +31,25 @@ class UserConfirmation extends DbData {
         
         return $oCollection;
     }
+    
+    public function createNewConfirmation($userId) {
+        if (!$userId || !ctype_digit((string) $userId)) {
+            return false;
+        }
+        
+        $configConfirmationExp = Config::configByPath(User::CONFIG_CONFIRMATION_EXPIRY);
+        
+        $code = md5(date('Y-m-d H:i:s') . WEBSITE_SALT);
+        $oItem = new SetterGetter();
+        $oItem->setUserId($userId);
+        $oItem->setCode($code);
+        $oItem->setExpiresAt(date('Y-m-d H:i:s', strtotime($configConfirmationExp)));
+        
+        $r = $this->Add($oItem);
+        if (!$r) {
+            return false;
+        }
+        
+        return $code;
+    }
 }

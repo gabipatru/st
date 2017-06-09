@@ -42,22 +42,14 @@ class User extends DbData {
     
     // add user confirmation
     protected function onAdd($userId) {
-        $configConfirmation     = Config::configByPath(self::CONFIG_USER_CONFIRMATION);
-        $configConfirmationExp  = Config::configByPath(User::CONFIG_CONFIRMATION_EXPIRY);
+        $configConfirmation = Config::configByPath(self::CONFIG_USER_CONFIRMATION);
         
         if ($configConfirmation === Config::CONFIG_VALUE_NO) {
             return true;
         }
         
-        $oItem = new SetterGetter();
-        $oItem->setUserId($userId);
-        $oItem->setCode(md5(date('Y-m-d H:i:s') . WEBSITE_SALT));
-        $oItem->setExpiresAt(date('Y-m-d H:i:s', strtotime($configConfirmationExp)));
-        
         $oUserConf = new UserConfirmation();
-        $r = $oUserConf->Add($oItem);
-        
-        return $r;
+        return $oUserConf->createNewConfirmation($userId);
     }
     
     public static function passwordHash($password) {

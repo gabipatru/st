@@ -261,4 +261,192 @@ class controller_user {
         }
         
     }
+    
+    ###############################################################################
+    ## FORGOT PASSWORD AND RESET PASSWORD PAGES
+    ###############################################################################
+    function forgot_password() {
+        if (User::isLoggedIn()) {
+            message_set_error(__('You cannot reset your password if you are logged in'));
+            http_redir('website/homepage');
+        }
+        $emailSent = false;
+        
+        $FV = new FormValidation(array(
+            'rules' => array(
+                'email' => array(
+                    'required' => true, 
+                    'email' => true
+                ),
+            ),
+            'messages' => array(
+                'email' => __('Please enter a valid email address')
+            )
+        ));
+        
+        $validateResult = $FV->validate();
+        
+        if (isPOST()) {
+            try {
+                if (!$validateResult) {
+                    throw new Exception(__('Please fill all the required fields'));
+                }
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
+                }
+                
+                $email = filter_post('email', 'email');
+                
+                // check if the email exists in our database
+                $oUser = new User();
+                $filters = array('email' => $email);
+                $options = array();
+                $oCollection = $oUser->Get($filters, $options);
+                if ($oCollection->getItemsNo() == 0) {
+                    throw new Exception(__('This email does not exist in the database'));
+                }
+                $oItem = $oCollection->getItem();
+                
+                db::startTransaction();
+                
+                // create confirmation
+                $oConf = new UserConfirmation();
+                $confirmationCode = $oConf->createNewConfirmation($oItem->getUserId());
+                if (!$confirmationCode) {
+                    throw new Exception(__('Could not create confirmation code'));
+                }
+                
+                // send the email with the confirmation code
+                $oEmailTemplate = new EmailTemplate('forgot_password.php');
+                $oEmailTemplate->assign('confirmationCode', $confirmationCode);
+                 
+                $r = $oEmailTemplate->send($email, __('Reset password'));
+                if (!$r) {
+                    throw new Exception(__('Could not send confirmation email. Please try again later.'));
+                }
+                
+                db::commitTransaction();
+                $emailSent = true;
+                message_set(__('An email has benn sent to your email address'));
+            }
+            catch (Exception $e) {
+                message_set_error($e->getMessage());
+                if (db::transactionLevel()) {
+                    db::rollbackTransaction();
+                }
+            }
+        }
+        
+        mvc::assign('FV', $FV);
+        mvc::assign('emailSent', $emailSent);
+    }
+    
+    function reset_password() {
+        $confirmationCode = filter_request('code', 'string');
+        $error = false;
+        
+        $FV = new FormValidation(array(
+            'rules' => array(
+                'password' => array(
+                    'required' => true,
+                    'minlength' => 2
+                ),
+                'password2' => array(
+                    'required' => true,
+                    'equalTo' => 'password'
+                ),
+            ),
+            'messages' => array(
+                'password'      => __('Password is not strong enough'),
+                'password2'     => __('Passwords must be identical'),
+            )
+        ));
+        
+        $validateResult = $FV->validate();
+        
+        if (isPOST()) {
+            try {
+                if (!$validateResult) {
+                    throw new Exception(__('Please fill all the required fields'));
+                }
+                if (!securityCheckToken(filter_post('token', 'string'))) {
+                    throw new Exception(__('The page delay was too long'));
+                }
+                if (!$confirmationCode) {
+                    throw new Exception(__('Incorrect code'));
+                }
+                
+                $newPassword = filter_post('password', filter_post('password', 'string'));
+                
+                // search for the code
+                $filters = array('code' => $confirmationCode);
+                $options = array();
+                $oUserConf = new UserConfirmation();
+                $oCollection = $oUserConf->Get($filters, $options);
+                if ($oCollection->getItemsNo() == 0) {
+                    throw new Exception(__('Incorrect code'));
+                }
+                $oCode = $oCollection->getItem();
+                
+                // get the user
+                $oUser = new User();
+                $filters = array('user_id' => $oCode->getUserId());
+                $options = array();
+                $oCollection = $oUser->Get($filters, $options);
+                if ($oCollection->getItemsNo() == 0) {
+                    throw new Exception(__('User not found in the database'));
+                }
+                $oLoadedUser = $oCollection->getItem();
+                
+                db::startTransaction();
+                
+                // update the password
+                $oItem = new SetterGetter();
+                $oItem->setPassword(User::passwordHash($newPassword));
+                $r = $oUser->Edit($oLoadedUser->getUserId(), $oItem);
+                if (!$r) {
+                    throw new Exception(__('Error while saving the new password'));
+                }
+                
+                // delete the confirmation
+                $oUserConf->Delete($oCode->getConfirmationId());
+                
+                db::commitTransaction();
+                message_set(__('Password was reset'));
+            }
+            catch (Exception $e) {
+                if (db::transactionLevel()) {
+                    db::rollbackTransaction();
+                }
+                message_set_error($e->getMessage());
+            }
+            
+            http_redir(href_website('user/login'));
+        }
+        
+        try {
+            if (!$confirmationCode) {
+                throw new Exception(__('Incorrect code'));
+            }
+            
+            // search for the code
+            $filters = array('code' => $confirmationCode);
+            $options = array();
+            $oUserConf = new UserConfirmation();
+            $oCode = $oUserConf->Get($filters, $options);
+            if ($oCode->getItemsNo() == 0) {
+                throw new Exception(__('Incorrect code'));
+            }
+            
+            
+        }
+        catch (Exception $e) {
+            message_set_error($e->getMessage());
+            $error = true;
+        }
+        
+        mvc::assign('error', $error);
+        mvc::assign('confirmationCode', $confirmationCode);
+        mvc::assign('FV', $FV);
+    }
 }

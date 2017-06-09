@@ -22,6 +22,10 @@
 		<label id="password-error" class="error" for="password"><?php echo $FV->password_error?></label>
 	</div>
 	
+	<div class="form-group col-md-12">
+		<a href="<?php echo href_website('user/forgot_passwd')?>"><?php echo __('Forgot my password')?></a>
+	</div>
+	
 	<input type="hidden" name="token" value="<?php echo securityGetToken()?>" />
 	<input type="hidden" name="return" value="<?php echo (!empty($FV->return) ? $FV->return : $return)?>" />
 	<div class="form-group col-md-12">
