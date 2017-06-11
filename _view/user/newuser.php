@@ -1,24 +1,24 @@
 <div id="form-page">
 	<div class="bg">
-		<div class="row">    		
-			<div class="col-sm-12">    			   			
-				<h2 class="title text-center"><?php echo __('Create account')?></h2>    			    				    				
+		<div class="row">
+			<div class="col-sm-12">
+				<h2 class="title text-center"><?php echo __('Create account')?></h2>
 			</div>			 		
 		</div>
-	
-		<div class="row">  
+<?php if (!$userAdded):?>
+		<div class="row">
 			<div class="col-sm-4">
 				<div class="contact-form">
 				
 <form id="newUser" class="contact-form row" action="<?php echo MVC_ACTION_URL?>" method="post">
 	<div class="form-group col-md-12">
 		<span><?php echo __('Email address')?>:</span>
-		<input type="text" class="form-control" name="email" value="<?php echo $FV->email?>">
+		<input type="text" class="form-control" name="email" placeholder="<?php echo __('Email address')?>" value="<?php echo $FV->email?>">
 		<label id="email-error" class="error" for="email"><?php echo $FV->email_error?></label>
 	</div>
 	<div class="form-group col-md-12">
 		<span><?php echo __('Username')?>:</span>
-		<input type="text" class="form-control" name="username" value="<?php echo $FV->username?>">
+		<input type="text" class="form-control" name="username" placeholder="<?php echo __('Username')?>" value="<?php echo $FV->username?>">
 		<label id="username-error" class="error" for="username"><?php echo $FV->username_error?></label>
 	</div>
 	<div class="form-group col-md-12">
@@ -33,12 +33,12 @@
 	</div>
 	<div class="form-group col-md-12">
 		<span><?php echo __('First Name')?>:</span>
-		<input type="text" class="form-control" name="first_name" value="<?php echo $FV->first_name?>">
+		<input type="text" class="form-control" name="first_name" placeholder="<?php echo __('First Name')?>" value="<?php echo $FV->first_name?>">
 		<label id="first_name-error" class="error" for="first_name"><?php echo $FV->first_name_error?></label>
 	</div>
 	<div class="form-group col-md-12">
 		<span><?php echo __('Last Name')?>:</span>
-		<input type="text" class="form-control" name="last_name" value="<?php echo $FV->last_name?>">
+		<input type="text" class="form-control" name="last_name" placeholder="<?php echo __('Last Name')?>" value="<?php echo $FV->last_name?>">
 		<label id="last_name-error" class="error" for="last_name"><?php echo $FV->last_name_error?></label>
 	</div>
 	
@@ -52,5 +52,6 @@
 				</div>
 			</div>
 		</div> <!-- End row -->
+<?php endif;?>
 	</div> <!-- End bg -->
 </div> <!-- End form page -->

@@ -127,6 +127,8 @@ class controller_user {
             ),
         ));
         
+        $userAdded = false;
+        
         $validateResult = $FV->validate();
         if (isPOST()) {
             try {
@@ -179,8 +181,8 @@ class controller_user {
                 db::startTransaction();
                 
                 // add the user
-                $r = $oUser->Add($oItem);
-                if (!$r) {
+                $confirmationCode = $oUser->Add($oItem);
+                if (!$confirmationCode) {
                     throw new Exception(__('Error adding user to the database. Please try again later'));
                 }
                 
@@ -189,8 +191,9 @@ class controller_user {
                 	// create email
                 	$oEmailTemplate = new EmailTemplate('newuser.php');
                 	$oEmailTemplate->assign('username', $oItem->getUsername());
+                	$oEmailTemplate->assign('confirmationCode', $confirmationCode);
                 	
-                	$r = $oEmailTemplate->send($oItem->getEmail(), 'Welcome, '. $oItem->getUsername());
+                	$r = $oEmailTemplate->send($oItem->getEmail(), __('Welcome'). ', '. $oItem->getUsername());
                 	if (!$r) {
                 		throw new Exception(__('Could not send confirmation email. Please try again later.'));
                 	}
@@ -199,6 +202,7 @@ class controller_user {
                 db::commitTransaction();
                 
                 message_set(__('User added to the database'));
+                $userAdded = true;
             }
             catch (Exception $e) {
                 if (db::transactionLevel()) {
@@ -208,6 +212,7 @@ class controller_user {
             }
         }
         
+        mvc::assign('userAdded', $userAdded);
         mvc::assign('FV', $FV);
     }
     

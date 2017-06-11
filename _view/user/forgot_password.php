@@ -13,7 +13,7 @@
 
 	<div class="form-group col-md-12">
 		<span><?php echo __('Email')?>:</span>
-		<input type="text" class="form-control" name="email" value="<?php echo $FV->email?>">
+		<input type="text" class="form-control" name="email" placeholder="<?php echo __('Email address')?>" value="<?php echo $FV->email?>">
 		<label id="email-error" class="error" for="email"><?php echo $FV->email_error?></label>
 	</div>
 	

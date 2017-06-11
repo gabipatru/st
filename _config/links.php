@@ -24,6 +24,8 @@ function href_website($sName, $sData = '') {
 		        	return HTTP_MAIN.'/user/logout.html'. ($sData ? "?return=".urlencode($sData) : '');
 		        case 'create_account':
 		            return HTTP_MAIN.'/user/newuser.html';
+		        case 'confirm':
+		            return HTTP_MAIN.'/user/confirm.html?code='.$sData;
 		        case 'forgot_passwd':
 		            return HTTP_MAIN.'/user/forgot_password.html';
 		        case 'reset_passwd':
