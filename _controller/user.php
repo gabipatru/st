@@ -342,6 +342,11 @@ class controller_user {
     }
     
     function reset_password() {
+        if (User::isLoggedIn()) {
+            message_set_error(__('You cannot reset your password if you are logged in'));
+            http_redir('website/homepage');
+        }
+        
         $confirmationCode = filter_request('code', 'string');
         $error = false;
         
