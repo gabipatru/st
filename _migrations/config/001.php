@@ -47,6 +47,10 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES ('/Email/Email Sending/Email From Name', 'Website', 'text');
 ";
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Email/Email Sending/Number of tries', '3', 'text');
+";
 
 // add config for pagination
 $migrationSql[] = "
@@ -59,7 +63,7 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES
 ('HTML/Header/Phone Number EN', '+44 7397 030 770', 'text'),
-('HTML/Header/Phone Number EN', '+40 766 248 430', 'text')
+('HTML/Header/Phone Number RO', '+40 766 248 430', 'text')
 ";
 
 // add config for address
