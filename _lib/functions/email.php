@@ -1,5 +1,5 @@
 <?php
-function email($to, $subject, $body) {
+function email($to, $subject, $body, $emailQueueId = null) {
 	require_once(CLASSES_DIR . '/phpmailer/class.phpmailer.php');
 	
 	// configure PHPMaile
@@ -39,9 +39,7 @@ function email($to, $subject, $body) {
 	
 	// log the data
 	$oItem = new SetterGetter();
-	$oItem->setTo($to);
-	$oItem->setSubject($subject);
-	$oItem->setBody($body);
+	$oItem->setEmailQueueId($emailQueueId);
 	$oItem->setStatus($status);
 	$oItem->setErrorInfo($mail->ErrorInfo);
 	$oItem->setDebug($debug);

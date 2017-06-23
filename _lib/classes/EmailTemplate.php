@@ -69,6 +69,30 @@ class EmailTemplate extends SetterGetter {
 	}
 	
 	###############################################################################
+	## QUEUE EMAIL FUNCTION
+	###############################################################################
+	public function queue($to, $subject, $body = null, $priority = EmailQueue::PRIORITY_MEDIUM) {
+        if (!$to) {
+			return false;
+		}
+		
+		if (!$body) {
+		    $body = $this->render();
+		}
+		
+		$oItem = new SetterGetter();
+		$oItem->setTo($to);
+		$oItem->setSubject($subject);
+		$oItem->setBody($body);
+		$oItem->setPriority($priority);
+		
+		$oEmailQueue = new EmailQueue();
+		$r = $oEmailQueue->Add($oItem);
+		
+		return $r;
+	}
+	
+	###############################################################################
 	## SEND EMAIL FUNCTION
 	###############################################################################
 	public function send($to, $subject, $body = null) {

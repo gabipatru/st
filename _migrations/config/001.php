@@ -51,6 +51,10 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES ('/Email/Email Sending/Number of tries', '3', 'text');
 ";
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Email/Email Sending/Number of emails to send in one go', '5', 'text');
+";
 
 // add config for pagination
 $migrationSql[] = "

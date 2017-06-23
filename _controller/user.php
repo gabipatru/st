@@ -193,7 +193,7 @@ class controller_user {
                 	$oEmailTemplate->assign('username', $oItem->getUsername());
                 	$oEmailTemplate->assign('confirmationCode', $confirmationCode);
                 	
-                	$r = $oEmailTemplate->send($oItem->getEmail(), __('Welcome'). ', '. $oItem->getUsername());
+                	$r = $oEmailTemplate->queue($oItem->getEmail(), __('Welcome'). ', '. $oItem->getUsername());
                 	if (!$r) {
                 		throw new Exception(__('Could not send confirmation email. Please try again later.'));
                 	}
@@ -325,7 +325,7 @@ class controller_user {
                 $oEmailTemplate = new EmailTemplate('forgot_password.php');
                 $oEmailTemplate->assign('confirmationCode', $confirmationCode);
                  
-                $r = $oEmailTemplate->send($email, __('Reset password'));
+                $r = $oEmailTemplate->queue($email, __('Reset password'), null, EmailQueue::PRIORITY_HIGHEST);
                 if (!$r) {
                     throw new Exception(__('Could not send confirmation email. Please try again later.'));
                 }

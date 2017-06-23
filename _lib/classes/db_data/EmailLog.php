@@ -9,9 +9,7 @@ class EmailLog extends DbData {
     
     protected $aFields = array(
     	'email_log_id',
-    	'to',
-    	'subject',
-    	'body',
+        'email_queue_id',
     	'status',
     	'error_info',
     	'debug',

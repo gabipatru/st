@@ -19,6 +19,10 @@ abstract class AbstractCron extends SetterGetter {
      * Constructor for scripts / crons
      */
     public function __construct($loggerName = null) {
+        // autoload
+        require_once(CLASSES_DIR . '/mvc.php');
+        spl_autoload_register('mvc::autoload');
+        
         // this is for logging
         if (!$loggerName) {
             $loggerName = get_class($this);
@@ -31,6 +35,15 @@ abstract class AbstractCron extends SetterGetter {
         $this->displayMsg('Cron started at ' . date('Y-m-d H:i:s'));
         
         db::connect();
+        
+        // config setup
+        $oConfig = new Config();
+        $oConfigCollection = $oConfig->Get();
+        $aConfigIndex = $oConfig->indexByPath();
+        
+        $oRegsitry = Registry::getSingleton();
+        $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
+        $oRegsitry->set(Config::REGISTRY_KEY_PATH, $aConfigIndex);
     }
     
     /*
@@ -87,12 +100,6 @@ abstract class AbstractCron extends SetterGetter {
      * Use in case error occur in the script and company staff must be notified
      */
     public function sendWarningEmail($subject, $message) {
-        $mail = new MandrillMailer();
-        $mail->AddAddress($this->getWarningEmailAddress());
-        $mail->Subject = $subject;
-        $mail->Body = $message;
-        if(!$mail->send()) {
-            $this->displayMsg("Mailer Error: " . $mail->ErrorInfo);
-        }
+        email($this->getWarningEmailAddress(), $subject, $body);
     }
 }
