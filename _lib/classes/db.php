@@ -176,11 +176,11 @@ class db {
 		}
 		foreach ($filters as $field => $value) {
 			if (is_scalar($value)) {
-				$whereCondition .= " AND ".$sPrefixStr.$field." = ? ";
+				$whereCondition .= " AND `".$sPrefixStr.$field."` = ? ";
 				$aParams[] = $value;
 			}
 			elseif (is_null($value) || empty($value) || $value === '') {
-				$whereCondition .= " AND ".$sPrefixStr.$field." IS NULL ";
+				$whereCondition .= " AND `".$sPrefixStr.$field."` IS NULL ";
 			}
 			elseif (is_array($value)) {
 				$markers = $value;
@@ -188,7 +188,7 @@ class db {
 				foreach($markers as $key => $value) {
 					$markers[$key] = '?';
 				}
-				$whereCondition .= " AND ".$sPrefixStr.$field." IN (".implode(',', $markers).") ";
+				$whereCondition .= " AND `".$sPrefixStr.$field."` IN (".implode(',', $markers).") ";
 			}
 		}
 		return array($whereCondition, $aParams);
@@ -210,7 +210,7 @@ class db {
 	    $aSearch = array();
 	    $aParams = array();
 	    foreach ($options['search_fields'] as $field) {
-	        $aSearch[] = $field. " LIKE ?";
+	        $aSearch[] = "`$field` LIKE ?";
 	        $aParams[] = '%' . $options['search'] . '%';
 	    }
 	    

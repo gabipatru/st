@@ -68,6 +68,15 @@ function href_admin($sName, $sData = '') {
                 case 'list_users':
                     return HTTP_MAIN.'/admin/users/list_users.html';
             }
+        case 'email':
+            switch ($aPath[1]) {
+                case 'list_menu':
+                    return HTTP_MAIN.'/admin/email/list_menu.html';
+                case 'email_queue':
+                    return HTTP_MAIN.'/admin/email/email_queue.html';
+                case 'email_log':
+                    return HTTP_MAIN.'/admin/email/email_log.html';
+            }
     }
 }
 

@@ -6,7 +6,7 @@
 <div id="content">
 	
 <?php if (!$oUserCol):?>
-	<p><?php __('No users found')?></p>
+	<p><?php echo __('No users found')?></p>
 <?php else:?>
 	<!-- Box -->
 	<div class="box">
