@@ -99,7 +99,7 @@ class controller_website {
             http_redir($referrer);
         }
         
-        setcookie(Translations::COOKIE_NAME, $newLanguage, time() + 86400 * 365);
+        setcookie(Translations::COOKIE_NAME, $newLanguage, time() + 86400 * 365, "/");
         
         http_redir($referrer);
     }
