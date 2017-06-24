@@ -84,4 +84,23 @@ class controller_website {
         mvc::assign('FV', $FV);
         mvc::assign('messageSent', $messageSent);
     }
+    
+    public function save_language() {
+        $newLanguage = filter_get('language', 'string');
+        $referrer = filter_get('referrer', 'string');
+        
+        if (!$referrer) {
+            $referrer = href_website('website/homepage');
+        }
+        
+        $oTranslations = Translations::getSingleton();
+        if (!$newLanguage || !$oTranslations->checkIfLanguageExists($newLanguage)) {
+            message_set_error(__('Could not configure language'));
+            http_redir($referrer);
+        }
+        
+        setcookie(Translations::COOKIE_NAME, $newLanguage, time() + 86400 * 365);
+        
+        http_redir($referrer);
+    }
 }

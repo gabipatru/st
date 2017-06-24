@@ -18,8 +18,9 @@ require_once(FUNCTIONS_DIR . '/email.php');
 securityUpdateToken();
 
 // load common translations
+$language = (isset($_COOKIE[Translations::COOKIE_NAME]) ? $_COOKIE[Translations::COOKIE_NAME] : DEFAULT_TRANSLATION_LANGUAGE);
 $oTranslations = Translations::getSingleton();
-$oTranslations->setLanguage('ro_RO');
+$oTranslations->setLanguage($language);
 $oTranslations->setModule('common');
 mvc::assign('oTranslations', $oTranslations);
 

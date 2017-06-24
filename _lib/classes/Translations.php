@@ -7,6 +7,8 @@
 
 class Translations {
     
+    const COOKIE_NAME = 'language';
+    
     private static $instance = null;
     private $language;
     private $module;
@@ -58,6 +60,10 @@ class Translations {
             return false;
         }
         
+        if (!$this->checkIfLanguageExists($lang)) {
+            $lang = DEFAULT_TRANSLATION_LANGUAGE;
+        }
+        
         $this->language = $lang;
     }
     
@@ -67,6 +73,17 @@ class Translations {
         }
         
         return $this->language;
+    }
+    
+    /*
+     * Check if a translation folder exists
+     */
+    public function checkIfLanguageExists($language) {
+        if (is_dir(TRANSLATIONS_DIR . '/' . $language)) {
+            return true;
+        }
+        
+        return false;
     }
     
     /*

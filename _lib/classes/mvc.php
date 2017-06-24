@@ -41,10 +41,6 @@ class mvc {
 	        require_once(CLASSES_DIR . '/db_data/_db_data.php');
 	        return;
 	    }
-	    if ($sClassName == 'ControllerAdminModel') {
-	        require_once(CONTROLLER_DIR . '/admin/_controller_admin_model.php');
-	        return;
-	    }
 	    if ($sClassName == 'dbDataModel') {
 	        require_once(CLASSES_DIR . '/db_data/_db_data_model.php');
 	        return;
@@ -58,6 +54,10 @@ class mvc {
 		if (file_exists(CLASSES_DIR . '/db_data/' . $sClassName . '.php')) {
 			require_once(CLASSES_DIR . '/db_data/' . $sClassName . '.php');
 			return;
+		}
+		if (file_exists(CLASSES_DIR . '/controller_model/' . $sClassName . '.php')) {
+		    require_once(CLASSES_DIR . '/controller_model/' . $sClassName . '.php');
+		    return;
 		}
 	}
 	

@@ -14,6 +14,8 @@ function href_website($sName, $sData = '') {
 					return HTTP_MAIN.'/website/homepage.html';
 				case 'contact':
 				    return HTTP_MAIN.'/website/contact.html';
+				case 'save_language':
+				    return HTTP_MAIN.'/website/save_language.html'. ($sData ? '?referrer='.urldecode($sData) : '');
 			}
 			break;
 		case 'user':

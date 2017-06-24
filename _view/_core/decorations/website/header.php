@@ -6,7 +6,7 @@
 				<div class="col-sm-6">
 					<div class="contactinfo">
 						<ul class="nav nav-pills">
-							<li><a href="#"><i class="fa fa-phone"></i><?php echo ($oTranslations->getLanguage() == 'en' ? Config::configByPath('HTML/Header/Phone Number EN') : Config::configByPath('HTML/Header/Phone Number RO'))?></a></li>
+							<li><a href="#"><i class="fa fa-phone"></i><?php echo ($oTranslations->getLanguage() == 'en_EN' ? Config::configByPath('HTML/Header/Phone Number EN') : Config::configByPath('HTML/Header/Phone Number RO'))?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -39,7 +39,8 @@
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="#">EN</a></li>
+								<li><a href="<?php echo href_website('website/save_language', CURRENT_URL)?>&language=en_EN"><div class="flag-en"></div> <span>EN</span></a></li>
+								<li><a href="<?php echo href_website('website/save_language', CURRENT_URL)?>&language=ro_RO"><div class="flag-ro"></div> <span>RO</span></a></li>
 							</ul>
 						</div>
 					</div>
