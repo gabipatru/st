@@ -38,6 +38,12 @@ INSERT INTO config (path, value, type)
 VALUES ('/Website/Users/Welcome Email', '1', 'yesno');
 ";
 
+// limit the maximum number of confirmations
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Website/Users/Max confirmations per user', '8', 'text');
+";
+
 // add config for global email_form and email_from_name
 $migrationSql[] = "
 INSERT INTO config (path, value, type)

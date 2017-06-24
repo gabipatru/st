@@ -32,12 +32,47 @@ class UserConfirmation extends DbData {
         return $oCollection;
     }
     
+    /*
+     * Get the number of confirmations of a user
+     */
+    public function UserConfirmationNumber($userId) {
+        if (!$userId || !ctype_digit((string) $userId)) {
+            return false;
+        }
+        
+        $sql = " SELECT COUNT(*) AS cnt"
+              ." FROM ".UserConfirmation::TABLE_NAME
+              ." WHERE user_id = ?";
+        $res = db::query($sql, array($userId));
+        if (!$res) {
+            return false;
+        }
+        $row = db::fetchAssoc($res);
+        $number = $row['cnt'];
+        return $number;
+    }
+    
+    /*
+     * Add a user confirmation code to the database while checking if the user has reached the max number of confirmations
+     * 
+     * @throw Exception
+     */
     public function createNewConfirmation($userId) {
         if (!$userId || !ctype_digit((string) $userId)) {
             return false;
         }
         
-        $configConfirmationExp = Config::configByPath(User::CONFIG_CONFIRMATION_EXPIRY);
+        $configConfirmationExp  = Config::configByPath(User::CONFIG_CONFIRMATION_EXPIRY);
+        $configMaxConfirmations = Config::configByPath(User::CONFIG_MAX_CONFIRMATIONS);
+        
+        // check if the user has reached the max number of confirmations
+        $numberOfConfirmations = $this->UserConfirmationNumber($userId);
+        if (!ctype_digit((string) $numberOfConfirmations)) {
+            throw new Exception(__('Could not create confirmation code'));
+        }
+        if ($numberOfConfirmations >= $configMaxConfirmations) {
+            throw new Exception(__('You cannot create any more confirmation codes'));
+        }
         
         $code = md5(date('Y-m-d H:i:s') . WEBSITE_SALT);
         $oItem = new SetterGetter();
