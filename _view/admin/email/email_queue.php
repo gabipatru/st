@@ -108,7 +108,11 @@
 			<td><?php echo $email->getCreatedAt()?></td>
 			<td><?php echo $email->getUpdatedAt()?></td>
 			<td><?php echo $email->getStatus()?></td>
-			<td>&nbsp;</td>
+			<td>
+				<a href="#" class="js-show-email-body" data-body="<?php echo base64_encode($email->getBody())?>">
+					<?php echo __('Show email body')?>
+				</a>
+			</td>
 		</tr>
 	<?php endforeach;?>
 	
