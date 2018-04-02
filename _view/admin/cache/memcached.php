@@ -44,7 +44,7 @@
 				<!-- Form -->
 				<div class="form">
 					<p>
-						<label><?php echo __('Flush one Memcached key')?> <span>(<?php echo __('Required Field')?></span></label>
+						<label><?php echo __('Flush one Memcached key')?> <span>(<?php echo __('Required Field')?>)</span></label>
 						<input type="text" name="memcached_key" class="field size1" />
 					</p>
 				</div>
