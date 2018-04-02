@@ -35,7 +35,8 @@
 					<div class="btn-group pull-right">
 						<div class="btn-group">
 							<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-								RO
+								<?php echo ($language == 'ro_RO' ? 'RO' : '')?>
+								<?php echo ($language == 'en_EN' ? 'EN' : '')?>
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
