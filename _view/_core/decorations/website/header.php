@@ -76,8 +76,8 @@
 					</div>
 					<div class="mainmenu pull-left">
 						<ul class="nav navbar-nav collapse navbar-collapse">
-							<li><a href="<?php echo href_website('website/homepage')?>" class="active"><?php echo __('Home')?></a></li>
-							<li><a href="<?php echo href_website('website/contact')?>"><?php echo __('Contact')?></a></li>
+							<li><a href="<?php echo href_website('website/homepage')?>" class="<?php echo (MVC_ACTION == 'homepage' ? 'active' : '')?>"><?php echo __('Home')?></a></li>
+							<li><a href="<?php echo href_website('website/contact')?>" class="<?php echo (MVC_ACTION == 'contact' ? 'active' : '')?>"><?php echo __('Contact')?></a></li>
 						</ul>
 					</div>
 				</div>
