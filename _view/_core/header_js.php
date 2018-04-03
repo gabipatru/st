@@ -12,6 +12,8 @@ var MVC_ACTION_URL	= '<?php echo MVC_ACTION_URL?>';
 var CURRENT_URL		= '<?php echo CURRENT_URL?>';
 
 var TOKEN			= '<?php echo securityGetToken()?>';
+
+var language		= '<?php echo $language ?>';
 </script>
 
 <?php if (!$_SKIP_JS): ?>
