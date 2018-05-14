@@ -1,14 +1,12 @@
 function __(msg) {
-	
 	// load translations
-	static var Translations;
-	if (!Translations) {
-		Translations = getTranslations();
+	if ( typeof __.Translations == 'undefined' ) {
+		__.Translations = getTranslations();
 	}
 	
 	// get the translations
-	if (msg in Translations) {
-		return Translations[msg];
+	if (msg in __.Translations) {
+		return __.Translations[msg];
 	}
 	
 	return msg;
