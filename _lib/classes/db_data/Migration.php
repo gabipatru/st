@@ -19,17 +19,46 @@ class Migration extends DbData {
     }
     
     /**
+     * Get the tables in the database
+     */
+    public function getTables() {
+        $sql = "SHOW TABLES";
+        $res = db::query($sql);
+        
+        if (!$res || $res->errorCode() != '00000') {
+            return new Collection();
+        }
+        
+        $oCollection = new Collection();
+        $i=0;
+        while ($row = db::fetchAssoc($res)) {
+            $oCollection->add($i, $row);
+            $i++;
+        }
+        
+        return $oCollection;
+    }
+    
+    /**
      * Find the migrations which have to be run and run them
      */
     public function runMigrations() {
         // load current mirations status
         require_once(CONFIG_DIR . '/migration.php');
         
-        db::startTransaction();
-        db::lock_transaction('migrations');
+        // get the database tables
+        $Tables = $this->getTables();
         
-        // load database version for all migrations
-        $oDatabaseVersion = $this->Get();
+        db::startTransaction();
+        if (count($Tables) > 0) {
+            db::lock_transaction('migrations');
+            // load database version for all migrations
+            $oDatabaseVersion = $this->Get();
+        }
+        else {
+            $oDatabaseVersion = new Collection();
+        }
+
         if (!count($oDatabaseVersion)) {
             $this->deployMigrations('migrations', '000');
             $oDatabaseVersion = $this->Get();
@@ -120,7 +149,7 @@ class Migration extends DbData {
             else {
                 $filters = array('name' => $migrationName);
                 $oMigration = $this->singleGet($filters);
-                if (!count($oMigration)) {
+                if (! $oMigration instanceof SetterGetter) {
                     die('Failed to fetch migration name : ' . $migrationName);
                 }
 
