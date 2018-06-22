@@ -39,7 +39,7 @@ class Config extends DbData {
             // try fetching from Registry
             $oRegistry = Registry::getSingleton();
             $oConfigCollection = $oRegistry->get(self::REGISTRY_KEY);
-            if (count($oConfigCollection)) {
+            if ($oConfigCollection !== null && count($oConfigCollection)) {
                 return $oConfigCollection;
             }
             
