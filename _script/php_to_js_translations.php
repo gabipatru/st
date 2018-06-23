@@ -69,7 +69,7 @@ class PHPtoJStranslations extends AbstractCron {
             $processed = [];
             foreach ($allMessages as $msg) {
                 $msgTranslated = $oTranslations->__($msg);
-                $processed[] = "'$msg':'$msgTranslated'";
+                $processed[$msg] = "'$msg':'$msgTranslated'";
             }
             
             // one single string with all $untranslated:$translated pairs
@@ -89,7 +89,7 @@ class PHPtoJStranslations extends AbstractCron {
         }
         
         $allLangs = implode(',', $allLangs);
-        $allLangs = 'var Translations={' .$allLangs. '}';
+        $allLangs = 'var Translations={' .$allLangs. '};';
         
         return $allLangs;
     }
@@ -115,7 +115,7 @@ class PHPtoJStranslations extends AbstractCron {
         $r = file_put_contents(self::JS_TRANSLATION_FILE, $jsString);
         
         if ($r) {
-            $this->displayMsg("New translations are saved. New size: $r");
+            $this->displayMsg("New translations are saved. New size: ". display_bytes($r));
         }
         else {
             $this->displayMsg("Could not save translations to HDD!");
