@@ -14,6 +14,7 @@ define('DECORATIONS_DIR', 		VIEW_DIR.'/_core/decorations');
 define('STATIC_DIR', 			BASE_DIR.'/public_html/_static');
 define('CSS_DIR', 				STATIC_DIR.'/css');
 define('JS_DIR', 				STATIC_DIR.'/js');
+define('JS_CODE_DIR',           BASE_DIR.'/_js');
 define('FILES_DIR', 			BASE_DIR.'/files');
 define('TRANSLATIONS_DIR',      BASE_DIR.'/_translations');
 define('EMAIL_VIEW_DIR',		VIEW_DIR.'/_email');

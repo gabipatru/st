@@ -25,7 +25,7 @@ abstract class AbstractCron extends SetterGetter {
         
         // this is for logging
         if (!$loggerName) {
-            $loggerName = get_class($this);
+            $loggerName = get_class($this). '.log';
         }
         $this->setLogName($loggerName);
         

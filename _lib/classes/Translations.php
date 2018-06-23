@@ -9,6 +9,14 @@ class Translations {
     
     const COOKIE_NAME = 'language';
     
+    const LANGUAGES = ['en_EN', 'ro_RO'];
+    const MODULES = [
+        'common',
+        'admin',
+        'user',
+        'website'
+    ];
+    
     private static $instance = null;
     private $language;
     private $module;
@@ -87,6 +95,21 @@ class Translations {
     }
     
     /*
+     * Get the raw translations for processing
+     */
+    public function getAllKeys() {
+        return $this->translations['untranslated'];
+    }
+    
+    /*
+     * Reset all translations
+     */
+    public function resetTranslations() {
+        unset($this->translations['untranslated']);
+        unset($this->translations['translated']);
+    }
+    
+    /*
      * Load a translation. Language and module must be set
      */
     public function loadTranslations() {
@@ -102,7 +125,7 @@ class Translations {
             }
         }
         else {
-            log_message('translation.log', 'Warning! Translation file ' . $language . '/' . $module . '.csv' . ' Does not exist!');
+            log_message('translation.log', 'Warning! Translation file '.$language.'/' .$module. '.csv Does not exist!');
         }
     }
     
