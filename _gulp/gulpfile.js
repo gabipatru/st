@@ -28,14 +28,14 @@ gulp.task('cleanup', function() {
 
 // JS hint task - check for js errors
 gulp.task('jshint', function() {
-  gulp.src(['./../_js/js-admin/**/*', './../_js/js-website/**/*.js'])
+  gulp.src(['./../_js/translations.js', './../_js/js-admin/**/*', './../_js/js-website/**/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
 // Process javascript task for website - concat, uglify
 gulp.task('javascript-website', function() {
-  gulp.src(['./../_js/js-vendors/**/*.js', './../_js/js-website/**/*.js'])
+  gulp.src(['./../_js/translations.js', './../_js/js-vendors/**/*.js', './../_js/js-website/**/*.js'])
     .pipe(concat('bundle.js'))
     .pipe(uglify())
     .pipe(gzip())
@@ -47,7 +47,7 @@ gulp.task('javascript-website', function() {
 
 // Process javascript task for admin - concat, uglify
 gulp.task('javascript-admin', function() {
-  gulp.src(['./../_js/js-vendors/**/*.js', './../_js/js-admin/**/*.js'])
+  gulp.src(['./../_js/translations.js', './../_js/js-vendors/**/*.js', './../_js/js-admin/**/*.js'])
     .pipe(concat('bundle-admin.js'))
     .pipe(uglify())
     .pipe(gzip())

@@ -1,4 +1,9 @@
 #!/bin/bash
 
+cd /var/www/st/_script
+php php_to_js_translations.php debug
+
+sleep 1
+
 cd /var/www/st/_gulp
 gulp

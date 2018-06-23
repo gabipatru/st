@@ -13,7 +13,7 @@ var CURRENT_URL		= '<?php echo CURRENT_URL?>';
 
 var TOKEN			= '<?php echo securityGetToken()?>';
 
-var language		= '<?php echo $language ?>';
+var LANGUAGE		= '<?php echo $oTranslations->getLanguage()?>';
 </script>
 
 <?php if (!$_SKIP_JS): ?>

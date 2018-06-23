@@ -23,7 +23,6 @@ $oTranslations = Translations::getSingleton();
 $oTranslations->setLanguage($language);
 $oTranslations->setModule('common');
 mvc::assign('oTranslations', $oTranslations);
-mvc::assign('language', $language);
 
 // database connection
 try {
