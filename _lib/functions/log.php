@@ -1,6 +1,6 @@
 <?php
 
-define ('LOG_PATH', FILES_DIR.'/logs');
+define ('LOG_PATH', FILES_DIR.'/log');
 
 function log_message($sFileName, $sMessage) {
 	if (!$sFileName) {
