@@ -1,6 +1,6 @@
 <?php
 // filesystem-specific
-define('BASE_DIR', 				'/var/www/st');
+define('BASE_DIR', 				getenv('WEBSITE_PATH'));
 define('HTTP_PROTOCOL', 		'http://');
 define('HTTP', 					HTTP_PROTOCOL . 'www.st.ro');
 define('HTTP_MAIN', 			HTTP);

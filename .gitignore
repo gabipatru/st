@@ -3,4 +3,3 @@
 .settings/
 _gulp/node_modules/*
 _gulp/package-lock.json
-files/*

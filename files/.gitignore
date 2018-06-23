@@ -1,0 +1,4 @@
+log/apache/error.log
+log/apache/access.log
+log/nginx/error.log
+log/nginx/access.log
