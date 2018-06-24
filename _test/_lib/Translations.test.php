@@ -18,6 +18,9 @@ class Translations extends AbstractTest {
         $tr2 = \Translations::getSingleton();
         $tr2->setModule('website', false);
         
+        $this->assertTrue($tr1 instanceof \Translations);
+        $this->assertTrue($tr2 instanceof \Translations);
+        
         $this->assertEquals($tr1->getModule(), $tr2->getModule());
         
         $tr1->setLanguage('ro_RO');
@@ -33,6 +36,7 @@ class Translations extends AbstractTest {
     public function testLanguageExists() {
         $tr = \Translations::getSingleton();
         
+        $this->assertTrue($tr instanceof \Translations);
         $this->assertTrue($tr->checkIfLanguageExists('en_EN'));
         $this->assertTrue($tr->checkIfLanguageExists('ro_RO'));
         $this->assertFalse($tr->checkIfLanguageExists('pl_PL'));
@@ -46,6 +50,8 @@ class Translations extends AbstractTest {
      */
     public function testTranslationIntegrity() {
         $tr = \Translations::getSingleton();
+        
+        $this->assertTrue($tr instanceof \Translations);
         
         foreach (\Translations::MODULES as $module) {
             $tr->setLanguage('en_EN');
@@ -75,17 +81,18 @@ class Translations extends AbstractTest {
         $tr->setModule('common');
         
         // asserts
+        $this->assertTrue($tr instanceof \Translations);
         $this->assertEquals('Account', $tr->__('Account'));
         $this->assertEquals('Home', $tr->__('Home'));
         
         $tr->resetTranslations();
         
         // set up language and module
-        $tr = \Translations::getSingleton();
         $tr->setLanguage('ro_RO');
         $tr->setModule('common');
         
         // asserts
+        $this->assertTrue($tr instanceof \Translations);
         $this->assertEquals('Cont', $tr->__('Account'));
         $this->assertEquals('Acasa', $tr->__('Home'));
     }
