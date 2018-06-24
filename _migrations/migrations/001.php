@@ -14,12 +14,12 @@ ENGINE=InnoDB;
 
 $migrationSql[] = "
 CREATE TABLE `migration_log` (
-	`migraion_log_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`migration_log_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`migration_id` INT UNSIGNED NOT NULL,
 	`query` TEXT NOT NULL,
     `duration` DECIMAL(10,3) NULL DEFAULT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (`migraion_log_id`),
+	PRIMARY KEY (`migration_log_id`),
 	CONSTRAINT `FK___migration` FOREIGN KEY (`migration_id`) REFERENCES `_migration` (`migration_id`) ON UPDATE CASCADE ON DELETE CASCADE
 )
 COLLATE='latin1_general_ci'

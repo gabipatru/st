@@ -19,6 +19,27 @@ class Migration extends DbData {
     }
     
     /**
+     * Load the migration sql from a file and return it
+     */
+    protected function fetchMigrationSQL($folder, $migrationName) {
+        // No file exists checking.
+        // We don't want the execution to continue if there are migration issues
+        require($folder . '/' . $migrationName . '.php');
+        if (empty($migrationSql)) {
+            die('Failed to run migration ' . $folder . ' : ' . $migrationName);
+        }
+        
+        return $migrationSql;
+    }
+    
+    /**
+     * Check if migration file exists
+     */
+    protected function checkMigrationFile($folder, $migrationName) {
+        return file_exists($folder . '/' . $migrationName . '.php');
+    }
+    
+    /**
      * Get the tables in the database
      */
     public function getTables() {
@@ -44,7 +65,7 @@ class Migration extends DbData {
      */
     public function runMigrations() {
         // load current mirations status
-        require_once(CONFIG_DIR . '/migration.php');
+        require(CONFIG_DIR . '/migration.php');
         
         // get the database tables
         $Tables = $this->getTables();
@@ -100,7 +121,7 @@ class Migration extends DbData {
         $nextMigrationName = $this->getNextMigration($currentVersion);
 
         // while there are migrations, run them
-        while (file_exists($folder . '/' . $this->getNextMigration($currentVersion) . '.php')) {
+        while ($this->checkMigrationFile($folder, $this->getNextMigration($currentVersion))) {
             // never run the previous migration
             $executedMigrations = '';
             if (isset($migrationSql)) {
@@ -108,10 +129,8 @@ class Migration extends DbData {
             }
             
             $nextMigrationName = $this->getNextMigration($currentVersion);
-            require_once($folder . '/' . $nextMigrationName . '.php');
-            if (empty($migrationSql)) {
-                die('Failed to run migration ' . $migrationName . ' : ' . $nextMigrationName);
-            }
+            
+            $migrationSql = $this->fetchMigrationSQL($folder, $nextMigrationName);
 
             $timeStart = microtime(true);
 
