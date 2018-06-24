@@ -8,7 +8,8 @@ require_once(__DIR__ .'/../AbstractTest.php');
 class SetterGetter extends AbstractTest {
     
     /**
-     * @group slow
+     * Basic test for SetterGetter
+     * @group fast
      */
     public function testSetterGetter() {
         $Var = new \SetterGetter();
