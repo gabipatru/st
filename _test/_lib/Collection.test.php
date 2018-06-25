@@ -81,4 +81,18 @@ class Collection extends AbstractTest {
         $this->assertEquals('apple juice', $Collection->getById(1)->getName());
         $this->assertEquals('synthetic', $Collection->getById(2)->getType());
     }
+    
+    /**
+     * Try getting an item from an empty collection
+     * @group fast
+     */
+    public function testGetItemEmptyCollection() {
+        $Collection = new \Collection();
+        
+        $Item = $Collection->getItem();
+        
+        // assert
+        $this->assertFalse($Item instanceof \SetterGetter);
+        $this->assertFalse($Item);
+    }
 }
