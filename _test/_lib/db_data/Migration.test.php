@@ -21,6 +21,8 @@ class Migration extends AbstractTest {
     public function testGetNextVersion() {
         $Migration = new \Migration();
         
+        $this->assertInstanceOf(\Migration::class, $Migration);
+        
         $nextVersion = $this->invokeMethod($Migration, 'getNextMigration', [ '000' ]);
         $this->assertEquals('001', $nextVersion);
         
