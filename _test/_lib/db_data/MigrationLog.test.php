@@ -25,9 +25,9 @@ class MigrationLog extends AbstractTest {
         $this->setUpDB();
         
         $Migration = new \Migration();
-        $tables = $Migration->getTables()->toArray();
+        $Tables = $Migration->getTables();
 
-        $this->assertTrue(in_array('migration_log', array_column($tables, 'tablesinmvctest')));
+        $this->assertTrue(in_array('migration_log', $Tables->collectionColumn('tablesinmvctest')));
     }
     
     /**

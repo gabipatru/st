@@ -65,4 +65,11 @@ class Collection extends SetterGetter implements Countable, IteratorAggregate {
             $this->add($key, $row);
         }
     }
+    
+    /*
+     * Get a column of the collection
+     */
+    public function collectionColumn($columnName) {
+        return array_column($this->data, $columnName);
+    }
 }

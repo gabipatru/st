@@ -95,4 +95,27 @@ class Collection extends AbstractTest {
         $this->assertFalse($Item instanceof \SetterGetter);
         $this->assertFalse($Item);
     }
+    
+    /**
+     * Test getting a collection column
+     * @group fast
+     */
+    public function testCollectionColumn() {
+        $Collection = new \Collection();
+        
+        // the data
+        $arr = [
+            1 => ['name' => 'apple juice', 'type' => 'natural'],
+            2 => ['name' => 'coca cola', 'type' => 'synthetic']
+        ];
+        
+        $Collection->fromArray($arr);
+        
+        // test collection column
+        $arr = $Collection->collectionColumn('type');
+        
+        $this->assertCount(2, $arr);
+        $this->assertEquals($arr[0], 'natural');
+        $this->assertEquals($arr[1], 'synthetic');
+    }
 }
