@@ -33,4 +33,46 @@ class EmailTemplate extends AbstractTest {
         $this->assertEquals('testx', $Email->getViewFile());
         $this->assertEquals('testy', $Email->getDecorations());
     }
+    
+    /**
+     * Test adding an email to the email queue
+     * @group slow
+     */
+    public function testAddToQueue() {
+        $this->setUpDB();
+        
+        $Email = new \EmailTemplate('test');
+        
+        // Add the message to queue
+        $r = $Email->queue('test@st.ro', 'test', 'test');
+        
+        // get data from DB
+        $EmailQueue = new \EmailQueue();
+        $filter = ['to' => 'test@st.ro'];
+        $Collection = $EmailQueue->Get($filter, []);
+        
+        // asserts
+        $this->assertTrue($r);
+        $this->assertInstanceOf(\Collection::class, $Collection);
+        $this->assertCount(1, $Collection);
+        $Item = $Collection->getItem();
+        $this->assertInstanceOf(\SetterGetter::class, $Item);
+        $this->assertEquals('test', $Item->getSubject());
+        $this->assertEquals('test', $Item->getBody());
+    }
+    
+    /**
+     * Test adding an email to email queue with wrong data
+     * @group fast
+     */
+    public function testAddToQueueNoEmailAddress() {
+        $Email = new \EmailTemplate('test');
+        
+        // Add the message to queue
+        $r = $Email->queue([], '');
+        
+        // assert false was returned, which means error
+        $this->assertFalse($r);
+    }
+
 }
