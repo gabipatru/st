@@ -63,4 +63,20 @@ class BaseTest extends AbstractTest {
             $this->assertEquals('40755', sprintf('%o', fileperms($folder)));
         }
     }
+    
+    /**
+     * Test the folders with all user write permissions
+     * @group fast
+     */
+    public function testUploadFolder() {
+        $allFolders = [
+            FILES_DIR,
+            FILES_DIR .'/log'
+        ];
+        
+        foreach ($allFolders as $folder) {
+            $this->assertTrue(is_dir($folder));
+            $this->assertEquals('40777', sprintf('%o', fileperms($folder)));
+        }
+    }
 }
