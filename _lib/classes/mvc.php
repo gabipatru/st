@@ -55,6 +55,10 @@ class mvc {
 			require_once(CLASSES_DIR . '/db_data/' . $sClassName . '.php');
 			return;
 		}
+		if (file_exists(TRAITS_DIR . '/' . $sClassName . '.trait.php')) {
+		    require_once(TRAITS_DIR . '/' . $sClassName . '.trait.php');
+		    return;
+		}
 		if (file_exists(CLASSES_DIR . '/controller_model/' . $sClassName . '.php')) {
 		    require_once(CLASSES_DIR . '/controller_model/' . $sClassName . '.php');
 		    return;

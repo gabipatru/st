@@ -5,6 +5,7 @@ require_once("environment.php");
 define('CONFIG_DIR', 			BASE_DIR.'/_config');
 define('CLASSES_DIR', 			BASE_DIR.'/_lib/classes');
 define('FUNCTIONS_DIR', 		BASE_DIR.'/_lib/functions');
+define('TRAITS_DIR',            BASE_DIR.'/_lib/traits');
 define('CONTROLLER_DIR',		BASE_DIR.'/_controller');
 define('MIGRATIONS_DIR',        BASE_DIR.'/_migrations');
 define('SCRIPT_DIR',            BASE_DIR.'/_script');

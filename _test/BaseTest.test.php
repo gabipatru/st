@@ -30,13 +30,15 @@ class BaseTest extends AbstractTest {
     
     /**
      * Test that some folders exist and that they have correct permissions
-     * @group slow
+     * @group fast
      */
     public function testFolders() {
         $allFolders = [
             BASE_DIR,
             CONFIG_DIR,
             CONTROLLER_DIR,
+            CLASSES_DIR,
+            TRAITS_DIR,
             BASE_DIR .'/_gulp',
             JS_CODE_DIR,
             JS_CODE_DIR .'/js-vendors',
