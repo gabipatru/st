@@ -406,4 +406,189 @@ class FilterTest extends AbstractTest
         $this->assertEquals('gabipatru@gmail.com', $r1);
         $this->assertEquals('gabipatru123@gmail.com', $r2);
     }
+    
+    /**
+     * Test email validation
+     * @group fast
+     */
+    public function testIsEmail() 
+    {
+        // the data
+        $var1 = 'gabipatru@gmail.com';
+        $var2 = 'gabipatru@gmail';
+        $var3 = 'gabipatru';
+        $var4 = '';
+        $var5 = null;
+        
+        // the validating
+        $r1 = $this->isEmail($var1);
+        $r2 = $this->isEmail($var2);
+        $r3 = $this->isEmail($var3);
+        $r4 = $this->isEmail($var4);
+        $r5 = $this->isEmail($var5);
+        
+        // asserts
+        $this->assertTrue($r1);
+        $this->assertFalse($r2);
+        $this->assertFalse($r3);
+        $this->assertFalse($r4);
+        $this->assertFalse($r5);
+    }
+    
+    /**
+     * Test Domain validation
+     * @group fast
+     */
+    public function testIsDomain()
+    {
+        // the data
+        $var1 = 'www.st.ro';
+        $var2 = 'st.ro';
+        $var3 = '.ro';
+        $var4 = 'www.st.ro/index.html';
+        $var5 = '';
+        $var6 = null;
+        
+        // the validating
+        $r1 = $this->isDomain($var1);
+        $r2 = $this->isDomain($var2);
+        $r3 = $this->isDomain($var3);
+        $r4 = $this->isDomain($var4);
+        $r5 = $this->isDomain($var5);
+        $r6 = $this->isDomain($var6);
+        
+        // asserts
+        $this->assertTrue($r1);
+        $this->assertTrue($r2);
+        $this->assertFalse($r3);
+        $this->assertTrue($r4);
+        $this->assertFalse($r5);
+        $this->assertFalse($r6);
+    }
+    
+    /**
+     * Test ip validation
+     * @group fast
+     */
+    public function testIsIp() {
+        // the data
+        $var1 = '1.1.1.1';
+        $var2 = '192.168.10.21';
+        $var3 = '255.255.255.255';
+        $var4 = '192.168.10.';
+        $var5 = '192';
+        $var6 = '';
+        $var7 = null;
+        
+        // the validation
+        $r1 = $this->isIp($var1);
+        $r2 = $this->isIp($var2);
+        $r3 = $this->isIp($var3);
+        $r4 = $this->isIp($var4);
+        $r5 = $this->isIp($var5);
+        $r6 = $this->isIp($var6);
+        $r7 = $this->isIp($var7);
+        
+        // asserts
+        $this->assertTrue($r1);
+        $this->assertTrue($r2);
+        $this->assertTrue($r3);
+        $this->assertFalse($r4);
+        $this->assertFalse($r5);
+        $this->assertFalse($r6);
+        $this->assertFalse($r7);
+    }
+    
+    /**
+     * Test mac validation
+     * @group fast
+     */
+    public function testIsMac()
+    {
+        // the data
+        $var1 = '00-14-22-01-23-45';
+        $var2 = '00-14';
+        $var3 = '123';
+        $var4 = '';
+        $var5 = null;
+        
+        // the validation
+        $r1 = $this->isMac($var1);
+        $r2 = $this->isMac($var2);
+        $r3 = $this->isMac($var3);
+        $r4 = $this->isMac($var4);
+        $r5 = $this->isMac($var5);
+        
+        // assert
+        $this->assertTrue($r1);
+        $this->assertFalse($r2);
+        $this->assertFalse($r3);
+        $this->assertFalse($r4);
+        $this->assertFalse($r5);
+    }
+    
+    /**
+     * Test url validation
+     * @group fast
+     */
+    public function testIsUrl()
+    {
+        // the data
+        $var1 = 'http://www.st.ro';
+        $var2 = 'https://st.ro';
+        $var3 = '.ro';
+        $var4 = 'http://www.st.ro/index.html';
+        $var5 = '';
+        $var6 = null;
+        
+        // the validation
+        $r1 = $this->isUrl($var1);
+        $r2 = $this->isUrl($var2);
+        $r3 = $this->isUrl($var3);
+        $r4 = $this->isUrl($var4);
+        $r5 = $this->isUrl($var5);
+        $r6 = $this->isUrl($var6);
+        
+        // asserts
+        $this->assertTrue($r1);
+        $this->assertTrue($r2);
+        $this->assertFalse($r3);
+        $this->assertTrue($r4);
+        $this->assertFalse($r5);
+        $this->assertFalse($r6);
+    }
+    
+    /**
+     * Test unsigned int validation
+     * @group fast
+     */
+    public function testIsUnsigned()
+    {
+        // the data
+        $var1 = '123';
+        $var2 = '1';
+        $var3 = '-2';
+        $var4 = '1.12';
+        $var5 = 'abc';
+        $var6 = '';
+        $var7 = null;
+        
+        // the validation
+        $r1 = $this->isUnsigned($var1);
+        $r2 = $this->isUnsigned($var2);
+        $r3 = $this->isUnsigned($var3);
+        $r4 = $this->isUnsigned($var4);
+        $r5 = $this->isUnsigned($var5);
+        $r6 = $this->isUnsigned($var6);
+        $r7 = $this->isUnsigned($var7);
+        
+        // asserts
+        $this->assertTrue($r1);
+        $this->assertTrue($r2);
+        $this->assertFalse($r3);
+        $this->assertFalse($r4);
+        $this->assertFalse($r5);
+        $this->assertFalse($r6);
+        $this->assertFalse($r7);
+    }
 }

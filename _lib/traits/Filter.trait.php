@@ -4,9 +4,9 @@
  * Use this trait if the class needs to filter variables
  */
 trait Filter 
-{
+{   
     /**
-     * The main function.
+     * The main filter function.
      * This will filter any variable type
      */
     public function filter($mVar, string $sFilterType)
@@ -206,5 +206,92 @@ trait Filter
     public function filterREQUEST($sIndex, $sFilterType)
     {
         return $this->filter($_REQUEST[$sIndex] ?? '', $sFilterType);
+    }
+    
+    /**
+     * Validate a value against a filter
+     */
+    private function validate($mVar, string $sFilterType) :bool
+    {
+        // initialize the filters array
+        if (strstr($sFilterType, '|') === false) {
+            $aFilters = explode('|', $sFilterType);
+        }
+        else {
+            $aFilters = array($sFilterType);
+        }
+        
+        // process the filters
+        foreach ($aFilters as $filter) {
+            // main check
+            switch ($filter) {
+                case 'isEmail':
+                    if (filter_var($mVar, FILTER_VALIDATE_EMAIL) === false) {
+                        return false;
+                    }
+                    break;
+                case 'isDomain':
+                    if (filter_var($mVar, FILTER_VALIDATE_DOMAIN) === false || !$mVar) {
+                        return false;
+                    }
+                    break;
+                case 'isIp':
+                    if (filter_var($mVar, FILTER_VALIDATE_IP) === false) {
+                        return false;
+                    }
+                    break;
+                case 'isMac':
+                    if (filter_var($mVar, FILTER_VALIDATE_MAC) === false) {
+                        return false;
+                    }
+                    break;
+                case 'isUrl':
+                    if (filter_var($mVar, FILTER_VALIDATE_URL) === false) {
+                        return false;
+                    }
+                    break;
+                case 'isUnsigned':
+                    if (ctype_digit((string) $mVar) === false) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        
+        // if none of the filters turn out to be false, return true
+        return true;
+    }
+    
+    ###############################################################################
+    ## FUNCTIONS FOR FILTERING data
+    ###############################################################################
+    public function isEmail($value) :bool
+    {
+        return $this->validate($value, 'isEmail');
+    }
+    
+    public function isDomain($value) :bool
+    {
+        return $this->validate($value, 'isDomain');
+    }
+    
+    public function isIp($value) :bool
+    {
+        return $this->validate($value, 'isIp');
+    }
+    
+    public function isMac($value) :bool
+    {
+        return $this->validate($value, 'isMac');
+    }
+
+    public function isUrl($value) :bool
+    {
+        return $this->validate($value, 'isUrl');
+    }
+    
+    public function isUnsigned($value) :bool
+    {
+        return $this->validate($value, 'isUnsigned');
     }
 }
