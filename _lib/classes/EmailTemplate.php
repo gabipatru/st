@@ -5,6 +5,8 @@
 
 class EmailTemplate extends SetterGetter {
 	
+    use Filter;
+    
 	private $aVarAssigned = array();
 	private $aVarAssignedRef = array();
 	
@@ -72,7 +74,7 @@ class EmailTemplate extends SetterGetter {
 	## QUEUE EMAIL FUNCTION
 	###############################################################################
 	public function queue($to, $subject, $body = null, $priority = EmailQueue::PRIORITY_MEDIUM) {
-        if (!$to) {
+        if (!$this->isEmail($to)) {
 			return false;
 		}
 		
@@ -96,7 +98,7 @@ class EmailTemplate extends SetterGetter {
 	## SEND EMAIL FUNCTION
 	###############################################################################
 	public function send($to, $subject, $body = null) {
-		if (!$to) {
+		if (!$this->isEmail($to)) {
 			return false;
 		}
 		

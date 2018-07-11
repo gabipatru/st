@@ -69,10 +69,29 @@ class EmailTemplate extends AbstractTest {
         $Email = new \EmailTemplate('test');
         
         // Add the message to queue
-        $r = $Email->queue([], '');
+        $r1 = $Email->queue([], '');
+        $r2 = $Email->queue([], 'abc');
         
         // assert false was returned, which means error
-        $this->assertFalse($r);
+        $this->assertFalse($r1);
+        $this->assertFalse($r2);
+    }
+    
+    /**
+     * Test sending email with wrong data
+     * @group fast
+     */
+    public function testSendWithWrongEmailAddress()
+    {
+        $Email = new \EmailTemplate('test');
+        
+        // send the email
+        $r1 = $Email->send('', 'test');
+        $r2 = $Email->send('abc', 'test');
+        
+        // assert false was returned which means error
+        $this->assertFalse($r1);
+        $this->assertFalse($r2);
     }
 
 }
