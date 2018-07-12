@@ -3,7 +3,7 @@ class controller_admin_users extends ControllerAdminModel {
     function _prehook() {
         parent::_prehook();
     
-        mvc::assign('menu', 'users');
+        $this->View->assign('menu', 'users');
     }
     
     function list_users() {
@@ -43,12 +43,12 @@ class controller_admin_users extends ControllerAdminModel {
         $oPagination->setItemsNo($oUserCol->getItemsNo());
         $oPagination->simple();
         
-        mvc::assign('oUserCol', $oUserCol);
-        mvc::assign('oPagination', $oPagination);
-        mvc::assign('search', $search);
-        mvc::assign('GF', $GF);
-        mvc::assign('sort', $sort);
-        mvc::assign('sort_crit', $sort_crit);
+        $this->View->assign('oUserCol', $oUserCol);
+        $this->View->assign('oPagination', $oPagination);
+        $this->View->assign('search', $search);
+        $this->View->assign('GF', $GF);
+        $this->View->assign('sort', $sort);
+        $this->View->assign('sort_crit', $sort_crit);
     }
     
     function ajax_change_status() {

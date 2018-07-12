@@ -3,7 +3,7 @@ class controller_admin_config extends ControllerAdminModel {
     function _prehook() {
         parent::_prehook();
         
-        mvc::assign('menu', 'config');
+        $this->View->assign('menu', 'config');
     }
     
     function list_items() {
@@ -23,8 +23,8 @@ class controller_admin_config extends ControllerAdminModel {
             $Breadcrumbs->Add($configName, CURRENT_URL);
         }
         
-        mvc::assign_by_ref('aConfig', $aSortedConfig);
-        mvc::assign('configName', $configName);
+        $this->View->assign_by_ref('aConfig', $aSortedConfig);
+        $this->View->assign('configName', $configName);
     }
     
     function save_all() {
@@ -129,7 +129,7 @@ class controller_admin_config extends ControllerAdminModel {
             }
         }
         
-        mvc::assign('FV', $FV);
+        $this->View->assign('FV', $FV);
     }
     
 }

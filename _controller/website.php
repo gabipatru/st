@@ -1,11 +1,11 @@
 <?php
-class controller_website {
+class controller_website extends AbstractController {
 	
 	function _prehook() {
-		mvc::setDecorations('website');
+	    $this->View->setDecorations('website');
 		
-		mvc::addCSS('/bundle.css');
-		mvc::addJS('/bundle.js');
+	    $this->View->addCSS('/bundle.css');
+	    $this->View->addJS('/bundle.js');
 		
 		$oTranslations = Translations::getSingleton();
 		$oTranslations->setModule('website');
@@ -81,8 +81,8 @@ class controller_website {
             }
         }
         
-        mvc::assign('FV', $FV);
-        mvc::assign('messageSent', $messageSent);
+        $this->View->assign('FV', $FV);
+        $this->View->assign('messageSent', $messageSent);
     }
     
     public function save_language() {

@@ -3,7 +3,7 @@ class controller_admin_email extends ControllerAdminModel {
     function _prehook() {
         parent::_prehook();
     
-        mvc::assign('menu', 'email');
+        $this->View->assign('menu', 'email');
     }
     
     function list_menu() {
@@ -51,12 +51,12 @@ class controller_admin_email extends ControllerAdminModel {
         $oPagination->setItemsNo($oEmailCollection->getItemsNo());
         $oPagination->simple();
         
-        mvc::assign('oCollection', $oEmailCollection);
-        mvc::assign('oPagination', $oPagination);
-        mvc::assign('search', $search);
-        mvc::assign('GF', $GF);
-        mvc::assign('sort', $sort);
-        mvc::assign('sort_crit', $sort_crit);
+        $this->View->assign('oCollection', $oEmailCollection);
+        $this->View->assign('oPagination', $oPagination);
+        $this->View->assign('search', $search);
+        $this->View->assign('GF', $GF);
+        $this->View->assign('sort', $sort);
+        $this->View->assign('sort_crit', $sort_crit);
     }
     
     function email_log() {
@@ -99,11 +99,11 @@ class controller_admin_email extends ControllerAdminModel {
         $oPagination->setItemsNo($oEmailCollection->getItemsNo());
         $oPagination->simple();
         
-        mvc::assign('oCollection', $oEmailCollection);
-        mvc::assign('oPagination', $oPagination);
-        mvc::assign('search', $search);
-        mvc::assign('GF', $GF);
-        mvc::assign('sort', $sort);
-        mvc::assign('sort_crit', $sort_crit);
+        $this->View->assign('oCollection', $oEmailCollection);
+        $this->View->assign('oPagination', $oPagination);
+        $this->View->assign('search', $search);
+        $this->View->assign('GF', $GF);
+        $this->View->assign('sort', $sort);
+        $this->View->assign('sort_crit', $sort_crit);
     }
 }

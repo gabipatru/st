@@ -4,7 +4,7 @@ class controller_admin_dashboard extends ControllerAdminModel {
     function _prehook() {
         parent::_prehook();
         
-        mvc::assign('menu', 'dashboard');
+        $this->View->assign('menu', 'dashboard');
     }
     
     function stats() {

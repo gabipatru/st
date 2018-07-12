@@ -6,7 +6,7 @@ class controller_admin_cache extends ControllerAdminModel {
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add(__('Cache'), href_admin('cache/list_cache'));
         
-        mvc::assign('menu', 'cache');
+        $this->View->assign('menu', 'cache');
     }
     
     function list_cache() {
@@ -30,8 +30,8 @@ class controller_admin_cache extends ControllerAdminModel {
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add(__('Memcached'), MVC_ACTION_URL);
 
-        mvc::assign_by_ref('aMemcacheStats', $aMemcacheStats);
-        mvc::assign('FV', $FV);
+        $this->View->assign_by_ref('aMemcacheStats', $aMemcacheStats);
+        $this->View->assign('FV', $FV);
     }
     
     function flush_memcached() {

@@ -1,6 +1,7 @@
 <?php
 /*
- * This class is used for implementing a nice and configurable email template 
+ * This class is used for implementing a nice and configurable email template.
+ * It is similar to the View class
  */
 
 class EmailTemplate extends SetterGetter {

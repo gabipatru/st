@@ -16,7 +16,7 @@ var TOKEN			= '<?php echo securityGetToken()?>';
 var LANGUAGE		= '<?php echo $oTranslations->getLanguage()?>';
 </script>
 
-<?php if (!$_SKIP_JS): ?>
+<?php if (!$this->getSkipJs()): ?>
 	<?php foreach($_aJS as $key => $value): ?>
 		<script type="text/javascript" src="<?php echo ($https ? HTTPS_JS : HTTP_JS).$value?>?id=<?php echo $key?>"></script>
 	<?php endforeach;?>

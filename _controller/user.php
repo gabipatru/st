@@ -1,11 +1,11 @@
 <?php
-class controller_user {
+class controller_user extends AbstractController {
     
     function _prehook() {
-        mvc::setDecorations('website');
+        $this->View->setDecorations('website');
         
-        mvc::addCSS('/bundle.css');
-        mvc::addJS('/bundle.js');
+        $this->View->addCSS('/bundle.css');
+        $this->View->addJS('/bundle.js');
         
         $oTranslations = Translations::getSingleton();
         $oTranslations->setModule('user');
@@ -81,8 +81,8 @@ class controller_user {
             }
         }
          
-        mvc::assign('return', $return);
-        mvc::assign('FV', $FV);
+        $this->View->assign('return', $return);
+        $this->View->assign('FV', $FV);
     }
     
     public function logout() {
@@ -212,8 +212,8 @@ class controller_user {
             }
         }
         
-        mvc::assign('userAdded', $userAdded);
-        mvc::assign('FV', $FV);
+        $this->View->assign('userAdded', $userAdded);
+        $this->View->assign('FV', $FV);
     }
     
     ###############################################################################
@@ -342,8 +342,8 @@ class controller_user {
             }
         }
         
-        mvc::assign('FV', $FV);
-        mvc::assign('emailSent', $emailSent);
+        $this->View->assign('FV', $FV);
+        $this->View->assign('emailSent', $emailSent);
     }
     
     function reset_password() {
@@ -455,8 +455,8 @@ class controller_user {
             $error = true;
         }
         
-        mvc::assign('error', $error);
-        mvc::assign('confirmationCode', $confirmationCode);
-        mvc::assign('FV', $FV);
+        $this->View->assign('error', $error);
+        $this->View->assign('confirmationCode', $confirmationCode);
+        $this->View->assign('FV', $FV);
     }
 }

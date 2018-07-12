@@ -1,7 +1,7 @@
 <?php
-if (!$_SKIP_META) {
-	if($_PAGE_TITLE) {
-		?><title><?php echo $_PAGE_TITLE?></title>
+if (!$this->getSkipMeta()) {
+	if($this->getPageTitle()) {
+	    ?><title><?php echo $this->getPageTitle()?></title>
 <?php }
 	foreach($_aMETA as $name => $content) {
 		?><meta name="<?php echo $name;?>" content="<?php echo $content?>"/>

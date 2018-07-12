@@ -1,9 +1,9 @@
 <?php
 class mvc {
+    static private $View;
+    
 	static private $sControllerPrefix = 'controller_';
 	
-	static private $aVarAssigned = array();
-	static private $aVarAssignedRef = array();
 	static private $aSkip = array(
 			'JS'               => false,
 			'CSS'              => false,
@@ -15,21 +15,10 @@ class mvc {
 			'VISIBLE_HEADER'   => false,
 			'VISIBLE_FOOTER'   => false
 		);
-	static private $aCacheBuster = array();
-	static private $aCSS = array();
-	static private $aJS = array();
-	static private $aMETA = array();
-	
-	static private $sPageTitle = '';
-	static private $sPageDecription = '';
-	static private $sPageKeywords = '';
 	
 	static private $sControllerFile;
 	static private $sControllerClass;
 	static private $sControllerFunction;
-	static private $sViewDir;
-	static private $sViewFile;
-	static private $sDecorations = 'default';
 	
 	/*
 	 * This function handles autoloading of classes
@@ -92,157 +81,12 @@ class mvc {
 	}
 	
 	/*
-	 * This function sets the view file
-	 */
-	public static function setViewFile($sFileName) {
-		self::$sViewFile = VIEW_DIR . '/' . $sFileName . '.php';
-	}
-	
-	/*
-	 * This function sets the view directory
-	 */
-	public static function setViewDir($sFolderName) {
-		self::$sViewDir = VIEW_DIR . '/' . $sFolderName;
-	}
-	
-	/*
-	 * This function sets the decorations
-	 */
-	public static function setDecorations($sFolderName) {
-		self::$sDecorations = $sFolderName;
-	}
-	
-	/*
-	 * This function add a cachebuster array, generated with gulp-bust
-	 */
-	public static function addCacheBuster($aCacheBuster) {
-	    if (is_array($aCacheBuster)) {
-	       self::$aCacheBuster = $aCacheBuster;
-	    }
-	}
-	
-	/*
-	 * This function adds a CSS file to be loaded
-	 * If the css file name matches a cachebuster key, the the css file is indexed by the cachebuster fingerprint
-	 */
-	public static function addCSS($sCssFileName) {
-	    $aCacheBuster = mvc::getCacheBuster();
-	    if (is_array($aCacheBuster)) {
-	        $arrayKeys = array_keys($aCacheBuster);
-	        foreach ($arrayKeys as $key) {
-	            if (strstr($key, $sCssFileName) !== false) {
-	                self::$aCSS[$aCacheBuster[$key]] = $sCssFileName;
-	                return;
-	            }
-	        }
-	    }
-		self::$aCSS[] = $sCssFileName;
-	}
-	
-	/*
-	 * This function adds a JS file to be loaded
-	 * If the js file name matches a cachebuster key, the the css file is indexed by the cachebuster fingerprint
-	 */
-	public static function addJS($sJsFileName) {
-	    $aCacheBuster = mvc::getCacheBuster();
-	    if (is_array($aCacheBuster)) {
-	        $arrayKeys = array_keys($aCacheBuster);
-	        foreach ($arrayKeys as $key) {
-	            if (strstr($key, $sJsFileName) !== false) {
-	                self::$aJS[$aCacheBuster[$key]] = $sJsFileName;
-	                return;
-	            }
-	        }
-	    }
-		self::$aJS[] = $sJsFileName;
-	}
-	
-	/*
-	 * This function sets a meta tag to be defined in the head
-	 */
-	public static function addMETA($sName, $sContent) {
-		self::$aMETA[$sName] = $sContent;
-	}
-	
-	/*
 	 * This function sets the page title, description and keywords
 	 */
 	public static function addSEOParams($sTitle, $sDescription, $sKeywords) {
 		self::$sPageTitle = $sTitle;
 		mvc::addMETA('description', $sDescription);
 		mvc::addMETA('keywords', $sKeywords);
-	}
-	
-	/*
-	 * This function sets a skip parameter.
-	 * There skip parameters are assigned to the view as $_SKIP_[name]
-	 */
-	private static function setSkip($index, $value) {
-		self::$aSkip[$index] = $value;
-	}
-	
-	/*
-	 * This function skips META declarations
-	 */
-	public static function skipMETA($bSkip = true) {
-		self::setSkip('META', $bSkip);
-	}
-	
-	/*
-	 * This function skipe JS includes
-	 */
-	public static function skipJS($bSkip = true) {
-		self::setSkip('JS', $bSkip);
-	}
-	
-
-	/*
-	 * This function will skip the main js bundle
-	 */
-	public static function skipJSBundle($bSkip = true) {
-	    self::setSkip('JS_BUNDLE', $bSkip);
-	}
-	
-	/*
-	 * This function skips CSS includes
-	 */
-	public static function skipCSS($bSkip = true) {
-		self::setSkip('CSS', $bSkip);
-	}
-	
-	/*
-	 * This function will skip the main css bundle
-	 */
-	public static function skipCSSBundle($bSkip = true) {
-	    self::setSkip('CSS_BUNDLE', $bSkip);
-	}
-	
-	/*
-	 * This function skips the header
-	*/
-	public static function skipHeader($bSkip = true) {
-		self::setSkip('HEADER', $bSkip);
-	}
-	
-	/*
-	 * This function skips the footer
-	*/
-	public static function skipFooter($bSkip = true) {
-		self::setSkip('FOOTER', $bSkip);
-	}
-	
-	/*
-	 * This function skips the visible header
-	*/
-	public static function skipVisibleHeader($bSkip = true) {
-		self::setSkip('VISIBLE_HEADER', $bSkip);
-	}
-	
-	/*
-	 * This function skips the visible footer
-	*/
-	public static function skipVisibleFooter($bSkip = true) {
-		self::setSkip('VISIBLE_FOOTER', $bSkip);
 	}
 	
 	/*
@@ -288,77 +132,6 @@ class mvc {
 		return self::$sControllerFile;
 	}
 	
-	/*
-	 * This function gets the view pathname
-	 */
-	public static function getViewFile() {
-		return self::$sViewFile;
-	}
-	
-	/*
-	 * This function gets the view directory
-	 */
-	public static function getViewDir() {
-		return self::$sViewDir;
-	}
-	
-	/*
-	 * This function returns the decorations directory
-	 */
-	public static function getDecorations() {
-		return self::$sDecorations;
-	}
-	
-	/*
-	 * This function fetches the cachebuster array
-	 */
-	public static function getCacheBuster() {
-	    return self::$aCacheBuster;
-	}
-	
-	###############################################################################
-	## ASSIGN FUNCTION
-	###############################################################################
-	
-	/*
-	 * Simple assign
-	 */
-	public static function assign($index, $mVar) {
-		self::$aVarAssigned[$index] = $mVar;
-	}
-	
-	/*
-	 * Assign by reference
-	 */
-	public static function assign_by_ref($index, &$mVar) {
-		self::$aVarAssignedRef[$index] =& $mVar;
-	}
-	
-	/*
-	 * The escape assign clears html special characters from strings and arrays
-	 */
-	private static function escape_recursive(&$arr) {
-		if (is_array($arr)) {
-			foreach($arr as $key => $value) {
-				if (is_array($arr[$key])) {
-					$arr[$key] = self::escape_recursive($arr[$key]);
-				}
-				else {
-					$arr[$key] = htmlspecialchars($arr[$key]);
-				}
-			}
-		}
-		return $arr;
-	} 
-	
-	public static function assign_escape($index, $mVar) {
-		if (is_scalar($mVar)) {
-			self::$aVarAssigned[$index] = htmlspecialchars($mVar);
-		}
-		if (is_array($mVar)) {
-			self::$aVarAssigned[$index] = self::escape_recursive($mVar);
-		}
-	}
 	
 	###############################################################################
 	## SPECIAL FUNCTIONS
@@ -401,55 +174,7 @@ class mvc {
 	 * This function renders the view
 	 */
 	private static function view() {
-		// add decorations css
-		if (file_exists(CSS_DIR.'/'.mvc::getDecorations().'/style.css')) {
-			mvc::addCSS('/'.mvc::getDecorations().'/style.css');
-		}
-		
-		// register CSS and JS files
-		mvc::assign('_aJS', self::$aJS);
-		mvc::assign('_aCSS', self::$aCSS);
-		mvc::assign('_aMETA', self::$aMETA);
-		
-		// register the Skips
-		if (is_array(self::$aSkip)) {
-			foreach (self::$aSkip as $key => $value) {
-				mvc::assign('_SKIP_'.$key, $value);
-			}
-		}
-		
-		// assign the current view directory
-		mvc::assign('_CURRENT_VIEW_DIR', mvc::getViewDir());
-		
-		// assign page title, description, keywords
-		mvc::assign('_PAGE_TITLE', self::$sPageTitle);
-		
-		// register all the assigned values
-		extract(mvc::$aVarAssigned);
-		extract(mvc::$aVarAssignedRef, EXTR_REFS);
-		
-		// load the header
-		require_once(VIEW_DIR.'/_core/header.php');
-		
-		// load the decorations header
-		require_once(DECORATIONS_DIR . '/' . mvc::getDecorations() . '/header.php');
-		
-		// load the common part of the section
-		if (file_exists(mvc::getViewDir() . '/_common.php')) {
-			require_once(mvc::getViewDir() . '/_common.php');
-		}
-		
-		// load the view file
-		if (!file_exists(mvc::getViewFile())) {
-			die("View file ".mvc::getViewFile()." not found. Please create it.");
-		}
-		require_once(mvc::getViewFile());
-		
-		// load the decorations footer
-		require_once(DECORATIONS_DIR . '/' . mvc::getDecorations() . '/footer.php');
-		
-		// load the footer
-		require_once(VIEW_DIR.'/_core/footer.php');
+		self::$View->render();
 	}
 	
 	###############################################################################
@@ -463,14 +188,17 @@ class mvc {
 		//register the autoloading class
 		spl_autoload_register('mvc::autoload');
 		
+		// init the View
+		self::$View = View::getSingleton();
+
 		//extract controller class and function
 		list($sClass, $sPath, $sFunction) = self::extract();
 		
 		mvc::setControllerFile($sPath);
 		mvc::setControllerClass($sClass);
 		mvc::setControllerFunction($sFunction);
-		mvc::setViewFile($sPath . '/' . $sFunction);
-		mvc::setViewDir($sPath);
+		self::$View->setViewFile(VIEW_DIR .'/'. $sPath .'/'. $sFunction . '.php');
+		self::$View->setViewDir($sPath);
 
 		define('MVC_MODULE', $sPath);
 		define('MVC_ACTION', $sFunction);

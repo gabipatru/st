@@ -1,3 +1,3 @@
-<?php if (!$_SKIP_FOOTER) {?>
+<?php if (!$this->getSkipFooter()) {?>
 	</html>
 <?php }?>
