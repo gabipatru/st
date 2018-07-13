@@ -120,7 +120,7 @@ class View extends SetterGetter
     /*
      * The escape assign clears html special characters from strings and arrays
      */
-    public function assignEscape($mVar)
+    public function assignEscape(string $index, $mVar)
     {
         if (is_array($mVar)) {
             $this->aVarAssigned[$index] = $this->escape_recursive($mVar);
