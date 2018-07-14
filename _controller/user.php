@@ -16,7 +16,7 @@ class controller_user extends AbstractController {
     }
     
     ###############################################################################
-    ## LOGIN PAGE, LOGOUT
+    ## LOGIN PAGE
     ###############################################################################
     function login() {
         if (User::isLoggedIn()) {
@@ -24,10 +24,10 @@ class controller_user extends AbstractController {
             http_redir(href_website('website/homepage'));
         }
         
-		$return = filter_get('return', 'urldecode');
-    	 
+        $return = filter_get('return', 'urldecode');
+         
         $FV = new FormValidation(array(
-        	'rules' => array(
+            'rules' => array(
                 'username' => 'required',
                 'password' => 'required'
             ),
@@ -39,8 +39,8 @@ class controller_user extends AbstractController {
 
         $validateResult = $FV->validate();
         if (isPOST()) {
-        	try {
-            	if (!$validateResult) {
+            try {
+                if (!$validateResult) {
                     throw new Exception(__('Please fill all the required fields'));
                 }
                 if (User::isLoggedIn()) {
@@ -61,12 +61,12 @@ class controller_user extends AbstractController {
                  
                 // check if the user is banned
                 if ($oUser->checkUserBanned($oItem->getUsername(), $oItem->getUsername())) {
-                	throw new Exception(__('This account is banned!'));
+                    throw new Exception(__('This account is banned!'));
                 }
                  
                 // check if the user is active
                 if ($configUserConfirmation && $oUser->checkUserInactive($oItem->getUsername(), $oItem->getUsername())) {
-                	throw new Exception(__('You must activate your account before logging in'));
+                    throw new Exception(__('You must activate your account before logging in'));
                 }
                  
                 $oLoggedUser = $oUser->Login($oItem);
@@ -83,8 +83,17 @@ class controller_user extends AbstractController {
          
         $this->View->assign('return', $return);
         $this->View->assign('FV', $FV);
+        
+        $this->View->addSEOParams(
+            $this->__('Login Page :: Surprize Turbo'),
+            $this->__('Log In the Surprize Turbo website.'),
+            $this->__('turbo surprises, login, exchange surprises, search turbo surprises')
+        );
     }
     
+    ###############################################################################
+    ## LOGOUT PAGE
+    ###############################################################################
     public function logout() {
         $oUser = new User();
         $oUser->logout();
@@ -188,15 +197,15 @@ class controller_user extends AbstractController {
                 
                 // send confirmation email if necessary
                 if ($configWelcomeEmail) {
-                	// create email
-                	$oEmailTemplate = new EmailTemplate('newuser.php');
-                	$oEmailTemplate->assign('username', $oItem->getUsername());
-                	$oEmailTemplate->assign('confirmationCode', $confirmationCode);
-                	
-                	$r = $oEmailTemplate->queue($oItem->getEmail(), __('Welcome'). ', '. $oItem->getUsername());
-                	if (!$r) {
-                		throw new Exception(__('Could not send confirmation email. Please try again later.'));
-                	}
+                    // create email
+                    $oEmailTemplate = new EmailTemplate('newuser.php');
+                    $oEmailTemplate->assign('username', $oItem->getUsername());
+                    $oEmailTemplate->assign('confirmationCode', $confirmationCode);
+                    
+                    $r = $oEmailTemplate->queue($oItem->getEmail(), __('Welcome'). ', '. $oItem->getUsername());
+                    if (!$r) {
+                        throw new Exception(__('Could not send confirmation email. Please try again later.'));
+                    }
                 }
                 
                 db::commitTransaction();
@@ -214,6 +223,12 @@ class controller_user extends AbstractController {
         
         $this->View->assign('userAdded', $userAdded);
         $this->View->assign('FV', $FV);
+        
+        $this->View->addSEOParams(
+            $this->__('Create user :: Surprize Turbo'),
+            $this->__('Create a new user.'),
+            $this->__('turbo surprises, new user, exchange surprises, search turbo surprises')
+        );
     }
     
     ###############################################################################
@@ -265,10 +280,15 @@ class controller_user extends AbstractController {
             message_set_error($e->getMessage());
         }
         
+        $this->View->addSEOParams(
+            $this->__('Welcome to Surprize Turbo'),
+            $this->__('Welcome to Surprize Turbo where you can exchange you favorite surprises.'),
+            $this->__('turbo surprises, welcome, exchange surprises, search turbo surprises')
+        );
     }
     
     ###############################################################################
-    ## FORGOT PASSWORD AND RESET PASSWORD PAGES
+    ## FORGOT PASSWORD PAGE
     ###############################################################################
     function forgot_password() {
         if (User::isLoggedIn()) {
@@ -344,8 +364,17 @@ class controller_user extends AbstractController {
         
         $this->View->assign('FV', $FV);
         $this->View->assign('emailSent', $emailSent);
+        
+        $this->View->addSEOParams(
+            $this->__('Forgot Password :: Surprize Turbo'),
+            $this->__('If you forgot your password you can reset it here.'),
+            $this->__('turbo surprises, forgot password, exchange surprises, search turbo surprises')
+        );
     }
     
+    ###############################################################################
+    ## RESET PASSWORD PAGE
+    ###############################################################################
     function reset_password() {
         if (User::isLoggedIn()) {
             message_set_error(__('You cannot reset your password if you are logged in'));
@@ -458,5 +487,11 @@ class controller_user extends AbstractController {
         $this->View->assign('error', $error);
         $this->View->assign('confirmationCode', $confirmationCode);
         $this->View->assign('FV', $FV);
+        
+        $this->View->addSEOParams(
+            $this->__('Reset Password :: Surprize Turbo'),
+            $this->__('Reset your password and start using your account again.'),
+            $this->__('turbo surprises, reset password, exchange surprises, search turbo surprises')
+        );
     }
 }
