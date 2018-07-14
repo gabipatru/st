@@ -1,6 +1,7 @@
 <?php
 class Pagination extends SetterGetter {
     const PER_PAGE_KEY = '/Website/Pagination/Per Page';
+    const NR_PAGES = 2;
     
     /*
      * Calculates the various attributes of the pagination 
@@ -21,7 +22,7 @@ class Pagination extends SetterGetter {
         }
         
         // some inits
-        $nrPages = 2;
+        $nrPages = self::NR_PAGES;
         $bFirstPage = true;
         $iPrevPages = 0;
         $iNextPages = 0;
@@ -47,7 +48,7 @@ class Pagination extends SetterGetter {
                     $bLastPage = false;
                 }
             }
-            elseif ($page >= $max_page - $nrPages) {
+            elseif ($page > $max_page - $nrPages) {
                 $bLastPage = false;
                 if ($page <= $nrPages) {
                     $bFirstPage = false;
@@ -61,7 +62,7 @@ class Pagination extends SetterGetter {
         if ($page < $max_page) {
             $iNextPages = ($max_page - $page > $nrPages ? $nrPages : $max_page - $page);
         }
-        
+
         // save data
         $this->setMaxPage($max_page);
         $this->setPrevPages($iPrevPages);
