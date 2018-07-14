@@ -19,7 +19,11 @@ class controller_website extends AbstractController {
 	## THE HOMEPAGE
 	###############################################################################
 	function homepage() {
-
+	    $this->View->addSEOParams(
+	        $this->__('Surprize Turbo: Comunity of Turbo Surprises fans'),
+	        $this->__('The largest protal for Turbo surprises fans.'),
+	        $this->__('turbo surprises, exchange surprises, search turbo surprises')
+	    );
 	}
 	
 	###############################################################################
@@ -83,8 +87,17 @@ class controller_website extends AbstractController {
         
         $this->View->assign('FV', $FV);
         $this->View->assign('messageSent', $messageSent);
+        
+        $this->View->addSEOParams(
+            $this->__('Contact us :: Suprirze Turbo'),
+            $this->__('Contact us at the largest protal for Turbo surprises fans.'),
+            $this->__('contact turbo surprises, exchange surprises, search turbo surprises')
+        );
     }
     
+    ###############################################################################
+    ## CHANGE LANGUAGE ACTION
+    ###############################################################################
     public function save_language() {
         $newLanguage = filter_get('language', 'string');
         $referrer = filter_get('referrer', 'string');

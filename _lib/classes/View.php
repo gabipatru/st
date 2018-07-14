@@ -86,11 +86,11 @@ class View extends SetterGetter
         return $this->aMeta;
     }
     
-    public function assSEOParams(string $title, string $description, string $keywords)
+    public function addSEOParams(string $title, string $description, string $keywords)
     {
         $this->setPageTitle($title);
-        $this->addMETA('description', $description);
-        $this->addMETA('keywords', $keywords);
+        $this->addMeta('description', $description);
+        $this->addMeta('keywords', $keywords);
     }
     
     /*
@@ -177,7 +177,7 @@ class View extends SetterGetter
         $this->assign('_aJS', $this->aJS);
         $this->assign('_aCSS', $this->aCSS);
         $this->assign('_aMETA', $this->aMeta);
-        
+
         // assign the current view directory
         $this->assign('_CURRENT_VIEW_DIR', $this->getViewDir());
         
