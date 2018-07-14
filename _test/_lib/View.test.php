@@ -139,4 +139,49 @@ class View extends AbstractTest
         $this->assertSame($arr, $View->getAssignedVar('array'));
         $this->assertEquals('test&quot;test', $View->getAssignedVar('escaped'));
     }
+    
+    /**
+     * Test recursive assign-escape
+     * @group fast
+     */
+    public function testAssignEscape()
+    {
+        $View = \View::getSingleton();
+        
+        $arr = [
+            'key' => ['test"test', 'test>', '<test']
+        ];
+        
+        $View->assignEscape('arr', $arr);
+        $newArr = $View->getAssignedVar('arr');
+        
+        // asserts
+        $this->assertCount(1, $newArr);
+        $this->assertEquals('test&quot;test',$newArr['key'][0]);
+        $this->assertEquals('test&gt;',$newArr['key'][1]);
+        $this->assertEquals('&lt;test',$newArr['key'][2]);
+    }
+    
+    /**
+     * Test if some important files or folders exist
+     * @group fast
+     */
+    public function testViewFilesAndFolders()
+    {
+        // check if the main header and footer exist
+        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header.php')));
+        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header_css.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header_css.php')));
+        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header_js.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header_js.php')));
+        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header_meta.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header_meta.php')));
+        $this->assertTrue(file_exists(VIEW_DIR.'/_core/footer.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/footer.php')));
+        
+        // check some folders
+        $this->assertTrue(is_dir(VIEW_DIR.'/_core/decorations'));
+        $this->assertEquals('40755', sprintf('%o', fileperms(VIEW_DIR.'/_core/decorations')));
+    }
 }
