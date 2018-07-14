@@ -1,34 +1,34 @@
 <?php
 class controller_website extends AbstractController {
-	
-	function _prehook() {
-	    $this->View->setDecorations('website');
-		
-	    $this->View->addCSS('/bundle.css');
-	    $this->View->addJS('/bundle.js');
-		
-		$oTranslations = Translations::getSingleton();
-		$oTranslations->setModule('website');
-	}
-	
-	function _posthook() {
-	
-	}
-	
-	###############################################################################
-	## THE HOMEPAGE
-	###############################################################################
-	function homepage() {
-	    $this->View->addSEOParams(
-	        $this->__('Surprize Turbo: Comunity of Turbo Surprises fans'),
-	        $this->__('The largest protal for Turbo surprises fans.'),
-	        $this->__('turbo surprises, exchange surprises, search turbo surprises')
-	    );
-	}
-	
-	###############################################################################
-	## CONTACT PAGE
-	###############################################################################
+    
+    function _prehook() {
+        $this->View->setDecorations('website');
+
+        $this->View->addCSS('/bundle.css');
+        $this->View->addJS('/bundle.js');
+        
+        $oTranslations = Translations::getSingleton();
+        $oTranslations->setModule('website');
+    }
+    
+    function _posthook() {
+    
+    }
+    
+    ###############################################################################
+    ## THE HOMEPAGE
+    ###############################################################################
+    function homepage() {
+        $this->View->addSEOParams(
+            $this->__('Surprize Turbo: Comunity of Turbo Surprises fans'),
+            $this->__('The largest protal for Turbo surprises fans.'),
+            $this->__('turbo surprises, exchange surprises, search turbo surprises')
+        );
+    }
+    
+    ###############################################################################
+    ## CONTACT PAGE
+    ###############################################################################
     function contact() {
         $messageSent = false;
         
