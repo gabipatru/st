@@ -1,5 +1,8 @@
 <?php
 class Pagination extends SetterGetter {
+    
+    use Filter;
+    
     const PER_PAGE_KEY = '/Website/Pagination/Per Page';
     const NR_PAGES = 2;
     
@@ -8,18 +11,21 @@ class Pagination extends SetterGetter {
      */
     protected function compute() {
         // sanity checks
-        if (!$this->getUrl()) {
+        if (!$this->isUrl($this->getUrl())) {
             return false;
         }
-        if (!$page = $this->getPage()) {
+        if (!$this->isUnsigned($this->getPage())) {
             return false;
         }
-        if (!$per_page = $this->getPerPage()) {
+        $page = $this->getPage();
+        if (!$this->isUnsigned($this->getPerPage())) {
             return false;
         }
-        if (!$total = $this->getItemsNo()) {
+        $per_page = $this->getPerPage();
+        if (!$this->isUnsigned($this->getItemsNo())) {
             return false;
         }
+        $total = $this->getItemsNo();
         
         // some inits
         $nrPages = self::NR_PAGES;

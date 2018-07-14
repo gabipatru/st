@@ -15,7 +15,7 @@ class Pagination extends AbstractTest
     {
         // init
         $oPagination = new \Pagination();
-        $oPagination->setUrl('www.st.ro');
+        $oPagination->setUrl('http://www.st.ro');
         $oPagination->setPage(1);
         $oPagination->setPerPage(10);
         $oPagination->setItemsNo(100);
@@ -39,7 +39,7 @@ class Pagination extends AbstractTest
     {
         // init
         $oPagination = new \Pagination();
-        $oPagination->setUrl('www.st.ro');
+        $oPagination->setUrl('http://www.st.ro');
         $oPagination->setPage(2);
         $oPagination->setPerPage(10);
         $oPagination->setItemsNo(100);
@@ -63,7 +63,7 @@ class Pagination extends AbstractTest
     {
         // init
         $oPagination = new \Pagination();
-        $oPagination->setUrl('www.st.ro');
+        $oPagination->setUrl('http://www.st.ro');
         $oPagination->setPage(3);
         $oPagination->setPerPage(10);
         $oPagination->setItemsNo(100);
@@ -87,7 +87,7 @@ class Pagination extends AbstractTest
     {
         // init
         $oPagination = new \Pagination();
-        $oPagination->setUrl('www.st.ro');
+        $oPagination->setUrl('http://www.st.ro');
         $oPagination->setPage(18);
         $oPagination->setPerPage(10);
         $oPagination->setItemsNo(200);
@@ -111,7 +111,7 @@ class Pagination extends AbstractTest
     {
         // init
         $oPagination = new \Pagination();
-        $oPagination->setUrl('www.st.ro');
+        $oPagination->setUrl('http://www.st.ro');
         $oPagination->setPage(19);
         $oPagination->setPerPage(10);
         $oPagination->setItemsNo(200);
@@ -135,7 +135,7 @@ class Pagination extends AbstractTest
     {
         // init
         $oPagination = new \Pagination();
-        $oPagination->setUrl('www.st.ro');
+        $oPagination->setUrl('http://www.st.ro');
         $oPagination->setPage(20);
         $oPagination->setPerPage(10);
         $oPagination->setItemsNo(200);
@@ -149,5 +149,48 @@ class Pagination extends AbstractTest
         $this->assertEquals(0, $oPagination->getNextPages());
         $this->assertTrue($oPagination->getFirstPage());
         $this->assertFalse($oPagination->getLastPage());
+    }
+    
+    /**
+     * Test pagination generation with wrong data
+     * @group fast
+     */
+    public function testPaginationWrongData()
+    {
+        // init
+        $oPagination = new \Pagination();
+        $oPagination->setUrl('abc');
+        $oPagination->setPage(20);
+        $oPagination->setPerPage(10);
+        $oPagination->setItemsNo(200);
+        
+        $this->assertFalse($this->invokeMethod($oPagination, 'compute'));
+        
+        // init
+        $oPagination = new \Pagination();
+        $oPagination->setUrl('http://www.st.ro');
+        $oPagination->setPage(-1);
+        $oPagination->setPerPage(10);
+        $oPagination->setItemsNo(200);
+        
+        $this->assertFalse($this->invokeMethod($oPagination, 'compute'));
+        
+        // init
+        $oPagination = new \Pagination();
+        $oPagination->setUrl('http://www.st.ro');
+        $oPagination->setPage(20);
+        $oPagination->setPerPage(null);
+        $oPagination->setItemsNo(200);
+        
+        $this->assertFalse($this->invokeMethod($oPagination, 'compute'));
+        
+        // init
+        $oPagination = new \Pagination();
+        $oPagination->setUrl('http://www.st.ro');
+        $oPagination->setPage(20);
+        $oPagination->setPerPage(10);
+        $oPagination->setItemsNo('abc');
+        
+        $this->assertFalse($this->invokeMethod($oPagination, 'compute'));
     }
 }
