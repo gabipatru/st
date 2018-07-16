@@ -25,6 +25,8 @@ class controller_admin_config extends ControllerAdminModel {
         
         $this->View->assign_by_ref('aConfig', $aSortedConfig);
         $this->View->assign('configName', $configName);
+        
+        $this->View->addSEOParams($this->__('Config List :: Admin'), '', '');
     }
     
     function save_all() {
@@ -130,6 +132,8 @@ class controller_admin_config extends ControllerAdminModel {
         }
         
         $this->View->assign('FV', $FV);
+        
+        $this->View->addSEOParams($this->__('Add New Config :: Admin'), '', '');
     }
     
 }

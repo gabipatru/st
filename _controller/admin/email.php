@@ -9,6 +9,8 @@ class controller_admin_email extends ControllerAdminModel {
     function list_menu() {
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add(__('Email'), MVC_ACTION_URL);
+        
+        $this->View->addSEOParams($this->__('Email :: Admin'), '', '');
     }
     
     function email_queue() {
@@ -57,6 +59,8 @@ class controller_admin_email extends ControllerAdminModel {
         $this->View->assign('GF', $GF);
         $this->View->assign('sort', $sort);
         $this->View->assign('sort_crit', $sort_crit);
+        
+        $this->View->addSEOParams($this->__('Email queue :: Admin'), '', '');
     }
     
     function email_log() {
@@ -105,5 +109,7 @@ class controller_admin_email extends ControllerAdminModel {
         $this->View->assign('GF', $GF);
         $this->View->assign('sort', $sort);
         $this->View->assign('sort_crit', $sort_crit);
+        
+        $this->View->addSEOParams($this->__('Email Log :: Admin'), '', '');
     }
 }

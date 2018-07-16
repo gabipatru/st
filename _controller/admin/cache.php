@@ -10,7 +10,7 @@ class controller_admin_cache extends ControllerAdminModel {
     }
     
     function list_cache() {
-        
+        $this->View->addSEOParams($this->__('List Cache Items :: Admin'), '', '');
     }
     
     function memcached() {
@@ -32,6 +32,8 @@ class controller_admin_cache extends ControllerAdminModel {
 
         $this->View->assign_by_ref('aMemcacheStats', $aMemcacheStats);
         $this->View->assign('FV', $FV);
+        
+        $this->View->addSEOParams($this->__('Memcached :: Admin'), '', '');
     }
     
     function flush_memcached() {

@@ -49,6 +49,8 @@ class controller_admin_users extends ControllerAdminModel {
         $this->View->assign('GF', $GF);
         $this->View->assign('sort', $sort);
         $this->View->assign('sort_crit', $sort_crit);
+        
+        $this->View->addSEOParams($this->__('Users List :: Admin'), '', '');
     }
     
     function ajax_change_status() {
