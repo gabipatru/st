@@ -79,8 +79,8 @@ h3 a{ text-decoration: none; }
 
 
 #main {}
-#content { float:left; width:950px; }
-#sidebar { float:right; width:225px; }
+#content { float:left; width:990px; margin-left:20px; }
+#sidebar { float:left; width:240px; }
 
 
 .table {}
@@ -98,7 +98,7 @@ h3 a{ text-decoration: none; }
 .box-head .right label { padding:4px 0 0 0;}
 .box-head .right input { margin-left:5px;}
 
-.box-continue { background:#ba4c32; height:32px; color:#fff; padding: 0 10px; line-height:32px; white-space:nowrap; border-bottom:solid 1px #fff; margin-left:-10px; width:928px; }
+.box-continue { background:#ba4c32; height:32px; color:#fff; padding: 0 10px; line-height:32px; white-space:nowrap; border-bottom:solid 1px #fff; margin-left:-10px; width:968px; }
 .GF-select { margin-left:4px; }
 
 .pagging { height:20px; padding:8px 10px; line-height:19px; color:#949494; }
