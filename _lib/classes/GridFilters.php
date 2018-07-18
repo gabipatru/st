@@ -44,9 +44,9 @@ class GridFilters {
 		// HTML for select
 		$sRet = '<select name="'.$sField.'" id="'.$sField.'" class="js-gfselect">';
 		$sRet .= '<option value="">-- '.__('All').' --</option>';
-		foreach ($this->aConfig[$sField]['valid_values'] as $option) {
-			$aVal = each($aValues);
-			$sValueName = $aVal['value'];
+		
+		foreach ($this->aConfig[$sField]['valid_values'] as $key => $option) {
+			$sValueName = $aValues[$key];
 			$sel = "";
 			if ($option == $this->$sField) {
 				$sel = 'selected="SELECTED"';
