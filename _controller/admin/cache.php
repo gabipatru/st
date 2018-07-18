@@ -47,7 +47,7 @@ class controller_admin_cache extends ControllerAdminModel {
         ));
         
         $validate = $FV->validate();
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validate) {
                     throw new Exception(__('Please make sure you filled all the required fields'));
@@ -61,18 +61,18 @@ class controller_admin_cache extends ControllerAdminModel {
                 $memcache = Mcache::getSingleton();
                 $memcache->delete($key);
                 
-                message_set('Key '. $key .' deleted !');
+                $this->setMessage($this->___('Key %s was deleted !', $key));
             }
             catch (Exception $e) {
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
         }
         
-        http_redir(href_admin('cache/memcached'));
+        $this->redirect(href_admin('cache/memcached'));
     }
     
     function flush_all_memcached() {
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!securityCheckToken(filter_post('token', 'string'))) {
                     throw new Exception(__('The page delay was too long'));
@@ -81,13 +81,13 @@ class controller_admin_cache extends ControllerAdminModel {
                 $memcache = Mcache::getSingleton();
                 $memcache->flush();
                 
-                message_set(__('Memcached keys flushed'));
+                $this->setMessage(__('Memcached keys flushed'));
             }
             catch (Exception $e) {
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
         }
         
-        http_redir(href_admin('cache/memcached'));
+        $this->redirect(href_admin('cache/memcached'));
     }
 }

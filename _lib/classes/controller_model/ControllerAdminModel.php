@@ -4,13 +4,13 @@
  */
 class ControllerAdminModel extends AbstractController {
     function _prehook() {
-        if (!User::isLoggedIn()) {
-            http_redir(href_website('user/login', CURRENT_URL));
+        if (!$this->isLoggedIn()) {
+            $this->redirect(href_website('user/login', CURRENT_URL));
         }
         
         $theUser = User::theUser();
         if (!$theUser->getIsAdmin()) {
-            http_redir(href_website('user/login', CURRENT_URL));
+            $this->redirect(href_website('user/login', CURRENT_URL));
         }
         
         $this->View->setDecorations('admin');

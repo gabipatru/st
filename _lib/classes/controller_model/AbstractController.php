@@ -2,6 +2,8 @@
 
 abstract class AbstractController
 {
+    use Http;
+    use Messages;
     use Translation; 
     
     protected $View;

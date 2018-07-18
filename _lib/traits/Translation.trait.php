@@ -10,4 +10,10 @@ trait Translation
         $oTranslations = Translations::getSingleton();
         return $oTranslations->__($msg);
     }
+    
+    protected function ___(string $msg, ...$params) :string
+    {
+        $oTranslations = Translations::getSingleton();
+        return $oTranslations->___($msg, $params);
+    }
 }

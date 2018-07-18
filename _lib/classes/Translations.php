@@ -145,25 +145,15 @@ class Translations {
      * Translate a message with format
      * Uses vsprintf
      */
-    public function ___() {
-        $numargs = func_num_args();
-        if ($numargs < 1) {
-            return '';
-        }
-        
+    public function ___($msg, ...$params) {
         // The message to be translated
-        $msg = func_get_arg(0);
-        
         $key = array_search($msg, $this->translations['untranslated']);
-        if ($key !== false) {
+        
+        if ($key === false) {
             return $msg;
         }
         
-        $args = array();
-        for ($i=1; $i<$numargs; $i++) {
-            $args[] = func_get_arg($i);
-        }
-        
-        return vsprintf($this->translations['translated'][$key], $args);
+        $params = $params[0];
+        return vsprintf($this->translations['translated'][$key], $params);
     }
 }

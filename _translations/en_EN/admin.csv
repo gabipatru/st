@@ -36,6 +36,7 @@
 "Flush all Memcached keys","Flush all Memcached keys"
 "Flush one Memcached key","Flush one Memcached key"
 "Incorrect input of config ids!","Incorrect input of config ids!"
+"Key %s was deleted !","Key %s was deleted !"
 "Last login","Last login"
 "Last Name","Last Name"
 "Last page","Last page"

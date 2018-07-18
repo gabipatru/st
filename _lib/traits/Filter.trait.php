@@ -193,17 +193,17 @@ trait Filter
     ###############################################################################
     ## FUNCTIONS FOR GET, POST data
     ###############################################################################
-    public function filterGET($sIndex, $sFilterType) 
+    public function filterGET(string $sIndex, string $sFilterType) 
     {
         return $this->filter($_GET[$sIndex] ?? '', $sFilterType);
     }
     
-    public function filterPOST($sIndex, $sFilterType) 
+    public function filterPOST(string $sIndex, string $sFilterType) 
     {
         return $this->filter($_POST[$sIndex] ?? '', $sFilterType);
     }
     
-    public function filterREQUEST($sIndex, $sFilterType)
+    public function filterREQUEST(string $sIndex, string $sFilterType)
     {
         return $this->filter($_REQUEST[$sIndex] ?? '', $sFilterType);
     }
