@@ -40,10 +40,10 @@ class controller_website extends AbstractController {
                 'message'   => 'required'
             ),
             'messages' => array(
-                'name'      => __('Please fill in your name'),
-                'email'     => __('Please enter a valid email address'),
-                'subject'   => __('Please specify a subject'),
-                'message'   => __('Please write the message we should receive')
+                'name'      => $this->__('Please fill in your name'),
+                'email'     => $this->__('Please enter a valid email address'),
+                'subject'   => $this->__('Please specify a subject'),
+                'message'   => $this->__('Please write the message we should receive')
             )
         ));
         
@@ -53,10 +53,10 @@ class controller_website extends AbstractController {
             try {
                 throw new Exception('test div');
                 if (!$validateResult) {
-                    throw new Exception(__('Please make sure you filled all the required fields'));
+                    throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
                 $name       = filter_post('name', 'string');
@@ -75,7 +75,7 @@ class controller_website extends AbstractController {
                  
                 $r = $oEmailTemplate->send($toEmail, $subject);
                 if (!$r) {
-                    throw new Exception(__('Could not send email. Please try again later.'));
+                    throw new Exception($this->__('Could not send email. Please try again later.'));
                 }
                 
                 $messageSent = true;
@@ -108,7 +108,7 @@ class controller_website extends AbstractController {
         
         $oTranslations = Translations::getSingleton();
         if (!$newLanguage || !$oTranslations->checkIfLanguageExists($newLanguage)) {
-            message_set_error(__('Could not configure language'));
+            message_set_error($this->__('Could not configure language'));
             http_redir($referrer);
         }
         

@@ -15,7 +15,7 @@ class controller_admin_users extends ControllerAdminModel {
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Users'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('Users'), MVC_ACTION_URL);
         
         $GF = new GridFilters(array(
             'status' => array(

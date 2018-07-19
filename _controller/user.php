@@ -19,12 +19,12 @@ class controller_user extends AbstractController {
     ## LOGIN PAGE
     ###############################################################################
     function login() {
-        if (User::isLoggedIn()) {
-            message_set(__('You are already logged in !'));
-            http_redir(href_website('website/homepage'));
+        if ($this->isLoggedIn()) {
+            $this->setMessage($this->__('You are already logged in !'));
+            $this->redirect(href_website('website/homepage'));
         }
         
-        $return = filter_get('return', 'urldecode');
+        $return = $this->filterGET('return', 'urldecode');
          
         $FV = new FormValidation(array(
             'rules' => array(
@@ -32,22 +32,22 @@ class controller_user extends AbstractController {
                 'password' => 'required'
             ),
             'messages' => array(
-                'username' => __('You need a username or email to login'),
-                'password' => __('You need a password to login')
+                'username' => $this->__('You need a username or email to login'),
+                'password' => $this->__('You need a password to login')
             )
          ));
 
         $validateResult = $FV->validate();
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception(__('Please fill all the required fields'));
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                 if (User::isLoggedIn()) {
-                    throw new Exception('You are already logged in !');
+                    throw new Exception($this->__('You are already logged in !'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                  
                 $returnUrl = filter_post('return', 'urldecode');
@@ -61,23 +61,23 @@ class controller_user extends AbstractController {
                  
                 // check if the user is banned
                 if ($oUser->checkUserBanned($oItem->getUsername(), $oItem->getUsername())) {
-                    throw new Exception(__('This account is banned!'));
+                    throw new Exception($this->__('This account is banned!'));
                 }
                  
                 // check if the user is active
                 if ($configUserConfirmation && $oUser->checkUserInactive($oItem->getUsername(), $oItem->getUsername())) {
-                    throw new Exception(__('You must activate your account before logging in'));
+                    throw new Exception($this->__('You must activate your account before logging in'));
                 }
                  
                 $oLoggedUser = $oUser->Login($oItem);
                 if (!is_object($oLoggedUser)) {
-                    throw new Exception(__('Incorect username or password'));
+                    throw new Exception($this->__('Incorect username or password'));
                 }
 
-                http_redir($returnUrl ? $returnUrl : href_website('website/homepage'));
+                $this->redirect($returnUrl ? $returnUrl : href_website('website/homepage'));
             }
             catch (Exception $e) {
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
         }
          
@@ -98,7 +98,7 @@ class controller_user extends AbstractController {
         $oUser = new User();
         $oUser->logout();
         
-        http_redir(href_website('website/homepage'));
+        $this->redirect(href_website('website/homepage'));
     }
     
     ###############################################################################
@@ -127,28 +127,28 @@ class controller_user extends AbstractController {
                 'last_name' => 'required'
             ),
             'messages' => array(
-                'email'         => __('Please enter a valid email address'),
-                'username'      => __('Please choose a username, at least 2 characters long'),
-                'password'      => __('Password is not strong enough'),
-                'password2'     => __('Passwords must be identical'),
-                'first_name'    => __('Please fill in your first name'),
-                'last_name'     => __('Please fill in your last name')
+                'email'         => $this->__('Please enter a valid email address'),
+                'username'      => $this->__('Please choose a username, at least 2 characters long'),
+                'password'      => $this->__('Password is not strong enough'),
+                'password2'     => $this->__('Passwords must be identical'),
+                'first_name'    => $this->__('Please fill in your first name'),
+                'last_name'     => $this->__('Please fill in your last name')
             ),
         ));
         
         $userAdded = false;
         
         $validateResult = $FV->validate();
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception(__('Please fill all the required fields'));
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                 if (User::isLoggedIn()) {
-                    throw new Exception('You are already logged in !');
+                    throw new Exception($this->__('You are already logged in !'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
                 // get user-related configs
@@ -157,11 +157,11 @@ class controller_user extends AbstractController {
                 
                 // prepare data
                 $oItem = new SetterGetter();
-                $oItem->setEmail(filter_post('email', 'email'));
-                $oItem->setUsername(filter_post('username', 'clean_html'));
-                $oItem->setPassword(filter_post('password', 'string'));
-                $oItem->setFirstName(filter_post('first_name', 'clean_html'));
-                $oItem->setLastName(filter_post('last_name', 'clean_html'));
+                $oItem->setEmail($this->filterPOST('email', 'email'));
+                $oItem->setUsername($this->filterPOST('username', 'clean_html'));
+                $oItem->setPassword($this->filterPOST('password', 'string'));
+                $oItem->setFirstName($this->filterPOST('first_name', 'clean_html'));
+                $oItem->setLastName($this->filterPOST('last_name', 'clean_html'));
                 if ($configUserConfirmation) {
                     $oItem->setStatus(User::STATUS_NEW);
                 }
@@ -176,7 +176,7 @@ class controller_user extends AbstractController {
                 $options = array();
                 $Collection = $oUser->Get($filters, $options);
                 if (count($Collection)) {
-                    throw new Exception(__('This username is already taken. Please choose another one'));
+                    throw new Exception($this->__('This username is already taken. Please choose another one'));
                 }
                 
                 // check if another user with that email exists
@@ -184,7 +184,7 @@ class controller_user extends AbstractController {
                 $options = array();
                 $Collection = $oUser->Get($filters, $options);
                 if (count($Collection)) {
-                    throw new Exception(__('A user with that email already exists. Please use another email'));
+                    throw new Exception($this->__('A user with that email already exists. Please use another email'));
                 }
                 
                 db::startTransaction();
@@ -192,7 +192,7 @@ class controller_user extends AbstractController {
                 // add the user
                 $confirmationCode = $oUser->Add($oItem);
                 if (!$confirmationCode) {
-                    throw new Exception(__('Error adding user to the database. Please try again later'));
+                    throw new Exception($this->__('Error adding user to the database. Please try again later'));
                 }
                 
                 // send confirmation email if necessary
@@ -202,22 +202,22 @@ class controller_user extends AbstractController {
                     $oEmailTemplate->assign('username', $oItem->getUsername());
                     $oEmailTemplate->assign('confirmationCode', $confirmationCode);
                     
-                    $r = $oEmailTemplate->queue($oItem->getEmail(), __('Welcome'). ', '. $oItem->getUsername());
+                    $r = $oEmailTemplate->queue($oItem->getEmail(), $this->__('Welcome'). ', '. $oItem->getUsername());
                     if (!$r) {
-                        throw new Exception(__('Could not send confirmation email. Please try again later.'));
+                        throw new Exception($this->__('Could not send confirmation email. Please try again later.'));
                     }
                 }
                 
                 db::commitTransaction();
                 
-                message_set(__('User added to the database'));
+                $this->setMessage($this->__('User added to the database'));
                 $userAdded = true;
             }
             catch (Exception $e) {
                 if (db::transactionLevel()) {
                     db::rollbackTransaction();
                 }
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
         }
         
@@ -235,11 +235,13 @@ class controller_user extends AbstractController {
     ## ACCOUNT CONFIRMATION PAGE
     ###############################################################################
     public function confirm() {
-        $code = filter_get('code', 'string');
+        $code = $this->filterGET('code', 'string');
         
         try {            
             if (empty($code)) {
-                throw new Exception(__("Could not find the code. You need the activetion code to activate the account"));
+                throw new Exception(
+                    $this->__("Could not find the code. You need the activetion code to activate the account")
+                );
             }
             
             // search for the activation code in DB
@@ -247,8 +249,8 @@ class controller_user extends AbstractController {
             $options = array();
             $oUserConf = new UserConfirmation();
             $oCode = $oUserConf->singleGet($filters, $options);
-            if (!count($oCode)) {
-                throw new Exception(__('Activation code is not correct'));
+            if (! $oCode instanceof SetterGetter) {
+                throw new Exception($this->__('Activation code is not correct'));
             }
             
             // activate user
@@ -260,24 +262,24 @@ class controller_user extends AbstractController {
             $oUser = new User();
             $r = $oUser->Edit($oCode->getUserId(), $oItem);
             if (!$r) {
-                throw new Exception(__('Account could not be activated. Please try again later'));
+                throw new Exception($this->__('Account could not be activated. Please try again later'));
             }
             
             // delete the old confirmation code
             $r = $oUserConf->Delete($oCode->getConfirmationId());
             if (!$r) {
-                throw new Exception(__('Account could not be activated. Please try again later'));
+                throw new Exception($this->__('Account could not be activated. Please try again later'));
             }
             
             db::commitTransaction();
             
-            message_set(__('Your account is not active'));
+            $this->setMessage($this->__('Your account is not active'));
         }
         catch (Exception $e) {
             if (db::transactionLevel()) {
                 db::rollbackTransaction();
             }
-            message_set_error($e->getMessage());
+            $this->setErrorMessage($e->getMessage());
         }
         
         $this->View->addSEOParams(
@@ -291,9 +293,9 @@ class controller_user extends AbstractController {
     ## FORGOT PASSWORD PAGE
     ###############################################################################
     function forgot_password() {
-        if (User::isLoggedIn()) {
-            message_set_error(__('You cannot reset your password if you are logged in'));
-            http_redir('website/homepage');
+        if ($this->isLoggedIn()) {
+            $this->setErrorMessage($this->__('You cannot reset your password if you are logged in'));
+            $this->redirect('website/homepage');
         }
         $emailSent = false;
         
@@ -305,22 +307,22 @@ class controller_user extends AbstractController {
                 ),
             ),
             'messages' => array(
-                'email' => __('Please enter a valid email address')
+                'email' => $this->__('Please enter a valid email address')
             )
         ));
         
         $validateResult = $FV->validate();
         
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception(__('Please fill all the required fields'));
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
-                $email = filter_post('email', 'email');
+                $email = $this->filterPOST('email', 'email');
                 
                 // check if the email exists in our database
                 $oUser = new User();
@@ -328,7 +330,7 @@ class controller_user extends AbstractController {
                 $options = array();
                 $oCollection = $oUser->Get($filters, $options);
                 if ($oCollection->getItemsNo() == 0) {
-                    throw new Exception(__('This email does not exist in the database'));
+                    throw new Exception($this->__('This email does not exist in the database'));
                 }
                 $oItem = $oCollection->getItem();
                 
@@ -338,24 +340,24 @@ class controller_user extends AbstractController {
                 $oConf = new UserConfirmation();
                 $confirmationCode = $oConf->createNewConfirmation($oItem->getUserId());
                 if (!$confirmationCode) {
-                    throw new Exception(__('Could not create confirmation code'));
+                    throw new Exception($this->__('Could not create confirmation code'));
                 }
                 
                 // send the email with the confirmation code
                 $oEmailTemplate = new EmailTemplate('forgot_password.php');
                 $oEmailTemplate->assign('confirmationCode', $confirmationCode);
                  
-                $r = $oEmailTemplate->queue($email, __('Reset password'), null, EmailQueue::PRIORITY_HIGHEST);
+                $r = $oEmailTemplate->queue($email, $this->__('Reset password'), null, EmailQueue::PRIORITY_HIGHEST);
                 if (!$r) {
-                    throw new Exception(__('Could not send confirmation email. Please try again later.'));
+                    throw new Exception($this->__('Could not send confirmation email. Please try again later.'));
                 }
                 
                 db::commitTransaction();
                 $emailSent = true;
-                message_set(__('An email has benn sent to your email address'));
+                $this->setMessage($this->__('An email has benn sent to your email address'));
             }
             catch (Exception $e) {
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
                 if (db::transactionLevel()) {
                     db::rollbackTransaction();
                 }
@@ -376,12 +378,12 @@ class controller_user extends AbstractController {
     ## RESET PASSWORD PAGE
     ###############################################################################
     function reset_password() {
-        if (User::isLoggedIn()) {
-            message_set_error(__('You cannot reset your password if you are logged in'));
-            http_redir('website/homepage');
+        if ($this->isLoggedIn()) {
+            $this->setErrorMessage($this->__('You cannot reset your password if you are logged in'));
+            $this->redirect('website/homepage');
         }
         
-        $confirmationCode = filter_request('code', 'string');
+        $confirmationCode = $this->filterREQUEST('code', 'string');
         $error = false;
         
         $FV = new FormValidation(array(
@@ -396,26 +398,26 @@ class controller_user extends AbstractController {
                 ),
             ),
             'messages' => array(
-                'password'      => __('Password is not strong enough'),
-                'password2'     => __('Passwords must be identical'),
+                'password'      => $this->__('Password is not strong enough'),
+                'password2'     => $this->__('Passwords must be identical'),
             )
         ));
         
         $validateResult = $FV->validate();
         
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception(__('Please fill all the required fields'));
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 if (!$confirmationCode) {
-                    throw new Exception(__('Incorrect code'));
+                    throw new Exception($this->__('Incorrect code'));
                 }
                 
-                $newPassword = filter_post('password', filter_post('password', 'string'));
+                $newPassword = $this->filterPOST('password', 'string');
                 
                 // search for the code
                 $filters = array('code' => $confirmationCode);
@@ -423,7 +425,7 @@ class controller_user extends AbstractController {
                 $oUserConf = new UserConfirmation();
                 $oCollection = $oUserConf->Get($filters, $options);
                 if ($oCollection->getItemsNo() == 0) {
-                    throw new Exception(__('Incorrect code'));
+                    throw new Exception($this->__('Incorrect code'));
                 }
                 $oCode = $oCollection->getItem();
                 
@@ -433,7 +435,7 @@ class controller_user extends AbstractController {
                 $options = array();
                 $oCollection = $oUser->Get($filters, $options);
                 if ($oCollection->getItemsNo() == 0) {
-                    throw new Exception(__('User not found in the database'));
+                    throw new Exception($this->__('User not found in the database'));
                 }
                 $oLoadedUser = $oCollection->getItem();
                 
@@ -444,28 +446,28 @@ class controller_user extends AbstractController {
                 $oItem->setPassword(User::passwordHash($newPassword));
                 $r = $oUser->Edit($oLoadedUser->getUserId(), $oItem);
                 if (!$r) {
-                    throw new Exception(__('Error while saving the new password'));
+                    throw new Exception($this->__('Error while saving the new password'));
                 }
                 
                 // delete the confirmation
                 $oUserConf->Delete($oCode->getConfirmationId());
                 
                 db::commitTransaction();
-                message_set(__('Password was reset'));
+                $this->setMessage($this->__('Password was reset'));
             }
             catch (Exception $e) {
                 if (db::transactionLevel()) {
                     db::rollbackTransaction();
                 }
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
             
-            http_redir(href_website('user/login'));
+            $this->redirect(href_website('user/login'));
         }
         
         try {
             if (!$confirmationCode) {
-                throw new Exception(__('Incorrect code'));
+                throw new Exception($this->__('Incorrect code'));
             }
             
             // search for the code
@@ -474,13 +476,13 @@ class controller_user extends AbstractController {
             $oUserConf = new UserConfirmation();
             $oCode = $oUserConf->Get($filters, $options);
             if ($oCode->getItemsNo() == 0) {
-                throw new Exception(__('Incorrect code'));
+                throw new Exception($this->__('Incorrect code'));
             }
             
             
         }
         catch (Exception $e) {
-            message_set_error($e->getMessage());
+            $this->setErrorMessage($e->getMessage());
             $error = true;
         }
         

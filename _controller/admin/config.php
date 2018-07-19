@@ -18,7 +18,7 @@ class controller_admin_config extends ControllerAdminModel {
         $aSortedConfig = $oConfig->sortData($oConfigCollection);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Config'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('Config'), MVC_ACTION_URL);
         if ($configName) {
             $Breadcrumbs->Add($configName, CURRENT_URL);
         }
@@ -35,10 +35,10 @@ class controller_admin_config extends ControllerAdminModel {
         
         try {
             if (!is_array($aConfigIds)) {
-                throw new Exception(__('Incorrect input of config ids!'));
+                throw new Exception($this->__('Incorrect input of config ids!'));
             }
             if (!securityCheckToken(filter_post('token', 'string'))) {
-                throw new Exception(__('The page delay was too long'));
+                throw new Exception($this->__('The page delay was too long'));
             }
             
             db::startTransaction();
@@ -52,7 +52,7 @@ class controller_admin_config extends ControllerAdminModel {
                 
                 $r = $oConfig->Edit($configId, $oItem);
                 if (!$r) {
-                    throw new Exception(__('Error while saving one of the config values'));
+                    throw new Exception($this->__('Error while saving one of the config values'));
                 }
             }
             
@@ -68,7 +68,7 @@ class controller_admin_config extends ControllerAdminModel {
             $this->redirect(href_admin('config/list_items') . '?name='.$configName);
         }
         
-        $this->setMessage(__('All items were saved'));
+        $this->setMessage($this->__('All items were saved'));
         $this->redirect(href_admin('config/list_items') . '?name='.$configName);
     }
     
@@ -80,8 +80,8 @@ class controller_admin_config extends ControllerAdminModel {
                 'value' => ''
             ),
             'messages' => array(
-                'path'  => __('Please specify the config path'),
-                'type'  => __('Please select a config type')
+                'path'  => $this->__('Please specify the config path'),
+                'type'  => $this->__('Please select a config type')
             )
         ));
         
@@ -89,10 +89,10 @@ class controller_admin_config extends ControllerAdminModel {
         if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
-                    throw new Exception(__('Please make sure you filled all mandatory values'));
+                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
                 $path  = $this->filterPOST('path', 'clean_html');
@@ -100,7 +100,7 @@ class controller_admin_config extends ControllerAdminModel {
                 $type  = $this->filterPOST('type', 'string');
                 
                 if (count(explode('/', trim($path, '/'))) != 3) {
-                    throw new Exception(__('You did not write the config properly'));
+                    throw new Exception($this->__('You did not write the config properly'));
                 }
                 
                 // check if the path exists
@@ -109,7 +109,7 @@ class controller_admin_config extends ControllerAdminModel {
                 $oConfig = new Config();
                 $oConfigCollection = $oConfig->Get($filters, $options);
                 if (count($oConfigCollection) > 0) {
-                    throw new Exception(__('A config with that path already exists'));
+                    throw new Exception($this->__('A config with that path already exists'));
                 }
                 
                 // add to database
@@ -119,11 +119,11 @@ class controller_admin_config extends ControllerAdminModel {
                 $oItem->setType($type);
                 $r = $oConfig->Add($oItem);
                 if (!$r) {
-                    $this->setErrorMessage(__('Error while saving to the database'));
+                    $this->setErrorMessage($this->__('Error while saving to the database'));
                     $this->redirect(MVC_ACTION_URL);
                 }
                 
-                $this->setMessage(__('Config added successfully'));
+                $this->setMessage($this->__('Config added successfully'));
                 $this->redirect(MVC_MODULE_URL . '/list_items.html');
             }
             catch (Exception $e) {

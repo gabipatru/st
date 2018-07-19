@@ -8,7 +8,7 @@ class controller_admin_email extends ControllerAdminModel {
     
     function list_menu() {
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Email'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('Email'), MVC_ACTION_URL);
         
         $this->View->addSEOParams($this->__('Email :: Admin'), '', '');
     }
@@ -20,8 +20,8 @@ class controller_admin_email extends ControllerAdminModel {
         $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Email'), MVC_MODULE_URL . '/list_menu.html');
-        $Breadcrumbs->Add(__('Email queue'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('Email'), MVC_MODULE_URL . '/list_menu.html');
+        $Breadcrumbs->Add($this->__('Email queue'), MVC_ACTION_URL);
         
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
         
@@ -70,8 +70,8 @@ class controller_admin_email extends ControllerAdminModel {
         $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Email'), MVC_MODULE_URL . '/list_menu.html');
-        $Breadcrumbs->Add(__('Email log'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('Email'), MVC_MODULE_URL . '/list_menu.html');
+        $Breadcrumbs->Add($this->__('Email log'), MVC_ACTION_URL);
         
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
         

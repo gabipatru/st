@@ -4,7 +4,7 @@ class controller_admin_cache extends ControllerAdminModel {
         parent::_prehook();
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Cache'), href_admin('cache/list_cache'));
+        $Breadcrumbs->Add($this->__('Cache'), href_admin('cache/list_cache'));
         
         $this->View->assign('menu', 'cache');
     }
@@ -19,7 +19,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 'memcached_key' => 'required'
             ),
             'messages' => array(
-                'memcached_key' => __('Please specify the memcached key you want to delete')
+                'memcached_key' => $this->__('Please specify the memcached key you want to delete')
             )
         ));
         
@@ -28,7 +28,7 @@ class controller_admin_cache extends ControllerAdminModel {
         Mcache::prettyStats($aMemcacheStats);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
-        $Breadcrumbs->Add(__('Memcached'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('Memcached'), MVC_ACTION_URL);
 
         $this->View->assign_by_ref('aMemcacheStats', $aMemcacheStats);
         $this->View->assign('FV', $FV);
@@ -42,7 +42,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 'memcached_key' => 'required'
             ),
             'messages' => array(
-                'memcached_key' => __('Please specify the memcached key you want to delete')
+                'memcached_key' => $this->__('Please specify the memcached key you want to delete')
             )
         ));
         
@@ -50,10 +50,10 @@ class controller_admin_cache extends ControllerAdminModel {
         if ($this->isPOST()) {
             try {
                 if (!$validate) {
-                    throw new Exception(__('Please make sure you filled all the required fields'));
+                    throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
                 $key = $this->filterPOST('memcached_key', 'string');
@@ -75,13 +75,13 @@ class controller_admin_cache extends ControllerAdminModel {
         if ($this->isPOST()) {
             try {
                 if (!securityCheckToken(filter_post('token', 'string'))) {
-                    throw new Exception(__('The page delay was too long'));
+                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
                 $memcache = Mcache::getSingleton();
                 $memcache->flush();
                 
-                $this->setMessage(__('Memcached keys flushed'));
+                $this->setMessage($this->__('Memcached keys flushed'));
             }
             catch (Exception $e) {
                 $this->setErrorMessage($e->getMessage());
