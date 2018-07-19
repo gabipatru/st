@@ -14,10 +14,10 @@ class controller_admin_email extends ControllerAdminModel {
     }
     
     function email_queue() {
-        $page       = filter_get('page', 'int|min[1]');
-        $search     = filter_get('search', 'string');
-        $sort       = filter_get('sort', 'string');
-        $sort_crit  = filter_get('sort_crit', 'set[asc,desc]');
+        $page       = $this->filterGET('page', 'int|min[1]');
+        $search     = $this->filterGET('search', 'string');
+        $sort       = $this->filterGET('sort', 'string');
+        $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add(__('Email'), MVC_MODULE_URL . '/list_menu.html');
@@ -64,10 +64,10 @@ class controller_admin_email extends ControllerAdminModel {
     }
     
     function email_log() {
-        $page       = filter_get('page', 'int|min[1]');
-        $search     = filter_get('search', 'string');
-        $sort       = filter_get('sort', 'string');
-        $sort_crit  = filter_get('sort_crit', 'set[asc,desc]');
+        $page       = $this->filterGET('page', 'int|min[1]');
+        $search     = $this->filterGET('search', 'string');
+        $sort       = $this->filterGET('sort', 'string');
+        $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add(__('Email'), MVC_MODULE_URL . '/list_menu.html');

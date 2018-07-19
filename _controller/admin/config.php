@@ -8,7 +8,7 @@ class controller_admin_config extends ControllerAdminModel {
     
     function list_items() {
         // this is the config we will display
-        $configName = filter_get('name', 'string');
+        $configName = $this->filterGET('name', 'string');
         
         $filters = array();
         $options = array();
@@ -30,8 +30,8 @@ class controller_admin_config extends ControllerAdminModel {
     }
     
     function save_all() {
-        $aConfigIds = $_POST['config_ids'];
-        $configName = filter_post('configName', 'string');
+        $aConfigIds = $this->filterPOST('config_ids', 'array');
+        $configName = $this->filterPOST('configName', 'string');
         
         try {
             if (!is_array($aConfigIds)) {
@@ -45,7 +45,7 @@ class controller_admin_config extends ControllerAdminModel {
             
             $oConfig = new Config();
             foreach ($aConfigIds as $configId) {
-                $configValue = filter_post('config'.$configId, 'clean_html');
+                $configValue = $this->filterPOST('config'.$configId, 'clean_html');
 
                 $oItem = new SetterGetter();
                 $oItem->setValue($configValue);
@@ -63,13 +63,13 @@ class controller_admin_config extends ControllerAdminModel {
             $Memcache->delete(Config::MEMCACHE_KEY);
         }
         catch (Exception $e) {
-            message_set_error($e->getMessage());
+            $this->setErrorMessage($e->getMessage());
             db::rollbackTransaction();
-            http_redir(href_admin('config/list_items') . '?name='.$configName);
+            $this->redirect(href_admin('config/list_items') . '?name='.$configName);
         }
         
-        message_set(__('All items were saved'));
-        http_redir(href_admin('config/list_items') . '?name='.$configName);
+        $this->setMessage(__('All items were saved'));
+        $this->redirect(href_admin('config/list_items') . '?name='.$configName);
     }
     
     function add() {
@@ -86,7 +86,7 @@ class controller_admin_config extends ControllerAdminModel {
         ));
         
         $validateResult = $FV->validate();
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
                     throw new Exception(__('Please make sure you filled all mandatory values'));
@@ -95,9 +95,9 @@ class controller_admin_config extends ControllerAdminModel {
                     throw new Exception(__('The page delay was too long'));
                 }
                 
-                $path  = filter_post('path', 'clean_html');
-                $value = filter_post('value', 'clean_html');
-                $type  = filter_post('type', 'string');
+                $path  = $this->filterPOST('path', 'clean_html');
+                $value = $this->filterPOST('value', 'clean_html');
+                $type  = $this->filterPOST('type', 'string');
                 
                 if (count(explode('/', trim($path, '/'))) != 3) {
                     throw new Exception(__('You did not write the config properly'));
@@ -119,15 +119,15 @@ class controller_admin_config extends ControllerAdminModel {
                 $oItem->setType($type);
                 $r = $oConfig->Add($oItem);
                 if (!$r) {
-                    message_set_error(__('Error while saving to the database'));
-                    http_redir(MVC_ACTION_URL);
+                    $this->setErrorMessage(__('Error while saving to the database'));
+                    $this->redirect(MVC_ACTION_URL);
                 }
                 
-                message_set(__('Config added successfully'));
-                http_redir(MVC_MODULE_URL . '/list_items.html');
+                $this->setMessage(__('Config added successfully'));
+                $this->redirect(MVC_MODULE_URL . '/list_items.html');
             }
             catch (Exception $e) {
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
         }
         

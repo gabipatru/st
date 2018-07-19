@@ -56,7 +56,7 @@ class controller_admin_cache extends ControllerAdminModel {
                     throw new Exception(__('The page delay was too long'));
                 }
                 
-                $key = filter_post('memcached_key', 'string');
+                $key = $this->filterPOST('memcached_key', 'string');
                 
                 $memcache = Mcache::getSingleton();
                 $memcache->delete($key);

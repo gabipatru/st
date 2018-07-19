@@ -7,10 +7,10 @@ class controller_admin_users extends ControllerAdminModel {
     }
     
     function list_users() {
-        $page       = filter_get('page', 'int|min[1]');
-        $search     = filter_get('search', 'string');
-        $sort       = filter_get('sort', 'string');
-        $sort_crit  = filter_get('sort_crit', 'set[asc,desc]');
+        $page       = $this->filterGET('page', 'int|min[1]');
+        $search     = $this->filterGET('search', 'string');
+        $sort       = $this->filterGET('sort', 'string');
+        $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
         
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
         
@@ -54,17 +54,17 @@ class controller_admin_users extends ControllerAdminModel {
     }
     
     function ajax_change_status() {
-        $userId     = filter_post('user_id', 'int');
-        $newStatus  = filter_post('new_status', 'string');
-        $sToken     = filter_post('token', 'string');
+        $userId     = $this->filterPOST('user_id', 'int');
+        $newStatus  = $this->filterPOST('new_status', 'string');
+        $sToken     = $this->filterPOST('token', 'string');
         
         try {
             if (!$userId || !$newStatus) {
-                throw new Exception('User id or new status are missing');
+                throw new Exception($this->__('User id or new status are missing'));
             }
             
             if (!securityCheckToken($sToken)) {
-                throw new Exception('The page delay was too long');
+                throw new Exception($this->__('The page delay was too long'));
             }
             
             $oItem = new SetterGetter();
@@ -73,15 +73,13 @@ class controller_admin_users extends ControllerAdminModel {
             $oUser = new User();
             $r = $oUser->Edit($userId, $oItem);
             if (!$r) {
-                throw new Exception('Error while saving to the database');
+                throw new Exception($this->__('Error while saving to the database'));
             }
             
-            ajax_json::success();
-            ajax_json::output_json();
+            $this->JsonSuccess();
         }
         catch (Exception $e) {
-            ajax_json::error($e->getMessage());
-            ajax_json::output_json();
+            $this->JsonError($e->getMessage());
         }
         
         exit;

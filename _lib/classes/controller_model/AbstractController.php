@@ -2,6 +2,7 @@
 
 abstract class AbstractController
 {
+    use Filter;
     use Http;
     use Messages;
     use Translation; 
