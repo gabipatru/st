@@ -49,6 +49,10 @@
 				<div class="col-sm-8">
 					<div class="shop-menu pull-right">
 						<ul class="nav navbar-nav">
+                        <?php $user = User::theUser()?>
+                        <?php if ($user instanceof SetterGetter && $user->getIsAdmin()):?>
+                            <li><a href="<?php echo href_admin('dashboard/stats')?>"><i class="fa fa-bomb"></i> <?php echo __('Admin')?></a></li>
+                        <?php endif;?>
 						<?php if (User::isLoggedIn()):?>
 							<li><a href="#"><i class="fa fa-user"></i> <?php echo __('Account')?></a></li>
 							<li><a href="<?php echo href_website('user/logout')?>"><i class="fa fa-share"></i> <?php echo __('Logout')?></a></li>

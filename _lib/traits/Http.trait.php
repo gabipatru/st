@@ -10,7 +10,7 @@ trait Http
      */
     protected function redirect(string $url)
     {
-        header('Location:'.$this->urlFormat($url));
+        header('Location:'. $url);
         exit();
     }
     
@@ -21,16 +21,6 @@ trait Http
     {
         header("Location:".HTTP_BASE_URL."404.php");
         exit();
-    }
-    
-    /*
-     * Standard format for the url
-     */
-    protected function urlFormat(string $str) :string
-    {
-        $str = str_replace(' ', '_', $str);
-        $str = str_replace('-', '_', $str);
-        return $str;
     }
         
     protected function isLoggedIn()
