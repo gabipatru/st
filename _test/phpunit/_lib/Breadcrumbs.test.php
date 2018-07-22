@@ -15,7 +15,7 @@ class Breadcrumbs extends AbstractTest {
         $br1 = \Breadcrumbs::getSingleton();
         
         $this->assertInstanceOf(\Breadcrumbs::class, $br1);
-        $this->assertTrue(is_array($br1->getBreadcrumbs));
+        $this->assertTrue(is_array($br1->getBreadcrumbs()));
         $this->assertEmpty($br1->getBreadcrumbs());
     }
     
