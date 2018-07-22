@@ -1,12 +1,14 @@
 <?php
+
 namespace Test;
 
-use PHPUnit\Framework\TestCase;
+require_once(__DIR__ .'/../AbstractTest.php');
 
-require_once(__DIR__ .'/../../AbstractTest.php');
-
-class MigrationLog extends AbstractTest {
-    
+/**
+ * Test the migration log class
+ */
+class MigrationLog extends AbstractTest
+{
     /**
      * Basic test for MigrationLog
      * @group fast
@@ -26,7 +28,7 @@ class MigrationLog extends AbstractTest {
         
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
-
+        
         $this->assertTrue(in_array('migration_log', $Tables->collectionColumn('tablesinmvctest')));
     }
     

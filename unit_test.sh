@@ -10,5 +10,7 @@ if [ "$1" = "fast" ]; then
     ./phpunit --exclude-group slow
 else
     printf "\n${YELLOW}Running all unit tests${NC}\n\n"
-    ./phpunit 
+    ./phpunit
+    cd "/var/www/st/_test/codeception"
+    ./codecept run
 fi

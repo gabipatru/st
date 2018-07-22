@@ -1,22 +1,18 @@
 <?php
+
 namespace Test;
 
-use PHPUnit\Framework\TestCase;
+require_once(__DIR__ .'/../AbstractTest.php');
 
-require_once(__DIR__ .'/../../AbstractTest.php');
 
-class Migration extends AbstractTest {
-    
-    /**
-     * Total number of tables in the database.
-     * When creating a new table increment this number of
-     * migration test will fail.
-     */
-    const NUM_TABLES = 8;
+/**
+ * Test the migration class
+ */
+class Migration extends AbstractTest
+{
     
     /**
      * Test the version incrementing
-     * @group fast
      */
     public function testGetNextVersion() {
         $Migration = new \Migration();
@@ -49,57 +45,16 @@ class Migration extends AbstractTest {
     }
     
     /**
-     * Test database connection with correct credentials
-     * @group slow
-     */
-    public function testDBconnectionGoodCredentials() {
-        $this->defineDebuggerAgent();
-        
-        \db::connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, self::DB_PASS);
-        
-        // assert no exception happned
-        $this->assertTrue(true);
-    }
-    
-    /**
-     * Test database connection with correct credentials
-     * @group slow
-     */
-    public function testDBconnectionBadCredentials() {
-        $this->defineDebuggerAgent();
-        
-        $this->expectException(\PDOException::class);
-        
-        \db::connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, 'qwe');
-    }
-    
-    /**
-     * Test running migrations from scratch
-     * This will import all migrations on an empty database
-     * @group slow
-     */
-    public function testMigrationsFromScratch() {
-        $this->setUpDB();
-        
-        // check how many tables we have
-        $Migration = new \Migration();
-        $Tables = $Migration->getTables();
-        
-        $this->assertCount(self::NUM_TABLES, $Tables);
-    }
-    
-    /**
      * Test deploying a new migration in an existing module
      * migration sql is an array
-     * @group slow
      */
     public function testDeployMigrations1() {
         $this->setUpDB();
-
+        
         // mock what we need
         $MockMigrations = $this->getMockBuilder('\Migration')
                                ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
-                               ->getMock();
+        ->getMock();
         $MockMigrations->method('fetchMigrationSQL')->willReturn( ['SHOW TABLES'] );
         $MockMigrations->method('checkMigrationFile')
         ->will($this->returnValueMap( [
@@ -128,7 +83,6 @@ class Migration extends AbstractTest {
     /**
      * Test deploying a new migration in an existing module
      * migration sql is a string
-     * @group slow
      */
     public function testDeployMigrations2() {
         $this->setUpDB();
@@ -165,7 +119,6 @@ class Migration extends AbstractTest {
     /**
      * Test deploying a new migration in a new module
      * migration sql is an array
-     * @group slow
      */
     public function testDeployMigrations3() {
         $this->setUpDB();

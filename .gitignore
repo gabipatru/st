@@ -4,4 +4,5 @@
 _gulp/node_modules/*
 _gulp/package-lock.json
 _js/translations.js
-_test/phpunit
+_test/phpunit/phpunit
+_test/codeception/codecept
