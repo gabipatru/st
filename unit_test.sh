@@ -3,7 +3,7 @@
 YELLOW='\033[0;32m'
 NC='\033[0m'
 
-cd "/var/www/st/_test"
+cd "/var/www/st/_test/phpunit"
 
 if [ "$1" = "fast" ]; then
     printf "\n${YELLOW}Running only fast unit tests${NC}\n\n"
