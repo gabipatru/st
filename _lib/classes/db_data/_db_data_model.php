@@ -61,7 +61,7 @@ abstract class dbDataModel {
 	    
 	    foreach ($aColumns as $realColumnName => $value) {
 	        $aColumns[$realColumnName] = str_replace('_', '', $realColumnName);
-	        if (!isset($aData[$aColumns[$realColumnName]])) {
+	        if (!array_key_exists($aColumns[$realColumnName], $aData)) {
 	           unset($aColumns[$realColumnName]);
 	        }
 	    }
