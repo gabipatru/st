@@ -11,7 +11,6 @@ class MigrationLog extends AbstractTest
 {
     /**
      * Basic test for MigrationLog
-     * @group fast
      */
     public function testBasic() {
         $MigrationLog = new \MigrationLog();
@@ -21,7 +20,6 @@ class MigrationLog extends AbstractTest
     
     /**
      * Check if the migration table exists
-     * @group slow
      */
     public function testBasicDB() {
         $this->setUpDB();
@@ -35,7 +33,6 @@ class MigrationLog extends AbstractTest
     /**
      * Test Adding a record to DB and fetch records from DB
      * @depends testBasicDB
-     * @group slow
      */
     public function testAddToDB() {
         $MigrationLog = new \MigrationLog();
@@ -61,7 +58,6 @@ class MigrationLog extends AbstractTest
     /**
      * Test editing a record in DB and fetching it
      * @depends testAddToDB
-     * @group slow
      */
     public function testEditInDB() {
         $MigrationLog = new \MigrationLog();
@@ -92,7 +88,6 @@ class MigrationLog extends AbstractTest
     /**
      * Test deleting an item in the db
      * @depends testEditInDB
-     * @group slow
      */
     public function testDeleteInDB() {
         $MigrationLog = new \MigrationLog();

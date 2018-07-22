@@ -45,6 +45,94 @@ class Migration extends AbstractTest
     }
     
     /**
+     * Check if the migration table exists
+     */
+    public function testBasicDB() {
+        $this->setUpDB();
+        
+        $Migration = new \Migration();
+        $Tables = $Migration->getTables();
+        
+        $this->assertTrue(in_array('_migration', $Tables->collectionColumn('tablesinmvctest')));
+    }
+    
+    /**
+     * Test Adding a record to DB and fetch records from DB
+     * @depends testBasicDB
+     */
+    public function testAddToDB() {
+        $Migration = new \Migration();
+        
+        // add some data to db
+        $data = new \SetterGetter();
+        $data->setName('test');
+        $data->setVersion('001');
+        
+        $Migration->Add($data);
+        
+        // check if the data is in db
+        $filters = [ 'name' => 'test' ];
+        $Collection = $Migration->Get($filters);
+        
+        $this->assertCount(1, $Collection);
+        $Item = $Collection->getItem();
+        $this->assertEquals('test', $Item->getName());
+        $this->assertEquals('001', $Item->getVersion());
+    }
+    
+    /**
+     * Test editing a record in DB and fetching it
+     * @depends testAddToDB
+     */
+    public function testEditInDB() {
+        $Migration = new \Migration();
+        
+        // get data from db
+        $filters = [ 'name' => 'test' ];
+        $Collection = $Migration->Get($filters);
+        $Item = $Collection->getItem();
+        $id = $Item->getMigrationId();
+        
+        $data = new \SetterGetter();
+        $data->setName('xtest1');
+        
+        $Migration->Edit($id, $data);
+        
+        // check if the data was edited
+        $filters = [ 'name' => 'xtest1' ];
+        $Collection = $Migration->Get($filters);
+        
+        $this->assertCount(1, $Collection);
+        
+        $Item = $Collection->getItem();
+        
+        $this->assertEquals('xtest1', $Item->getName());
+        $this->assertEquals('001', $Item->getVersion());
+    }
+    
+    /**
+     * Test deleting an item in the db
+     * @depends testEditInDB
+     */
+    public function testDeleteInDB() {
+        $Migration = new \Migration();
+        
+        // get data from db
+        $filters = [ 'name' => 'xtest1' ];
+        $Collection = $Migration->Get($filters);
+        $Item = $Collection->getItem();
+        $id = $Item->getMigrationId();
+        
+        $Migration->Delete($id);
+        
+        // check if the data was edited
+        $filters = [ 'name' => 'xtest1' ];
+        $Collection = $Migration->Get($filters);
+        
+        $this->assertCount(0, $Collection);
+    }
+    
+    /**
      * Test deploying a new migration in an existing module
      * migration sql is an array
      */
