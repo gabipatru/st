@@ -8,5 +8,8 @@ actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost/myapp
+            url: http://www.st.ro
+            curl:
+                CURLOPT_RETURNTRANSFER: true
+                CURLOPT_FOLLOWLOCATION: true
         - \Helper\Acceptance
