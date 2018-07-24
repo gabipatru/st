@@ -5,6 +5,10 @@ namespace Test;
 use \AcceptanceTester;
 use \Codeception\Util\HttpCode;
 
+/**
+ * Provide a few useful functions for acceptance tests.
+ * All acceptance tests should extend this.
+ */
 class AbstractAcceptanceCest
 {
     /**

@@ -7,15 +7,18 @@ use \Codeception\Util\HttpCode;
 
 require_once(__DIR__ .'/../AbstractAcceptanceCest.php');
 
+/**
+ * Test the homepage
+ */
 class HomepageCest extends AbstractAcceptanceCest
 {
     /**
-     * Test the homepage
+     * Test that all elements are displayed on the homepage
      */
     public function checkHomepage(AcceptanceTester $I)
     {
         $I->amOnPage('/');
-        $I->seeResponseCodeIs(HttpCode::OK);        ;
+        $I->seeResponseCodeIs(HttpCode::OK);
         
         $this->testUpperBar($I);
         
