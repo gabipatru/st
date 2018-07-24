@@ -27,6 +27,8 @@ class HomepageCest extends AbstractAcceptanceCest
         
         $this->testNavBar($I);
         
+        $I->see('Home', '.active');
+        
         $this->testFooter($I);
     }
 }
