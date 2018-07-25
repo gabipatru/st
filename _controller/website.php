@@ -51,7 +51,6 @@ class controller_website extends AbstractController {
         
         if (isPOST()) {
             try {
-                throw new Exception('test div');
                 if (!$validateResult) {
                     throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
@@ -73,7 +72,7 @@ class controller_website extends AbstractController {
                 
                 $toEmail = Config::configByPath('/Email/Email Sending/Contact Email');
                  
-                $r = $oEmailTemplate->send($toEmail, $subject);
+                $r = $oEmailTemplate->queue($toEmail, $subject);
                 if (!$r) {
                     throw new Exception($this->__('Could not send email. Please try again later.'));
                 }
