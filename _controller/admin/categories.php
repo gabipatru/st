@@ -9,6 +9,7 @@ class controller_admin_categories extends ControllerAdminModel
         $this->View->assign('menu', 'categories');
     }
     
+    // List categories
     function list_categories()
     {
         $oCategories = new Category();
@@ -24,6 +25,7 @@ class controller_admin_categories extends ControllerAdminModel
         $this->View->addSEOParams($this->__('Categories List :: Admin'), '', '');
     }
     
+    // Add / edit a category
     function edit()
     {
         $categoryId = $this->filterGET('category_id', 'int');
@@ -49,7 +51,7 @@ class controller_admin_categories extends ControllerAdminModel
                 if (! $validateResult) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
@@ -115,5 +117,35 @@ class controller_admin_categories extends ControllerAdminModel
         }
         
         $this->View->assign('FV', $FV);
+        $this->View->assign('categoryId', $categoryId);
+    }
+    
+    // Delete a category
+    function delete()
+    {
+        $categoryId = $this->filterGET('category_id', 'int');
+        
+        try {
+            if (! securityCheckToken($this->filterGET('token', 'string'))) {
+                throw new Exception($this->__('The page delay was too long'));
+            }
+            if (! $categoryId) {
+                throw new Exception($this->__('Category ID is missing.'));
+            }
+            
+            // delete
+            $oCategoryModel = new Category();
+            $r = $oCategoryModel->Delete($categoryId);
+            if (!$r) {
+                throw new Exception($this->__('Error while deleting from database.'));
+            }
+            
+            $this->setMessage($this->__('The category was deleted.'));
+        }
+        catch (Exception $e) {
+            $this->setErrorMessage($e->getMessage());
+        }
+        
+        $this->redirect(href_admin('categories/list'));
     }
 }

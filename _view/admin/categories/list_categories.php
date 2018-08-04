@@ -57,9 +57,21 @@
             <td><?php echo $oCat->getName()?></td>
             <td><?php echo $oCat->getStatus()?></td>
             <td>
-              <a href="<?php echo href_admin('categories/edit', $oCat->getCategoryId())?>" class="ico edit js-user-list-edit">
-                <?php echo __('Edit')?>
-              </a>
+              <span class="padding-right20">
+                <a href="<?php echo href_admin('categories/edit', $oCat->getCategoryId())?>" 
+                   class="ico edit js-user-list-edit"
+                >
+                  <?php echo __('Edit')?>
+                </a>
+              </span>
+              <span class="padding-right20">
+                <a href="<?php echo href_admin('categories/delete', $oCat->getCategoryId())?>" 
+                   class="ico del js-user-list-edit"
+                   onclick="return confirm('<?php echo $this->__('Are you sure you want to delete this item ?')?>')"
+                >
+                  <?php echo $this->__('Delete')?>
+                </a>
+              </span>
             </td>
           </tr>
         <?php endforeach;?>

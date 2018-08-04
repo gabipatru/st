@@ -9,7 +9,7 @@
     <div class="box">
     
       <div class="box-head">
-        <h2><?php echo $this->__('Add New Category')?></h2>
+        <h2><?php echo ($categoryId ? $this->__('Edit Category') : $this->__('Add New Category'))?></h2>
       </div>
       
       <form id="editForm" action="<?php echo CURRENT_URL?>" method="post">
@@ -28,7 +28,7 @@
           
           <p>
             <label><?php echo $this->__('Status')?> <span>(<?php echo $this->__('Required Field')?>)</span></label>
-            <select id="status" name="status" class="field size3">
+            <select id="status" name="status" class="field size4">
               <option <?php $this->selected($FV->status, 'online')?> value="online"><?php echo __('Online')?></option>
               <option <?php $this->selected($FV->status, 'offline')?> value="offline"><?php echo __('Offline')?></option>
             </select>
