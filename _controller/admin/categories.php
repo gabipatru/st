@@ -93,14 +93,13 @@ class controller_admin_categories extends ControllerAdminModel
                 $this->setErrorMessage($e->getMessage());
             }
         }
-        else {
-            $oCategory = new SetterGetter();
-            if ($categoryId) {
-                $filters = [ 'category_id' => $categoryId ];
-                $oCategory = $oCategoryModel->singleGet($filters, []);
+        
+        $oCategory = new SetterGetter();
+        if ($categoryId) {
+            $filters = [ 'category_id' => $categoryId ];
+            $oCategory = $oCategoryModel->singleGet($filters, []);
                 
-                $FV->initDefault($oCategory);
-            }
+            $FV->initDefault($oCategory);
         }
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
