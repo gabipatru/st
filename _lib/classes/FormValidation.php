@@ -151,4 +151,11 @@ class FormValidation {
 			$this->$sFieldError = '';
 		}
 	}
+	
+	public function initDefault($object) {
+	    foreach ($this->_aFormConfig['rules'] as $sField => $mRule) {
+	        $functionName = 'get'.ucfirst($sField);
+	        $this->$sField = $object->$functionName();
+	    }
+	}
 }

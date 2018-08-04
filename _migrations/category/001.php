@@ -1,5 +1,6 @@
 <?php
 $migrationSql = [];
+
 $migrationSql[] = "
 CREATE TABLE category (
     `category_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -8,8 +9,19 @@ CREATE TABLE category (
     `status` ENUM('online', 'offline') NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`category_id`),
+    UNIQUE INDEX (`name`),
     INDEX (`status`)
 )
 COLLATE='latin1_general_ci'
 ENGINE=InnoDB;
+";
+
+$migrationSql[] = "
+INSERT INTO category (name, description, status)
+VALUES ('Turbo', 'Seriile Turbo', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO category (name, description, status)
+VALUES ('Lazer', 'Seriile Lazer', 'online')
 ";

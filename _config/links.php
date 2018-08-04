@@ -48,6 +48,13 @@ function href_admin($sName, $sData = '') {
                     return HTTP_MAIN.'/admin/dashboard/stats.html';
             }
             break;
+        case 'categories':
+            switch ($aPath[1]) {
+                case 'list':
+                    return HTTP_MAIN.'/admin/categories/list_categories.html';
+                case 'edit':
+                    return HTTP_MAIN.'/admin/categories/edit.html' . ($sData ? '?category_id='.$sData : '');
+            }
         case 'config':
             switch ($aPath[1]) {
                 case 'list_items':
