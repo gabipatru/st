@@ -185,6 +185,8 @@ class mvc {
 	 * This functions runs the controller and the view
 	 */
 	public static function run() {
+	    $timeStart = microtime(true);
+	    
 		//register the autoloading class
 		spl_autoload_register('mvc::autoload');
 		
