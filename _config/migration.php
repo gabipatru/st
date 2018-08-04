@@ -6,5 +6,6 @@ $aMigrationsConfig = array(
     'config'        => '001',
     'users'         => '002',
     'email'			=> '001',
-    'category'      => '001'
+    'category'      => '001',
+    'series'        => '001'
 );

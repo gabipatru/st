@@ -155,7 +155,16 @@ class FormValidation {
 	public function initDefault($object) {
 	    foreach ($this->_aFormConfig['rules'] as $sField => $mRule) {
 	        $functionName = 'get'.ucfirst($sField);
-	        $this->$sField = $object->$functionName();
+	        if (strstr($functionName, '_')) {
+	            $functionName = str_replace('_', ' ', $sField);
+	            $functionName = ucwords($functionName);
+	            $functionName = str_replace(' ', '', $functionName);
+	            $functionName = 'get'.ucfirst($functionName);
+	            $this->$sField = $object->$functionName();
+	        }
+	        else {
+	            $this->$sField = $object->$functionName();
+	        }
 	    }
 	}
 }

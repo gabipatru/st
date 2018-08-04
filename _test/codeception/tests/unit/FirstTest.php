@@ -14,7 +14,7 @@ class FirstTest extends AbstractTest
      * When creating a new table increment this number of
      * migration test will fail.
      */
-    const NUM_TABLES = 9;
+    const NUM_TABLES = 10;
     
     /**
      * Test database connection with correct credentials

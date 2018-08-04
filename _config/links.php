@@ -55,6 +55,15 @@ function href_admin($sName, $sData = '') {
                 case 'edit':
                     return HTTP_MAIN.'/admin/categories/edit.html' . ($sData ? '?category_id='.$sData : '');
             }
+        case 'series':
+            switch ($aPath[1]) {
+                case 'list':
+                    return HTTP_MAIN.'/admin/series/list_series.html';
+                case 'edit':
+                    return HTTP_MAIN.'/admin/series/edit.html' . ($sData ? '?series_id='.$sData : '');
+                case 'delete':
+                    return HTTP_MAIN.'/admin/series/delete.html' . ($sData ? "?series_id=$sData&token=". securityGetToken() : '');
+            }
         case 'config':
             switch ($aPath[1]) {
                 case 'list_items':
