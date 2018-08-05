@@ -3,7 +3,8 @@
 </div> <!-- container -->
 
 <div class="shell-debug">
-  <span>Generated in <?php printf("%5.1f", $executionTime)?> ms</span>
+  <div><?php echo $this->__('Script footprint')?>: <?php echo $this->displayBytes($memFootprint)?></div>
+  <div><?php echo $this->__('Generated in')?> <?php printf("%5.1f", $executionTime)?> ms</div>
 </div>
 
 <!-- Footer -->
