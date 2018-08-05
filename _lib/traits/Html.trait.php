@@ -23,13 +23,13 @@ trait Html
     {
         $temp = $iBytes;
         $sBytes = $iBytes . ' B';
-        if ($temp > 1024) {
+        if ($temp >= 1024) {
             $temp = $temp / 1024;
             $sBytes = sprintf('%10.2f', $temp);
             $sBytes  = $sBytes . ' KB';
             $temp = (int) $temp;
         }
-        if ($temp > 1024) {
+        if ($temp >= 1024) {
             $temp = $temp / 1024;
             $sBytes = sprintf('%10.2f', $temp);
             $sBytes = $sBytes . ' MB';
