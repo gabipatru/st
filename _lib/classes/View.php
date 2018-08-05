@@ -172,7 +172,7 @@ class View extends SetterGetter
     {
         // add decorations css
         if (file_exists(CSS_DIR.'/'.$this->getDecorations().'/style.css')) {
-            mvc::addCSS('/'.$this->getDecorations().'/style.css');
+            $this->addCSS('/'.$this->getDecorations().'/style.css');
         }
         
         // register CSS and JS files

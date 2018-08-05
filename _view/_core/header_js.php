@@ -1,6 +1,6 @@
 <script type="text/javascript" nonce="29af2i">
-var CONTROLLER_NAME = '<?php echo mvc::getControllerClass(); ?>';
-var ACTION_NAME     = '<?php echo mvc::getControllerFunction(); ?>';
+var CONTROLLER_NAME = '<?php echo mvc::getSingleton()->getControllerClass(); ?>';
+var ACTION_NAME     = '<?php echo mvc::getSingleton()->getControllerFunction(); ?>';
 
 var HTTP_IMAGES     = '<?php echo HTTP_IMAGES;?>';
 var HTTP            = '<?php echo HTTP;?>';

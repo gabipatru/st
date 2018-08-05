@@ -1,5 +1,6 @@
 <?php
-	require_once('../../_config.php');
+    require_once('../../_config.php');
 
-	mvc::run();
+    $MVC = mvc::getSingleton();
+    $MVC->run();
 ?>

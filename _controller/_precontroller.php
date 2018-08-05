@@ -22,7 +22,7 @@ $language = (isset($_COOKIE[Translations::COOKIE_NAME]) ? $_COOKIE[Translations:
 $oTranslations = Translations::getSingleton();
 $oTranslations->setLanguage($language);
 $oTranslations->setModule('common');
-self::$View->assign('oTranslations', $oTranslations);
+$this->View->assign('oTranslations', $oTranslations);
 
 // database connection
 try {
@@ -51,7 +51,7 @@ if (User::isLoggedIn()) {
 //set up cachebuster
 $busterJson = file_get_contents(STATIC_DIR . '/busters.json');
 $aCacheBuster = json_decode($busterJson, true);
-self::$View->addCacheBuster($aCacheBuster);
+$this->View->addCacheBuster($aCacheBuster);
 
 // set up Content Security Policy
 $csp = Config::configByPath('/Website/Security/Content Security Policy');
