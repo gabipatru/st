@@ -67,6 +67,11 @@ class mvc extends SetterGetter
         $this->controllerfile = CONTROLLER_DIR . '/' . $sFileName . '.php';
     }
     
+    protected function serverSelf()
+    {
+        return $_SERVER['PHP_SELF'];
+    }
+    
     ###############################################################################
     ## SPECIAL FUNCTIONS
     ###############################################################################
@@ -75,15 +80,15 @@ class mvc extends SetterGetter
      * This function extracts the controller class and function from the url and
      */
     private function extract() {
-        $self = $_SERVER['PHP_SELF'];
-
+        $self = $this->serverSelf();
+        
         $aSelf = explode('index.php', $self);
-        if (!$aSelf[1]) {
-            return array('homepage', 'main');
+        if (empty($aSelf[1])) {
+            return ['website', 'website', 'homepage'];
         }
         $aSelf = explode('?', $aSelf[1]);
         if (!$aSelf[0]) {
-            return array('homepage', 'main');
+            return ['website', 'website', 'homepage'];
         }
         
         // remove any ../ from the path
