@@ -170,11 +170,6 @@ class View extends SetterGetter
     ###############################################################################
     public function render()
     {
-        // add decorations css
-        if (file_exists(CSS_DIR.'/'.$this->getDecorations().'/style.css')) {
-            $this->addCSS('/'.$this->getDecorations().'/style.css');
-        }
-        
         // register CSS and JS files
         $this->assign('_aJS', $this->aJS);
         $this->assign('_aCSS', $this->aCSS);
