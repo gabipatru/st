@@ -100,7 +100,7 @@ abstract class dbDataModel {
 		$sValues = implode(',', $aMarkers);
 		
 		// execute the query
-		$sql = "INSERT INTO ".$this->getTableName()
+		$sql = "INSERT INTO `".$this->getTableName() ."`"
 				." (".$sFields.")"
 				." VALUES (".$sValues.")";
 		$res = db::query($sql, $aParams);
@@ -147,7 +147,7 @@ abstract class dbDataModel {
 		$aParams[] = $iId;
 		
 		// execute the query
-		$sql = "UPDATE ".$this->getTableName()." SET "
+		$sql = "UPDATE `".$this->getTableName()."` SET "
 				.$sFields
 				.' WHERE '.$this->getIdField()." = ?";
 		$res = db::query($sql, $aParams);
@@ -173,7 +173,7 @@ abstract class dbDataModel {
 		}
 		
 		// delete the item
-		$sql = "DELETE FROM ".$this->getTableName()
+		$sql = "DELETE FROM `".$this->getTableName() ."`"
 				." WHERE ".$this->getIdField()." = ?";
 		$res = db::query($sql, array($iId));
 		if ($res->errorCode() != '00000') {
@@ -198,7 +198,7 @@ abstract class dbDataModel {
 		}
 		
 		// run the query
-		$sql = "UPDATE ".$this->getTableName()." SET "
+		$sql = "UPDATE `".$this->getTableName()."` SET "
 				.$this->getStatusField()." = ? "
 				." WHERE ".$this->getIdField()." = ?";
 		$res = db::query($sql, array($mNewStatus, $iId));
@@ -232,7 +232,7 @@ abstract class dbDataModel {
     		$aParams = array_merge($aParams, $searchParams);
 		}
 		
-		$sql = "SELECT COUNT(*) AS cnt FROM ".$this->getTableName()
+		$sql = "SELECT COUNT(*) AS cnt FROM `".$this->getTableName() ."`"
 				." WHERE ".$whereCondition;
 		$row = db::querySelect($sql, $aParams);
 		if (isset($row['cnt'])) {
@@ -282,7 +282,7 @@ abstract class dbDataModel {
 		}
 		
 		// select the data
-		$sql = "SELECT * FROM ".$this->getTableName()
+		$sql = "SELECT * FROM `".$this->getTableName() ."`"
 				." WHERE ".$whereCondition
 				.$sOrder
 				.$sLimit;

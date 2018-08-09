@@ -3,37 +3,37 @@
 // This function returns links for the website
 
 function href_website($sName, $sData = '') {
-	if (strstr($sName, '/') !== false) {
-		$aPath = explode('/', $sName);
-		$sName = $aPath[0];
-	}
-	switch ($sName) {
-		case 'website':
-			switch ($aPath[1]) {
-				case 'homepage':
-					return HTTP_MAIN.'/website/homepage.html';
-				case 'contact':
-				    return HTTP_MAIN.'/website/contact.html';
-				case 'save_language':
-				    return HTTP_MAIN.'/website/save_language.html'. ($sData ? '?referrer='.urldecode($sData) : '');
-			}
-			break;
-		case 'user':
-		    switch ($aPath[1]) {
-		        case 'login':
-		            return  HTTP_MAIN.'/user/login.html'. ($sData ? "?return=".urlencode($sData) : '');
-		        case 'logout':
-		        	return HTTP_MAIN.'/user/logout.html'. ($sData ? "?return=".urlencode($sData) : '');
-		        case 'create_account':
-		            return HTTP_MAIN.'/user/newuser.html';
-		        case 'confirm':
-		            return HTTP_MAIN.'/user/confirm.html?code='.$sData;
-		        case 'forgot_passwd':
-		            return HTTP_MAIN.'/user/forgot_password.html';
-		        case 'reset_passwd':
-		            return HTTP_MAIN.'/user/reset_password.html?code='.$sData;
-		    }
-	}
+    if (strstr($sName, '/') !== false) {
+        $aPath = explode('/', $sName);
+        $sName = $aPath[0];
+    }
+    switch ($sName) {
+        case 'website':
+            switch ($aPath[1]) {
+                case 'homepage':
+                    return HTTP_MAIN.'/website/homepage.html';
+                case 'contact':
+                    return HTTP_MAIN.'/website/contact.html';
+                case 'save_language':
+                    return HTTP_MAIN.'/website/save_language.html'. ($sData ? '?referrer='.urldecode($sData) : '');
+            }
+            break;
+        case 'user':
+            switch ($aPath[1]) {
+                case 'login':
+                    return  HTTP_MAIN.'/user/login.html'. ($sData ? "?return=".urlencode($sData) : '');
+                case 'logout':
+                    return HTTP_MAIN.'/user/logout.html'. ($sData ? "?return=".urlencode($sData) : '');
+                case 'create_account':
+                    return HTTP_MAIN.'/user/newuser.html';
+                case 'confirm':
+                    return HTTP_MAIN.'/user/confirm.html?code='.$sData;
+                case 'forgot_passwd':
+                    return HTTP_MAIN.'/user/forgot_password.html';
+                case 'reset_passwd':
+                    return HTTP_MAIN.'/user/reset_password.html?code='.$sData;
+            }
+    }
 }
 
 function href_admin($sName, $sData = '') {
@@ -65,6 +65,15 @@ function href_admin($sName, $sData = '') {
                     return HTTP_MAIN.'/admin/series/edit.html' . ($sData ? '?series_id='.$sData : '');
                 case 'delete':
                     return HTTP_MAIN.'/admin/series/delete.html' . ($sData ? "?series_id=$sData&token=". securityGetToken() : '');
+            }
+        case 'groups':
+            switch ($aPath[1]) {
+                case 'list':
+                    return HTTP_MAIN.'/admin/groups/list_groups.html';
+                case 'edit':
+                    return HTTP_MAIN.'/admin/groups/edit.html' . ($sData ? '?group_id='.$sData : '');
+                case 'delete':
+                    return HTTP_MAIN.'/admin/groups/delete.html' . ($sData ? "?group_id=$sData&token=". securityGetToken() : '');
             }
         case 'config':
             switch ($aPath[1]) {
