@@ -49,7 +49,7 @@ abstract class AbstractTest extends Unit {
         \db::query("SET FOREIGN_KEY_CHECKS = 0;");
         foreach ($oTablesCollection as $Table) {
             $tableName = $Table->getTablesInMvcTest();
-            \db::query("DROP TABLE ".$tableName);
+            \db::query("DROP TABLE `".$tableName."`");
         }
         \db::query("SET FOREIGN_KEY_CHECKS = 1;");
         

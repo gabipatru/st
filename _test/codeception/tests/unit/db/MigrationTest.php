@@ -227,7 +227,7 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = array('migration_id' => 8, 'query' => 'SHOW TABLES');
+        $filters = array('migration_id' => 9, 'query' => 'SHOW TABLES');
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'phpunit_migration_test' ];
