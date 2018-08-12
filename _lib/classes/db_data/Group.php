@@ -21,10 +21,10 @@ class Group extends DbData
         parent::__construct($table, $id, $status);
     }
     
-    protected function onGet($oCollection)
+    protected function onGet(Collection $oCollection): bool
     {
         // get all series ids
-        $ids = $oCollection->collectionColumn('seriesid');
+        $ids = $oCollection->databaseColumn('series_id');
         
         // load the required series
         $oSeriesModel = new Series();

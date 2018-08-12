@@ -32,7 +32,7 @@ abstract class dbDataModel {
 	abstract protected function onSetStatus($iId);
 	
 	abstract protected function onBeforeGet($filters, $options);
-	abstract protected function onGet($oCollection);
+	abstract protected function onGet(Collection $oCollection): bool;
 	
 	/*
 	 * Some get functions for class data

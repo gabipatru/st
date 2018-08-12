@@ -21,10 +21,10 @@ class Series extends DbData
         parent::__construct($table, $id, $status);
     }
     
-    protected function onGet($oCollection)
+    protected function onGet(Collection $oCollection): bool
     {
         // get all category ids
-        $ids = $oCollection->collectionColumn('categoryid');
+        $ids = $oCollection->databaseColumn('category_id');
         
         $oCategoryModel = new Category();
         $filters = [ 'category_id' => $ids ];

@@ -35,7 +35,8 @@ class DbData extends dbDataModel {
         return true;
     }
     
-    protected function onGet($oCollection) {
+    protected function onGet(Collection $oCollection): bool 
+    {
         return true;
     }
     

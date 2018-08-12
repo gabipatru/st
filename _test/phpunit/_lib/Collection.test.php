@@ -118,4 +118,32 @@ class Collection extends AbstractTest {
         $this->assertEquals($arr[0], 'natural');
         $this->assertEquals($arr[1], 'synthetic');
     }
+    
+    /**
+     * Test getting a collection column which is also a database column
+     * @group fast
+     */
+    public function testCollectionDatabaseColumn()
+    {
+        $Collection = new \Collection();
+        
+        // the data
+        $arr = [
+            1 => ['id' => '5', 'category_id' => '6'],
+            2 => ['id' => '15', 'category_id' => '16']
+        ];
+        
+        $Collection->fromArray($arr);
+        
+        // test collection column
+        $arr1 = $Collection->databaseColumn('id');
+        $arr2 = $Collection->databaseColumn('category_id');
+        
+        $this->assertCount(2, $arr1);
+        $this->assertCount(2, $arr2);
+        $this->assertEquals($arr1[0], '5');
+        $this->assertEquals($arr1[1], '15');
+        $this->assertEquals($arr2[0], '6');
+        $this->assertEquals($arr2[1], '16');
+    }
 }

@@ -69,7 +69,17 @@ class Collection extends SetterGetter implements Countable, IteratorAggregate {
     /*
      * Get a column of the collection
      */
-    public function collectionColumn($columnName) {
+    public function collectionColumn(string $columnName) 
+    {
         return array_column($this->data, $columnName);
+    }
+    
+    /*
+     * Get a column which is a database column too
+     */
+    public function databaseColumn(string $columnName)
+    {
+        $columnName = str_replace('_', '', $columnName);
+        return $this->collectionColumn($columnName);
     }
 }

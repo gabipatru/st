@@ -21,10 +21,10 @@ class Surprise extends DbData
         parent::__construct($table, $id, $status);
     }
     
-    protected function onGet($oCollection)
+    protected function onGet(Collection $oCollection): bool
     {
         // get all series ids
-        $ids = $oCollection->collectionColumn('groupid');
+        $ids = $oCollection->databaseColumn('group_id');
         
         // load the required series
         $oGroupModel = new Group();
