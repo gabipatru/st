@@ -21,6 +21,7 @@
                 <li><a href="<?php echo href_admin('categories/list')?>" class="<?php echo ($menu == 'categories' ? 'active' : '')?>"><span><?php echo $this->__('Categories')?></span></a></li>
                 <li><a href="<?php echo href_admin('series/list')?>" class="<?php echo ($menu == 'series' ? 'active' : '')?>"><span><?php echo $this->__('Series')?></span></a></li>
                 <li><a href="<?php echo href_admin('groups/list')?>" class="<?php echo ($menu == 'groups' ? 'active' : '')?>"><span><?php echo $this->__('Groups')?></span></a></li>
+                <li><a href="<?php echo href_admin('surprises/list')?>" class="<?php echo ($menu == 'surprises' ? 'active' : '')?>"><span><?php echo $this->__('Surprises')?></span></a></li>
                 <li><a href="<?php echo href_admin('config/list_items')?>" class="<?php echo ($menu == 'config' ? 'active' : '')?>"><span><?php echo $this->__('Config')?></span></a></li>
                 <li><a href="<?php echo href_admin('cache/list_cache')?>" class="<?php echo ($menu == 'cache' ? 'active' : '')?>"><span><?php echo $this->__('Cache')?></span></a></li>
                 <li><a href="<?php echo href_admin('users/list_users')?>" class="<?php echo ($menu == 'users' ? 'active' : '')?>"><span><?php echo $this->__('Users')?></span></a></li>

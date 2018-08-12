@@ -75,6 +75,15 @@ function href_admin($sName, $sData = '') {
                 case 'delete':
                     return HTTP_MAIN.'/admin/groups/delete.html' . ($sData ? "?group_id=$sData&token=". securityGetToken() : '');
             }
+        case 'surprises':
+            switch ($aPath[1]) {
+                case 'list':
+                    return HTTP_MAIN.'/admin/surprises/list_surprises.html';
+                case 'edit':
+                    return HTTP_MAIN.'/admin/surprises/edit.html' . ($sData ? '?surprise_id='.$sData : '');
+                case 'delete':
+                    return HTTP_MAIN.'/admin/surprises/delete.html' . ($sData ? "?surprise_id=$sData&token=". securityGetToken() : '');
+            }
         case 'config':
             switch ($aPath[1]) {
                 case 'list_items':

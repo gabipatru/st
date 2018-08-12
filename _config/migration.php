@@ -8,5 +8,6 @@ $aMigrationsConfig = array(
     'email'			=> '001',
     'category'      => '001',
     'series'        => '001',
-    'group'         => '001'
+    'group'         => '001',
+    'surprise'      => '001'
 );
