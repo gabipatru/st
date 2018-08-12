@@ -25,3 +25,13 @@ $migrationSql[] = "
 INSERT INTO category (name, description, status)
 VALUES ('Lazer', 'Seriile Lazer', 'online')
 ";
+
+$migrationSql[] = "
+INSERT INTO category (name, description, status)
+VALUES ('Ülker', 'Seriile Ülker final', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO category (name, description, status)
+VALUES ('Otto Moto', 'Seriile Otto Moto', 'online')
+";

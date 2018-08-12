@@ -62,3 +62,88 @@ $migrationSql[] = "
 INSERT INTO `group` (series_id, name, description, status)
 VALUES ('3', 'Turbo Sport 141 - 210', 'A treia grupa Turbo Sport', 'online')
 ";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('3', 'Turbo Sport 211 - 280', 'A patra grupa Turbo Sport', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('3', 'Turbo Sport 401 - 470', 'A cincea grupa Turbo Sport', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('4', 'Turbo Super 331 - 400', 'Turbo Super', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('4', 'Turbo Super 401 - 470', 'Turbo Super', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('4', 'Turbo Super 471 - 540', 'Turbo Super', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('5', 'Turbo 2000 71 - 140', 'Turbo 2000', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('6', 'Turbo 2014 1 - 160', 'Turbo 2014', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('7', 'Turbo Sport 2003 1 - 99', 'Turbo Sport 2003', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('8', 'Turbo Super 2003 1 - 99', 'Turbo Super 2003', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('9', 'Lazer 1 - 70', 'Lazer 1 - 70', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('10', 'Lazer Blue 1 - 100', 'Lazer Blue 1 - 100', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('11', 'Ülker Final \'86 1 - 60', 'Ülker Final \'86 1 - 60', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('12', 'Ülker Final \'88 1 - 50', 'Ülker Final \'88 1 - 50', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('13', 'Ülker Final \'90 1 - 70', 'Ülker Final \'90 1 - 70', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('14', 'Ülker Final \'92 1 - 70', 'Ülker Final \'92 1 - 70', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('15', 'Otto Moto 1 - 100', 'Seria Otto Moto 1 - 100', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('15', 'Otto Moto 101 - 200', 'Seria Otto Moto 101 - 200', 'online')
+";
