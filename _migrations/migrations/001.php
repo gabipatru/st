@@ -16,7 +16,7 @@ $migrationSql[] = "
 CREATE TABLE `migration_log` (
 	`migration_log_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`migration_id` INT UNSIGNED NOT NULL,
-	`query` TEXT NOT NULL,
+	`query` LONGTEXT NOT NULL,
     `duration` DECIMAL(10,3) NULL DEFAULT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (`migration_log_id`),

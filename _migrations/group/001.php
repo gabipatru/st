@@ -35,6 +35,11 @@ VALUES ('1', 'Turbo 121 - 190', 'A treia grupa Turbo', 'online')
 
 $migrationSql[] = "
 INSERT INTO `group` (series_id, name, description, status)
+VALUES ('1', 'Turbo 191 - 260', 'A treia grupa Turbo', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
 VALUES ('1', 'Turbo 261 - 330', 'A patra grupa Turbo', 'online')
 ";
 
@@ -71,6 +76,11 @@ VALUES ('3', 'Turbo Sport 211 - 280', 'A patra grupa Turbo Sport', 'online')
 $migrationSql[] = "
 INSERT INTO `group` (series_id, name, description, status)
 VALUES ('3', 'Turbo Sport 401 - 470', 'A cincea grupa Turbo Sport', 'online')
+";
+
+$migrationSql[] = "
+INSERT INTO `group` (series_id, name, description, status)
+VALUES ('3', 'Turbo Sport 471 - 540', 'A cincea grupa Turbo Sport', 'online')
 ";
 
 $migrationSql[] = "
