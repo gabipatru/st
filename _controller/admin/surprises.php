@@ -12,17 +12,27 @@ class controller_admin_surprises extends ControllerAdminModel {
     // List surprises
     function list_surprises()
     {
-        $page = $this->filterGET('page', 'int|min[1]');
+        $page       = $this->filterGET('page', 'int|min[1]');
+        $search     = $this->filterGET('search', 'string');
         
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
+        
+        $GF = new GridFilters([ 
+            'status' => [
+                'default' => false,
+                'valid_values' => []
+            ]
+        ]);
         
         $oSurpriseModel = new Surprise();
         
         // get all the categories
         $filters = [];
         $options = [
-            'page' => $page,
-            'per_page' => $perPage
+            'page'          => $page,
+            'per_page'      => $perPage,
+            'search'        => $search,
+            'search_fields' => ['name']
         ];
         $oSurprisesCollection = $oSurpriseModel->Get($filters, $options);
         
@@ -30,7 +40,7 @@ class controller_admin_surprises extends ControllerAdminModel {
         $Breadcrumbs->Add($this->__('Surprises'), MVC_ACTION_URL);
         
         $oPagination = new Pagination();
-        $oPagination->setUrl(MVC_ACTION_URL.'?');
+        $oPagination->setUrl(MVC_ACTION_URL .'?'. $GF->GFHref(false, true, true));
         $oPagination->setPage($page);
         $oPagination->setPerPage($perPage);
         $oPagination->setItemsNo($oSurprisesCollection->getItemsNo());
@@ -38,6 +48,8 @@ class controller_admin_surprises extends ControllerAdminModel {
         
         $this->View->assign('oSurprisesCollection', $oSurprisesCollection);
         $this->View->assign('oPagination', $oPagination);
+        $this->View->assign('search', $search);
+        $this->View->assign('GF', $GF);
         
         $this->View->addSEOParams($this->__('Surprises List :: Admin'), '', '');
     }
