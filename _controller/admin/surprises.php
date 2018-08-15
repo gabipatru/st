@@ -12,15 +12,32 @@ class controller_admin_surprises extends ControllerAdminModel {
     // List surprises
     function list_surprises()
     {
+        $page = $this->filterGET('page', 'int|min[1]');
+        
+        $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
+        
         $oSurpriseModel = new Surprise();
         
         // get all the categories
-        $oSurprisesCollection = $oSurpriseModel->Get([], []);
+        $filters = [];
+        $options = [
+            'page' => $page,
+            'per_page' => $perPage
+        ];
+        $oSurprisesCollection = $oSurpriseModel->Get($filters, $options);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add($this->__('Surprises'), MVC_ACTION_URL);
         
+        $oPagination = new Pagination();
+        $oPagination->setUrl(MVC_ACTION_URL.'?');
+        $oPagination->setPage($page);
+        $oPagination->setPerPage($perPage);
+        $oPagination->setItemsNo($oSurprisesCollection->getItemsNo());
+        $oPagination->simple();
+        
         $this->View->assign('oSurprisesCollection', $oSurprisesCollection);
+        $this->View->assign('oPagination', $oPagination);
         
         $this->View->addSEOParams($this->__('Surprises List :: Admin'), '', '');
     }

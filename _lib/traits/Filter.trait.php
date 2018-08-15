@@ -12,7 +12,7 @@ trait Filter
     public function filter($mVar, string $sFilterType)
     {
         // initialize the filters array
-        if (strstr($sFilterType, '|') === false) {
+        if (strstr($sFilterType, '|') !== false) {
             $aFilters = explode('|', $sFilterType);
         }
         else {

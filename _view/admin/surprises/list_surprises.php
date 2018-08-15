@@ -79,8 +79,11 @@
             </td>
           </tr>
         <?php endforeach;?>
-        
         </table>
+        
+        <div class="pagging">
+          <?php echo $oPagination->getHtml()?>
+        </div>
       
       </div>
       <!-- End table -->
