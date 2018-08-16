@@ -16,316 +16,309 @@ class FilterTest extends AbstractTest
     /**
      * Test boolean filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerBool
      */
-    public function testBool()
+    public function testBool($var, $expected)
     {
-        // the data
-        $var1 = true;
-        $var2 = 123;
-        $var3 = '123';
-        $var4 = [1,2];
-        $var5 = false;
-        $var6 = 0;
-        $var7 = '';
-        $var8 = [];
-        $var9 = null;
-        $var10 = 'false';
-        
         // the filtering
-        $r1 = $this->filterBool($var1);
-        $r2 = $this->filterBool($var2);
-        $r3 = $this->filterBool($var3);
-        $r4 = $this->filterBool($var4);
-        $r5 = $this->filterBool($var5);
-        $r6 = $this->filterBool($var6);
-        $r7 = $this->filterBool($var7);
-        $r8 = $this->filterBool($var8);
-        $r9 = $this->filterBool($var9);
-        $r10 = $this->filterBool($var10);
+        $result = $this->filterBool($var);
         
         // asserts
-        $this->assertTrue($r1);
-        $this->assertTrue($r2);
-        $this->assertTrue($r3);
-        $this->assertTrue($r4);
-        $this->assertFalse($r5);
-        $this->assertFalse($r6);
-        $this->assertFalse($r7);
-        $this->assertFalse($r8);
-        $this->assertFalse($r9);
-        $this->assertFalse($r10);
+        $this->assertTrue($expected === $result);
+    }
+    
+    public function providerBool()
+    {
+        return [
+            [true,      true],
+            [123,       true],
+            ['123',     true],
+            [[1, 2],    true],
+            [false,     false],
+            [0,         false],
+            ['',        false],
+            [null,      false],
+            ['false',   false]
+        ];
     }
     
     /**
      * Test the integer filtering with correct and incorrect data
      * @group fast
+     * @dataProvider providerInt
      */
-    public function testInt()
+    public function testInt($var, $expected)
     {
-        // the data
-        $var1 = 123;
-        $var2 = '123';
-        $var3 = '12ab<>3!()';
-        $var4 = null;
-        $var5 = '123.45';
-        
         // the filtering
-        $r1 = $this->filterInt($var1);
-        $r2 = $this->filterInt($var2);
-        $r3 = $this->filterInt($var3);
-        $r4 = $this->filterInt($var4);
-        $r5 = $this->filterInt($var5);
+        $result = $this->filterInt($var);
         
         // asserts
-        $this->assertTrue(123 === $r1);
-        $this->assertTrue(123 === $r2);
-        $this->assertTrue(123 === $r3);
-        $this->assertTrue(0 === $r4);
-        $this->assertTrue(12345 === $r5);
+        $this->assertTrue($expected === $result);
+    }
+    
+    public function providerInt()
+    {
+        return [
+            [123,           123],
+            ['123',         123],
+            ['12ab<>3!()',  123],
+            [null,          0],
+            ['123.45',      12345]
+        ];
     }
     
     /**
      * Test the float filtering with correct and incorrect data
      * @group fast
+     * @dataProvider providerFloat
      */
-    public function testFloat()
+    public function testFloat($var, $expeccted)
     {
-        // the data
-        $var1 = 123.45;
-        $var2 = '123.45';
-        $var3 = '12ab<>3!.45()';
-        $var4 = null;
-        
         // the filtering
-        $r1 = $this->filterFloat($var1);
-        $r2 = $this->filterFloat($var2);
-        $r3 = $this->filterFloat($var3);
-        $r4 = $this->filterFloat($var4);
+        $result = $this->filterFloat($var);
         
         // asserts
-        $this->assertTrue(123.45 === $r1);
-        $this->assertTrue(123.45 === $r2);
-        $this->assertTrue(123.45 === $r3);
-        $this->assertTrue(0.0 === $r4);
+        $this->assertTrue($result === $expeccted);
+    }
+    
+    public function providerFloat()
+    {
+        return [
+            [123.45,            123.45],
+            ['123.45',          123.45],
+            ['12ab<>3!.45()',   123.45],
+            [null,              0.0]
+        ];
     }
     
     /**
      * Test the string filtering with correct and incorrect data
      * @group fast
+     * @dataProvider providerString
      */
-    public function testString() {
-        // the data
-        $var1 = 'str';
-        $var2 = 123;
-        $var3 = null;
-        
+    public function testString($var, $expected) 
+    {
         // the filtering
-        $r1 = $this->filterString($var1);
-        $r2 = $this->filterString($var2);
-        $r3 = $this->filterString($var3);
+        $result = $this->filterString($var);
         
         // asserts
-        $this->assertEquals('str', $r1);
-        $this->assertEquals('123', $r2);
-        $this->assertEquals('', $r3);
+        $this->assertEquals($expected, $result);;
+    }
+    
+    public function providerString()
+    {
+        return [
+            ['str', 'str'],
+            [123,   '123'],
+            [null,  '']
+        ];
     }
     
     /**
      * Test the urlencode filtering
      * @group fast
+     * @dataProvider providerUrlEncode
      */
-    public function testUrlEncode()
+    public function testUrlEncode($var, $expected)
     {
-        // the data
-        $var1 = 'www.st.ro';
-        $var2 = 'www.s t.ro';
-        $var3 = 'www.s&t.ro';
-        
         // the filtering
-        $r1 = $this->filter($var1, 'urlencode');
-        $r2 = $this->filter($var2, 'urlencode');
-        $r3 = $this->filter($var3, 'urlencode');
+        $result = $this->filter($var, 'urlencode');
         
         // asserts
-        $this->assertEquals('www.st.ro', $r1);
-        $this->assertEquals('www.s+t.ro', $r2);
-        $this->assertEquals('www.s%26t.ro', $r3);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerUrlEncode()
+    {
+        return [
+            ['www.st.ro',   'www.st.ro'],
+            ['www.s t.ro',  'www.s+t.ro'],
+            ['www.s&t.ro',  'www.s%26t.ro']
+        ];
     }
     
     /**
      * Test the urldecode filtering
      * @group fast
+     * @dataProvider providerUrlDecode
      */
-    public function testUrlDecode()
+    public function testUrlDecode($var, $expected)
     {
-        // the data
-        $var1 = 'www.st.ro';
-        $var2 = 'www.s+t.ro';
-        $var3 = 'www.s%26t.ro';
-        
         // the filtering
-        $r1 = $this->filter($var1, 'urldecode');
-        $r2 = $this->filter($var2, 'urldecode');
-        $r3 = $this->filter($var3, 'urldecode');
+        $result = $this->filter($var, 'urldecode');
         
         // asserts
-        $this->assertEquals('www.st.ro', $r1);
-        $this->assertEquals('www.s t.ro', $r2);
-        $this->assertEquals('www.s&t.ro', $r3);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerUrlDecode()
+    {
+        return [
+            ['www.st.ro',       'www.st.ro'],
+            ['www.s+t.ro',      'www.s t.ro'],
+            ['www.s%26t.ro',    'www.s&t.ro']
+        ];
     }
     
     /**
      * Test html cleaning
      * @group fast
+     * @dataProvider providerCleanHtml
      */
-    public function testCleanHtml()
+    public function testCleanHtml($var, $expected)
     {
-        // the data
-        $var1 = 'html';
-        $var2 = '<html"123">';
-        
         // the filtering
-        $r1 = $this->filter($var1, 'clean_html');
-        $r2 = $this->filter($var2, 'clean_html');
+        $result = $this->filter($var, 'clean_html');
         
         // asserts
-        $this->assertEquals('html', $r1);
-        $this->assertEquals('&lt;html&quot;123&quot;&gt;', $r2);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerCleanHtml()
+    {
+        return [
+            ['html',        'html'],
+            ['<html"123">', '&lt;html&quot;123&quot;&gt;']
+        ];
     }
     
     /**
      * Test the min filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerMin
      */
-    public function testMin()
+    public function testMin($var, $value, $expected)
     {
-        // the data
-        $var1 = 1;
-        $var2 = 5;
-        $var3 = null;
-        
         // the filtering
-        $r1 = $this->filterMin($var1, 2);
-        $r2 = $this->filterMin($var2, 2);
-        $r3 = $this->filterMin($var3, 2);
+        $result = $this->filterMin($var, 2);
         
         // asserts
-        $this->assertEquals(2, $r1);
-        $this->assertEquals(5, $r2);
-        $this->assertEquals(2, $r3);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerMin()
+    {
+        return [
+            [1,     2, 2],
+            [5,     2, 5],
+            [null,  2, 2]
+        ];
     }
     
     /**
      * Test the date-before filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerDateBefore
      */
-    public function testDateBefore()
+    public function testDateBefore($var, $value, $expected)
     {
-        // the data
-        $var1 = '2018-06-03 10:00:00';
-        $var2 = '2018-07-04 11:11:11';
-        $var3 = null;
-        
         // the filtering
-        $r1 = $this->filterBefore($var1, '2018-06-28 00:00:00');
-        $r2 = $this->filterBefore($var2, '2018-06-28 00:00:00');
-        $r3 = $this->filterBefore($var3, '2018-06-28 00:00:00');
+        $resule = $this->filterBefore($var, $value);
         
         // asserts
-        $this->assertEquals('2018-06-28 00:00:00', $r1);
-        $this->assertEquals('2018-07-04 11:11:11', $r2);
-        $this->assertEquals('2018-06-28 00:00:00', $r3);
+        $this->assertEquals($expected, $resule);
+    }
+    
+    public function providerDateBefore()
+    {
+        return [
+            ['2018-06-03 10:00:00', '2018-06-28 00:00:00', '2018-06-28 00:00:00'],
+            ['2018-07-04 11:11:11', '2018-06-28 00:00:00', '2018-07-04 11:11:11'],
+            [null,                  '2018-06-28 00:00:00', '2018-06-28 00:00:00']
+        ];
     }
     
     /**
      * Test the max filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerMax
      */
-    public function testMax()
+    public function testMax($var, $value, $expected)
     {
-        // the data
-        $var1 = 1;
-        $var2 = 5;
-        $var3 = null;
-        
         // the filtering
-        $r1 = $this->filterMax($var1, 2);
-        $r2 = $this->filterMax($var2, 2);
-        $r3 = $this->filterMax($var3, 2);
+        $result = $this->filterMax($var, $value);
         
         // asserts
-        $this->assertEquals(1, $r1);
-        $this->assertEquals(2, $r2);
-        $this->assertEquals(2, $r3);
+        $this->assertEquals($result, $expected);
+    }
+    
+    public function providerMax()
+    {
+        return [
+            [1,     2, 1],
+            [5,     2, 2],
+            [null,  2, 2]
+        ];
     }
     
     /**
      * Test the date-after filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerDateAfter
      */
-    public function testDateAfter()
+    public function testDateAfter($var, $value, $expected)
     {
-        // the data
-        $var1 = '2018-06-03 10:00:00';
-        $var2 = '2018-07-04 11:11:11';
-        $var3 = null;
-        
         // the filtering
-        $r1 = $this->filterAfter($var1, '2018-06-28 00:00:00');
-        $r2 = $this->filterAfter($var2, '2018-06-28 00:00:00');
-        $r3 = $this->filterAfter($var3, '2018-06-28 00:00:00');
+        $result = $this->filterAfter($var, $value);
         
         // asserts
-        $this->assertEquals('2018-06-03 10:00:00', $r1);
-        $this->assertEquals('2018-06-28 00:00:00', $r2);
-        $this->assertEquals('2018-06-28 00:00:00', $r3);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerDateAfter()
+    {
+        return [
+            ['2018-06-03 10:00:00', '2018-06-28 00:00:00', '2018-06-03 10:00:00'],
+            ['2018-07-04 11:11:11', '2018-06-28 00:00:00', '2018-06-28 00:00:00'],
+            [null,                  '2018-06-28 00:00:00', '2018-06-28 00:00:00']
+        ];
     }
     
     /**
      * Test the interval filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerInterval
      */
-    public function testInterval() 
+    public function testInterval($var, $value1, $value2, $expected) 
     {
-        // the data
-        $var1 = 1;
-        $var2 = 3;
-        $var3 = 5;
-        $var4 = null;
-        
         // the filtering
-        $r1 = $this->filterInterval($var1, 2, 4);
-        $r2 = $this->filterInterval($var2, 2, 4);
-        $r3 = $this->filterInterval($var3, 2, 4);
-        $r4 = $this->filterInterval($var4, 2, 4);
+        $result = $this->filterInterval($var, $value1, $value2);
         
         // asserts
-        $this->assertEquals(2, $r1);
-        $this->assertEquals(3, $r2);
-        $this->assertEquals(4, $r3);
-        $this->assertEquals(2, $r4);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerInterval()
+    {
+        return[
+            [1,     2, 4, 2],
+            [3,     2, 4, 3],
+            [5,     2, 4, 4],
+            [null,  2, 4, 2]
+        ];
     }
     
     /**
      * Test the date-between filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerDateBetween
      */
-    public function testDateBetween()
+    public function testDateBetween($var, $value1, $value2, $expected)
     {
-        // the data
-        $var1 = '2018-06-03 10:00:00';
-        $var2 = '2018-07-04 11:11:11';
-        $var3 = '2018-10-20 11:10:10';
-        
         // the filtering
-        $r1 = $this->filterDateBetween($var1, '2018-06-28 00:00:00', '2018-07-10 00:00:00');
-        $r2 = $this->filterDateBetween($var2, '2018-06-28 00:00:00', '2018-07-10 00:00:00');
-        $r3 = $this->filterDateBetween($var3, '2018-06-28 00:00:00', '2018-07-10 00:00:00');
+        $result = $this->filterDateBetween($var, $value1, $value2);
         
         // asserts
-        $this->assertEquals('2018-06-28 00:00:00', $r1);
-        $this->assertEquals('2018-07-04 11:11:11', $r2);
-        $this->assertEquals('2018-07-10 00:00:00', $r3);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerDateBetween()
+    {
+        return [
+            ['2018-06-03 10:00:00', '2018-06-28 00:00:00', '2018-07-10 00:00:00', '2018-06-28 00:00:00'],
+            ['2018-07-04 11:11:11', '2018-06-28 00:00:00', '2018-07-10 00:00:00', '2018-07-04 11:11:11'],
+            ['2018-10-20 11:10:10', '2018-06-28 00:00:00', '2018-07-10 00:00:00', '2018-07-10 00:00:00']
+        ];
     }
     
     /**
@@ -358,34 +351,27 @@ class FilterTest extends AbstractTest
     /**
      * Test the values set filtering function with correct and incorrect data
      * @group fast
+     * @dataProvider providerSetOfValues
      */
-    public function testSerOfValues() {
-        // the data
-        $set1 = [2, 4, 6];
-        $set2 = ['red', 'green', 'blue'];
-        
-        $var1 = 1;
-        $var2 = 2;
-        $var3 = 4;
-        $var4 = 9;
-        $var5 = 'red';
-        $var6 = 'yellow';
-        
+    public function testSetOfValues($var, $set, $expected)
+    {
         // the filtering
-        $r1 = $this->filterSetOfValues($var1, $set1);
-        $r2 = $this->filterSetOfValues($var2, $set1);
-        $r3 = $this->filterSetOfValues($var3, $set1);
-        $r4 = $this->filterSetOfValues($var4, $set1);
-        $r5 = $this->filterSetOfValues($var5, $set2);
-        $r6 = $this->filterSetOfValues($var6, $set2);
+        $result = $this->filterSetOfValues($var, $set);
         
         // asserts
-        $this->assertFalse($r1);
-        $this->assertEquals(2, $r2);
-        $this->assertEquals(4, $r3);
-        $this->assertFalse($r4);
-        $this->assertEquals('red', $r5);
-        $this->assertFalse($r6);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerSetOfValues()
+    {
+        return[
+            [1,         [2, 4, 6],                  false],
+            [2,         [2, 4, 6],                  2],
+            [4,         [2, 4, 6],                  4],
+            [9,         [2, 4, 6],                  false],
+            ['red',     ['red', 'green', 'blue'],   'red'],
+            ['yellow',  ['red', 'green', 'blue'],   false]
+        ];
     }
     
     /**
@@ -410,185 +396,184 @@ class FilterTest extends AbstractTest
     /**
      * Test email validation
      * @group fast
+     * @dataProvider providerIsEmail
      */
-    public function testIsEmail() 
+    public function testIsEmail($var, $expected) 
     {
-        // the data
-        $var1 = 'gabipatru@gmail.com';
-        $var2 = 'gabipatru@gmail';
-        $var3 = 'gabipatru';
-        $var4 = '';
-        $var5 = null;
-        
         // the validating
-        $r1 = $this->isEmail($var1);
-        $r2 = $this->isEmail($var2);
-        $r3 = $this->isEmail($var3);
-        $r4 = $this->isEmail($var4);
-        $r5 = $this->isEmail($var5);
+        $result = $this->isEmail($var);
         
         // asserts
-        $this->assertTrue($r1);
-        $this->assertFalse($r2);
-        $this->assertFalse($r3);
-        $this->assertFalse($r4);
-        $this->assertFalse($r5);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerIsEmail()
+    {
+        return[
+            ['gabipatru@gmail.com', true],
+            ['gabipatru@gmail',     false],
+            ['gabipatru',           false],
+            ['',                    false],
+            [null,                  false]
+        ];
     }
     
     /**
      * Test Domain validation
      * @group fast
+     * @dataProvider providerIsDomain
      */
-    public function testIsDomain()
+    public function testIsDomain($var, $expected)
     {
-        // the data
-        $var1 = 'www.st.ro';
-        $var2 = 'st.ro';
-        $var3 = '.ro';
-        $var4 = 'www.st.ro/index.html';
-        $var5 = '';
-        $var6 = null;
-        
         // the validating
-        $r1 = $this->isDomain($var1);
-        $r2 = $this->isDomain($var2);
-        $r3 = $this->isDomain($var3);
-        $r4 = $this->isDomain($var4);
-        $r5 = $this->isDomain($var5);
-        $r6 = $this->isDomain($var6);
+        $result = $this->isDomain($var);
         
         // asserts
-        $this->assertTrue($r1);
-        $this->assertTrue($r2);
-        $this->assertFalse($r3);
-        $this->assertTrue($r4);
-        $this->assertFalse($r5);
-        $this->assertFalse($r6);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerIsDomain()
+    {
+        return[
+            ['www.st.ro',               true],
+            ['st.ro',                   true],
+            ['.ro',                     false],
+            ['www.st.ro/index.html',    true],
+            ['',                        false],
+            [null,                      false]
+        ];
     }
     
     /**
      * Test ip validation
      * @group fast
+     * @dataProvider providerIsIp
      */
-    public function testIsIp() {
-        // the data
-        $var1 = '1.1.1.1';
-        $var2 = '192.168.10.21';
-        $var3 = '255.255.255.255';
-        $var4 = '192.168.10.';
-        $var5 = '192';
-        $var6 = '';
-        $var7 = null;
-        
+    public function testIsIp($var, $expected) 
+    {
         // the validation
-        $r1 = $this->isIp($var1);
-        $r2 = $this->isIp($var2);
-        $r3 = $this->isIp($var3);
-        $r4 = $this->isIp($var4);
-        $r5 = $this->isIp($var5);
-        $r6 = $this->isIp($var6);
-        $r7 = $this->isIp($var7);
+        $result = $this->isIp($var);
         
         // asserts
-        $this->assertTrue($r1);
-        $this->assertTrue($r2);
-        $this->assertTrue($r3);
-        $this->assertFalse($r4);
-        $this->assertFalse($r5);
-        $this->assertFalse($r6);
-        $this->assertFalse($r7);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerIsIp()
+    {
+        return [
+            ['1.1.1.1',         true],
+            ['192.168.10.21',   true],
+            ['255.255.255.255', true],
+            ['192.168.10.',     false],
+            ['192',             false],
+            ['',                false],
+            [null,              false]
+        ];
     }
     
     /**
      * Test mac validation
      * @group fast
+     * @dataProvider providerIsMac
      */
-    public function testIsMac()
+    public function testIsMac($var, $expected)
     {
-        // the data
-        $var1 = '00-14-22-01-23-45';
-        $var2 = '00-14';
-        $var3 = '123';
-        $var4 = '';
-        $var5 = null;
-        
         // the validation
-        $r1 = $this->isMac($var1);
-        $r2 = $this->isMac($var2);
-        $r3 = $this->isMac($var3);
-        $r4 = $this->isMac($var4);
-        $r5 = $this->isMac($var5);
+        $result = $this->isMac($var);
         
         // assert
-        $this->assertTrue($r1);
-        $this->assertFalse($r2);
-        $this->assertFalse($r3);
-        $this->assertFalse($r4);
-        $this->assertFalse($r5);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerIsMac()
+    {
+        return[
+            ['00-14-22-01-23-45',   true],
+            ['00-14',               false],
+            ['123',                 false],
+            ['',                    false],
+            [null,                  false]
+        ];
     }
     
     /**
      * Test url validation
      * @group fast
+     * @dataProvider providerIsUrl
      */
-    public function testIsUrl()
-    {
-        // the data
-        $var1 = 'http://www.st.ro';
-        $var2 = 'https://st.ro';
-        $var3 = '.ro';
-        $var4 = 'http://www.st.ro/index.html';
-        $var5 = '';
-        $var6 = null;
-        
+    public function testIsUrl($var, $expected)
+    {        
         // the validation
-        $r1 = $this->isUrl($var1);
-        $r2 = $this->isUrl($var2);
-        $r3 = $this->isUrl($var3);
-        $r4 = $this->isUrl($var4);
-        $r5 = $this->isUrl($var5);
-        $r6 = $this->isUrl($var6);
+        $result = $this->isUrl($var);
         
         // asserts
-        $this->assertTrue($r1);
-        $this->assertTrue($r2);
-        $this->assertFalse($r3);
-        $this->assertTrue($r4);
-        $this->assertFalse($r5);
-        $this->assertFalse($r6);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerIsUrl()
+    {
+        return[
+            ['http://www.st.ro',            true],
+            ['https://st.ro',               true],
+            ['.ro',                         false],
+            ['http://www.st.ro/index.html', true],
+            ['',                            false],
+            [null,                          false]
+        ];
     }
     
     /**
      * Test unsigned int validation
      * @group fast
+     * @dataProvider providerIsUnsigned
      */
-    public function testIsUnsigned()
+    public function testIsUnsigned($var, $expected)
     {
-        // the data
-        $var1 = '123';
-        $var2 = '1';
-        $var3 = '-2';
-        $var4 = '1.12';
-        $var5 = 'abc';
-        $var6 = '';
-        $var7 = null;
-        
         // the validation
-        $r1 = $this->isUnsigned($var1);
-        $r2 = $this->isUnsigned($var2);
-        $r3 = $this->isUnsigned($var3);
-        $r4 = $this->isUnsigned($var4);
-        $r5 = $this->isUnsigned($var5);
-        $r6 = $this->isUnsigned($var6);
-        $r7 = $this->isUnsigned($var7);
+        $result = $this->isUnsigned($var);
         
         // asserts
-        $this->assertTrue($r1);
-        $this->assertTrue($r2);
-        $this->assertFalse($r3);
-        $this->assertFalse($r4);
-        $this->assertFalse($r5);
-        $this->assertFalse($r6);
-        $this->assertFalse($r7);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerIsUnsigned()
+    {
+        return[
+            ['123',     true],
+            ['1',       true],
+            ['-2',      false],
+            ['1.12',    false],
+            ['abc',     false],
+            ['',        false],
+            [null,      false]
+        ];
+    }
+    
+    /**
+     * Test all sort of complex filters
+     * @group fast
+     * @dataProvider providerComplexFilter
+     */
+    public function testComplexFilter($var, $filter, $expected)
+    {
+        $result = $this->filter($var, $filter);
+        
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerComplexFilter()
+    {
+        return [
+            [0,     'int|min[1]',       1],
+            [null,  'int|min[1]',       1],
+            [4,     'int|min[1]',       4],
+            [10,    'int|max[5]',       5],
+            ['abc', 'int|max[6]',       6],
+            [3,     'int|max[10]',      3],
+            [0,     'int|set[1,3,5]',   false],
+            [3,     'int|set[1,3,5]',   3],
+            [1,     'int|interval[2-4]',2],
+            ['a>1', 'string|clean_html',    'a&gt;1']
+        ];
     }
 }
