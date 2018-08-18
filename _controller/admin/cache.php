@@ -52,7 +52,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 if (!$validate) {
                     throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
@@ -74,7 +74,7 @@ class controller_admin_cache extends ControllerAdminModel {
     function flush_all_memcached() {
         if ($this->isPOST()) {
             try {
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 

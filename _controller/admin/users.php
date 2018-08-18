@@ -63,7 +63,7 @@ class controller_admin_users extends ControllerAdminModel {
                 throw new Exception($this->__('User id or new status are missing'));
             }
             
-            if (!securityCheckToken($sToken)) {
+            if (!$this->securityCheckToken($sToken)) {
                 throw new Exception($this->__('The page delay was too long'));
             }
             

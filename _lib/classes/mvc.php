@@ -1,10 +1,14 @@
 <?php
 require_once(TRAITS_DIR .'/Singleton.trait.php');
+require_once(TRAITS_DIR .'/SecurityToken.trait.php');
+require_once(TRAITS_DIR .'/Messages.trait.php');
 require_once(CLASSES_DIR .'/SetterGetter.php');
 
 class mvc extends SetterGetter 
 {
     use Singleton;
+    use SecurityToken;
+    use Messages;
     
     private $View;
     

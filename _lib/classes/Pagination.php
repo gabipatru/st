@@ -2,6 +2,7 @@
 class Pagination extends SetterGetter {
     
     use Filter;
+    use Translation;
     
     const PER_PAGE_KEY = '/Website/Pagination/Per Page';
     const NR_PAGES = 2;
@@ -79,50 +80,50 @@ class Pagination extends SetterGetter {
         return true;
     }
     
-	public function simple() {
-		if (!$this->compute()) {
-		    return '';
-		}
-		
-		$page         = $this->getPage();
-		$iPrevPages   = $this->getPrevPages();
-		$iNextPages   = $this->getNextPages();
-		$bFirstPage   = $this->getFirstPage();
-		$bLastPage    = $this->getLastPage();
-		$max_page     = $this->getMaxPage();
-		$url          = $this->getUrl();
-		$per_page     = $this->getPerPage();
-		
-		// compose html
-		$sHtml = '';
-		$sPrevHtml = '';
-		$sNextHtml = '';
-		for ($i = $page - $iPrevPages; $i<$page; $i++) {
-			$sPrevHtml .= '<a href="'.$url.'&page='.$i.'">'.$i.'</a>';
-		}
-		for ($i = $page + 1; $i<$page+$iNextPages + 1; $i++) {
-			$sNextHtml .= '<a href="'.$url.'&page='.$i.'">'.$i.'</a>';
-		}
-		
-		$showingStart = (($page - 1) * $per_page + 1);
-		$showingEnd = ($page * $per_page <= $this->getItemsNo() ? $page * $per_page : $this->getItemsNo());
-		
-		$sHtml .= '
+    public function simple() {
+        if (!$this->compute()) {
+            return '';
+        }
+        
+        $page         = $this->getPage();
+        $iPrevPages   = $this->getPrevPages();
+        $iNextPages   = $this->getNextPages();
+        $bFirstPage   = $this->getFirstPage();
+        $bLastPage    = $this->getLastPage();
+        $max_page     = $this->getMaxPage();
+        $url          = $this->getUrl();
+        $per_page     = $this->getPerPage();
+        
+        // compose html
+        $sHtml = '';
+        $sPrevHtml = '';
+        $sNextHtml = '';
+        for ($i = $page - $iPrevPages; $i<$page; $i++) {
+            $sPrevHtml .= '<a href="'.$url.'&page='.$i.'">'.$i.'</a>';
+        }
+        for ($i = $page + 1; $i<$page+$iNextPages + 1; $i++) {
+            $sNextHtml .= '<a href="'.$url.'&page='.$i.'">'.$i.'</a>';
+        }
+        
+        $showingStart = (($page - 1) * $per_page + 1);
+        $showingEnd = ($page * $per_page <= $this->getItemsNo() ? $page * $per_page : $this->getItemsNo());
+        
+        $sHtml .= '
                 <div class="left">'
-		          .__('Showing') .' '
-		          .$showingStart.' - '.$showingEnd. ' '. __('of'). ' ' .$this->getItemsNo()
-		          .'</div>
+                  .$this->__('Showing') .' '
+                      .$showingStart.' - '.$showingEnd. ' '. $this->__('of'). ' ' .$this->getItemsNo()
+                  .'</div>
                 <div class="right">
-                '.($bFirstPage ? '<a href="'.$url.'&page=1">'.__('First page').'</a>' : '').'
+                '.($bFirstPage ? '<a href="'.$url.'&page=1">'.$this->__('First page').'</a>' : '').'
                 '.$sPrevHtml.'
                 <span>'.$page.'</span>
                 '.$sNextHtml.'
-                '.($bLastPage ? '<a href="'.$url.'&page='.$max_page.'">'.__('Last page').'</a>' : '').'
+                '.($bLastPage ? '<a href="'.$url.'&page='.$max_page.'">'.$this->__('Last page').'</a>' : '').'
                 </div>
         ';
 
-		$this->setHtml($sHtml);
-		
-		return true;
-	}
+        $this->setHtml($sHtml);
+        
+        return true;
+    }
 }

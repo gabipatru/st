@@ -6,6 +6,7 @@ abstract class AbstractController
     use Http;
     use Messages;
     use Translation; 
+    use SecurityToken;
     
     protected $View;
     

@@ -48,7 +48,7 @@
             <th><?php echo $this->__('Category ID')?></th>
             <th><?php echo $this->__('Category Name')?></th>
             <th><?php echo $this->__('Status')?></th>
-            <th><?php echo __('Actions')?></th>
+            <th><?php echo $this->____('Actions')?></th>
           </tr>
           
         <?php foreach ($oCategoriesCollection as $oCat):?>
@@ -61,7 +61,7 @@
                 <a href="<?php echo href_admin('categories/edit', $oCat->getCategoryId())?>" 
                    class="ico edit js-user-list-edit"
                 >
-                  <?php echo __('Edit')?>
+                  <?php echo $this->__('Edit')?>
                 </a>
               </span>
               <span class="padding-right20">

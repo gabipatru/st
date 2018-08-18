@@ -40,9 +40,9 @@
         <form id="searchAndFilters" method="get" action="<?php echo MVC_ACTION_URL?>" >
           <h2 class="left"><?php echo $this->__('Surprises list')?></h2>
           <div class="right">
-            <label><?php echo __('Search for surprises')?></label>
+            <label><?php echo $this->__('Search for surprises')?></label>
             <input name="search" type="text" class="field small-field" value="<?php echo $search?>" />
-            <input type="submit" class="button" value="<?php echo __('Search')?>" />
+            <input type="submit" class="button" value="<?php echo $this->__('Search')?>" />
           </div>
         </form>
       </div>

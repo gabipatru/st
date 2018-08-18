@@ -10,9 +10,9 @@
 <!-- Footer -->
 <div id="footer">
     <div class="shell">
-        <span class="left"><?php echo __('Copyright © 2017 Surprize Turbo. All rights reserved.')?></span>
+        <span class="left"><?php echo $this->__('Copyright © 2017 Surprize Turbo. All rights reserved.')?></span>
         <span class="right">
-            <?php echo __('Designed by Sutprize Turbo')?>
+            <?php echo $this->__('Designed by Sutprize Turbo')?>
         </span>
     </div>
 </div>

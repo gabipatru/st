@@ -7,6 +7,8 @@
 
 class Translations {
     
+    use Log;
+    
     const COOKIE_NAME = 'language';
     
     const LANGUAGES = ['en_EN', 'ro_RO'];
@@ -125,7 +127,7 @@ class Translations {
             }
         }
         else {
-            log_message('translation.log', 'Warning! Translation file '.$language.'/' .$module. '.csv Does not exist!');
+            $this->logMessage('Warning! Translation file '.$language.'/' .$module. '.csv Does not exist!');
         }
     }
     

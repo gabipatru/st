@@ -13,7 +13,7 @@ var MVC_MODULE_URL  = '<?php echo MVC_MODULE_URL?>';
 var MVC_ACTION_URL  = '<?php echo MVC_ACTION_URL?>';
 var CURRENT_URL     = '<?php echo CURRENT_URL?>';
 
-var TOKEN           = '<?php echo securityGetToken()?>';
+var TOKEN           = '<?php echo $this->securityGetToken()?>';
 
 var LANGUAGE        = '<?php echo $oTranslations->getLanguage()?>';
 </script>

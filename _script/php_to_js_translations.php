@@ -10,6 +10,8 @@ class PHPtoJStranslations extends AbstractCron {
     
     const JS_TRANSLATION_FILE = JS_CODE_DIR. '/translations.js';
     
+    use Html;
+    
     private function deleteOldJStranslations() {
         if (file_exists(self::JS_TRANSLATION_FILE)) {
             unlink(self::JS_TRANSLATION_FILE);
@@ -115,7 +117,7 @@ class PHPtoJStranslations extends AbstractCron {
         $r = file_put_contents(self::JS_TRANSLATION_FILE, $jsString);
         
         if ($r) {
-            $this->displayMsg("New translations are saved. New size: ". display_bytes($r));
+            $this->displayMsg("New translations are saved. New size: ". $this->displayBytes($r));
         }
         else {
             $this->displayMsg("Could not save translations to HDD!");

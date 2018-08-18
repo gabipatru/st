@@ -8,6 +8,7 @@ class View extends SetterGetter
     use Singleton;
     use Translation;
     use Html;
+    use SecurityToken;
     
     private $aVarAssigned = [];
     private $aVarAssignedRef = [];

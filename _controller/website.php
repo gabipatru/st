@@ -49,19 +49,19 @@ class controller_website extends AbstractController {
         
         $validateResult = $FV->validate();
         
-        if (isPOST()) {
+        if ($this->isPOST()) {
             try {
                 if (!$validateResult) {
                     throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
-                $name       = filter_post('name', 'string');
-                $email      = filter_post('email', 'email');
-                $subject    = filter_post('subject', 'string');
-                $message    = filter_post('message', 'string');
+                $name       = $this->filterPOST('name', 'string');
+                $email      = $this->filterPOST('email', 'email');
+                $subject    = $this->filterPOST('subject', 'string');
+                $message    = $this->filterPOST('message', 'string');
                 
                 // send the email
                 $oEmailTemplate = new EmailTemplate('contact.php');
@@ -80,7 +80,7 @@ class controller_website extends AbstractController {
                 $messageSent = true;
             }
             catch (Exception $e) {
-                message_set_error($e->getMessage());
+                $this->setErrorMessage($e->getMessage());
             }
         }
         
@@ -98,21 +98,21 @@ class controller_website extends AbstractController {
     ## CHANGE LANGUAGE ACTION
     ###############################################################################
     public function save_language() {
-        $newLanguage = filter_get('language', 'string');
-        $referrer = filter_get('referrer', 'string');
+        $newLanguage = $this->filterGET('language', 'string');
+        $referrer = $this->filterGET('referrer', 'string');
         
         if (!$referrer) {
-            $referrer = href_website('website/homepage');
+            $referrer = $this->redirect('website/homepage');
         }
         
         $oTranslations = Translations::getSingleton();
         if (!$newLanguage || !$oTranslations->checkIfLanguageExists($newLanguage)) {
-            message_set_error($this->__('Could not configure language'));
-            http_redir($referrer);
+            $this->setErrorMessage($this->__('Could not configure language'));
+            $this->redirect($referrer);
         }
         
         setcookie(Translations::COOKIE_NAME, $newLanguage, time() + 86400 * 365, "/");
         
-        http_redir($referrer);
+        $this->redirect($referrer);
     }
 }

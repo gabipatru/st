@@ -1,6 +1,8 @@
 addAction( 'controller_user', 'newuser', {
     run: function() {
-        $( "#newUser" ).validate( aFormValidate );
+        if (typeof(aFormValidate) != 'undefined') {
+            $( "#newUser" ).validate( aFormValidate );
+        }
         
         // password strength meter
         $( "#password" ).on('input', function() {

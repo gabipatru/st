@@ -37,6 +37,8 @@ function href_website($sName, $sData = '') {
 }
 
 function href_admin($sName, $sData = '') {
+    $mvc = mvc::getSingleton();
+    
     if (strstr($sName, '/') !== false) {
         $aPath = explode('/', $sName);
         $sName = $aPath[0];
@@ -55,7 +57,7 @@ function href_admin($sName, $sData = '') {
                 case 'edit':
                     return HTTP_MAIN.'/admin/categories/edit.html' . ($sData ? '?category_id='.$sData : '');
                 case 'delete':
-                    return HTTP_MAIN.'/admin/categories/delete.html' . ($sData ? "?category_id=$sData&token=". securityGetToken() : '');
+                    return HTTP_MAIN.'/admin/categories/delete.html' . ($sData ? "?category_id=$sData&token=". $mvc->securityGetToken() : '');
             }
         case 'series':
             switch ($aPath[1]) {
@@ -64,7 +66,7 @@ function href_admin($sName, $sData = '') {
                 case 'edit':
                     return HTTP_MAIN.'/admin/series/edit.html' . ($sData ? '?series_id='.$sData : '');
                 case 'delete':
-                    return HTTP_MAIN.'/admin/series/delete.html' . ($sData ? "?series_id=$sData&token=". securityGetToken() : '');
+                    return HTTP_MAIN.'/admin/series/delete.html' . ($sData ? "?series_id=$sData&token=". $mvc->securityGetToken() : '');
             }
         case 'groups':
             switch ($aPath[1]) {
@@ -73,7 +75,7 @@ function href_admin($sName, $sData = '') {
                 case 'edit':
                     return HTTP_MAIN.'/admin/groups/edit.html' . ($sData ? '?group_id='.$sData : '');
                 case 'delete':
-                    return HTTP_MAIN.'/admin/groups/delete.html' . ($sData ? "?group_id=$sData&token=". securityGetToken() : '');
+                    return HTTP_MAIN.'/admin/groups/delete.html' . ($sData ? "?group_id=$sData&token=". $mvc->securityGetToken() : '');
             }
         case 'surprises':
             switch ($aPath[1]) {
@@ -82,7 +84,7 @@ function href_admin($sName, $sData = '') {
                 case 'edit':
                     return HTTP_MAIN.'/admin/surprises/edit.html' . ($sData ? '?surprise_id='.$sData : '');
                 case 'delete':
-                    return HTTP_MAIN.'/admin/surprises/delete.html' . ($sData ? "?surprise_id=$sData&token=". securityGetToken() : '');
+                    return HTTP_MAIN.'/admin/surprises/delete.html' . ($sData ? "?surprise_id=$sData&token=". $mvc->securityGetToken() : '');
             }
         case 'config':
             switch ($aPath[1]) {

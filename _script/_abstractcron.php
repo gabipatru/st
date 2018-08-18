@@ -5,7 +5,14 @@
  * Don't forget to modify the log config in common/config
  */
 
+require_once(TRAITS_DIR .'/Html.trait.php');
+require_once(TRAITS_DIR .'/Log.trait.php');
+require_once(TRAITS_DIR .'/Email.trait.php');
+
 abstract class AbstractCron extends SetterGetter {
+    
+    use Log;
+    use Email;
     
     protected $db;
     
@@ -18,16 +25,10 @@ abstract class AbstractCron extends SetterGetter {
     /*
      * Constructor for scripts / crons
      */
-    public function __construct($loggerName = null) {
+    public function __construct() {
         // autoload
         require_once(CLASSES_DIR . '/mvc.php');
         spl_autoload_register('mvc::autoload');
-        
-        // this is for logging
-        if (!$loggerName) {
-            $loggerName = get_class($this). '.log';
-        }
-        $this->setLogName($loggerName);
         
         $this->checkDebugOption();
         
@@ -84,7 +85,7 @@ abstract class AbstractCron extends SetterGetter {
         if ($this->getDebug()) {
             echo $message . "\n";
         } else {
-            log_message($this->getLogName(), $message);
+            $this->logMessage($message);
         }
     }
     
@@ -100,6 +101,6 @@ abstract class AbstractCron extends SetterGetter {
      * Use in case error occur in the script and company staff must be notified
      */
     public function sendWarningEmail($subject, $message) {
-        email($this->getWarningEmailAddress(), $subject, $body);
+        $this->sendEmail($this->getWarningEmailAddress(), $subject, $body);
     }
 }

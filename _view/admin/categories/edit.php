@@ -29,8 +29,8 @@
           <p>
             <label><?php echo $this->__('Status')?> <span>(<?php echo $this->__('Required Field')?>)</span></label>
             <select id="status" name="status" class="field size4">
-              <option <?php $this->selected($FV->status, 'online')?> value="online"><?php echo __('Online')?></option>
-              <option <?php $this->selected($FV->status, 'offline')?> value="offline"><?php echo __('Offline')?></option>
+              <option <?php $this->selected($FV->status, 'online')?> value="online"><?php echo $this->__('Online')?></option>
+              <option <?php $this->selected($FV->status, 'offline')?> value="offline"><?php echo $this->__('Offline')?></option>
             </select>
           </p>
           
@@ -41,7 +41,7 @@
           <input type="submit" class="button" value="<?php echo $this->__('Save')?>" />
         </div>
         
-        <input type="hidden" name="token" value="<?php echo securityGetToken()?>">
+        <input type="hidden" name="token" value="<?php echo $this->securityGetToken()?>">
         
       </form>
       <?php echo $FV->_js_code;?>

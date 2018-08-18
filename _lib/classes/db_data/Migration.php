@@ -5,6 +5,9 @@
  */
 
 class Migration extends DbData {
+    
+    use Log;
+    
     const TABLE_NAME    = '_migration';
     const ID_FIELD      = 'migration_id';
     
@@ -204,7 +207,7 @@ class Migration extends DbData {
         $oMigrationLog = new MigrationLog();
         $r = $oMigrationLog->Add($oItem);
         if (!$r) {
-            log_message('migrations.log', 'Failed to update migrations log with query '>$sql);
+            $this->logMessage('Failed to update migrations log with query '>$sql);
             return false;
         }
         return true;

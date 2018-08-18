@@ -7,18 +7,10 @@ require_once(CONFIG_DIR . '/debug.php');
 require_once(CONFIG_DIR . '/links.php');
 require_once(CONFIG_DIR . '/constants.php');
 
-require_once(FUNCTIONS_DIR . '/messages.php');
-require_once(FUNCTIONS_DIR . '/http_functions.php');
-require_once(FUNCTIONS_DIR . '/html_functions.php');
-require_once(FUNCTIONS_DIR . '/filter.php');
-require_once(FUNCTIONS_DIR . '/log.php');
-require_once(FUNCTIONS_DIR . '/security_token.php');
-require_once(FUNCTIONS_DIR . '/email.php');
-
-securityUpdateToken();
+$this->securityUpdateToken();
 
 // load common translations
-$language = (isset($_COOKIE[Translations::COOKIE_NAME]) ? $_COOKIE[Translations::COOKIE_NAME] : DEFAULT_TRANSLATION_LANGUAGE);
+$language = ($_COOKIE[Translations::COOKIE_NAME] ?? DEFAULT_TRANSLATION_LANGUAGE);
 $oTranslations = Translations::getSingleton();
 $oTranslations->setLanguage($language);
 $oTranslations->setModule('common');

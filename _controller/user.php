@@ -46,16 +46,16 @@ class controller_user extends AbstractController {
                 if (User::isLoggedIn()) {
                     throw new Exception($this->__('You are already logged in !'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                  
-                $returnUrl = filter_post('return', 'urldecode');
+                $returnUrl = $this->filterPOST('return', 'urldecode');
                 $configUserConfirmation = Config::configByPath(User::CONFIG_USER_CONFIRMATION);
                  
                 $oItem = new SetterGetter();
-                $oItem->setUsername(filter_post('username', 'string'));
-                $oItem->setPassword(filter_post('password', 'string'));
+                $oItem->setUsername($this->filterPOST('username', 'string'));
+                $oItem->setPassword($this->filterPOST('password', 'string'));
                  
                 $oUser = new User();
                  
@@ -147,7 +147,7 @@ class controller_user extends AbstractController {
                 if (User::isLoggedIn()) {
                     throw new Exception($this->__('You are already logged in !'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
@@ -318,7 +318,7 @@ class controller_user extends AbstractController {
                 if (!$validateResult) {
                     throw new Exception($this->__('Please fill all the required fields'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
@@ -410,7 +410,7 @@ class controller_user extends AbstractController {
                 if (!$validateResult) {
                     throw new Exception($this->__('Please fill all the required fields'));
                 }
-                if (!securityCheckToken(filter_post('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 if (!$confirmationCode) {

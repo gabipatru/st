@@ -53,7 +53,7 @@ class controller_admin_groups extends ControllerAdminModel
                 if (! $validateResult) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
-                if (!securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
@@ -136,7 +136,7 @@ class controller_admin_groups extends ControllerAdminModel
         $groupId = $this->filterGET('group_id', 'int');
         
         try {
-            if (!securityCheckToken($this->filterGET('token', 'string'))) {
+            if (!$this->securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
             if (!$groupId) {

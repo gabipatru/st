@@ -51,7 +51,7 @@ class controller_admin_categories extends ControllerAdminModel
                 if (! $validateResult) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
-                if (!securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
@@ -126,7 +126,7 @@ class controller_admin_categories extends ControllerAdminModel
         $categoryId = $this->filterGET('category_id', 'int');
         
         try {
-            if (! securityCheckToken($this->filterGET('token', 'string'))) {
+            if (! $this->securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
             if (! Config::configByPath(DbData::ALLOW_DELETE_KEY)) {

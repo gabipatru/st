@@ -12,7 +12,12 @@ class SendQueuedEmail extends AbstractCron {
         $oEmails = $oEmailQueue->GetEmailsToProcess();
         
         foreach ($oEmails as $oCurrentEmail) {
-            $r = email($oCurrentEmail->getTo(), $oCurrentEmail->getSubject(), $oCurrentEmail->getBody(), $oCurrentEmail->getEMailQueueId());
+            $r = $this->sendEmail(
+                $oCurrentEmail->getTo(), 
+                $oCurrentEmail->getSubject(), 
+                $oCurrentEmail->getBody(), 
+                $oCurrentEmail->getEMailQueueId()
+            );
             
             $oItem = new SetterGetter();
             if ($r) {

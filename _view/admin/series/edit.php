@@ -54,7 +54,7 @@
           <input type="submit" class="button" value="<?php echo $this->__('Save')?>" />
         </div>
         
-        <input type="hidden" name="token" value="<?php echo securityGetToken()?>">
+        <input type="hidden" name="token" value="<?php echo $this->securityGetToken()?>">
         
       </form>
       <?php echo $FV->_js_code;?>

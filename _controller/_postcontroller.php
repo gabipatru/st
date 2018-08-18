@@ -1,5 +1,5 @@
 <?php
-$this->View->assign('_MESSAGES', message_get());
+$this->View->assign('_MESSAGES', $this->getMessages());
 $this->View->assign('https', false);
 
 // close memcached connection
