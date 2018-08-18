@@ -44,14 +44,14 @@ class EmailQueue extends DbData {
               ." AND send_attempts < ?"
               ." ORDER BY priority DESC"
               ." LIMIT ".$emailLimit;
-        $res = db::query($sql, array($maxSendAttempts));
+        $res = $this->db->query($sql, array($maxSendAttempts));
         if (!$res || $res->errorCode() != '00000') {
             return new Collection();
         }
-        $iNrItems = db::rowCount($res);
+        $iNrItems = $this->db->rowCount($res);
     
         $oCollection = new Collection();
-        while ($row = db::fetchAssoc($res)) {
+        while ($row = $this->db->fetchAssoc($res)) {
             $oCollection->add($row[$this->getIdField()], $row);
         }
 

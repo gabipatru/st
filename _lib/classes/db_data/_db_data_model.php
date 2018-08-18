@@ -4,17 +4,19 @@
  * This class is used to implement basic operations on a database table
  */
 
-require_once(CLASSES_DIR.'/db.php');
-
 abstract class dbDataModel {
 	private $tableName;
 	private $idField;
 	private $statusField;
 	
+	protected $db;
+	
 	function __construct($table, $id, $status) {
 		$this->tableName = $table;
 		$this->idField = $id;
 		$this->statusField = $status;
+		
+		$this->db = db::getSingleton();
 	}
 	
 	/*
@@ -103,11 +105,11 @@ abstract class dbDataModel {
 		$sql = "INSERT INTO `".$this->getTableName() ."`"
 				." (".$sFields.")"
 				." VALUES (".$sValues.")";
-		$res = db::query($sql, $aParams);
+		$res = $this->db->query($sql, $aParams);
 		if (!$res || $res->errorCode() != '00000') {
 			return false;
 		}
-		$iLastId = db::lastInsertId();
+		$iLastId = $this->db->lastInsertId();
 
 		// call abstract function onAdd
 		return $this->onAdd($iLastId);
@@ -150,7 +152,7 @@ abstract class dbDataModel {
 		$sql = "UPDATE `".$this->getTableName()."` SET "
 				.$sFields
 				.' WHERE '.$this->getIdField()." = ?";
-		$res = db::query($sql, $aParams);
+		$res = $this->db->query($sql, $aParams);
 		if ($res->errorCode() != '00000') {
 			return false;
 		}
@@ -175,7 +177,7 @@ abstract class dbDataModel {
 		// delete the item
 		$sql = "DELETE FROM `".$this->getTableName() ."`"
 				." WHERE ".$this->getIdField()." = ?";
-		$res = db::query($sql, array($iId));
+		$res = $this->db->query($sql, array($iId));
 		if ($res->errorCode() != '00000') {
 			return false;
 		}
@@ -184,7 +186,7 @@ abstract class dbDataModel {
 		$r = $this->onDelete($iId);
 		
 		if ($r) {
-			return db::rowCount($res);
+		    return $this->db->rowCount($res);
 		}
 		return false;
 	}
@@ -201,7 +203,7 @@ abstract class dbDataModel {
 		$sql = "UPDATE `".$this->getTableName()."` SET "
 				.$this->getStatusField()." = ? "
 				." WHERE ".$this->getIdField()." = ?";
-		$res = db::query($sql, array($mNewStatus, $iId));
+		$res = $this->db->query($sql, array($mNewStatus, $iId));
 		if ($res->errorCode() != '00000') {
 			return false;
 		}
@@ -224,8 +226,8 @@ abstract class dbDataModel {
 			return false;
 		}
 		
-		list($whereCondition, $aParams) = db::filters($filters);
-		list($searchCondition, $searchParams) = db::searchFilter($options);
+		list($whereCondition, $aParams) = $this->db->filters($filters);
+		list($searchCondition, $searchParams) = $this->db->searchFilter($options);
 		
 		if (count($searchParams) > 0 && !empty($searchCondition)) {
     		$whereCondition .= $searchCondition;
@@ -234,7 +236,7 @@ abstract class dbDataModel {
 		
 		$sql = "SELECT COUNT(*) AS cnt FROM `".$this->getTableName() ."`"
 				." WHERE ".$whereCondition;
-		$row = db::querySelect($sql, $aParams);
+		$row = $this->db->querySelect($sql, $aParams);
 		if (isset($row['cnt'])) {
 			return $row['cnt'];
 		}
@@ -259,8 +261,8 @@ abstract class dbDataModel {
 		
 		$iNrItems = $this->Count($filters, $options);
 		
-		list($whereCondition, $aParams) = db::filters($filters);
-		list($searchCondition, $searchParams) = db::searchFilter($options);
+		list($whereCondition, $aParams) = $this->db->filters($filters);
+		list($searchCondition, $searchParams) = $this->db->searchFilter($options);
 		
 		if (count($searchParams) > 0 && !empty($searchCondition)) {
     		$whereCondition .= $searchCondition;
@@ -286,7 +288,7 @@ abstract class dbDataModel {
 				." WHERE ".$whereCondition
 				.$sOrder
 				.$sLimit;
-		$res = db::query($sql, $aParams);
+		$res = $this->db->query($sql, $aParams);
 		if (!$res || $res->errorCode() != '00000') {
 			return new Collection();
 		}
@@ -301,7 +303,7 @@ abstract class dbDataModel {
 		}
 		
 		$oCollection = new Collection();
-		while ($row = db::fetchAssoc($res)) {
+		while ($row = $this->db->fetchAssoc($res)) {
 		    $oCollection->add($row[$this->getIdField()], $row);
 		}
 		

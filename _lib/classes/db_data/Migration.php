@@ -47,7 +47,7 @@ class Migration extends DbData {
      */
     public function getTables() {
         $sql = "SHOW TABLES";
-        $res = db::query($sql);
+        $res = $this->db->query($sql);
         
         if (!$res || $res->errorCode() != '00000') {
             return new Collection();
@@ -55,7 +55,7 @@ class Migration extends DbData {
         
         $oCollection = new Collection();
         $i=0;
-        while ($row = db::fetchAssoc($res)) {
+        while ($row = $this->db->fetchAssoc($res)) {
             $oCollection->add($i, $row);
             $i++;
         }
@@ -73,9 +73,9 @@ class Migration extends DbData {
         // get the database tables
         $Tables = $this->getTables();
         
-        db::startTransaction();
+        $this->db->startTransaction();
         if (count($Tables) > 0) {
-            db::lock_transaction('migrations');
+            $this->db->lock_transaction('migrations');
             // load database version for all migrations
             $oDatabaseVersion = $this->Get();
         }
@@ -113,7 +113,7 @@ class Migration extends DbData {
             }
         }
         
-        db::commitTransaction();
+        $this->db->commitTransaction();
     }
     
     /**
@@ -140,7 +140,7 @@ class Migration extends DbData {
             // run the migration(s)
             if (is_array($migrationSql)) {
                 foreach ($migrationSql as $mig) {
-                    $r = db::query($mig);
+                    $r = $this->db->query($mig);
                     if (!$r) {
                         die('Failed to run migration '.$mig);
                     }
@@ -148,7 +148,7 @@ class Migration extends DbData {
                 }
             }
             else {
-                $r = db::query($migrationSql);
+                $r = $this->db->query($migrationSql);
                 if (!$r) {
                     die('Failed to run migration '.$mig);
                 }
@@ -166,7 +166,7 @@ class Migration extends DbData {
                 if (!$r) {
                     die('Failed to add migration name : ' . $migrationName);
                 }
-                $migrationId = db::lastInsertId();
+                $migrationId = $this->db->lastInsertId();
             }
             else {
                 $filters = array('name' => $migrationName);

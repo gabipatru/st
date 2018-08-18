@@ -110,15 +110,15 @@ class User extends DbData {
         	$sql .= " AND status = ?";
         	$aParams[] = User::STATUS_ACTIVE;
         }
-        $res = db::query($sql, $aParams);
-        if (!$res || $res->errorCode() != '00000' || db::rowCount($res) == 0) {
+        $res = $this->db->query($sql, $aParams);
+        if (!$res || $res->errorCode() != '00000' || $this->db->rowCount($res) == 0) {
             return false;
         }
         
         $lastLogin = date('Y-m-d H:i:s');
         
         // build the user object
-        $row = db::fetchAssoc($res);
+        $row = $this->db->fetchAssoc($res);
         $oLoggedInUser = new SetterGetter();
         $oLoggedInUser->setUserId($row['user_id']);
         $oLoggedInUser->setEmail($row['email']);
@@ -163,8 +163,8 @@ class User extends DbData {
     			." AND (username = ? OR email = ?)";
     	$aParams = array($status, $userName, $email);
     	
-    	$res = db::query($sql, $aParams);
-    	if (!$res || $res->errorCode() != '00000' || db::rowCount($res) == 0) {
+    	$res = $this->db->query($sql, $aParams);
+    	if (!$res || $res->errorCode() != '00000' || $this->db->rowCount($res) == 0) {
     		return false;
     	}
     	else {

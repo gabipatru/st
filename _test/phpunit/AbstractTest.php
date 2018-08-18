@@ -33,18 +33,19 @@ abstract class AbstractTest extends TestCase {
     public function setUpDB() {
         $this->defineDebuggerAgent();
         
-        \db::connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, self::DB_PASS);
+        $db = \db::getSingleton();
+        $db->connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, self::DB_PASS);
         
         // delete the existing tables
         $Migration = new \Migration();
         $oTablesCollection = $Migration->getTables();
         
-        \db::query("SET FOREIGN_KEY_CHECKS = 0;");
+        $db->query("SET FOREIGN_KEY_CHECKS = 0;");
         foreach ($oTablesCollection as $Table) {
             $tableName = $Table->getTablesInMvcTest();
-            \db::query("DROP TABLE `".$tableName."`");
+            $db->query("DROP TABLE `".$tableName."`");
         }
-        \db::query("SET FOREIGN_KEY_CHECKS = 1;");
+        $db->query("SET FOREIGN_KEY_CHECKS = 1;");
         
         // run the migrations on empty db
         $Migration->runMigrations();

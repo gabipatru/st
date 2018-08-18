@@ -22,7 +22,8 @@ class FirstTest extends AbstractTest
     public function testDbConnectionGoodCredentials() {
         $this->defineDebuggerAgent();
         
-        \db::connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, self::DB_PASS);
+        $db = \db::getSingleton();
+        $db->connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, self::DB_PASS);
         
         // assert no exception happned
         $this->assertTrue(true);
@@ -36,7 +37,8 @@ class FirstTest extends AbstractTest
         
         $this->expectException(\PDOException::class);
         
-        \db::connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, 'qwe');
+        $db = \db::getSingleton();
+        $db->connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, 'qwe');
     }
     
     /**

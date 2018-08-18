@@ -19,13 +19,13 @@ class UserConfirmation extends DbData {
         $sql = "SELECT confirmation_id "
                 ." FROM ".UserConfirmation::TABLE_NAME
                 ." WHERE expires_at < NOW()";
-        $res = db::query($sql);
+        $res = $this->db->query($sql);
         if (!$res || $res->errorCode() != '00000') {
             return new Collection();
         }
         
         $oCollection = new Collection();
-        while ($row = db::fetchAssoc($res)) {
+        while ($row = $this->db->fetchAssoc($res)) {
             $oCollection->add($row[$this->getIdField()], $row);
         }
         
@@ -43,11 +43,11 @@ class UserConfirmation extends DbData {
         $sql = " SELECT COUNT(*) AS cnt"
               ." FROM ".UserConfirmation::TABLE_NAME
               ." WHERE user_id = ?";
-        $res = db::query($sql, array($userId));
+        $res = $this->db->query($sql, array($userId));
         if (!$res) {
             return false;
         }
-        $row = db::fetchAssoc($res);
+        $row = $this->db->fetchAssoc($res);
         $number = $row['cnt'];
         return $number;
     }

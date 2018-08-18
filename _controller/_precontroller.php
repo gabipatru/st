@@ -18,7 +18,8 @@ $this->View->assign('oTranslations', $oTranslations);
 
 // database connection
 try {
-    db::connect();
+    $db = db::getSingleton();
+    $db->connect();
     $oMigration = new Migration();
     $oMigration->runMigrations();
 }
