@@ -5,7 +5,9 @@
  * every time you extend that method
  */
 
-class DbData extends dbDataModel {
+class DbData extends dbDataModel 
+{
+    const ALLOW_DELETE_KEY = '/Website/Database/Delete permitted';
     
     protected function onAdd($insertId) {
         return true;

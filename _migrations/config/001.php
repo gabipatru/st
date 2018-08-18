@@ -68,6 +68,12 @@ INSERT INTO config (path, value, type)
 VALUES ('/Website/Pagination/Per Page', '20', 'text');
 ";
 
+// add config for database deletion
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Website/Database/Delete permitted', '0', 'yesno');
+";
+
 // add config for phone number
 $migrationSql[] = "
 INSERT INTO config (path, value, type)

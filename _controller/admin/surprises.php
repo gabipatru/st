@@ -168,6 +168,9 @@ class controller_admin_surprises extends ControllerAdminModel {
             if (!securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
+            if (! Config::configByPath(DbData::ALLOW_DELETE_KEY)) {
+                throw new Exception($this->__('Delete not allowed'));
+            }
             if (!$surpriseId) {
                 throw new Exception($this->__('Group ID is missing.'));
             }
