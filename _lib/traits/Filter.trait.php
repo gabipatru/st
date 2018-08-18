@@ -214,7 +214,7 @@ trait Filter
     private function validate($mVar, string $sFilterType) :bool
     {
         // initialize the filters array
-        if (strstr($sFilterType, '|') === false) {
+        if (strstr($sFilterType, '|') !== false) {
             $aFilters = explode('|', $sFilterType);
         }
         else {
