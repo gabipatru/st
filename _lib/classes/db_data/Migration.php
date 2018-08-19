@@ -66,13 +66,14 @@ class Migration extends DbData {
     /**
      * Find the migrations which have to be run and run them
      */
-    public function runMigrations() {
+    public function runMigrations($migrations = null) {
         // load current mirations status
         require(CONFIG_DIR . '/migration.php');
         
         // get the database tables
         $Tables = $this->getTables();
         
+        // lock everything to make sure only one migration runs at one time
         $this->db->startTransaction();
         if (count($Tables) > 0) {
             $this->db->lock_transaction('migrations');
@@ -83,9 +84,16 @@ class Migration extends DbData {
             $oDatabaseVersion = new Collection();
         }
 
+        // load migration state from DB
         if (!count($oDatabaseVersion)) {
             $this->deployMigrations('migrations', '000');
-            $oDatabaseVersion = $this->Get();
+            
+            $filters = [];
+            // we may have to run only some migrations
+            if (is_array($migrations) && count($migrations) > 0) {
+                $filters = ['name' => $migrations];
+            }
+            $oDatabaseVersion = $this->Get($filters);
         }
 
         // create array with migration names from database
@@ -96,8 +104,15 @@ class Migration extends DbData {
         
         // check if there are any new migration groups
         foreach ($aMigrationsConfig as $migrationName => $latestVersion) {
+            // we must deply the migration if it is not set up in the db
             if (!in_array($migrationName, $aDatabaseMigrationNames)) {
-                $this->deployMigrations($migrationName, '000');
+                // but if we must deply only some migrations, extra checks are made
+                if (! is_array($migrations) || count($migrations) == 0) {
+                    $this->deployMigrations($migrationName, '000');
+                }
+                elseif (is_array($migrations) && count($migrations) > 0 && in_array($migrationName, $migrations)) {
+                    $this->deployMigrations($migrationName, '000');
+                }
             }
         }
         

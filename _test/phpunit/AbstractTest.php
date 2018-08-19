@@ -30,7 +30,7 @@ abstract class AbstractTest extends TestCase {
      * Set up the DB by deleting all tables and running the migrations
      * an an empty database
      */
-    public function setUpDB() {
+    public function setUpDB($migrations = null) {
         $this->defineDebuggerAgent();
         
         $db = \db::getSingleton();
@@ -48,7 +48,7 @@ abstract class AbstractTest extends TestCase {
         $db->query("SET FOREIGN_KEY_CHECKS = 1;");
         
         // run the migrations on empty db
-        $Migration->runMigrations();
+        $Migration->runMigrations($migrations);
     }
     
     /**

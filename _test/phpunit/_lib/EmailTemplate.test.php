@@ -39,7 +39,7 @@ class EmailTemplate extends AbstractTest {
      * @group slow
      */
     public function testAddToQueue() {
-        $this->setUpDB();
+        $this->setUpDB(['email']);
         
         $Email = new \EmailTemplate('test');
         
