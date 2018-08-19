@@ -9,5 +9,6 @@ $aMigrationsConfig = array(
     'category'      => '001',
     'series'        => '001',
     'group'         => '001',
-    'surprise'      => '001'
+    'surprise'      => '001',
+    'test'          => '001'
 );
