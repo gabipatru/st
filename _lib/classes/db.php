@@ -69,6 +69,10 @@ class db {
         $this->bDebug = $bDebug;
     }
     
+    public function getDebug() {
+        return $this->bDebug;
+    }
+    
     /*
      * This function connects to the database
      */
@@ -187,7 +191,7 @@ class db {
             }
             elseif (is_array($value)) {
                 $markers = $value;
-                $aParams = $value;
+                $aParams = array_merge($aParams, $value);
                 foreach($markers as $key => $value) {
                     $markers[$key] = '?';
                 }
