@@ -61,9 +61,10 @@ class db {
     
     private $oPDO = null;
     private $bDebug = false;
+    private $iQueriesNo = 0;
     
-    /*
-     * This function sets the debug mode to a given level
+    /**
+     * These functions are setters ang getters for the debug variable
      */
     public function setDebug($bDebug) {
         $this->bDebug = $bDebug;
@@ -71,6 +72,22 @@ class db {
     
     public function getDebug() {
         return $this->bDebug;
+    }
+    
+    /**
+     * These functions operate with the number of queries run by a script
+     */
+    private function setQueriesNo(int $nr) {
+        $this->iQueriesNo = $nr;
+    }
+    
+    private function incrementQueriesNo() {
+        $this->iQueriesNo = $this->iQueriesNo + 1;
+    }
+    
+    public function getQueriesNo(): int
+    {
+        return $this->iQueriesNo;
     }
     
     /*
@@ -95,7 +112,7 @@ class db {
         
         // if class debug is active, print the query and parameters
         if ($this->bDebug === true ) {
-            trigger_error($sql);
+            echo $sql;
             echo'<pre>';print_r($mParams);echo'</pre>';
         }
         
@@ -104,14 +121,15 @@ class db {
         
         // execute the statement
         $oStmt->execute($mParams);
+        $this->incrementQueriesNo();
         if ($oStmt->errorCode() == '00000') {
             return $oStmt;
         }
         else {
             if (DEBUGGER_AGENT) {
-                trigger_error($sql);
                 echo'<pre>';print_r($mParams);echo'</pre>';
                 echo '<pre>';print_r($oStmt->errorInfo());echo '</pre>';
+                trigger_error($sql);
             }
             return false;
         }

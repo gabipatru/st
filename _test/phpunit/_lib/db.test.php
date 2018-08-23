@@ -2,6 +2,7 @@
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Error\Error;
 
 require_once(__DIR__ .'/../AbstractTest.php');
 
@@ -253,5 +254,63 @@ class db extends AbstractTest
         
         $this->assertEquals(0, $db->transactionLevel());
         $this->assertEquals($oldRows, $rows);
+    }
+    
+    /**
+     * Test query function with an invalid query
+     * @group fast
+     */
+    public function testQueryWithEmptySql()
+    {
+        $db = \db::getSingleton();
+        
+        $this->expectException(Error::class);
+        
+        $db->query(0);
+    }
+    
+    /**
+     * Test query function with wrong query
+     * @group fast
+     */
+    public function testQueryWithError()
+    {
+        $db = \db::getSingleton();
+        
+        $this->expectException(Error::class);
+        
+        $db->query("x=1");
+    }
+    
+    /**
+     * Test if query is outputed when debug is set to true
+     * @group fast
+     */
+    public function testQueryWithDebug()
+    {
+        $db = \db::getSingleton();
+        $db->setDebug(true);
+        
+        $db->query("SELECT 1");
+        
+        $db->setDebug(false);
+        
+        $this->expectOutputString("SELECT 1<pre></pre>");
+    }
+    
+    /**
+     * Test if the number of queries is incremented
+     * @group fast
+     */
+    public function testQueryNumber()
+    {
+        $db = \db::getSingleton();
+        $iNumberOfQueries = $db->getQueriesNo();
+        
+        $db->query("SELECT 1");
+        
+        $iNewNumberOfQueries = $db->getQueriesNo();
+        
+        $this->assertEquals($iNumberOfQueries + 1, $iNewNumberOfQueries);
     }
 }
