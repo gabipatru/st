@@ -134,6 +134,21 @@ class Migration extends AbstractTest
     }
     
     /**
+     * Test deploying partial migration
+     * @group slow
+     */
+    public function testDeployPartialMigration()
+    {
+        $this->setUpDB(['test']);
+        
+        $Migration = new \Migration();
+        $Tables = $Migration->getTables();
+        
+        $this->assertCount(3, $Tables);
+        $this->assertTrue(in_array('test', $Tables->collectionColumn('tablesinmvctest')));
+    }
+    
+    /**
      * Test deploying a new migration in an existing module
      * migration sql is an array
      * @group slow
