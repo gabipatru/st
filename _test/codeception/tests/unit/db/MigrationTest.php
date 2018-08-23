@@ -65,18 +65,18 @@ class Migration extends AbstractTest
         
         // add some data to db
         $data = new \SetterGetter();
-        $data->setName('test');
+        $data->setName('test1');
         $data->setVersion('001');
         
         $Migration->Add($data);
         
         // check if the data is in db
-        $filters = [ 'name' => 'test' ];
+        $filters = [ 'name' => 'test1' ];
         $Collection = $Migration->Get($filters);
         
         $this->assertCount(1, $Collection);
         $Item = $Collection->getItem();
-        $this->assertEquals('test', $Item->getName());
+        $this->assertEquals('test1', $Item->getName());
         $this->assertEquals('001', $Item->getVersion());
     }
     
@@ -88,7 +88,7 @@ class Migration extends AbstractTest
         $Migration = new \Migration();
         
         // get data from db
-        $filters = [ 'name' => 'test' ];
+        $filters = [ 'name' => 'test1' ];
         $Collection = $Migration->Get($filters);
         $Item = $Collection->getItem();
         $id = $Item->getMigrationId();
@@ -227,7 +227,7 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = array('migration_id' => 10, 'query' => 'SHOW TABLES');
+        $filters = array('migration_id' => 11, 'query' => 'SHOW TABLES');
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'phpunit_migration_test' ];
