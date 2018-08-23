@@ -1,18 +1,15 @@
 <?php
-
 namespace Test;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+use PHPUnit\Framework\TestCase;
 
+require_once(__DIR__ .'/../../AbstractTest.php');
 
-/**
- * Test the migration class
- */
 class Migration extends AbstractTest
 {
-    
     /**
      * Test the version incrementing
+     * @group fast
      */
     public function testGetNextVersion() {
         $Migration = new \Migration();
@@ -46,9 +43,10 @@ class Migration extends AbstractTest
     
     /**
      * Check if the migration table exists
+     * @group slow
      */
     public function testBasicDB() {
-        $this->setUpDB();
+        $this->setUpDB(['migrations']);
         
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
@@ -58,6 +56,7 @@ class Migration extends AbstractTest
     
     /**
      * Test Adding a record to DB and fetch records from DB
+     * @group slow
      * @depends testBasicDB
      */
     public function testAddToDB() {
@@ -82,6 +81,7 @@ class Migration extends AbstractTest
     
     /**
      * Test editing a record in DB and fetching it
+     * @group slow
      * @depends testAddToDB
      */
     public function testEditInDB() {
@@ -112,6 +112,7 @@ class Migration extends AbstractTest
     
     /**
      * Test deleting an item in the db
+     * @group slow
      * @depends testEditInDB
      */
     public function testDeleteInDB() {
@@ -135,13 +136,14 @@ class Migration extends AbstractTest
     /**
      * Test deploying a new migration in an existing module
      * migration sql is an array
+     * @group slow
      */
     public function testDeployMigrations1() {
-        $this->setUpDB();
+        $this->setUpDB(['migrations']);
         
         // mock what we need
         $MockMigrations = $this->getMockBuilder('\Migration')
-                               ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
+        ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
         ->getMock();
         $MockMigrations->method('fetchMigrationSQL')->willReturn( ['SHOW TABLES'] );
         $MockMigrations->method('checkMigrationFile')
@@ -171,9 +173,10 @@ class Migration extends AbstractTest
     /**
      * Test deploying a new migration in an existing module
      * migration sql is a string
+     * @group slow
      */
     public function testDeployMigrations2() {
-        $this->setUpDB();
+        $this->setUpDB(['migrations']);
         
         // mock what we need
         $MockMigrations = $this->getMockBuilder('\Migration')
@@ -207,9 +210,10 @@ class Migration extends AbstractTest
     /**
      * Test deploying a new migration in a new module
      * migration sql is an array
+     * @group slow
      */
     public function testDeployMigrations3() {
-        $this->setUpDB();
+        $this->setUpDB(['migrations']);
         
         // mock what we need
         $MockMigrations = $this->getMockBuilder('\Migration')
@@ -227,7 +231,7 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = array('migration_id' => 11, 'query' => 'SHOW TABLES');
+        $filters = array('migration_id' => 2, 'query' => 'SHOW TABLES');
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'phpunit_migration_test' ];

@@ -17,31 +17,6 @@ class FirstTest extends AbstractTest
     const NUM_TABLES = 13;
     
     /**
-     * Test database connection with correct credentials
-     */
-    public function testDbConnectionGoodCredentials() {
-        $this->defineDebuggerAgent();
-        
-        $db = \db::getSingleton();
-        $db->connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, self::DB_PASS);
-        
-        // assert no exception happned
-        $this->assertTrue(true);
-    }
-    
-    /**
-     * Test database connection with correct credentials
-     */
-    public function testDbConnectionBadCredentials() {
-        $this->defineDebuggerAgent();
-        
-        $this->expectException(\PDOException::class);
-        
-        $db = \db::getSingleton();
-        $db->connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, 'qwe');
-    }
-    
-    /**
      * Test running migrations from scratch
      * This will import all migrations on an empty database
      */

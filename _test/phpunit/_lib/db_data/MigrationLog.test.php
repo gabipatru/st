@@ -1,16 +1,15 @@
 <?php
-
 namespace Test;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+use PHPUnit\Framework\TestCase;
 
-/**
- * Test the migration log class
- */
+require_once(__DIR__ .'/../../AbstractTest.php');
+
 class MigrationLog extends AbstractTest
 {
     /**
      * Basic test for MigrationLog
+     * @group fast
      */
     public function testBasic() {
         $MigrationLog = new \MigrationLog();
@@ -20,9 +19,10 @@ class MigrationLog extends AbstractTest
     
     /**
      * Check if the migration table exists
+     * @group slow
      */
     public function testBasicDB() {
-        $this->setUpDB();
+        $this->setUpDB(['migrations']);
         
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
@@ -32,6 +32,7 @@ class MigrationLog extends AbstractTest
     
     /**
      * Test Adding a record to DB and fetch records from DB
+     * @group slow
      * @depends testBasicDB
      */
     public function testAddToDB() {
@@ -57,6 +58,7 @@ class MigrationLog extends AbstractTest
     
     /**
      * Test editing a record in DB and fetching it
+     * @group slow
      * @depends testAddToDB
      */
     public function testEditInDB() {
@@ -87,6 +89,7 @@ class MigrationLog extends AbstractTest
     
     /**
      * Test deleting an item in the db
+     * @group slow
      * @depends testEditInDB
      */
     public function testDeleteInDB() {

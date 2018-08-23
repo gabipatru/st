@@ -1,17 +1,15 @@
 <?php
-
 namespace Test;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+use PHPUnit\Framework\TestCase;
 
-/**
- * Test the email log class
- */
+require_once(__DIR__ .'/../../AbstractTest.php');
 
 class EmailQueue extends AbstractTest
 {
     /**
      * Basic test for EmailQueue
+     * @group fast
      */
     public function testBasic() {
         $EmailQueue = new \EmailQueue();
@@ -21,9 +19,10 @@ class EmailQueue extends AbstractTest
     
     /**
      * Check if the email log table exists
+     * @group slow
      */
     public function testBasicDB() {
-        $this->setUpDB();
+        $this->setUpDB(['email']);
         
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
@@ -33,6 +32,7 @@ class EmailQueue extends AbstractTest
     
     /**
      * Test Adding a record to DB and fetch records from DB
+     * @group slow
      * @depends testBasicDB
      */
     public function testAddToDB() {
@@ -67,6 +67,7 @@ class EmailQueue extends AbstractTest
     
     /**
      * Test editing a record in DB and fetching it
+     * @group slow
      * @depends testAddToDB
      */
     public function testEditInDB() {
@@ -102,6 +103,7 @@ class EmailQueue extends AbstractTest
     
     /**
      * Test deleting an item in the db
+     * @group slow
      * @depends testEditInDB
      */
     public function testDeleteInDB() {
