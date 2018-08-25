@@ -33,6 +33,6 @@ INSERT INTO `acl_permission` (acl_task_id, user_group_id) VALUES
 (5, 2),
 (6, 2),
 (7, 2),
-(9, 2),
+(8, 2),
 (10, 2)
 ";

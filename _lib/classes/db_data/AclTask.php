@@ -11,7 +11,7 @@ class AclTask extends DbData
     private $aclTasks = [
         'admin/dashboard'       => 1,
         'admin/cache'           => 2,
-        'admin/categries'       => 3,
+        'admin/categories'      => 3,
         'admin/config'          => 4,
         'admin/email'           => 5,
         'admin/groups'          => 6,

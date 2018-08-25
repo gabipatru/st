@@ -19,6 +19,10 @@ trait Singleton
             static::$instance = new static;
         }
         
+        if (method_exists(static::$instance, 'onGetSingleton')) {
+            static::$instance->onGetSingleton();
+        }
+        
         return static::$instance;
     }
 }
