@@ -1,6 +1,9 @@
 <!-- Main -->
 <div id="main">
+
 <div class="cl">&nbsp;</div>
+
+<?php include(VIEW_DIR. '/admin/_include/user_sidebar.php');?>
     
 <!-- Content -->
 <div id="content">

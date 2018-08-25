@@ -115,6 +115,15 @@ function href_admin($sName, $sData = '') {
                 case 'email_log':
                     return HTTP_MAIN.'/admin/email/email_log.html';
             }
+        case 'user_groups':
+            switch ($aPath[1]) {
+                case 'list':
+                    return HTTP_MAIN.'/admin/user_groups/list_user_groups.html';
+                case 'edit':
+                    return HTTP_MAIN.'/admin/user_groups/edit.html' . ($sData ? '?user_group_id='.$sData : '');
+                case 'delete':
+                    return HTTP_MAIN.'/admin/user_groups/delete.html' . ($sData ? "?user_group_id=$sData&token=". $mvc->securityGetToken() : '');
+            }
     }
 }
 
