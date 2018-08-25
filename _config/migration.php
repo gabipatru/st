@@ -10,5 +10,6 @@ $aMigrationsConfig = array(
     'series'        => '001',
     'group'         => '001',
     'surprise'      => '001',
+    'acl'           => '001',
     'test'          => '001'
 );
