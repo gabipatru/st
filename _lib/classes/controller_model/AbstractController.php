@@ -9,9 +9,11 @@ abstract class AbstractController
     use SecurityToken;
     
     protected $View;
+    protected $db;
     
     public function __construct()
     {
         $this->View = View::getSingleton();
+        $this->db = db::getSingleton();
     }
 }

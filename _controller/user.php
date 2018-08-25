@@ -187,7 +187,7 @@ class controller_user extends AbstractController {
                     throw new Exception($this->__('A user with that email already exists. Please use another email'));
                 }
                 
-                db::startTransaction();
+                $this->db->startTransaction();
                 
                 // add the user
                 $confirmationCode = $oUser->Add($oItem);
@@ -208,14 +208,14 @@ class controller_user extends AbstractController {
                     }
                 }
                 
-                db::commitTransaction();
+                $this->db->commitTransaction();
                 
                 $this->setMessage($this->__('User added to the database'));
                 $userAdded = true;
             }
             catch (Exception $e) {
-                if (db::transactionLevel()) {
-                    db::rollbackTransaction();
+                if ($this->db->transactionLevel()) {
+                    $this->db->rollbackTransaction();
                 }
                 $this->setErrorMessage($e->getMessage());
             }
@@ -257,7 +257,7 @@ class controller_user extends AbstractController {
             $oItem = new SetterGetter();
             $oItem->setStatus(User::STATUS_ACTIVE);
             
-            db::startTransaction();
+            $this->db->startTransaction();
             
             $oUser = new User();
             $r = $oUser->Edit($oCode->getUserId(), $oItem);
@@ -271,13 +271,13 @@ class controller_user extends AbstractController {
                 throw new Exception($this->__('Account could not be activated. Please try again later'));
             }
             
-            db::commitTransaction();
+            $this->db->commitTransaction();
             
             $this->setMessage($this->__('Your account is not active'));
         }
         catch (Exception $e) {
-            if (db::transactionLevel()) {
-                db::rollbackTransaction();
+            if ($this->db->transactionLevel()) {
+                $this->db->rollbackTransaction();
             }
             $this->setErrorMessage($e->getMessage());
         }
@@ -334,7 +334,7 @@ class controller_user extends AbstractController {
                 }
                 $oItem = $oCollection->getItem();
                 
-                db::startTransaction();
+                $this->db->startTransaction();
                 
                 // create confirmation
                 $oConf = new UserConfirmation();
@@ -352,14 +352,14 @@ class controller_user extends AbstractController {
                     throw new Exception($this->__('Could not send confirmation email. Please try again later.'));
                 }
                 
-                db::commitTransaction();
+                $this->db->commitTransaction();
                 $emailSent = true;
                 $this->setMessage($this->__('An email has benn sent to your email address'));
             }
             catch (Exception $e) {
                 $this->setErrorMessage($e->getMessage());
-                if (db::transactionLevel()) {
-                    db::rollbackTransaction();
+                if ($this->db->transactionLevel()) {
+                    $this->db->rollbackTransaction();
                 }
             }
         }
@@ -439,7 +439,7 @@ class controller_user extends AbstractController {
                 }
                 $oLoadedUser = $oCollection->getItem();
                 
-                db::startTransaction();
+                $this->db->startTransaction();
                 
                 // update the password
                 $oItem = new SetterGetter();
@@ -452,12 +452,12 @@ class controller_user extends AbstractController {
                 // delete the confirmation
                 $oUserConf->Delete($oCode->getConfirmationId());
                 
-                db::commitTransaction();
+                $this->db->commitTransaction();
                 $this->setMessage($this->__('Password was reset'));
             }
             catch (Exception $e) {
-                if (db::transactionLevel()) {
-                    db::rollbackTransaction();
+                if ($this->db->transactionLevel()) {
+                    $this->db->rollbackTransaction();
                 }
                 $this->setErrorMessage($e->getMessage());
             }

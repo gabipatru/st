@@ -41,7 +41,7 @@ class controller_admin_config extends ControllerAdminModel {
                 throw new Exception($this->__('The page delay was too long'));
             }
             
-            db::startTransaction();
+            $this->db->startTransaction();
             
             $oConfig = new Config();
             foreach ($aConfigIds as $configId) {
@@ -56,7 +56,7 @@ class controller_admin_config extends ControllerAdminModel {
                 }
             }
             
-            db::commitTransaction();
+            $this->db->commitTransaction();
             
             // clear config values from memcache
             $Memcache = Mcache::getSingleton();
@@ -64,7 +64,7 @@ class controller_admin_config extends ControllerAdminModel {
         }
         catch (Exception $e) {
             $this->setErrorMessage($e->getMessage());
-            db::rollbackTransaction();
+            $this->db->rollbackTransaction();
             $this->redirect(href_admin('config/list_items') . '?name='.$configName);
         }
         
