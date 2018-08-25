@@ -107,7 +107,7 @@ class controller_admin_user_groups extends ControllerAdminModel
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add($this->__('Users'), href_admin('users/list_users'));
-        $Breadcrumbs->Add($this->__('User Groups'), MVC_ACTION_URL);
+        $Breadcrumbs->Add($this->__('User Groups'), href_admin('user_groups/list'));
         
         if ($userGroupId) {
             $this->View->addSEOParams($this->__('Edit User Groups :: Admin'), '', '');

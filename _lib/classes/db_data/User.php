@@ -21,6 +21,7 @@ class User extends DbData {
     
     protected $aFields = array(
         'user_id',
+        'user_group_id',
         'email',
         'username',
         'password',
@@ -51,6 +52,24 @@ class User extends DbData {
         
         $oUserConf = new UserConfirmation();
         return $oUserConf->createNewConfirmation($userId);
+    }
+    
+    protected function onGet(Collection $oCollection) :bool
+    {
+        // get all user groups
+        $ids = $oCollection->databaseColumn('user_group_id');
+        
+        $oUserGroupModel = new UserGroup();
+        $filters = [ 'user_group_id' => $ids ];
+        $oUserGroupCollection = $oUserGroupModel->Get($filters);
+        
+        // bind categories to their series
+        foreach ($oCollection as $oCol) {
+            $oUserGroup= $oUserGroupCollection->getById($oCol->getUserGroupId());
+            $oCol->setUserGroup($oUserGroup);
+        }
+        
+        return true;
     }
     
     public static function passwordHash($password) {

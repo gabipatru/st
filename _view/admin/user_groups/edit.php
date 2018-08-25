@@ -19,6 +19,7 @@
           <p>
             <label><?php echo $this->__('Name')?> <span>(<?php echo $this->__('Required Field')?>)</span></label>
             <input type="text" name="name" id="name" class="field size1" value="<?php echo $FV->name;?>" />
+            <label id="name-error" class="error" for="name"><?php echo $FV->name_error?></label>
           </p>
           
           <p>
@@ -32,6 +33,7 @@
               <option <?php $this->selected($FV->status, 'online')?> value="online"><?php echo $this->__('Online')?></option>
               <option <?php $this->selected($FV->status, 'offline')?> value="offline"><?php echo $this->__('Offline')?></option>
             </select>
+            <label id="status-error" class="error"><?php echo $FV->status_error?></label>
           </p>
           
         </div>

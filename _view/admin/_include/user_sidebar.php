@@ -11,7 +11,7 @@
       <!-- End Box Head-->
       
       <div class="box-content">
-      <a href="<?php echo href_admin('user/list_user')?>" class="box-link"><?php echo $this->__('Users list')?></a>
+      <a href="<?php echo href_admin('users/list_users')?>" class="box-link"><?php echo $this->__('Users list')?></a>
       <a href="<?php echo href_admin('user_groups/list')?>" class="box-link">
         <?php echo $this->__('User Groups List')?>
       </a>

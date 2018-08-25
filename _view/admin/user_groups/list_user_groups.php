@@ -5,6 +5,10 @@
   <!-- Main Sidebar -->
   <div id="sidebar">
   
+  <div class="cl">&nbsp;</div>
+  
+  <?php include(VIEW_DIR. '/admin/_include/user_sidebar.php');?>
+  
   <!-- Sidebar -->
   <div id="sidebar">
   
@@ -31,10 +35,6 @@
     
   </div>
   <!-- End Sidebar -->
-  
-  <div class="cl">&nbsp;</div>
-  
-  <?php include(VIEW_DIR. '/admin/_include/user_sidebar.php');?>
   
   <!-- End Main Sidebar -->
   </div>

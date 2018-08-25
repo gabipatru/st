@@ -24,6 +24,7 @@ class controller_admin_users extends ControllerAdminModel {
             )
         ));
         
+        // fetch users
         $oUser = new User();
         $filters = $GF->filters();
         $options = array(
@@ -36,6 +37,10 @@ class controller_admin_users extends ControllerAdminModel {
         );
         $oUserCol = $oUser->Get($filters, $options);
         
+        // fetch user groups
+        $oUserGroupModel = new UserGroup();
+        $oUserGroupCollection = $oUserGroupModel->Get();
+        
         $oPagination = new Pagination();
         $oPagination->setUrl(MVC_ACTION_URL.'?' . $GF->GFHref(false, true, true));
         $oPagination->setPage($page);
@@ -44,6 +49,7 @@ class controller_admin_users extends ControllerAdminModel {
         $oPagination->simple();
         
         $this->View->assign('oUserCol', $oUserCol);
+        $this->View->assign('oUserGroupCollection', $oUserGroupCollection);
         $this->View->assign('oPagination', $oPagination);
         $this->View->assign('search', $search);
         $this->View->assign('GF', $GF);
@@ -54,9 +60,10 @@ class controller_admin_users extends ControllerAdminModel {
     }
     
     function ajax_change_status() {
-        $userId     = $this->filterPOST('user_id', 'int');
-        $newStatus  = $this->filterPOST('new_status', 'string');
-        $sToken     = $this->filterPOST('token', 'string');
+        $userId         = $this->filterPOST('user_id', 'int');
+        $newStatus      = $this->filterPOST('new_status', 'string');
+        $newUserGroupId = $this->filterPOST('new_user_group_id', 'int');
+        $sToken         = $this->filterPOST('token', 'string');
         
         try {
             if (!$userId || !$newStatus) {
@@ -68,6 +75,7 @@ class controller_admin_users extends ControllerAdminModel {
             }
             
             $oItem = new SetterGetter();
+            $oItem->setUserGroupId($newUserGroupId);
             $oItem->setStatus($newStatus);
             
             $oUser = new User();

@@ -35,7 +35,8 @@ abstract class AbstractCron extends SetterGetter {
         $this->displayMsg('*******************************');
         $this->displayMsg('Cron started at ' . date('Y-m-d H:i:s'));
         
-        db::connect();
+        $db = db::getSingleton();
+        $db->connect();
         
         // config setup
         $oConfig = new Config();

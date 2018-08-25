@@ -61,6 +61,9 @@
                 </a>
             </th>
             <th>
+                <?php echo $this->__('Group')?>
+            </th>
+            <th>
                 <?php echo ($sort == 'email' ? '<span class="'.($sort_crit == 'asc' ? 'sortAsc':'sortDesc' ).'"></span>':'')?>
                 <a href="<?php echo MVC_ACTION_URL.'?'.$GF->GFHref(true, true, false). $GF->sortParams('email', $sort_crit)?>">
                     <?php echo $this->__('Email')?>
@@ -68,15 +71,7 @@
             </th>
             <th>
                 <?php echo ($sort == 'first_name' ? '<span class="'.($sort_crit == 'asc' ? 'sortAsc':'sortDesc' ).'"></span>':'')?>
-                <a href="<?php echo MVC_ACTION_URL.'?'.$GF->GFHref(true, true, false). $GF->sortParams('first_name', $sort_crit)?>">
-                    <?php echo $this->__('First Name')?>
-                </a>
-            </th>
-            <th>
-                <?php echo ($sort == 'last_name' ? '<span class="'.($sort_crit == 'asc' ? 'sortAsc':'sortDesc' ).'"></span>':'')?>
-                <a href="<?php echo MVC_ACTION_URL.'?'.$GF->GFHref(true, true, false). $GF->sortParams('last_name', $sort_crit)?>">
-                    <?php echo $this->__('Last Name')?>
-                </a>
+                <?php echo $this->__('Name')?>
             </th>
             <th><?php echo $this->__('Status')?></th>
             <th>
@@ -97,9 +92,11 @@
         <tr>
             <td><?php echo $user->getUserId()?></td>
             <td><?php echo $user->getUsername()?></td>
+            <td>
+              <?php echo ($user->getUserGroup() instanceof SetterGetter ? $user->getUserGroup()->getName() : '');?>
+            </td>
             <td><?php echo $user->getEmail()?></td>
-            <td><?php echo $user->getFirstName()?></td>
-            <td><?php echo $user->getLastName()?></td>
+            <td><?php echo $user->getFirstName(). ' ' .$user->getLastName()?></td>
             <td><?php echo $user->getStatus()?></td>
             <td><?php echo $user->getCreatedAt()?></td>
             <td><?php echo $user->getLastLogin()?></td>
@@ -111,6 +108,7 @@
                     data-user-username="<?php echo $user->getUsername()?>"
                     data-user-email="<?php echo $user->getEmail()?>"
                     data-user-status="<?php echo $user->getStatus()?>"
+                    data-user-group="<?php echo $user->getUserGroupId();?>"
                 >
                     <?php echo $this->__('Edit')?>
                 </a>
@@ -157,6 +155,17 @@
             <option value="<?php echo User::STATUS_ACTIVE?>"><?php echo $this->__('Active')?></option>
             <option value="<?php echo User::STATUS_BANNED?>"><?php echo $this->__('Banned')?></option>
             <option value="<?php echo User::STATUS_NEW?>"><?php echo $this->__('New')?></option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><?php echo $this->__('Change User Group to')?></td>
+        <td>
+          <select id="dialog-new-user-group">
+            <option value=""><?php echo $this->__('-- Choose one --')?></option>
+            <?php foreach ($oUserGroupCollection as $oItem):?>
+              <option value="<?php echo $oItem->getUserGroupId()?>"><?php echo $oItem->getName()?></option>
+            <?php endforeach;?>
           </select>
         </td>
       </tr>

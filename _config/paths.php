@@ -20,6 +20,7 @@ define('FILES_DIR', 			BASE_DIR.'/files');
 define('TRANSLATIONS_DIR',      BASE_DIR.'/_translations');
 define('EMAIL_VIEW_DIR',		VIEW_DIR.'/_email');
 define('EMAIL_DECORATIONS_DIR', EMAIL_VIEW_DIR.'/_core/decorations');
+define('LOG_PATH',              BASE_DIR.'/files/log');
 
 define('HTTP_STATIC', 			HTTP_MAIN.'/_static');
 define('HTTPS_STATIC', 			HTTPS_MAIN.'/_static');
