@@ -23,6 +23,7 @@ ENGINE=InnoDB;
 
 // add admin user
 $migrationSql[] = "
-INSERT INTO `user` (email, username, password, first_name, last_name, status, is_admin)
-VALUES('gabipatru@gmail.com', 'admin', '632ccb20c31207fb22bf34a5c32fc4e24f6779aa', 'Gabi', 'Patru', 'active', 1);
+INSERT INTO `user` (email, username, password, first_name, last_name, status, is_admin) VALUES
+('gabipatru@gmail.com', 'admin', '632ccb20c31207fb22bf34a5c32fc4e24f6779aa', 'Gabi', 'Patru', 'active', 1),
+('editor@st.ro', 'editor', '632ccb20c31207fb22bf34a5c32fc4e24f6779aa', 'Editor', 'ST', 'active', 1);
 ";

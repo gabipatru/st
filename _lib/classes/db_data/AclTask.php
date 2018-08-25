@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * CRUD for acl_tasks table
  */
