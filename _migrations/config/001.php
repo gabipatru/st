@@ -14,6 +14,12 @@ COLLATE='latin1_general_ci'
 ENGINE=InnoDB;
 ";
 
+// add config for User ACL
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES ('/Website/ACL/Enable ACL', '1', 'yesno');
+";
+
 // add config for Content Security Policy
 $migrationSql[] = "
 INSERT INTO config (path, value, type)

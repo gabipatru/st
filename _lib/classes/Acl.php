@@ -31,6 +31,11 @@ class Acl
     
     public function checkPermission(int $taskId, int $userId) :bool
     {
+        // check if ACL is enabled
+        if (! Config::configByPath('/Website/ACL/Enable ACL')) {
+            return true;
+        }
+        
         // the complex query
         $sql = "
             SELECT user.user_id
