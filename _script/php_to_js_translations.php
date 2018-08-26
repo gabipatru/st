@@ -71,7 +71,7 @@ class PHPtoJStranslations extends AbstractCron {
             $processed = [];
             foreach ($allMessages as $msg) {
                 $msgTranslated = $oTranslations->__($msg);
-                $processed[$msg] = "'$msg':'$msgTranslated'";
+                $processed[$msg] = "\"$msg\":\"$msgTranslated\"";
             }
             
             // one single string with all $untranslated:$translated pairs

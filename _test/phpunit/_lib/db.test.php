@@ -340,4 +340,17 @@ class db extends AbstractTest
         
         $this->assertEquals($iNumberOfQueries + 1, $iNewNumberOfQueries);
     }
+    
+    /**
+     * Test if the query is saved to a variable once it is run
+     * @group fast
+     */
+    public function testQuerySaving()
+    {
+        $db = \db::getSingleton();
+        $db->query("SELECT 5");
+        
+        $aQueries = $db->getRunQueries();
+        $this->assertTrue(in_array("SELECT 5", $aQueries));
+    }
 }

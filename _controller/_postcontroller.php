@@ -6,6 +6,10 @@ $this->View->assign('https', false);
 $Memcached = Mcache::getSingleton();
 $Memcached->quit();
 
+// number of queries run
+$this->View->assign('_queryNo', $db->getQueriesNo());
+$this->View->assign('_queriesRun', $db->getRunQueries());
+
 // memory usage
 $memFootprint = memory_get_peak_usage(false);
 $this->View->assign('memFootprint', $memFootprint);

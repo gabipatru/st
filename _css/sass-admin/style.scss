@@ -13,6 +13,8 @@ textarea { overflow:hidden; }
 
 .hidden {display:none;}
 
+.yellow-text { color: yellow; }
+
 .padding-right20 { padding-right: 20px; }
 
 .field { border:solid 1px #d3cfc7; background:#fff; padding:5px; }
@@ -48,6 +50,7 @@ h3 a{ text-decoration: none; }
 
 .shell { width:1250px; margin:0 auto; }
 .shell-debug { background-color: #D1644B; color: white; padding: 16px; }
+.shell-debug-item { background-color:#D1644B; color:white; margin-left:25px; padding-left:5px; border-bottom: 1px solid #5D6669 }
 
 #header { height:89px; white-space:nowrap; background: url('data:image/gif;base64,R0lGODlhAQBZAOYAAMFPNbdLMb5OM6BAKadDLJw+KK1GLrNJMLlLMrtMMsFPNJM5JZk8J58/KbVJMLVKMLlMMpU6JadDK6ZDK6ZCK7hLMZI5JJc8Jpo9J6hELJ0+KKFAKbhLMq1GLapELL1OM8JPNbdKMbNIMKhDLKJBKpE5JJ4/KKNBKqpELZU7JbtMM6RBKpY7Jr5ONJg8Jps9J5Q6JbFIL7ZKMatFLb1NM69HLrBHL6lELLJIL6VCK6xFLbpMMr9ONLRJMK5GLsBPNLxNMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAABAFkAAAdVgCAAAAo/hjyILQIfNDRAjyoJO5MQCBwVAQEhMjIPDj2gByI4ODExNjY1NT6sBh06OjMzKB43NxkjBBITFDk5KyckGwMNJhoFLxgMLhcsKREwCxYlgQA7'); }
 #header h1{ float:left; display:inline; padding-top:12px; }

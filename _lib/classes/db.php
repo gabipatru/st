@@ -62,6 +62,7 @@ class db {
     private $oPDO = null;
     private $bDebug = false;
     private $iQueriesNo = 0;
+    private $aQueriesRun = [];
     
     /**
      * These functions are setters ang getters for the debug variable
@@ -88,6 +89,19 @@ class db {
     public function getQueriesNo(): int
     {
         return $this->iQueriesNo;
+    }
+    
+    /*
+     * These functions operate with the run queries array
+     */
+    private function addRunQuery(string $sql) 
+    {
+        $this->aQueriesRun[] = $sql;
+    }
+    
+    public function getRunQueries(): array
+    {
+        return $this->aQueriesRun;
     }
     
     /*
@@ -121,7 +135,10 @@ class db {
         
         // execute the statement
         $oStmt->execute($mParams);
+        
         $this->incrementQueriesNo();
+        $this->addRunQuery($sql);
+        
         if ($oStmt->errorCode() == '00000') {
             return $oStmt;
         }
