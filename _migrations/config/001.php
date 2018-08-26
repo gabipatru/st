@@ -96,6 +96,14 @@ VALUES
 ('HTML/Contact Page/City RO', 'Bucuresti, Romania', 'text')
 ";
 
+// add config for HTML footer debug info
+$migrationSql[] = "
+INSERT INTO config (path, value, type)
+VALUES
+('HTML/Footer Debug/Dsiplay in admin', '1', 'yesno'),
+('HTML/Footer Debug/Display in website (only with DEBUGGER AGENT)', '1', 'yesno')
+";
+
 // add config for contact email
 $migrationSql[] = "
 INSERT INTO config (path, value, type)

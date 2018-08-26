@@ -2,6 +2,7 @@
     </div> <!-- shell -->
 </div> <!-- container -->
 
+<?php if (Config::configByPath('HTML/Footer Debug/Dsiplay in admin')):?>
 <!-- Shell-debug -->
 <div class="shell-debug">
   <div><?php echo $this->__('Script footprint')?>: <?php echo $this->displayBytes($memFootprint)?></div>
@@ -22,6 +23,7 @@
   </div>
 </div>
 <!-- End Shell-debug -->
+<?php endif;?>
 
 <!-- Footer -->
 <div id="footer">
