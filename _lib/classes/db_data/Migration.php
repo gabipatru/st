@@ -67,6 +67,8 @@ class Migration extends DbData {
      * Find the migrations which have to be run and run them
      */
     public function runMigrations($migrations = null) {
+        $locked = false;
+        
         // load current mirations status
         require(CONFIG_DIR . '/migration.php');
         
@@ -76,7 +78,6 @@ class Migration extends DbData {
         // lock everything to make sure only one migration runs at one time
         $this->db->startTransaction();
         if (count($Tables) > 0) {
-            $this->db->lock_transaction('migrations');
             // load database version for all migrations
             $oDatabaseVersion = $this->Get();
         }
@@ -86,6 +87,9 @@ class Migration extends DbData {
 
         // load migration state from DB
         if (!count($oDatabaseVersion)) {
+            $this->db->lock_transaction('migrations');
+            $locked = true;
+            
             $this->deployMigrations('migrations', '000');
             
             $filters = [];
@@ -108,9 +112,17 @@ class Migration extends DbData {
             if (!in_array($migrationName, $aDatabaseMigrationNames)) {
                 // but if we must deply only some migrations, extra checks are made
                 if (! is_array($migrations) || count($migrations) == 0) {
+                    if (! $locked) {
+                        $this->db->lock_transaction('migrations');
+                        $locked = true;
+                    }
                     $this->deployMigrations($migrationName, '000');
                 }
                 elseif (is_array($migrations) && count($migrations) > 0 && in_array($migrationName, $migrations)) {
+                    if (! $locked) {
+                        $this->db->lock_transaction('migrations');
+                        $locked = true;
+                    }
                     $this->deployMigrations($migrationName, '000');
                 }
             }
@@ -121,6 +133,10 @@ class Migration extends DbData {
             foreach ($oDatabaseVersion as $oMigration) {
                 if ($oMigration->getName() == $migrationName) {
                     if ($oMigration->getVersion() != $latestVersion) {
+                        if (! $locked) {
+                            $this->db->lock_transaction('migrations');
+                            $locked = true;
+                        }
                         $this->deployMigrations($migrationName, $oMigration->getVersion());
                     }
                     break;
