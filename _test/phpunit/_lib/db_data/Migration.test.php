@@ -144,7 +144,7 @@ class Migration extends AbstractTest
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
         
-        $this->assertCount(3, $Tables);
+        $this->assertCount(4, $Tables);
         $this->assertTrue(in_array('test', $Tables->collectionColumn('tablesinmvctest')));
     }
     
@@ -246,7 +246,7 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = array('migration_id' => 2, 'query' => 'SHOW TABLES');
+        $filters = array('migration_id' => 3, 'query' => 'SHOW TABLES');
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'phpunit_migration_test' ];

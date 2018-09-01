@@ -171,6 +171,10 @@ class controller_user extends AbstractController {
                                 
                 $oUser = new User();
                 
+                $this->db->startTransaction();
+                
+                $this->db->lock_transaction('create user');
+                
                 // check if another user with that username exists
                 $filters = array('username' => $oItem->getUsername());
                 $options = array();
@@ -186,8 +190,6 @@ class controller_user extends AbstractController {
                 if (count($Collection)) {
                     throw new Exception($this->__('A user with that email already exists. Please use another email'));
                 }
-                
-                $this->db->startTransaction();
                 
                 // add the user
                 $confirmationCode = $oUser->Add($oItem);

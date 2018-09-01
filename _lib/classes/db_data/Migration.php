@@ -87,10 +87,10 @@ class Migration extends DbData {
 
         // load migration state from DB
         if (!count($oDatabaseVersion)) {
-            $this->db->lock_transaction('migrations');
             $locked = true;
             
             $this->deployMigrations('migrations', '000');
+            $this->deployMigrations('general', '000');
             
             $filters = [];
             // we may have to run only some migrations
@@ -123,7 +123,7 @@ class Migration extends DbData {
                         $this->db->lock_transaction('migrations');
                         $locked = true;
                     }
-                    $this->deployMigrations($migrationName, '000');
+                    $this->deployMigrations($migrationName, '000', false);
                 }
             }
         }

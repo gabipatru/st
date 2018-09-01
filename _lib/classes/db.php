@@ -299,8 +299,36 @@ class db {
             return false;
         }
         
+        // check if the lock exists
+        if (! $this->checkLock($sLockName)) {
+            $this->addLock($sLockName);
+        }
+        
         $sql = "SELECT name FROM _locks WHERE name = ? FOR UPDATE";
         $this->query($sql, array($sLockName));
         return true;
+    }
+    
+    /*
+     * Check if a transaction lock exists
+     */
+    private function checkLock(string $sLockName) :bool
+    {
+        $sql = "SELECT name FROM _locks WHERE name = ?";
+        $res = $this->query($sql, [$sLockName]);
+        if ($this->rowCount($res) > 0) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    /*
+     * Add a transaction lock
+     */
+    private function addLock(string $sLockName) 
+    {
+        $sql = "INSERT INTO _locks (name) VALUES ('$sLockName')";
+        $this->query($sql, [$sLockName]);
     }
 }
