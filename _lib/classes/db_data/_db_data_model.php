@@ -192,6 +192,24 @@ abstract class dbDataModel {
     }
     
     /*
+     * DELETE by column - delete all rows based on condition
+     */
+    public function DeleteByColumn(array $filters) {
+        // query condition and params
+        list($whereCondition, $aParams) = $this->db->filters($filters);
+        
+        // run the query
+        $sql = "DELETE FROM `".$this->getTableName() ."`"
+                ." WHERE ".$whereCondition;
+        $res = $this->db->query($sql, $aParams);
+        if (!$res || $res->errorCode() != '00000') {
+            return false;
+        }
+        
+        return $this->db->rowCount($res);
+    }
+    
+    /*
      * STATUS functions - checge the status to onlin / offline, etc
      */
     public function setStatus($iId, $mNewStatus) {
@@ -313,8 +331,11 @@ abstract class dbDataModel {
         }
         
         $oCollection = new Collection();
+        $i=0;
         while ($row = $this->db->fetchAssoc($res)) {
-            $oCollection->add($row[$this->getIdField()], $row);
+            $index = ($this->getIdField() ? $row[$this->getIdField()] : $i);
+            $oCollection->add($index, $row);
+            $i++;
         }
         
         $oCollection->setMaxPage($iMaxPage);

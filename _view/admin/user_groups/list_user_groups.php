@@ -67,6 +67,7 @@
             <td><?php echo $oCat->getName()?></td>
             <td><?php echo $oCat->getStatus()?></td>
             <td>
+              <div>
               <span class="padding-right20">
                 <a href="<?php echo href_admin('user_groups/edit', $oCat->getUserGroupId())?>" 
                    class="ico edit js-user-list-edit"
@@ -82,6 +83,23 @@
                   <?php echo $this->__('Delete')?>
                 </a>
               </span>
+              </div>
+              <div class="padding-left13">
+                <a 
+                    href="#" 
+                    class="ico permission js-user-permission-edit" 
+                    data-user-group-id="<?php echo $oCat->getUserGroupId()?>"
+                >
+                  <?php echo $this->__('Permissions')?>
+                </a>
+                <?php foreach ($aPermission[$oCat->getUserGroupId()] as $permission):?>
+                  <input 
+                      type="hidden" 
+                      id="permission-<?php echo $oCat->getUserGroupId().'-'.$permission?>" 
+                      value="set" 
+                  />
+                <?php endforeach;?>
+              </div>
             </td>
           </tr>
         <?php endforeach;?>
@@ -103,3 +121,32 @@
   <div class="cl">&nbsp;</div>
 </div>
 <!-- Main -->
+
+<!-- Dialog for editing permissions -->
+<div id="user-permission-dialog" class="hidden" title="<?php echo $this->__('Edit psermissions')?>">
+  <table class="dialog-table">
+    <?php foreach ($aAclTasks as $task => $taskId):?>
+      <tr>
+        <td><?php echo $task?></td>
+        <td>
+          <input 
+              type="checkbox" 
+              id="task-<?php echo $taskId?>" 
+              name="task-<?php echo $taskId?>" 
+              class="js-task"
+              data-task-id="<?php echo $taskId?>" 
+          />
+        </td>
+      </tr>
+    <?php endforeach;?>
+  </table>
+  <p class="dialog-actions" data-dialog="user-permission-dialog">
+    <button id="dialog-permission-save" class="ui-button ui-widget ui-corner-all">
+      <?php echo $this->__('Save')?>
+    </button>
+    <button class="ui-button ui-widget ui-corner-all js-dialog-cancel"><?php echo $this->__('Cancel')?></button>
+  </p>
+  <p id="dialog-ajax-permission-spinner"></p>
+  <p id="dialog-ajax-permission-error" class="dialog-ajax-error"></p>
+</div>
+<!-- End dialog for editing permissions -->

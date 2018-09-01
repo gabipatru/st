@@ -9,8 +9,11 @@ trait Filter
      * The main filter function.
      * This will filter any variable type
      */
-    public function filter($mVar, string $sFilterType)
+    public function filter($mVar, string $sFilterType = null)
     {
+        if (!$sFilterType) {
+            return $mVar;
+        }
         // initialize the filters array
         if (strstr($sFilterType, '|') !== false) {
             $aFilters = explode('|', $sFilterType);
@@ -193,17 +196,17 @@ trait Filter
     ###############################################################################
     ## FUNCTIONS FOR GET, POST data
     ###############################################################################
-    public function filterGET(string $sIndex, string $sFilterType) 
+    public function filterGET(string $sIndex, string $sFilterType = null) 
     {
         return $this->filter($_GET[$sIndex] ?? '', $sFilterType);
     }
     
-    public function filterPOST(string $sIndex, string $sFilterType) 
+    public function filterPOST(string $sIndex, string $sFilterType = null) 
     {
         return $this->filter($_POST[$sIndex] ?? '', $sFilterType);
     }
     
-    public function filterREQUEST(string $sIndex, string $sFilterType)
+    public function filterREQUEST(string $sIndex, string $sFilterType = null)
     {
         return $this->filter($_REQUEST[$sIndex] ?? '', $sFilterType);
     }

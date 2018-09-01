@@ -6,7 +6,7 @@
 class AclPermission extends DbData
 {
     const TABLE_NAME    = 'acl_permission';
-    const ID_FIELD      = 'acl_task_id';
+    const ID_FIELD      = null;
     
     protected $aFields = array(
         'acl_task_id',

@@ -21,7 +21,28 @@ class controller_admin_user_groups extends ControllerAdminModel
         $Breadcrumbs->Add($this->__('Users'), href_admin('users/list_users'));
         $Breadcrumbs->Add($this->__('User Groups'), MVC_ACTION_URL);
         
+        // ACL tasks
+        $oAclTaskModel = new AclTask();
+        $aAclTasks = $oAclTaskModel->getAllAclTasks();
+        
+        // ACL tasks for groups
+        $groupIds = [];
+        foreach ($oGroupsCollection as $oGroup) {
+            $groupIds[] = $oGroup->getUserGroupId();
+        }
+        $oAclPermissionModel = new AclPermission();
+        $filters = [ 'user_group_id' => $groupIds ];
+        $oPermissionCollection = $oAclPermissionModel->Get($filters);
+        
+        // create an usable permissions array
+        $aPermission = [];
+        foreach ($oPermissionCollection as $oItem) {
+            $aPermission[$oItem->getUserGroupId()][] = $oItem->getAclTaskId();
+        }
+        
         $this->View->assign('oGroupsCollection', $oGroupsCollection);
+        $this->View->assign_by_ref('aAclTasks', $aAclTasks);
+        $this->View->assign_by_ref('aPermission', $aPermission);
         
         $this->View->addSEOParams($this->__('User Groups List :: Admin'), '', '');
     }
@@ -152,5 +173,56 @@ class controller_admin_user_groups extends ControllerAdminModel
         }
         
         $this->redirect(href_admin('user_groups/list'));
+    }
+    
+    // Edit the group's permissions
+    function ajax_change_permission() 
+    {
+        $groupId = $this->filterPOST('user_group_id', 'int');
+        $aPermission = $this->filterPOST('permissions');
+        $sToken = $this->filterPOST('token', 'string');
+        
+        $oAclPermissionModel = new AclPermission();
+        
+        try {
+            if (! $this->securityCheckToken($sToken)) {
+                throw new Exception($this->__('The page delay was too long'));
+            }
+            if (! $groupId) {
+                throw new Exception($this->__('The group id is missing'));
+            }
+            if (! is_array($aPermission)) {
+                throw new Exception($this->__('New permissions are incorrect'));
+            }
+            
+            $this->db->startTransaction();
+        
+            // delete existing permissions for the group
+            $filters = [ 'user_group_id' => $groupId ];
+            $r = $oAclPermissionModel->DeleteByColumn($filters);
+            if (!$r) {
+                throw new Exception($this->__('Could not delete old permissions from the database'));
+            }
+            
+            // add new permissions
+            foreach ($aPermission as $taskId) {
+                $oItem = new SetterGetter();
+                $oItem->setAclTaskId($taskId);
+                $oItem->setUserGroupId($groupId);
+                $r = $oAclPermissionModel->Add($oItem);
+                if (!$r) {
+                    throw new Exception($this->__('Could not add new permissions to the database'));
+                }
+            }
+            
+            $this->db->commitTransaction();
+            $this->JsonSuccess();
+        }
+        catch (Exception $e) {
+            $this->db->rollbackTransaction();
+            $this->JsonError($e->getMessage());
+        }
+        
+        exit;
     }
 }
