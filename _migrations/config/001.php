@@ -107,7 +107,7 @@ $migrationSql[] = "
 INSERT INTO config (path, value, type)
 VALUES
 ('HTML/Footer Debug/Dsiplay in admin', '1', 'yesno'),
-('HTML/Footer Debug/Display in website (only with DEBUGGER AGENT)', '1', 'yesno')
+('HTML/Footer Debug/Display in website', '1', 'yesno')
 ";
 
 // add config for contact email
