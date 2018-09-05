@@ -10,17 +10,11 @@
  */
 class FileUpload extends SetterGetter 
 {
-    
-    /*
-     * Mime type checks:
-     * php - use finfo from php
-     * mp3 - use special function to check mp3 bitrate and sample rate
-     */
-    private $sMimeCheck;
+    const DEFAULT_MAX_UPLOAD_SIZE = 8388608; // 8 MB
     
     function __construct() {
         $this->resetAllowedTypes();
-        $this->setMaxFileSize(8388608); // 8 MB
+        $this->setMaxFileSize(self::DEFAULT_MAX_UPLOAD_SIZE);
         $this->setMimeGetMode('php');
     }
     
