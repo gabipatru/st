@@ -7,10 +7,16 @@
  *  - setAllowedTypes (mime types)
  *  - setFieldName
  *  - setFileNam
+ *  
+ *  Other options
+ *  - setMimeGetMode - the way in which the mime type will be read
+ *    - php - php's FINFO_FILE will be used
+ *    - internal - an internal function which works only for mp3s
  */
 class FileUpload extends SetterGetter 
 {
     const DEFAULT_MAX_UPLOAD_SIZE = 8388608; // 8 MB
+    const SUPPORTED_MIME_METHODS = ['php', 'internal', 'linux-file'];
     
     function __construct() {
         $this->resetAllowedTypes();
@@ -180,23 +186,34 @@ class FileUpload extends SetterGetter
      * Gets the mime type of the uploaded file
      */
     public function getMimeType($sCheckType = 'php') {
-        $sFile = $this->getFieldName();
-        if (!$sFile) {
+        if (! in_array($sCheckType, self::SUPPORTED_MIME_METHODS)) {
+            trigger_error("Unsupported mime method: $sCheckType on line ". __LINE__, E_USER_WARNING);
+        }
+        
+        if ($this->getFieldName()) {
+            $sFile = $_FILES[$this->getFieldName()]['tmp_name'];
+        } elseif ($this->getFileName()) {
+            $sFile = $this->getFileName();
+        } else {
             return false;
         }
+        
         switch ($sCheckType) {
             case 'php':
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $sMime = finfo_file($finfo, $_FILES[$sFile]['tmp_name']);
+                $sMime = finfo_file($finfo, $sFile);
                 finfo_close($finfo);
                 return $sMime;
-            case 'mp3':
-                $mp3Data = $this->getMP3BitRateSampleRate($_FILES[$sFile]['tmp_name']);
+            case 'internal':
+                $mp3Data = $this->getMP3BitRateSampleRate($sFile);
                 if ($mp3Data['bitRate'] >= 8 && $mp3Data['bitRate'] <= 512 && 
                         $mp3Data['sampleRate'] >= 8000 && $mp3Data['sampleRate'] <= 48000) {
                     return 'audio/mpeg';
                 }
                 return false;
+            case 'linux-file':
+                $sMime = exec("file -b --mime-type $sFile");
+                return $sMime;
         }
     }
     

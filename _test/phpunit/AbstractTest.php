@@ -17,6 +17,7 @@ abstract class AbstractTest extends TestCase {
     const DB_USER       = 'st';
     const DB_PASS       = 'qwqwqwqw';
     const DB_DATABASE   = 'mvc_test';
+    const RESOURCE_PATH = BASE_DIR .'/_test/resource/testfiles';
     
     /**
      * Called each time a new test is being run
