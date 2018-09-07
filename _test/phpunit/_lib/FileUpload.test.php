@@ -64,7 +64,7 @@ class FileUpload extends AbstractTest
     public function testGetMimeType($file, $mime, $mode)
     {
         $uploader = new \FileUpload();
-        $uploader->setFileName($file);
+        $uploader->setSourceFileName($file);
         
         $this->assertEquals($mime, $uploader->getMimeType($mode));
     }

@@ -6,7 +6,8 @@
  *  - setUploadPath
  *  - setAllowedTypes (mime types)
  *  - setFieldName
- *  - setFileNam
+ *  - setSourceFileName
+ *  - setFileName
  *  
  *  Other options
  *  - setMimeGetMode - the way in which the mime type will be read
@@ -192,8 +193,8 @@ class FileUpload extends SetterGetter
         
         if ($this->getFieldName()) {
             $sFile = $_FILES[$this->getFieldName()]['tmp_name'];
-        } elseif ($this->getFileName()) {
-            $sFile = $this->getFileName();
+        } elseif ($this->getSourceFileName()) {
+            $sFile = $this->getSourceFileName();
         } else {
             return false;
         }
@@ -218,9 +219,10 @@ class FileUpload extends SetterGetter
     }
     
     /*
-     * Make the Upload
+     * Check if the file can be uploaded
      */
-    public function Upload() {
+    protected function UploadSanityChecks() :bool
+    {
         // sanity checks
         if (!$this->getUploadPath()) {
             trigger_error('No upload path selected, line '.__LINE__, E_USER_WARNING);
@@ -238,6 +240,22 @@ class FileUpload extends SetterGetter
             return false;
         }
         
+        if (!is_uploaded_file($_FILES[$this->getFieldName()]['tmp_name'])) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /*
+     * Make the Upload
+     */
+    public function Upload() :bool
+    {
+        if (! $this->UploadSanityChecks()) {
+            return false;
+        }
+        
         // check if mime type matches allowed mime types
         $mimeMode = $this->getMimeType($this->getMimeGetMode());
         if (!$this->checkMimeType($mimeMode)) {
@@ -246,10 +264,6 @@ class FileUpload extends SetterGetter
         
         // check the file size
         if (filesize($_FILES[$this->getFieldName()]['tmp_name']) > $this->getMaxFileSize()) {
-            return false;
-        }
-        
-        if (!is_uploaded_file($_FILES[$this->getFieldName()]['tmp_name'])) {
             return false;
         }
         
