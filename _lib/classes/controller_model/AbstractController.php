@@ -8,7 +8,9 @@ abstract class AbstractController
     use Translation; 
     use SecurityToken;
     
+    /** @var View */
     protected $View;
+    /** @var db */
     protected $db;
     
     public function __construct()
