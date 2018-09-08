@@ -23,6 +23,119 @@ class FileUpload extends AbstractTest
     }
     
     /**
+     * Test if the file extension is properly fetched
+     * @group fast
+     */
+    public function testGetFullFileExtension()
+    {
+        $uploader = new \FileUpload();
+        $uploader->setFileExtension('jpg');
+        
+        // asserts
+        $this->assertEquals('jpg', $uploader->getFileExtension());
+        $this->assertEquals('.jpg', $uploader->getFullFileExtension());
+    }
+    
+    /**
+     * Test if the extension can be exxtracted from the file
+     * @group fast
+     * @dataProvider providerGetExtension
+     */
+    public function testGetExtension($file, $expectedExtension)
+    {
+        $uploader = new \FileUpload();
+        $uploader->setSourceFileName($file);
+        
+        $extension = $uploader->getExtension();
+        
+        $this->assertEquals($expectedExtension, $extension);
+    }
+    
+    public function providerGetExtension()
+    {
+        $path = BASE_DIR .'/_test/resource/testfiles';
+        
+        return [
+            [$path .'/4933.mp3', 'mp3'],
+            [$path .'/file.txt', 'txt'],
+            [$path .'/file.html', 'html'],
+            [$path .'/file.php', 'php']
+        ];
+    }
+    
+    /**
+     * Test fetching of the source files
+     * @group fast
+     * @dataProvider providerGetSourceFile
+     */
+    public function testGetSourceFile($field, $fileName, $expected)
+    {
+        $uploader = new \FileUpload();
+        $uploader->setFieldName($field);
+        $uploader->setSourceFileName($fileName);
+        
+        $soourceFile = $uploader->getSourceFile();
+        
+        $this->assertEquals($expected, $soourceFile);
+    }
+    
+    public function providerGetSourceFile()
+    {
+        return [
+            ['test', null, false],
+            [null, 'file.txt', 'file.txt'],
+            ['test', 'file.txt', false]
+        ];
+    }
+    
+    /**
+     * Test the fileExists functionality
+     * @group fast
+     * @dataProvider providerFileExists
+     */
+    public function testFileExists($file, $expected)
+    {
+        $uploader = new \FileUpload();
+        $uploader->setSourceFileName($file);
+        
+        $result = $uploader->fileExists();
+        
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function providerFileExists()
+    {
+        $path = BASE_DIR .'/_test/resource/testfiles';
+        
+        return [
+            [$path .'/4933.mp3', true],
+            [$path .'/file.txt', true],
+            [$path .'/file.html', true],
+            [$path .'/file.php', true],
+            [$path .'/file.jpg', true],
+            [$path .'/file.png', true],
+            [$path .'/file.gif', true],
+            [$path .'/file.ext', false],
+            [$path .'/test.jpg', false]
+        ];
+    }
+    
+    /**
+     * Test getDestinationFile functionality
+     * @group fast
+     */
+    public function testGetDestinationFile()
+    {
+        $uploader = new \FileUpload();
+        $uploader->setFileName('test');
+        $uploader->setFileExtension('jpg');
+        
+        $destinationFile = $uploader->getDestinationFile();
+        
+        $this->assertEquals('test.jpg', $destinationFile);
+    }
+    
+    /**
      * Test allowed file types
      * @group fast
      */
