@@ -9,10 +9,6 @@ class DbData extends dbDataModel
 {
     const ALLOW_DELETE_KEY = '/Website/Database/Delete permitted';
     
-    protected function onAdd($insertId) {
-        return true;
-    }
-    
     protected function onBeforeAdd($oItem) {
         return true;
     }

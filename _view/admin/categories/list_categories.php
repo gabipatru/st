@@ -45,14 +45,22 @@
       
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
+            <th><?php echo $this->__('Image')?></th>
             <th><?php echo $this->__('Category ID')?></th>
             <th><?php echo $this->__('Category Name')?></th>
             <th><?php echo $this->__('Status')?></th>
-            <th><?php echo $this->____('Actions')?></th>
+            <th><?php echo $this->__('Actions')?></th>
           </tr>
           
         <?php foreach ($oCategoriesCollection as $oCat):?>
           <tr>
+            <td>
+              <?php if ($oCat->getFile()):?>
+                <img src="<?php echo Category::HTTP_DIR .'/'. $oCat->getFile()?>">
+              <?php else: ?>
+                &nbsp;
+              <?php endif;?>
+            </td>
             <td><?php echo $oCat->getCategoryId()?></td>
             <td><?php echo $oCat->getName()?></td>
             <td><?php echo $oCat->getStatus()?></td>

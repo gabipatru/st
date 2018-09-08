@@ -23,7 +23,6 @@ abstract class dbDataModel {
      * The abstract functions: re-declare all of these when you extend
      */
     abstract protected function onBeforeAdd($oItem);
-    abstract protected function onAdd($insertId);
     
     abstract protected function onBeforeEdit($iId, $oItem);
     abstract protected function onEdit($iId, $res);
@@ -113,6 +112,10 @@ abstract class dbDataModel {
 
         // call abstract function onAdd
         return $this->onAdd($iLastId);
+    }
+    
+    protected function onAdd($iLastId) {
+        return $iLastId;
     }
     
     /*

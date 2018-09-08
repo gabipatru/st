@@ -12,7 +12,7 @@
         <h2><?php echo ($categoryId ? $this->__('Edit Category') : $this->__('Add New Category'))?></h2>
       </div>
       
-      <form id="editForm" action="<?php echo CURRENT_URL?>" method="post">
+      <form id="editForm" action="<?php echo CURRENT_URL?>" method="post" enctype="multipart/form-data">
         <!-- Form -->
         <div class="form">
           
@@ -34,6 +34,12 @@
               <option <?php $this->selected($FV->status, 'offline')?> value="offline"><?php echo $this->__('Offline')?></option>
             </select>
             <label id="status-error" class="error"><?php echo $FV->status_error?></label>
+          </p>
+          
+          <p>
+            <label><?php echo $this->__('Image')?></label>
+            <input type="file" name="fileImage">
+            <label id="fileImage-error" class="error"><?php echo $FV->fileImage_error?></label>
           </p>
           
         </div>

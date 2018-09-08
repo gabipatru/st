@@ -1,7 +1,9 @@
 <?php
 
 /*
- * Upload and resize image
+ * Upload and resize an image
+ * Options
+ * - setStretch - default false
  */
 class ImageUpload extends FileUpload
 {
@@ -28,17 +30,6 @@ class ImageUpload extends FileUpload
     private function getResizeTo() :array
     {
         return [ $this->resizeWidth, $this->resizeHeight ];
-    }
-    
-    protected function getSourceFile() :string
-    {
-        if ($this->getFieldName()) {
-            return $_FILES[$this->getFieldName()]['tmp_name'];
-        } elseif ($this->getSourceFileName()) {
-            return $this->getSourceFileName();
-        }
-        
-        return null;
     }
     
     /**
@@ -82,6 +73,7 @@ class ImageUpload extends FileUpload
         }
         
         if ($mimeType == 'image/jpeg') {
+            $this->setFileExtension('jpg');
             return $this->ResizeJPG();
         }
         if ($mimeType == 'image/png') {
@@ -97,7 +89,8 @@ class ImageUpload extends FileUpload
         list( $newWidth, $newHeight ) = $this->getResizeTo();
         
         $sourceFile = $this->getSourceFile();
-        $targetFile = $this->getUploadPath().'/'.$this->getFileName().'.jpg';
+        $extension = ($this->getFileExtension() ? $this->getFullFileExtension() : '.jpg');
+        $targetFile = $this->getUploadPath().'/'.$this->getFileName() . $extension;
         
         list( $width, $height ) = getimagesize($sourceFile);
         

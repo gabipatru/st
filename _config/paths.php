@@ -30,6 +30,7 @@ define('HTTPS_CSS', 			HTTPS_STATIC.'/css');
 define('HTTP_JS', 				HTTP_STATIC.'/js');
 define('HTTPS_JS', 				HTTPS_STATIC.'/js');
 define('HTTP_IMAGES', 			HTTP_STATIC.'/images');
+define('HTTP_FILE_IMAGES',      HTTP_MAIN.'/files/images');
 define('HTTP_ICONS',			HTTP_IMAGES.'/icons');
 
 define('CURRENT_URL', 			(isset($_SERVER['REQUEST_URI']) ? HTTP . $_SERVER['REQUEST_URI'] : ''));

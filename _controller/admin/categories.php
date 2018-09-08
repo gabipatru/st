@@ -36,7 +36,8 @@ class controller_admin_categories extends ControllerAdminModel
             'rules' => [
                 'name'          => 'required',
                 'status'        => 'required',
-                'description'   => ''
+                'description'   => '',
+                'fileImage'     => ''
             ],
             'messages' => [
                 'name'      => $this->__('Please specify a category name'),
@@ -73,11 +74,15 @@ class controller_admin_categories extends ControllerAdminModel
                 $oItem = new SetterGetter();
                 $oItem->setName($name);
                 $oItem->setDescription($description);
+                $oItem->setFile(null);
                 $oItem->setStatus($status);
+                
+                $this->db->startTransaction();
                 
                 // save to db
                 if (! $categoryId) {
-                    $r = $oCategoryModel->Add($oItem);
+                    $categoryId = $oCategoryModel->Add($oItem);
+                    $r = ( $categoryId ? true : false );
                 }
                 else {
                     $r = $oCategoryModel->Edit($categoryId, $oItem);
@@ -88,10 +93,34 @@ class controller_admin_categories extends ControllerAdminModel
                     throw new Exception($this->__('Error while saving to the database'));
                 }
                 
+                // upload the file
+                $uploader = new ImageUpload();
+                $uploader->setFieldName('fileImage');
+                if ( $uploader->fileExists() ) {
+                    $uploader->setUploadPath( Category::UPLOAD_DIR );
+                    $uploader->setFileName( $categoryId );
+                    $uploader->ResizeTo( Category::IMAGE_WIDTH, Category::IMAGE_HEIGHT );
+                    $r = $uploader->Upload();
+                    if (!$r) {
+                        throw new Exception($this->__('Could not upload image'));
+                    }
+                    
+                    // make another update in order to save the file name
+                    $file = $uploader->getDestinationFile();
+                    $oItem->setFile($file);
+                    $r = $oCategoryModel->Edit($categoryId, $oItem);
+                    if (!$r) {
+                        throw new Exception($this->__('Error while saving to the database'));
+                    }
+                }
+                
+                $this->db->commitTransaction();
+                
                 $this->setMessage($this->__('The category was saved.'));
                 $this->redirect(href_admin('categories/list'));
             }
             catch (Exception $e) {
+                $this->db->rollbackTransaction();
                 $this->setErrorMessage($e->getMessage());
             }
         }
@@ -136,16 +165,32 @@ class controller_admin_categories extends ControllerAdminModel
                 throw new Exception($this->__('Category ID is missing.'));
             }
             
+            $this->db->startTransaction();
+            
             // delete
             $oCategoryModel = new Category();
+            
+            // load the category to be deleted
+            $filters = [ 'category_id' => $categoryId ];
+            $oCategory = $oCategoryModel->singleGet($filters);
+            
             $r = $oCategoryModel->Delete($categoryId);
             if (!$r) {
                 throw new Exception($this->__('Error while deleting from database.'));
             }
             
+            if ($oCategory->getFile()) {
+                if ( ! unlink( Category::UPLOAD_DIR .'/'. $oCategory->getFile() ) ) {
+                    throw new Exception($this->__('Could not delete category file.'));
+                }
+            }
+            
+            $this->db->commitTransaction();
+            
             $this->setMessage($this->__('The category was deleted.'));
         }
         catch (Exception $e) {
+            $this->db->rollbackTransaction();
             $this->setErrorMessage($e->getMessage());
         }
         

@@ -61,14 +61,58 @@ class FileUpload extends SetterGetter
     /*
      * get the file extension based on the mime tyoe
      */
-    public function getExtension($sPath = false) {
-        if (!$sPath) {
-            $sPath = $_FILES[$this->getFieldName()]['name'];
+    public function getExtension() {
+        if ($this->getFileExtension()) {
+            return $this->getFileExtension();
         }
-        if (!$sPath) {
+        
+        $sPath = $this->getSourceFile();
+        if ($sPath) {
+            return pathinfo($sPath, PATHINFO_EXTENSION);
+        }
+        
+        return null;
+    }
+    
+    public function getFullFileExtension()
+    {
+        return '.' .$this->getFileExtension();
+    }
+    
+    // fetch the file path and file name
+    public function getSourceFile() :string
+    {
+        if ($this->getFieldName()) {
+            return ( isset($_FILES[$this->getFieldName()]) ? $_FILES[$this->getFieldName()]['tmp_name'] : false );
+        } elseif ($this->getSourceFileName()) {
+            return $this->getSourceFileName();
+        }
+        
+        return false;
+    }
+    
+    // fetch the file name and extension of the destination file
+    public function getDestinationFile()
+    {
+        if ($this->getFileName()) {
+            return $this->getFileName() .$this->getFullFileExtension();
+        }
+        
+        return null;
+    }
+    
+    public function fileExists() :bool
+    {
+        $file = $this->getSourceFile();
+        if ( ! $file ) {
             return false;
         }
-        return pathinfo($sPath, PATHINFO_EXTENSION);
+        
+        if ( file_exists( $file ) ) {
+            return true;
+        }
+        
+        return false;
     }
     
     /*
@@ -226,20 +270,27 @@ class FileUpload extends SetterGetter
         // sanity checks
         if (!$this->getUploadPath()) {
             trigger_error('No upload path selected, line '.__LINE__, E_USER_WARNING);
+            return false;
         }
         if (!is_dir($this->getUploadPath())) {
             trigger_error('Destination folder does not exist. Please create it.'.__LINE__, E_USER_WARNING);
+            return false;
         }
         if (!$this->getFieldName()) {
             trigger_error('No file specified for uplaod, line '.__LINE__, E_USER_WARNING);
+            return false;
+        }
+        if ( ! $this->getSourceFile() ) {
+            trigger_error('No file uploaded '. __LINE__, E_USER_WARNING);
+            return false;
         }
         if (!$this->getFileName()) {
             trigger_error('No destination name specified, line'.__LINE__, E_USER_WARNING);
+            return false;
         }
         if (!$this->checkUploadError()) {
             return false;
         }
-        
         if (!is_uploaded_file($_FILES[$this->getFieldName()]['tmp_name'])) {
             return false;
         }
@@ -274,10 +325,7 @@ class FileUpload extends SetterGetter
         $sExt = $this->getExtension();
         $this->setFileExtension($sExt);
         
-        $r = move_uploaded_file(
-            $_FILES[$this->getFieldName()]['tmp_name'], 
-            $this->getUploadPath().'/'.$this->getFileName().'.'.$sExt
-        );
+        $r = move_uploaded_file( $_FILES[$this->getFieldName()]['tmp_name'], $this->getDestinationFile() );
         if(! $r) {
             return false;
         }

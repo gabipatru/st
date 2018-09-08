@@ -52,7 +52,7 @@ class EmailTemplate extends AbstractTest {
         $Collection = $EmailQueue->Get($filter, []);
         
         // asserts
-        $this->assertTrue($r);
+        $this->assertEquals(1, $r);
         $this->assertInstanceOf(\Collection::class, $Collection);
         $this->assertCount(1, $Collection);
         $Item = $Collection->getItem();
