@@ -87,7 +87,11 @@ class ImageUpload extends FileUpload
     
     private function ResizeJPG()
     {
-        list( $sourceFile, $targetFile, $newWidth, $newHeight, $width, $height ) = $this->CalculateResize();
+        $sourceFile = $this->getSourceFile();
+        $extension = ($this->getFileExtension() ? $this->getFullFileExtension() : '.jpg');
+        $targetFile = $this->getUploadPath().'/'.$this->getFileName() . $extension;
+        
+        list( $newWidth, $newHeight, $width, $height ) = $this->CalculateResize();
         
         $src = imagecreatefromjpeg($sourceFile);
         $dst = imagecreatetruecolor($newWidth, $newHeight);
@@ -101,7 +105,11 @@ class ImageUpload extends FileUpload
     
     private function ResizePNG()
     {
-        list( $sourceFile, $targetFile, $newWidth, $newHeight, $width, $height ) = $this->CalculateResize();
+        $sourceFile = $this->getSourceFile();
+        $extension = ($this->getFileExtension() ? $this->getFullFileExtension() : '.png');
+        $targetFile = $this->getUploadPath().'/'.$this->getFileName() . $extension;
+        
+        list( $newWidth, $newHeight, $width, $height ) = $this->CalculateResize();
         
         $src = imagecreatefrompng( $sourceFile );
         $dst = imagecreatetruecolor($newWidth, $newHeight);
@@ -123,11 +131,8 @@ class ImageUpload extends FileUpload
      */
     private function CalculateResize()
     {
-        list( $newWidth, $newHeight ) = $this->getResizeTo();
-        
         $sourceFile = $this->getSourceFile();
-        $extension = ($this->getFileExtension() ? $this->getFullFileExtension() : '.jpg');
-        $targetFile = $this->getUploadPath().'/'.$this->getFileName() . $extension;
+        list( $newWidth, $newHeight ) = $this->getResizeTo();
         
         list( $width, $height ) = getimagesize($sourceFile);
         
@@ -136,6 +141,6 @@ class ImageUpload extends FileUpload
             list( $newWidth, $newHeight ) = $this->keepAspectRatio( $newWidth, $newHeight, $width, $height );
         }
         
-        return [$sourceFile, $targetFile, $newWidth, $newHeight, $width, $height];
+        return [$newWidth, $newHeight, $width, $height];
     }
 }

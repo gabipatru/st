@@ -62,11 +62,11 @@ class ImageUpload extends AbstractTest
     }
     
     /**
-     * Test the JPG resize without crop and keep aspect ratio
+     * Test the JPG resize without crop
      * @group fast
-     * @dataProvider providerJPGResizeWithoutStretch
+     * @dataProvider providerJPGResize
      */
-    public function testJPGResizeWithoutStretch($width, $height, $expectedWidth, $expectedHeight, $stretch)
+    public function testJPGResize($width, $height, $expectedWidth, $expectedHeight, $stretch)
     {
         $uploader = new \ImageUpload();
         
@@ -90,10 +90,50 @@ class ImageUpload extends AbstractTest
         unlink(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.jpg');
     }
     
-    public function providerJPGResizeWithoutStretch()
+    public function providerJPGResize()
     {
         return [
             [32, 32, 32, 32, false],
+            [32, 24, 32, 32, false],
+            [12, 24, 12, 12, false],
+            [32, 24, 32, 24, true],
+            [12, 24, 12, 24, true]
+        ];
+    }
+    
+    /**
+     * Test the PNG resize without crop
+     * @group fast
+     * @dataProvider providerPNGResize
+     */
+    public function testPNGResize($width, $height, $expectedWidth, $expectedHeight, $stretch)
+    {
+        $uploader = new \ImageUpload();
+        
+        $uploader->setSourceFileName(BASE_DIR .'/_test/resource/testfiles/file.png');
+        $uploader->setUploadPath(BASE_DIR .'/_test/resource/testfiles');
+        $uploader->setFileName('file_resized');
+        $uploader->ResizeTo($width, $height);
+        $uploader->setStretch($stretch);
+        
+        $result = $this->invokeMethod($uploader, 'ResizePNG');
+        
+        // asserts
+        $this->assertTrue($result);
+        $this->assertTrue( file_exists(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.png') );
+        
+        // check image size
+        list( $width, $height ) = getimagesize(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.png');
+        $this->assertEquals($expectedWidth, $width);
+        $this->assertEquals($expectedHeight, $height);
+        
+        unlink(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.png');
+    }
+    
+    public function providerPNGResize()
+    {
+        return [
+            [48, 48, 48, 48, false],
             [32, 24, 32, 32, false],
             [12, 24, 12, 12, false],
             [32, 24, 32, 24, true],
