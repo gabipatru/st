@@ -77,6 +77,7 @@ class ImageUpload extends FileUpload
             return $this->ResizeJPG();
         }
         if ($mimeType == 'image/png') {
+            $this->setFileExtension('png');
             return $this->ResizePNG();
         }
         if ($mimeType == 'image/gif') {
@@ -85,6 +86,42 @@ class ImageUpload extends FileUpload
     }
     
     private function ResizeJPG()
+    {
+        list( $sourceFile, $targetFile, $newWidth, $newHeight, $width, $height ) = $this->CalculateResize();
+        
+        $src = imagecreatefromjpeg($sourceFile);
+        $dst = imagecreatetruecolor($newWidth, $newHeight);
+        if ( imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height) ) {
+            $r = imagejpeg($dst, $targetFile);
+            return $r;
+        }
+        
+        return false;
+    }
+    
+    private function ResizePNG()
+    {
+        list( $sourceFile, $targetFile, $newWidth, $newHeight, $width, $height ) = $this->CalculateResize();
+        
+        $src = imagecreatefrompng( $sourceFile );
+        $dst = imagecreatetruecolor($newWidth, $newHeight);
+        if ( imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height) ) {
+            $r = imagepng($dst, $targetFile);
+            return $r;
+        }
+        
+        return false;
+    }
+    
+    private function ResizeGIF()
+    {
+        
+    }
+    
+    /*
+     * Calculate the resize dimensions of the new image
+     */
+    private function CalculateResize()
     {
         list( $newWidth, $newHeight ) = $this->getResizeTo();
         
@@ -99,23 +136,6 @@ class ImageUpload extends FileUpload
             list( $newWidth, $newHeight ) = $this->keepAspectRatio( $newWidth, $newHeight, $width, $height );
         }
         
-        $src = imagecreatefromjpeg($sourceFile);
-        $dst = imagecreatetruecolor($newWidth, $newHeight);
-        if ( imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height) ) {
-            $r = imagejpeg($dst, $targetFile);
-            return $r;
-        }
-        
-        return false;
-    }
-    
-    private function ResizePNG()
-    {
-        
-    }
-    
-    private function ResizeGIF()
-    {
-        
+        return [$sourceFile, $targetFile, $newWidth, $newHeight, $width, $height];
     }
 }

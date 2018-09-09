@@ -6,4 +6,6 @@ _gulp/package-lock.json
 _js/translations.js
 _test/phpunit/phpunit
 _test/codeception/codecept
+
 public_html/files/images/categories/*.jpg
+public_html/files/images/categories/*.png
