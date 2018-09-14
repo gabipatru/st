@@ -47,6 +47,7 @@
 "Config List :: Admin","Config List :: Admin"
 "Could not add new permissions to the database","Could not add new permissions to the database"
 "Could not delete category file.","Could not delete category file."
+"Could not delete series file.","Could not delete series file."
 "Could not delete old permissions from the database","Could not delete old permissions from the database"
 "Could not upload image","Could not upload image"
 "Created at","Created at"

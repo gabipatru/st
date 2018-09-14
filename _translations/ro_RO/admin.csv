@@ -47,6 +47,7 @@
 "Config List :: Admin","Lista de configurare :: Admin"
 "Could not add new permissions to the database","Nu au putut fi adaugate noile permisiuni in baza de date"
 "Could not delete category file.","Fisierul nu a putut fi sters"
+"Could not delete series file.","Fisierul nu a putut fi sters"
 "Could not delete old permissions from the database","Nu au putut fi sterse vechile permisiuni din baza de date"
 "Could not upload image","Imaginea nu a putut fi salvata"
 "Created at","Creat la data"

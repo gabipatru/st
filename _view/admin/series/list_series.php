@@ -45,6 +45,7 @@
       
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
+            <th><?php echo $this->__('Image')?></th>
             <th><?php echo $this->__('Series ID')?></th>
             <th><?php echo $this->__('Series Name')?></th>
             <th><?php echo $this->__('Category')?></th>
@@ -54,6 +55,18 @@
           
         <?php foreach ($oSeriesCollection as $oCat):?>
           <tr>
+            <td>
+              <?php if ($oCat->getFile()):?>
+                <span class="js-image-cell" data-image-div="image-div-<?php echo $oCat->getSeriesId()?>">
+                  <?php echo $this->__('Image')?>
+                </span>
+                <div id="image-div-<?php echo $oCat->getSeriesId()?>" class="hidden absolute">
+                  <img src="<?php echo Series::HTTP_DIR .'/'. $oCat->getFile()?>">
+                </div>
+              <?php else: ?>
+                &nbsp;
+              <?php endif;?>
+            </td>
             <td><?php echo $oCat->getSeriesId()?></td>
             <td><?php echo $oCat->getName()?></td>
             <td><?php echo ($oCat->getCategory() instanceof SetterGetter ? $oCat->getCategory()->getName() : '')?></td>

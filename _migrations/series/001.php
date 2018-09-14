@@ -7,6 +7,7 @@ CREATE TABLE series (
     `category_id` INT(10) UNSIGNED,
     `name` VARCHAR(255) NOT NULL,
     `description` TEXT,
+    `file` VARCHAR(255),
     `status` ENUM('online', 'offline') NOT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`series_id`),

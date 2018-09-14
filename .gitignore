@@ -9,3 +9,6 @@ _test/codeception/codecept
 
 public_html/files/images/categories/*.jpg
 public_html/files/images/categories/*.png
+
+public_html/files/images/series/*.jpg
+public_html/files/images/series/*.png

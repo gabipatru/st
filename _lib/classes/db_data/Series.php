@@ -8,11 +8,18 @@ class Series extends DbData
     const TABLE_NAME    = 'series';
     const ID_FIELD      = 'series_id';
     
+    const UPLOAD_DIR    = IMAGES_DIR .'/series';
+    const HTTP_DIR      = HTTP_FILE_IMAGES .'/series';
+    
+    const IMAGE_WIDTH   = 250;
+    const IMAGE_HEIGHT  = 250;
+    
     protected $aFields = array(
         'series_id',
         'category_id',
         'name',
         'description',
+        'file',
         'status',
         'created_at'
     );

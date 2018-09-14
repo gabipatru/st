@@ -37,7 +37,8 @@ class controller_admin_series extends ControllerAdminModel
                 'category_id'   => 'required',
                 'name'          => 'required',
                 'status'        => 'required',
-                'description'   => ''
+                'description'   => '',
+                'fileImage'     => ''
             ],
             'messages' => [
                 'category_id'   => $this->__('Please choose a category'),
@@ -77,14 +78,39 @@ class controller_admin_series extends ControllerAdminModel
                 $oItem->setCategoryId($categoryId);
                 $oItem->setName($name);
                 $oItem->setDescription($description);
+                $oItem->setFile(null);
                 $oItem->setStatus($status);
+                
+                $this->db->startTransaction();
                 
                 // save to db
                 if (! $seriesId) {
-                    $r = $oSeriesModel->Add($oItem);
+                    $seriesId = $oSeriesModel->Add($oItem);
+                    $r = ($seriesId ? true : false);
                 }
                 else {
                     $r = $oSeriesModel->Edit($seriesId, $oItem);
+                }
+                
+                // upload the file
+                $uploader = new ImageUpload();
+                $uploader->setFieldName('fileImage');
+                if ( $uploader->fileExists() ) {
+                    $uploader->setUploadPath( Series::UPLOAD_DIR );
+                    $uploader->setFileName( $seriesId );
+                    $uploader->ResizeTo( Series::IMAGE_WIDTH, Series::IMAGE_HEIGHT );
+                    $r = $uploader->Upload();
+                    if (!$r) {
+                        throw new Exception($this->__('Could not upload image'));
+                    }
+                    
+                    // make another update in order to save the file name
+                    $file = $uploader->getDestinationFile();
+                    $oItem->setFile($file);
+                    $r = $oSeriesModel->Edit($seriesId, $oItem);
+                    if (!$r) {
+                        throw new Exception($this->__('Error while saving to the database'));
+                    }
                 }
                 
                 // check results
@@ -92,10 +118,13 @@ class controller_admin_series extends ControllerAdminModel
                     throw new Exception($this->__('Error while saving to the database'));
                 }
                 
+                $this->db->commitTransaction();
+                
                 $this->setMessage($this->__('The series was saved.'));
                 $this->redirect(href_admin('series/list'));
             }
             catch (Exception $e) {
+                $this->db->rollbackTransaction();
                 $this->setErrorMessage($e->getMessage());
             }
         }
@@ -127,6 +156,7 @@ class controller_admin_series extends ControllerAdminModel
         
         $this->View->assign('FV', $FV);
         $this->View->assign('seriesId', $seriesId);
+        $this->View->assign('oSeries', $oSeries);
         $this->View->assign('oCategoriesCollection', $oCategoriesCollection);
     }
     
@@ -146,16 +176,32 @@ class controller_admin_series extends ControllerAdminModel
                 throw new Exception($this->__('Series ID is missing.'));
             }
             
-            // delete
+            $this->db->startTransaction();
+            
             $oSeriesModel = new Series();
+            
+            // load the series to be deleted
+            $filters = [ 'series_id' => $seriesId ];
+            $oSeries = $oSeriesModel->singleGet($filters);
+            
+            // delete
             $r = $oSeriesModel->Delete($seriesId);
             if (!$r) {
                 throw new Exception($this->__('Error while deleting from database.'));
             }
             
+            if ($oSeries->getFile()) {
+                if ( ! unlink( Series::UPLOAD_DIR .'/'. $oSeries->getFile() ) ) {
+                    throw new Exception($this->__('Could not delete series file.'));
+                }
+            }
+            
+            $this->db->commitTransaction();
+            
             $this->setMessage($this->__('The series was deleted.'));
         }
         catch (Exception $e) {
+            $this->db->rollbackTransaction();
             $this->setErrorMessage($e->getMessage());
         }
         
