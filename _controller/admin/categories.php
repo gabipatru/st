@@ -146,6 +146,7 @@ class controller_admin_categories extends ControllerAdminModel
         }
         
         $this->View->assign('FV', $FV);
+        $this->View->assign('oCategory', $oCategory);
         $this->View->assign('categoryId', $categoryId);
     }
     

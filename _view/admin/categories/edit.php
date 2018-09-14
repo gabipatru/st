@@ -38,6 +38,16 @@
           
           <p>
             <label><?php echo $this->__('Image')?></label>
+            <?php if ($oCategory->getFile()):?>
+              <img 
+                  alt="<?php echo $oCategory->getFile()?>" 
+                  src="<?php echo Category::HTTP_DIR .'/'. $oCategory->getFile()?>"
+              >
+            <?php endif;?>
+          </p>
+          
+          <p>
+            <label><?php echo $this->__('New Image')?></label>
             <input type="file" name="fileImage">
             <label id="fileImage-error" class="error"><?php echo $FV->fileImage_error?></label>
           </p>
