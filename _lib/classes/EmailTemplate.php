@@ -8,7 +8,6 @@ class EmailTemplate extends SetterGetter {
     
     use Filter;
     use Email;
-    use Translation;
     
     private $aVarAssigned = array();
     private $aVarAssignedRef = array();

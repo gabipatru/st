@@ -69,6 +69,7 @@ class ImageUpload extends FileUpload
         // check if mime type matches allowed mime types
         $mimeType = $this->getMimeType($this->getMimeGetMode());
         if (!$this->checkMimeType($mimeType)) {
+            $this->setDebugMessage($this->___('Incorrect file type: %s', $mimeType));
             return false;
         }
         

@@ -6,6 +6,9 @@
 
 class SetterGetter {
     
+    use Messages;
+    use Translation;
+    
     public function __call($function, $args) {
         $prefix = substr($function, 0, 3);
         $property = strtolower(substr($function, 3));

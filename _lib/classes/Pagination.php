@@ -2,7 +2,6 @@
 class Pagination extends SetterGetter {
     
     use Filter;
-    use Translation;
     
     const PER_PAGE_KEY = '/Website/Pagination/Per Page';
     const NR_PAGES = 2;

@@ -92,6 +92,7 @@
 "Groups List :: Admin","Groups List :: Admin"
 "Group Name","Group Name"
 "Image","Image"
+"Incorrect file type: %s","Incorrect file type: %s"
 "Incorrect input of config ids!","Incorrect input of config ids!"
 "Key %s was deleted !","Key %s was deleted !"
 "Last login","Last login"
