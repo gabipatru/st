@@ -19,7 +19,7 @@ trait Http
      */
     protected function redirect404()
     {
-        header("Location:".HTTP_MAIN."/website/404.html");
+        header("Location:".HTTP_MAIN."/website/not_found.html");
         exit();
     }
         

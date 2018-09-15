@@ -154,4 +154,16 @@ class controller_website extends AbstractController {
         
         $this->redirect($referrer);
     }
+    
+    ###############################################################################
+    ## 404 Not Found
+    ###############################################################################
+    function not_found()
+    {
+        $this->View->addSEOParams(
+            $this->___('Surprize Turbo: Not Found'),
+            $this->___('Not found'),
+            $this->__('turbo surprises, not found')
+        );
+    }
 }
