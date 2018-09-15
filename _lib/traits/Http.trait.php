@@ -28,6 +28,15 @@ trait Http
         return User::isLoggedIn();
     }
     
+    // format a string for use in URL
+    public function urlFormat(string $name) :string
+    {
+        $name = str_replace(' ', '-', $name);
+        $name = str_replace('_', '-', $name);
+        
+        return $name;
+    }
+    
     ###############################################################################
     ## FUNCTIONS FOR CHEKING HTTP VERBS
     ###############################################################################

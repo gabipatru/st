@@ -20,7 +20,7 @@
     <div class="container">
       <div class="row">
         <p class="pull-left"><?php echo $this->__('Copyright © 2017 Surprize Turbo. All rights reserved.')?></p>
-        <p class="pull-right"><?php echo $this->__('Designed by Sutprize Turbo')?></p>
+        <p class="pull-right"><?php echo $this->__('Designed by Surprize Turbo')?></p>
       </div>
     </div>
   </div>

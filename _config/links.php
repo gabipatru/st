@@ -3,6 +3,8 @@
 // This function returns links for the website
 
 function href_website($sName, $sData = '') {
+    $View = View::getSingleton();
+    
     if (strstr($sName, '/') !== false) {
         $aPath = explode('/', $sName);
         $sName = $aPath[0];
@@ -12,6 +14,10 @@ function href_website($sName, $sData = '') {
             switch ($aPath[1]) {
                 case 'homepage':
                     return HTTP_MAIN.'/website/homepage.html';
+                case 'category':
+                    $id = current($sData);
+                    $name = $View->urlFormat( current( array_keys( $sData ) ) );
+                    return HTTP_MAIN."/website/category/$name/$id";
                 case 'contact':
                     return HTTP_MAIN.'/website/contact.html';
                 case 'save_language':

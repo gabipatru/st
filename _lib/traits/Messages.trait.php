@@ -28,6 +28,10 @@ trait Messages
     
     protected function getMessages(bool $clear = true) :array
     {
+        if (! isset( $_SESSION['_messages'] )) {
+            return [];
+        }
+        
         $aMessageTypes = $this->constMessageTypes();
         $msgReturn = [];
         foreach ($_SESSION['_messages'] as $msg => $type) {
@@ -53,6 +57,10 @@ trait Messages
     
     protected function getDebugMessages(bool $clear = true) :array
     {
+        if (! isset( $_SESSION['_messages'] )) {
+            return [];
+        }
+        
         $aMessageTypes = $this->constMessageTypes();
         $msgReturn = [];
         foreach ($_SESSION['_messages'] as $msg => $type) {

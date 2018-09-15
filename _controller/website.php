@@ -19,6 +19,12 @@ class controller_website extends AbstractController {
     ## THE HOMEPAGE
     ###############################################################################
     function homepage() {
+        // get the categories
+        $oCategoryModel = new Category();
+        $oCategoriesCollection = $oCategoryModel->Get();
+        
+        $this->View->assign('oCategoriesCollection', $oCategoriesCollection);
+        
         $this->View->addSEOParams(
             $this->__('Surprize Turbo: Comunity of Turbo Surprises fans'),
             $this->__('The largest protal for Turbo surprises fans.'),
