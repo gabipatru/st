@@ -33,6 +33,39 @@ class controller_website extends AbstractController {
     }
     
     ###############################################################################
+    ## CATEGORY PAGE
+    ###############################################################################
+    function category()
+    {
+        $categoryId = $this->filterGET('category_id', 'int');
+        if (!$categoryId) {
+            $this->redirect404();
+        }
+        
+        // load current category
+        $oCategoryModel = new Category();
+        $filter = ['category_id' => $categoryId];
+        $oCategory = $oCategoryModel->singleGet($filter);
+        if (! $oCategory) {
+            $this->redirect404();
+        }
+        
+        // load series
+        $oSeriesModel = new Series();
+        $filter = ['category_id' => $categoryId];
+        $oSeriesCollection = $oSeriesModel->Get($filter);
+        
+        $this->View->assign('oCategory', $oCategory);
+        $this->View->assign('oSeriesCollection', $oSeriesCollection);
+        
+        $this->View->addSEOParams(
+            $this->___('Surprize Turbo: %s Category', $oCategory->getName()),
+            $this->___('Check out the series of the category %s', $oCategory->getName()),
+            $this->__('turbo surprises, exchange surprises, search turbo surprises') .', '.$oCategory->getName()
+        );
+    }
+    
+    ###############################################################################
     ## CONTACT PAGE
     ###############################################################################
     function contact() {

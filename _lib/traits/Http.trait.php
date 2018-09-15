@@ -19,7 +19,7 @@ trait Http
      */
     protected function redirect404()
     {
-        header("Location:".HTTP_BASE_URL."404.php");
+        header("Location:".HTTP_MAIN."/website/404.html");
         exit();
     }
         
