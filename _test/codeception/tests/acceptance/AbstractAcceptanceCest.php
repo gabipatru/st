@@ -57,6 +57,6 @@ class AbstractAcceptanceCest
     {
         $I->seeElement('.footer-bottom');
         $I->see('Copyright © 2017 Surprize Turbo. All rights reserved.', 'p.pull-left');
-        $I->see('Designed by Sutprize Turbo', 'p.pull-right');
+        $I->see('Designed by Surprize Turbo', 'p.pull-right');
     }
 }

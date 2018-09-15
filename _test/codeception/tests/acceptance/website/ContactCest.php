@@ -21,15 +21,10 @@ class ContactCest extends AbstractAcceptanceCest
         $I->seeResponseCodeIs(HttpCode::OK);
         
         $this->testUpperBar($I);
-        
         $this->testLogo($I);
-        
         $I->see('EN');
-        
         $this->testLinksForGuest($I);
-        
         $this->testNavBar($I);
-        
         $I->see('Contact', '.active');
         
         $I->seeElement('#contact-form');
@@ -57,8 +52,17 @@ class ContactCest extends AbstractAcceptanceCest
         $I->click('#submit-form');
         
         // asserts
+        $this->testUpperBar($I);
+        $this->testLogo($I);
+        $I->see('EN');
+        $this->testLinksForGuest($I);
+        $this->testNavBar($I);
+        $I->see('Contact', '.active');
+        
         $I->dontSeeElement('div.msg-error');
         $I->see('The message was sent. Thank you.', 'h3');
+        
+        $this->testFooter($I);
     }
     
     /**
@@ -78,12 +82,21 @@ class ContactCest extends AbstractAcceptanceCest
         $I->click('#submit-form');
         
         // asserts
+        $this->testUpperBar($I);
+        $this->testLogo($I);
+        $I->see('EN');
+        $this->testLinksForGuest($I);
+        $this->testNavBar($I);
+        $I->see('Contact', '.active');
+        
         $I->seeElement('div.msg-error');
         $I->see('Please make sure you filled all the required fields', '.msg-error');
         $I->see('Please enter a valid email address');
         $I->dontSee('Please fill in your name');
         $I->dontSee('Please specify a subject');
         $I->dontSee('Please write the message we should receive');
+        
+        $this->testFooter($I);
     }
     
     /**
@@ -102,12 +115,21 @@ class ContactCest extends AbstractAcceptanceCest
         $I->click('#submit-form');
         
         // asserts
+        $this->testUpperBar($I);
+        $this->testLogo($I);
+        $I->see('EN');
+        $this->testLinksForGuest($I);
+        $this->testNavBar($I);
+        $I->see('Contact', '.active');
+        
         $I->seeElement('div.msg-error');
         $I->see('Please make sure you filled all the required fields', '.msg-error');
         $I->see('Please enter a valid email address');
         $I->dontSee('Please fill in your name');
         $I->dontSee('Please specify a subject');
         $I->dontSee('Please write the message we should receive');
+        
+        $this->testFooter($I);
     }
     
     /**
@@ -121,11 +143,20 @@ class ContactCest extends AbstractAcceptanceCest
         $I->click('#submit-form');
         
         // asserts
+        $this->testUpperBar($I);
+        $this->testLogo($I);
+        $I->see('EN');
+        $this->testLinksForGuest($I);
+        $this->testNavBar($I);
+        $I->see('Contact', '.active');
+        
         $I->seeElement('div.msg-error');
         $I->see('Please make sure you filled all the required fields', '.msg-error');
         $I->see('Please enter a valid email address');
         $I->See('Please fill in your name');
         $I->See('Please specify a subject');
         $I->See('Please write the message we should receive');
+        
+        $this->testFooter($I);
     }
 }

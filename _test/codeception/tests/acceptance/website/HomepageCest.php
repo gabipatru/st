@@ -31,6 +31,8 @@ class HomepageCest extends AbstractAcceptanceCest
         $this->testNavBar($I);
         
         $I->see('Home', '.active');
+        $I->canSeeNumberOfElements('.col-sm-3', 5);
+        $I->canSeeNumberOfElements('.category-link', 4);
         
         $this->testFooter($I);
     }
