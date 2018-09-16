@@ -7,8 +7,22 @@
     </div> <!-- End row -->
     
     <div class="row">
+      <div class="col-sm-3 right">
+        <h4 class="title"><?php echo $this->__('Filter')?></h2>
+        <select id="filterGroup">
+          <option value="0"><?php echo $this->__('All')?></option>
+          <?php foreach ($oGroupCollection as $oGroup):?>
+            <option value="<?php echo $oGroup->getGroupId()?>"><?php echo $oGroup->getName();?></option>
+          <?php endforeach;?>
+        </select>
+      </div>
+    </div>
+    
+    <br style="clear:both;" />
+    
+    <div class="row">
       <?php foreach ($oSurpriseCollection as $oSurprise):?>
-        <div class="col-sm-3 margin-bottom-30">
+        <div class="col-sm-3 margin-bottom-30 js-surprise" data-group-id="<?php echo $oSurprise->getGroupId() ?>">
           <div class="category-box height-210">
             <?php if ($oSurprise->getFile()):?>
               <a href="<?php echo href_website('website/series', [$oSeries->getName() => $oSeries->getSeriesId()])?>">
