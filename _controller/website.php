@@ -66,6 +66,65 @@ class controller_website extends AbstractController {
     }
     
     ###############################################################################
+    ## SERIES PAGE
+    ###############################################################################
+    function series()
+    {
+        $seriesId           = $this->filterGET('series_id', 'int');
+        $seriesNameFromUrl  = $this->filterGET('series_name', 'string');
+        if (! $seriesId || ! $seriesNameFromUrl) {
+            $this->redirect404();
+        }
+        
+        // load the series
+        $oSeriesModel = new Series();
+        $filter = [ 'series_id' => $seriesId ];
+        $oSeries = $oSeriesModel->singleGet($filter);
+        if (! $oSeries) {
+            $this->redirect404();
+        }
+        if ($this->View->urlFormat($oSeries->getName()) != $seriesNameFromUrl) {
+            $this->redirect404();
+        }
+        
+        try {
+            // load the groups of the series
+            $oGroupModel = new Group();
+            $filter = [ 'series_id' => $seriesId ];
+            $oGroupCollection = $oGroupModel->Get($filter);
+            if (! $oGroupCollection->count()) {
+                throw new Exception($this->___('Could not find any groups for the series %s', $oSeries->getName()));
+            }
+            
+            // load the surprises
+            $aGroupIds = [];
+            foreach ($oGroupCollection as $group) {
+                $aGroupIds[] = $group->getGroupId();
+            }
+            
+            $oSurpriseModel = new Surprise();
+            $filter = [ 'group_id' => $aGroupIds ];
+            $oSurpriseCollection = $oSurpriseModel->Get($filter);
+            if (! $oSurpriseCollection->count()) {
+                throw new Exception($this->___('Could not find any surprises for the series %s', $oSeries->getName()));
+            }
+        }
+        catch (Exception $e) {
+            $this->setErrorMessage($e->getMessage());
+        }
+        
+        $this->View->assign('oSeries', $oSeries);
+        $this->View->assign('oGroupCollection', $oGroupCollection);
+        $this->View->assign('oSurpriseCollection', $oSurpriseCollection);
+        
+        $this->View->addSEOParams(
+            $this->___('Surprize Turbo: %s Series', $oSeries->getName()),
+            $this->___('Check out the surprises of the series %s', $oSeries->getName()),
+            $this->__('turbo surprises, exchange surprises, search turbo surprises') .', '.$oSeries->getName()
+        );
+    }
+    
+    ###############################################################################
     ## CONTACT PAGE
     ###############################################################################
     function contact() {

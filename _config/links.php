@@ -18,6 +18,10 @@ function href_website($sName, $sData = '') {
                     $id = current($sData);
                     $name = $View->urlFormat( current( array_keys( $sData ) ) );
                     return HTTP_MAIN."/website/category/$name/$id.html";
+                case 'series':
+                    $id = current($sData);
+                    $name = $View->urlFormat( current( array_keys( $sData ) ) );
+                    return HTTP_MAIN."/website/series/$name/$id.html";
                 case 'contact':
                     return HTTP_MAIN.'/website/contact.html';
                 case 'save_language':
