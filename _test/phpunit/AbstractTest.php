@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once(__DIR__ .'/../../_config/paths.php');
 require_once(CLASSES_DIR .'/mvc.php');
+require_once(CONFIG_DIR .'/links.php');
 
 abstract class AbstractTest extends TestCase {
     
