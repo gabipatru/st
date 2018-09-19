@@ -34,16 +34,33 @@ abstract Class AbstractControllerTest extends AbstractTest
                                     'filterGET', 
                                     'filterPOST', 
                                     'securityCheckToken', 
-                                    'redirect' 
+                                    'redirect',
+                                    'validate',
+                                    '__',
                                 ])
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);
+            $oController->method('__')->willReturn(true);
         }
         else {
             $oController = new $sClass;
         }
         
         return $oController;
+    }
+    
+    /**
+     * Mock the filterPOST method to return a value from the $postValues array
+     */
+    protected function setPOST(array $postValues, $oMock)
+    {
+        $oMock->method('filterPOST')->will($this->returnCallback( function($key, $type) use ($postValues) {
+            foreach ($postValues as $name => $value) {
+                if ($key == $name) {
+                    return $value;
+                }
+            }
+        }));
     }
     
     /**
@@ -60,5 +77,13 @@ abstract Class AbstractControllerTest extends AbstractTest
     protected function mockIsPost(bool $value, $mock)
     {
         $mock->method('isPost')->willReturn($value);
+    }
+    
+    /**
+     * Mock the validate method of the controller
+     */
+    protected function mockValidate(bool $value, $mock)
+    {
+        $mock->method('validate')->willReturn($value);
     }
 }

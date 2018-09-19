@@ -18,4 +18,9 @@ abstract class AbstractController
         $this->View = View::getSingleton();
         $this->db = db::getSingleton();
     }
+    
+    protected function validate(FormValidation $FV) :bool
+    {
+        return $FV->validate();
+    }
 }

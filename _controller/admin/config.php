@@ -85,10 +85,9 @@ class controller_admin_config extends ControllerAdminModel {
             )
         ));
         
-        $validateResult = $FV->validate();
         if ($this->isPOST()) {
             try {
-                if (!$validateResult) {
+                if (! $this->validate($FV)) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
