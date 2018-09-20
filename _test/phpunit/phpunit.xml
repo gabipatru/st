@@ -14,7 +14,16 @@
 >
     <testsuites>
         <testsuite name="main">
-            <directory suffix=".test.php">./</directory>
+            <file>./BaseTest.test.php</file>
+            <file>./Filter.test.php</file>
+            <file>./Html.test.php</file>
+            <file>./Http.test.php</file>
+        </testsuite>
+        <testsuite name="lib">
+            <directory suffix=".test.php">./_lib</directory>
+        </testsuite>
+        <testsuite name="controller">
+            <directory suffix=".test.php">./_controller</directory>
         </testsuite>
     </testsuites>
     

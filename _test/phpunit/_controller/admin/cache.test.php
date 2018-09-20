@@ -46,6 +46,7 @@ class controller_admin_cache extends AbstractControllerTest
     /**
      * Test if memcache is cleared it's not a post
      * @group slow
+     * @depends test_flush_all_memcahed_wrong_token
      */
     public function test_flush_all_memcahed_not_post()
     {
@@ -78,6 +79,7 @@ class controller_admin_cache extends AbstractControllerTest
     /**
      * Test flushing of all memcache keys
      * @group slow
+     * @depends test_flush_all_memcahed_wrong_token
      */
     public function test_flush_all_memcached()
     {

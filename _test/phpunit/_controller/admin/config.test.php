@@ -35,6 +35,7 @@ class controller_admin_config extends AbstractControllerTest
     /**
      * Try adding a config with correct data
      * @group slow
+     * @depends test_add_not_post
      */
     public function test_add()
     {
