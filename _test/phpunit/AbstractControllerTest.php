@@ -35,12 +35,10 @@ abstract Class AbstractControllerTest extends AbstractTest
                                     'filterPOST', 
                                     'securityCheckToken', 
                                     'redirect',
-                                    'validate',
-                                    '__',
+                                    'validate'
                                 ])
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);
-            $oController->method('__')->willReturn(true);
         }
         else {
             $oController = new $sClass;
