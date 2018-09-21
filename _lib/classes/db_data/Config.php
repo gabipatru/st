@@ -122,4 +122,22 @@ class Config extends DbData {
         }
         return null;
     }
+    
+    public function reInit()
+    {
+        // clear memcache
+        $oMemcache = Mcache::getSingleton();
+        $oMemcache->delete(self::MEMCACHE_KEY);
+        
+        $oRegsitry = Registry::getSingleton();
+        $oRegsitry->clear(self::REGISTRY_KEY);
+        $oRegsitry->clear(self::REGISTRY_KEY_PATH);
+        
+        $oConfigCollection = $this->Get();
+        $aConfigIndex = $this->indexByPath();
+        
+        $oRegsitry->set(self::REGISTRY_KEY, $oConfigCollection);
+        $oRegsitry->set(self::REGISTRY_KEY_PATH, $aConfigIndex);
+        $oRegsitry->setShowWarning(true);
+    }
 }

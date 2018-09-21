@@ -87,6 +87,52 @@ class controller_admin_config extends AbstractControllerTest
     }
     
     /**
+     * Test what happens if the config path is invalid
+     * @group fast
+     */
+    public function test_add_invalid_config_path()
+    {
+        $oMockController = $this->initController('/admin/index.php/admin/config/add');
+        $this->mockIsPost(true, $oMockController);
+        $this->mockValidate(true, $oMockController);
+        $this->mockSecurityCheckToken(true, $oMockController);
+        
+        $this->setPOST([ 'path' => 'test/test', 'value' => 'test', 'type' => 'text' ], $oMockController);
+        
+        // the test
+        $oMockController->add();
+        
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+        
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('You did not write the config properly', array_keys($messages)));
+    }
+    
+    /**
+     * Test what happens if we try to add a config which has the same path as another config
+     * @group fast
+     */
+    public function test_add_duplicate_path()
+    {
+        $oMockController = $this->initController('/admin/index.php/admin/config/add');
+        $this->mockIsPost(true, $oMockController);
+        $this->mockValidate(true, $oMockController);
+        $this->mockSecurityCheckToken(true, $oMockController);
+        
+        $this->setPOST(['path'=>'/Website/Pagination/Per Page', 'value'=>'test', 'type'=>'text'], $oMockController);
+        
+        // the test
+        $oMockController->add();
+        
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+        
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('A config with that path already exists', array_keys($messages)));
+    }
+    
+    /**
      * Try adding a config with correct data
      * @group slow
      * @depends test_add_not_post
@@ -121,5 +167,43 @@ class controller_admin_config extends AbstractControllerTest
         $this->assertEquals(count($oConfig) + 1, count($oNewConfig));
         $this->assertTrue(is_array($messages));
         $this->assertTrue(in_array('Config added successfully', array_keys($messages)));
+    }
+    
+    /**
+     * Test saving new values for configs
+     * @group slow
+     * @depends test_add_not_post
+     */
+    public function test_save_all()
+    {
+        $oMockController = $this->initController('/admin/index.php/admin/config/save_all');
+        $this->mockSecurityCheckToken(true, $oMockController);
+        
+        $this->setPOST([ 'config_ids' => [4, 7], 'config4' => 'test', 'config7' => 'test' ], $oMockController);
+        
+        $oConfigModel = new \Config();
+        $oConfigModel->reInit();
+        
+        $value1 = $oConfigModel->configByPath('/Website/Users/Confirmation expiry');
+        $value2 = $oConfigModel->configByPath('/Email/Email Sending/Email From');
+        
+        // the test
+        $oMockController->save_all();
+        
+        $oConfigModel->reInit();
+        $newValue1 = $oConfigModel->configByPath('/Website/Users/Confirmation expiry');
+        $newValue2 = $oConfigModel->configByPath('/Email/Email Sending/Email From');
+        
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+        
+        // asserts
+        $this->assertEquals('1 day', $value1);
+        $this->assertEquals('website@mvc.ro', $value2);
+        
+        $this->assertEquals('test', $newValue1);
+        $this->assertEquals('test', $newValue2);
+        
+        $this->assertTrue(is_array($messages));
+        $this->assertTrue(in_array('All items were saved', array_keys($messages)));
     }
 }
