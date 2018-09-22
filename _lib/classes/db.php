@@ -36,8 +36,12 @@ class NestedPDO extends PDO {
     }
 
     public function rollBack() {
+        if ($this->transLevel == 0) {
+            return;
+        }
+        
         $this->transLevel--;
-
+        
         if($this->transLevel == 0 || !$this->nestable()) {
             parent::rollBack();
         } else {

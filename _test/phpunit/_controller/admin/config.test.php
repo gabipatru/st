@@ -170,6 +170,45 @@ class controller_admin_config extends AbstractControllerTest
     }
     
     /**
+     * Test what happens when the config ids are not present
+     * @group fast
+     */
+    public function test_save_all_invalid_config_ids()
+    {
+        $oMockController = $this->initController('/admin/index.php/admin/config/save_all');
+        $this->setPOST([ 'config_ids' => null ], $oMockController);
+        
+        // the test
+        $oMockController->save_all();
+        
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+        
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('Incorrect input of config ids!', array_keys($messages)));
+    }
+    
+    /**
+     * Test what happens when the token is invalid
+     * @group fast
+     */
+    public function test_save_all_invalid_token()
+    {
+        $oMockController = $this->initController('/admin/index.php/admin/config/save_all');
+        $this->setPOST([ 'config_ids' => [1] ], $oMockController);
+        $this->mockSecurityCheckToken(false, $oMockController);
+        
+        // the test
+        $oMockController->save_all();
+        
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+        
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('The page delay was too long', array_keys($messages)));
+    }
+    
+    /**
      * Test saving new values for configs
      * @group slow
      * @depends test_add_not_post
@@ -203,7 +242,7 @@ class controller_admin_config extends AbstractControllerTest
         $this->assertEquals('test', $newValue1);
         $this->assertEquals('test', $newValue2);
         
-        $this->assertTrue(is_array($messages));
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
         $this->assertTrue(in_array('All items were saved', array_keys($messages)));
     }
 }
