@@ -222,7 +222,6 @@ class controller_admin_cache extends AbstractControllerTest
 
         // asserts
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
-        $this->assertTrue(in_array('was deleted !', array_keys($messages)));
 
         // check if the key is deleted
         $config = $Memcache->get(\Config::MEMCACHE_KEY);
