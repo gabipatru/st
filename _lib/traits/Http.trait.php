@@ -59,7 +59,7 @@ trait Http
         echo json_encode([ 'response' => 'success' ]);
     }
     
-    protected function JsonError(?string $msg = null)
+    protected function JsonError(string $msg = null)
     {
         $response = [ 'response' => 'error' ];
         if ($msg) {

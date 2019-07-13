@@ -2,19 +2,22 @@
 $migrationSql = [];
 
 $migrationSql[] = "
+CREATE TYPE category_status AS ENUM ('online', 'offline');
+";
+
+$migrationSql[] = "
 CREATE TABLE category (
-    `category_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
-    `description` TEXT,
-    `file` VARCHAR(255),
-    `status` ENUM('online', 'offline') NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`category_id`),
-    UNIQUE INDEX (`name`),
-    INDEX (`status`)
-)
-COLLATE='latin1_general_ci'
-ENGINE=InnoDB;
+    category_id serial PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description TEXT,
+    file VARCHAR(255),
+    status category_status NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+";
+
+$migrationSql[] = "
+CREATE INDEX idx_category_status ON category(status);
 ";
 
 $migrationSql[] = "

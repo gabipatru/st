@@ -85,7 +85,7 @@ class EmailTemplate extends SetterGetter {
         }
         
         $oItem = new SetterGetter();
-        $oItem->setTo($to);
+        $oItem->setToo($to);
         $oItem->setSubject($subject);
         $oItem->setBody($body);
         $oItem->setPriority($priority);

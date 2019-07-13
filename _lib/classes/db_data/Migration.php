@@ -46,10 +46,10 @@ class Migration extends DbData {
      * Get the tables in the database
      */
     public function getTables() {
-        $sql = "SHOW TABLES";
+        $sql = "SELECT * FROM pg_catalog.pg_tables WHERE schemaname = 'public';";
         $res = $this->db->query($sql);
         
-        if (!$res || $res->errorCode() != '00000') {
+        if (! $res) {
             return new Collection();
         }
         
@@ -197,7 +197,7 @@ class Migration extends DbData {
                 if (!$r) {
                     die('Failed to add migration name : ' . $migrationName);
                 }
-                $migrationId = $this->db->lastInsertId();
+                $migrationId = $this->db->lastInsertId($this->getTableName(), $this->getIdField());
             }
             else {
                 $filters = array('name' => $migrationName);

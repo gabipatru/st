@@ -27,7 +27,7 @@ class UserGroup extends AbstractTest
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
         
-        $this->assertTrue(in_array('user_group', $Tables->collectionColumn('tablesinmvctest')));
+        $this->assertTrue(in_array('user_group', $Tables->collectionColumn('tablename')));
     }
     
     /**

@@ -48,7 +48,7 @@ class EmailTemplate extends AbstractTest {
         
         // get data from DB
         $EmailQueue = new \EmailQueue();
-        $filter = ['to' => 'test@st.ro'];
+        $filter = ['too' => 'test@st.ro'];
         $Collection = $EmailQueue->Get($filter, []);
         
         // asserts

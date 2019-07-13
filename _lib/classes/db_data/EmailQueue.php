@@ -17,7 +17,7 @@ class EmailQueue extends DbData {
     
     protected $aFields = array(
         'email_queue_id',
-        'to',
+        'too',
         'subject',
         'body',
         'priority',
@@ -44,8 +44,8 @@ class EmailQueue extends DbData {
               ." AND send_attempts < ?"
               ." ORDER BY priority DESC"
               ." LIMIT ".$emailLimit;
-        $res = $this->db->query($sql, array($maxSendAttempts));
-        if (!$res || $res->errorCode() != '00000') {
+        $res = $this->db->query($sql, [$maxSendAttempts]);
+        if (! $res) {
             return new Collection();
         }
         $iNrItems = $this->db->rowCount($res);

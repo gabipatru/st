@@ -38,12 +38,14 @@ class Acl
         
         // the complex query
         $sql = "
-            SELECT user.user_id
-            FROM acl_permission 
-            INNER JOIN user_group ON (user_group.user_group_id = acl_permission.user_group_id)
-            INNER JOIN user ON (user.user_group_id = user_group.user_group_id)
-            WHERE acl_permission.acl_task_id = ?
-            AND user.user_id = ?
+            SELECT ".User::TABLE_NAME.".user_id
+            FROM ".AclPermission::TABLE_NAME." 
+            INNER JOIN ".UserGroup::TABLE_NAME." 
+                ON (".UserGroup::TABLE_NAME.".user_group_id = ".AclPermission::TABLE_NAME.".user_group_id)
+            INNER JOIN ".User::TABLE_NAME." 
+                ON (".User::TABLE_NAME.".user_group_id = ".UserGroup::TABLE_NAME.".user_group_id)
+            WHERE ".AclPermission::TABLE_NAME.".acl_task_id = $1
+            AND ".User::TABLE_NAME.".user_id = $2
         ";
         
         $aParams = [$taskId, $userId];

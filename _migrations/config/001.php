@@ -2,16 +2,16 @@
 $migrationSql = array();
 
 $migrationSql[] = "
-CREATE TABLE `config`(
-    `config_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `path` VARCHAR(255) NOT NULL,
-    `value` TEXT,
-    `type` ENUM('text', 'textarea', 'yesno'),
-    PRIMARY KEY (`config_id`),
-    UNIQUE INDEX (`path`)
-)
-COLLATE='latin1_general_ci'
-ENGINE=InnoDB;
+CREATE TYPE config_type AS ENUM ('text', 'textarea', 'yesno');
+";
+
+$migrationSql[] = "
+CREATE TABLE config(
+    config_id serial PRIMARY KEY,
+    path VARCHAR(255) UNIQUE NOT NULL,
+    value TEXT,
+    type config_type
+);
 ";
 
 // add config for User ACL
@@ -23,7 +23,7 @@ VALUES ('/Website/ACL/Enable ACL', '1', 'yesno');
 // add config for Content Security Policy
 $migrationSql[] = "
 INSERT INTO config (path, value, type)
-VALUES ('/Website/Security/Content Security Policy', 'default-src \'self\' \'unsafe-inline\' \'nonce-29af2i\' data:', 'textarea');
+VALUES ('/Website/Security/Content Security Policy', 'default-src ''self'' ''unsafe-inline'' ''nonce-29af2i'' data:', 'textarea');
 ";
 
 // add config for user activation control

@@ -19,7 +19,7 @@ class dbDataModel extends AbstractTest
     {
         $model = new \User();
         $this->assertInstanceOf(\dbDataModel::class, $model);
-        $this->assertEquals('user', $model->getTableName());
+        $this->assertEquals('users', $model->getTableName());
     }
     
     /**

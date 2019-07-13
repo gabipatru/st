@@ -50,8 +50,8 @@ class Migration extends AbstractTest
         
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
-        
-        $this->assertTrue(in_array('_migration', $Tables->collectionColumn('tablesinmvctest')));
+
+        $this->assertTrue(in_array('_migration', $Tables->collectionColumn('tablename')));
     }
     
     /**
@@ -145,7 +145,7 @@ class Migration extends AbstractTest
         $Tables = $Migration->getTables();
         
         $this->assertCount(4, $Tables);
-        $this->assertTrue(in_array('test', $Tables->collectionColumn('tablesinmvctest')));
+        $this->assertTrue(in_array('test', $Tables->collectionColumn('tablename')));
     }
     
     /**
@@ -160,7 +160,7 @@ class Migration extends AbstractTest
         $MockMigrations = $this->getMockBuilder('\Migration')
         ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
         ->getMock();
-        $MockMigrations->method('fetchMigrationSQL')->willReturn( ['SHOW TABLES'] );
+        $MockMigrations->method('fetchMigrationSQL')->willReturn( ['SELECT 1'] );
         $MockMigrations->method('checkMigrationFile')
         ->will($this->returnValueMap( [
             [MIGRATIONS_DIR. '/' .'migrations', '002', true],
@@ -172,7 +172,7 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = [ 'migration_id' => 1, 'query' => 'SHOW TABLES' ];
+        $filters = [ 'migration_id' => 1, 'query' => 'SELECT 1' ];
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'migrations' ];
@@ -181,7 +181,7 @@ class Migration extends AbstractTest
         // asserts
         $this->assertInstanceOf(\Collection::class, $Collection);
         $this->assertEquals(1, $Collection->getItemsNo());
-        $this->assertEquals('SHOW TABLES', $Collection->getItem()->getQuery());
+        $this->assertEquals('SELECT 1', $Collection->getItem()->getQuery());
         $this->assertEquals('002', $MigrationCollection->getItem()->getVersion());
     }
     
@@ -197,7 +197,7 @@ class Migration extends AbstractTest
         $MockMigrations = $this->getMockBuilder('\Migration')
         ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
         ->getMock();
-        $MockMigrations->method('fetchMigrationSQL')->willReturn('SHOW TABLES');
+        $MockMigrations->method('fetchMigrationSQL')->willReturn('SELECT 1');
         $MockMigrations->method('checkMigrationFile')
         ->will($this->returnValueMap( [
             [MIGRATIONS_DIR. '/' .'migrations', '002', true],
@@ -209,16 +209,16 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = array('migration_id' => 1, 'query' => 'SHOW TABLES');
+        $filters = array('migration_id' => 1, 'query' => 'SELECT 1');
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'migrations' ];
         $MigrationCollection = $MockMigrations->Get($filters, []);
-        
+
         // asserts
         $this->assertInstanceOf(\Collection::class, $Collection);
         $this->assertEquals(1, $Collection->getItemsNo());
-        $this->assertEquals('SHOW TABLES', $Collection->getItem()->getQuery());
+        $this->assertEquals('SELECT 1', $Collection->getItem()->getQuery());
         $this->assertEquals('002', $MigrationCollection->getItem()->getVersion());
     }
     
@@ -234,7 +234,7 @@ class Migration extends AbstractTest
         $MockMigrations = $this->getMockBuilder('\Migration')
         ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
         ->getMock();
-        $MockMigrations->method('fetchMigrationSQL')->willReturn('SHOW TABLES');
+        $MockMigrations->method('fetchMigrationSQL')->willReturn('SELECT 1');
         $MockMigrations->method('checkMigrationFile')
         ->will($this->returnValueMap( [
             [MIGRATIONS_DIR. '/' .'phpunit_migration_test', '001', true],
@@ -246,7 +246,7 @@ class Migration extends AbstractTest
         
         // check if the migration was run
         $MigrationLog = new \MigrationLog();
-        $filters = array('migration_id' => 3, 'query' => 'SHOW TABLES');
+        $filters = array('migration_id' => 3, 'query' => 'SELECT 1');
         $Collection = $MigrationLog->Get($filters, []);
         
         $filters = [ 'name' => 'phpunit_migration_test' ];
@@ -255,7 +255,7 @@ class Migration extends AbstractTest
         // asserts
         $this->assertInstanceOf(\Collection::class, $Collection);
         $this->assertEquals(1, $Collection->getItemsNo());
-        $this->assertEquals('SHOW TABLES', $Collection->getItem()->getQuery());
+        $this->assertEquals('SELECT 1', $Collection->getItem()->getQuery());
         $this->assertEquals('001', $MigrationCollection->getItem()->getVersion());
     }
 }

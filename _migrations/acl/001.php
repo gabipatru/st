@@ -3,19 +3,15 @@ $migrationSql = [];
 
 $migrationSql[] = "
 CREATE TABLE acl_task (
-    `acl_task_id` INT(10) UNSIGNED NOT NULL,
-    `name` VARCHAR(255) NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`acl_task_id`),
-    UNIQUE INDEX (`name`)
-)
-COLLATE='latin1_general_ci'
-ENGINE=InnoDB;
+    acl_task_id serial PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 ";
 
 $oAclTaskModel = new AclTask();
 
-$query = "INSERT INTO `acl_task` (acl_task_id, name) VALUES";
+$query = "INSERT INTO acl_task (acl_task_id, name) VALUES";
 $parts = [];
 foreach ($oAclTaskModel->getAllAclTasks() as $name => $taskId) {
     $parts[] = "($taskId, '$name')";

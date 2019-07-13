@@ -5,7 +5,7 @@
  */
 
 class User extends DbData {
-    const TABLE_NAME    = 'user';
+    const TABLE_NAME    = 'users';
     const ID_FIELD      = 'user_id';
     
     const REGISTRY_KEY  = 'LOGGED_USER';
@@ -122,15 +122,15 @@ class User extends DbData {
         
         // search for the user
         $sql = "SELECT * FROM ". self::TABLE_NAME
-                ." WHERE password = ?"
-                ." AND (username = ? OR email = ?)";
+                ." WHERE password = $1"
+                ." AND (username = $2 OR email = $3)";
         $aParams = array($password, $oItem->getUsername(), $oItem->getUsername());
         if (Config::configByPath(self::CONFIG_USER_CONFIRMATION)) {
-        	$sql .= " AND status = ?";
+        	$sql .= " AND status = $4";
         	$aParams[] = User::STATUS_ACTIVE;
         }
         $res = $this->db->query($sql, $aParams);
-        if (!$res || $res->errorCode() != '00000' || $this->db->rowCount($res) == 0) {
+        if (!$res || $this->db->rowCount($res) == 0) {
             return false;
         }
         

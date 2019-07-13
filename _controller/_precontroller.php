@@ -24,7 +24,7 @@ try {
     $oMigration->runMigrations();
 }
 catch (Exception $e) {
-    die(__("Could not connect to database"));
+    die("Could not connect to database");
 }
 
 // config setup

@@ -2,15 +2,10 @@
 $migrationSql = array();
 
 $migrationSql[] = "
-CREATE TABLE `_locks` (
-    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL COLLATE 'latin1_general_ci',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY (`name`)
-)
-COLLATE='latin1_general_ci'
-ENGINE=InnoDB
-;
+CREATE TABLE _locks (
+    id serial PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL
+);
 ";
 
 $migrationSql[] = "

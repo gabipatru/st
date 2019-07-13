@@ -15,9 +15,9 @@ abstract class AbstractTest extends TestCase {
      * DB constants are used for connecting to test database
      */
     const DB_HOST       = 'localhost';
-    const DB_USER       = 'st';
-    const DB_PASS       = 'qwqwqwqw';
-    const DB_DATABASE   = 'mvc_test';
+    const DB_USER       = 'st_test';
+    const DB_PASS       = 'qwqwqw';
+    const DB_DATABASE   = 'surprize_turbo_test';
     const RESOURCE_PATH = BASE_DIR .'/_test/resource/testfiles';
     
     /**
@@ -40,14 +40,9 @@ abstract class AbstractTest extends TestCase {
         
         // delete the existing tables
         $Migration = new \Migration();
-        $oTablesCollection = $Migration->getTables();
-        
-        $db->query("SET FOREIGN_KEY_CHECKS = 0;");
-        foreach ($oTablesCollection as $Table) {
-            $tableName = $Table->getTablesInMvcTest();
-            $db->query("DROP TABLE `".$tableName."`");
-        }
-        $db->query("SET FOREIGN_KEY_CHECKS = 1;");
+
+        $db->query("DROP SCHEMA public CASCADE;");
+        $db->query("CREATE SCHEMA public;");
         
         // run the migrations on empty db
         $Migration->runMigrations($migrations);

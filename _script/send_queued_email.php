@@ -13,7 +13,7 @@ class SendQueuedEmail extends AbstractCron {
         
         foreach ($oEmails as $oCurrentEmail) {
             $r = $this->sendEmail(
-                $oCurrentEmail->getTo(), 
+                $oCurrentEmail->getToo(),
                 $oCurrentEmail->getSubject(), 
                 $oCurrentEmail->getBody(), 
                 $oCurrentEmail->getEMailQueueId()

@@ -27,7 +27,7 @@ class EmailLog extends AbstractTest
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
         
-        $this->assertTrue(in_array('email_log', $Tables->collectionColumn('tablesinmvctest')));
+        $this->assertTrue(in_array('email_log', $Tables->collectionColumn('tablename')));
     }
     
     /**

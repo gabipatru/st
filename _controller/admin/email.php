@@ -38,7 +38,7 @@ class controller_admin_email extends ControllerAdminModel {
             'page' => $page,
             'per_page' => $perPage,
             'search' => $search,
-            'search_fields' => array('to', 'subject'),
+            'search_fields' => array('too', 'subject'),
             'order_field' => $sort,
             'order_type' => $sort_crit
         );
@@ -88,7 +88,7 @@ class controller_admin_email extends ControllerAdminModel {
             'page' => $page,
             'per_page' => $perPage,
             'search' => $search,
-            'search_fields' => array('to'),
+            'search_fields' => array('too'),
             'order_field' => $sort,
             'order_type' => $sort_crit
         );

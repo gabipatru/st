@@ -27,7 +27,7 @@ class EmailQueue extends AbstractTest
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
         
-        $this->assertTrue(in_array('email_queue', $Tables->collectionColumn('tablesinmvctest')));
+        $this->assertTrue(in_array('email_queue', $Tables->collectionColumn('tablename')));
     }
     
     /**
@@ -40,7 +40,7 @@ class EmailQueue extends AbstractTest
         
         // add some data to db
         $data = new \SetterGetter();
-        $data->setTo('test@st.ro');
+        $data->setToo('test@st.ro');
         $data->setSubject('test');
         $data->setBody('test body');
         $data->setPriority(11);
@@ -56,7 +56,8 @@ class EmailQueue extends AbstractTest
         
         $this->assertCount(1, $Collection);
         $Item = $Collection->getItem();
-        $this->assertEquals('test@st.ro', $Item->getTo());
+
+        $this->assertEquals('test@st.ro', $Item->getToo());
         $this->assertEquals('test', $Item->getSubject());
         $this->assertEquals('test body', $Item->getBody());
         $this->assertEquals(11, $Item->getPriority());
@@ -92,7 +93,7 @@ class EmailQueue extends AbstractTest
         
         $Item = $Collection->getItem();
         
-        $this->assertEquals('test@st.ro', $Item->getTo());
+        $this->assertEquals('test@st.ro', $Item->getToo());
         $this->assertEquals('xtest1', $Item->getSubject());
         $this->assertEquals('test body', $Item->getBody());
         $this->assertEquals(11, $Item->getPriority());

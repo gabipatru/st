@@ -27,7 +27,7 @@ class Category extends AbstractTest
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
         
-        $this->assertTrue(in_array('category', $Tables->collectionColumn('tablesinmvctest')));
+        $this->assertTrue(in_array('category', $Tables->collectionColumn('tablename')));
     }
     
     /**

@@ -5,6 +5,9 @@ $this->View->assign('https', false);
 $Memcached = Mcache::getSingleton();
 $Memcached->quit();
 
+// close DB connection
+$db->disconnect();
+
 // number of queries run
 $this->View->assign('_queryNo', $db->getQueriesNo());
 $this->View->assign('_queriesRun', $db->getRunQueries());

@@ -5,7 +5,7 @@
  */
 class Group extends DbData
 {
-    const TABLE_NAME    = 'group';
+    const TABLE_NAME    = 'groups';
     const ID_FIELD      = 'group_id';
     
     protected $aFields = array(

@@ -16,6 +16,7 @@ class AbstractAcceptanceCest
      */
     protected function testUpperBar(AcceptanceTester $I)
     {
+
         $I->seeElement('.contactinfo');
         $I->see('+', '.contactinfo');
     }

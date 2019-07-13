@@ -1,6 +1,7 @@
 <?php
 namespace Test;
 
+use mysql_xdevapi\Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Error;
 
@@ -48,9 +49,9 @@ class db extends AbstractTest
      */
     public function testDbConnectionBadCredentials() {
         $this->defineDebuggerAgent();
-        
-        $this->expectException(\PDOException::class);
-        
+
+        $this->expectException(\Exception::class);
+
         $db = \db::getSingleton();
         $db->connect(self::DB_HOST, self::DB_DATABASE, self::DB_USER, 'qwe');
     }
@@ -71,7 +72,7 @@ class db extends AbstractTest
         list($sql, $aParams) = $db->searchFilter($options);
         
         // asserts
-        $this->assertEquals(" AND(`field1` LIKE ?)", $sql);
+        $this->assertEquals(" AND(field1 LIKE $1)", $sql);
         $this->assertCount(1, $aParams);
         $this->assertEquals('%value to search%', $aParams[0]);
     }
@@ -92,7 +93,7 @@ class db extends AbstractTest
         list($sql, $aParams) = $db->searchFilter($options);
         
         //asserts
-        $this->assertEquals(" AND(`field1` LIKE ? OR `field2` LIKE ? OR `field3` LIKE ?)", $sql);
+        $this->assertEquals(" AND(field1 LIKE $1 OR field2 LIKE $2 OR field3 LIKE $3)", $sql);
         $this->assertCount(3, $aParams);
         $this->assertEquals('%value to search%', $aParams[0]);
         $this->assertEquals('%value to search%', $aParams[1]);
@@ -122,9 +123,9 @@ class db extends AbstractTest
     public function providerFilters()
     {
         return [
-            [['field1' => 'value1'], " 1=1 AND `field1` = ? ", 'value1', 1],
-            [['field3' => null], " 1=1 AND `field3` IS NULL ", null, 0],
-            [['f1' => [1,2,3]], " 1=1 AND `f1` IN (?,?,?) ", 1, 3]
+            [['field1' => 'value1'], " 1=1 AND field1 = $1", 'value1', 1],
+            [['field3' => null], " 1=1 AND field3 IS NULL ", null, 0],
+            [['f1' => [1,2,3]], " 1=1 AND f1 IN ($1,$2,$3) ", 1, 3]
         ];
     }
     
@@ -145,7 +146,7 @@ class db extends AbstractTest
         list($sql, $aParams) = $db->filters($filters);
         
         // asserts
-        $this->assertEquals(" 1=1 AND `field1` = ?  AND `fx` IS NULL  AND `f1` IN (?,?,?) ", $sql);
+        $this->assertEquals(" 1=1 AND field1 = $1 AND fx IS NULL  AND f1 IN ($2,$3,$4) ", $sql);
         $this->assertCount(4, $aParams);
         $this->assertEquals('value1', $aParams[0]);
         $this->assertEquals(1, $aParams[1]);
@@ -164,7 +165,7 @@ class db extends AbstractTest
         $db = \db::getSingleton();
         
         // the test
-        $nextId = $db->nextId(\Test::TABLE_NAME);
+        $nextId = $db->nextId(\Test::TABLE_NAME, \Test::ID_FIELD);
         
         // assert
         $this->assertEquals(1, $nextId);
@@ -322,7 +323,7 @@ class db extends AbstractTest
         
         $db->setDebug(false);
         
-        $this->expectOutputString("SELECT 1<pre></pre>");
+        $this->expectOutputString("SELECT 1<pre>Array\n(\n)\n</pre>");
     }
     
     /**

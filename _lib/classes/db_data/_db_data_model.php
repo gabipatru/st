@@ -92,23 +92,26 @@ abstract class dbDataModel {
         $aData = get_object_vars($oItem);
         
         $aFields = array_keys($this->columnNames($aData));
-        $sFields = implode('`,`', $aFields);
-        $sFields = '`' . $sFields . '`';
+        $sFields = implode(',', $aFields);
+        $sFields = $sFields;
+
+        $i = 1;
         foreach ($aData as $field => $value) {
             $aParams[] = $value;
-            $aMarkers[] = '?';
+            $aMarkers[] = '$'.$i;
+            $i++;
         }
         $sValues = implode(',', $aMarkers);
         
         // execute the query
-        $sql = "INSERT INTO `".$this->getTableName() ."`"
+        $sql = "INSERT INTO ".$this->getTableName() .""
                 ." (".$sFields.")"
                 ." VALUES (".$sValues.")";
         $res = $this->db->query($sql, $aParams);
-        if (!$res || $res->errorCode() != '00000') {
+        if (! $res) {
             return false;
         }
-        $iLastId = $this->db->lastInsertId();
+        $iLastId = $this->db->lastInsertId($this->getTableName(), $this->getIdField());
 
         // call abstract function onAdd
         return $this->onAdd($iLastId);
@@ -142,8 +145,11 @@ abstract class dbDataModel {
         $aData = get_object_vars($oItem);
         
         $aFields = array_keys($this->columnNames($aData));
+
+        $i = 1;
         foreach ($aFields as $key => $value) {
-            $aFields[$key] = $value . ' = ?';
+            $aFields[$key] = $value . ' = $'.$i;
+            $i++;
         }
         foreach ($aData as $key => $value) {
             $aParams[] = $value;
@@ -152,11 +158,11 @@ abstract class dbDataModel {
         $aParams[] = $iId;
         
         // execute the query
-        $sql = "UPDATE `".$this->getTableName()."` SET "
+        $sql = "UPDATE ".$this->getTableName()." SET "
                 .$sFields
-                .' WHERE '.$this->getIdField()." = ?";
+                .' WHERE '.$this->getIdField()." = $".$i;
         $res = $this->db->query($sql, $aParams);
-        if ($res->errorCode() != '00000') {
+        if (! $res) {
             return false;
         }
         
@@ -178,10 +184,10 @@ abstract class dbDataModel {
         }
         
         // delete the item
-        $sql = "DELETE FROM `".$this->getTableName() ."`"
-                ." WHERE ".$this->getIdField()." = ?";
+        $sql = "DELETE FROM ".$this->getTableName()
+                ." WHERE ".$this->getIdField()." = $1";
         $res = $this->db->query($sql, array($iId));
-        if ($res->errorCode() != '00000') {
+        if (! $res) {
             return false;
         }
         
@@ -202,10 +208,10 @@ abstract class dbDataModel {
         list($whereCondition, $aParams) = $this->db->filters($filters);
         
         // run the query
-        $sql = "DELETE FROM `".$this->getTableName() ."`"
+        $sql = "DELETE FROM ".$this->getTableName()
                 ." WHERE ".$whereCondition;
         $res = $this->db->query($sql, $aParams);
-        if (!$res || $res->errorCode() != '00000') {
+        if (! $res) {
             return false;
         }
         
@@ -221,11 +227,11 @@ abstract class dbDataModel {
         }
         
         // run the query
-        $sql = "UPDATE `".$this->getTableName()."` SET "
-                .$this->getStatusField()." = ? "
-                ." WHERE ".$this->getIdField()." = ?";
+        $sql = "UPDATE ".$this->getTableName()." SET "
+                .$this->getStatusField()." = $1 "
+                ." WHERE ".$this->getIdField()." = $2";
         $res = $this->db->query($sql, array($mNewStatus, $iId));
-        if ($res->errorCode() != '00000') {
+        if (! $res) {
             return false;
         }
         
@@ -255,7 +261,7 @@ abstract class dbDataModel {
             $aParams = array_merge($aParams, $searchParams);
         }
         
-        $sql = "SELECT COUNT(*) AS cnt FROM `".$this->getTableName() ."`"
+        $sql = "SELECT COUNT(*) AS cnt FROM ".$this->getTableName() .""
                 ." WHERE ".$whereCondition;
         $row = $this->db->querySelect($sql, $aParams);
         if (isset($row['cnt'])) {
@@ -306,16 +312,16 @@ abstract class dbDataModel {
         if (!empty($options['per_page']) && !empty($options['page'])) {
             $offset = ($options['page'] - 1) * $options['per_page'];
             $limit = $options['per_page'];
-            $sLimit = " LIMIT ".$offset.', '.$limit;
+            $sLimit = " OFFSET ".$offset.' LIMIT '.$limit;
         }
         
         // select the data
-        $sql = "SELECT * FROM `".$this->getTableName() ."`"
+        $sql = "SELECT * FROM ".$this->getTableName()
                 ." WHERE ".$whereCondition
                 .$sOrder
                 .$sLimit;
         $res = $this->db->query($sql, $aParams);
-        if (!$res || $res->errorCode() != '00000') {
+        if (! $res) {
             return new Collection();
         }
         

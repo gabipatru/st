@@ -2,18 +2,21 @@
 $migrationSql = [];
 
 $migrationSql[] = "
+CREATE TYPE user_group_status AS ENUM ('online', 'offline');
+";
+
+$migrationSql[] = "
 CREATE TABLE user_group (
-    `user_group_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(255) NOT NULL,
-    `description` TEXT,
-    `status` ENUM('online', 'offline') NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`user_group_id`),
-    UNIQUE INDEX (`name`),
-    INDEX (`status`)
-)
-COLLATE='latin1_general_ci'
-ENGINE=InnoDB;
+    user_group_id serial PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description TEXT,
+    status user_group_status NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+";
+
+$migrationSql[] = "
+CREATE INDEX idx_user_group_status ON user_group(status);
 ";
 
 $migrationSql[] = "

@@ -101,7 +101,7 @@
   <?php foreach ($oCollection as $email):?>
     <tr>
       <td><?php echo $email->getEmailQueueId()?></td>
-      <td><?php echo $email->getTo()?></td>
+      <td><?php echo $email->getToo()?></td>
       <td><?php echo $email->getSubject()?></td>
       <td><?php echo $email->getPriority()?></td>
       <td><?php echo $email->getSendAttempts()?></td>

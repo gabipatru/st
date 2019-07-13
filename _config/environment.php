@@ -12,8 +12,8 @@ define('ENVIRONMENT',			'local');
 // db-specific
 define('DB_HOST',				'localhost');
 define('DB_USER',				'st');
-define('DB_PASS',				'qwqwqwqw');
-define('DB_DATABASE',			'mvc');
+define('DB_PASS',				'qwqwqw');
+define('DB_DATABASE',			'surprize_turbo');
 
 // memcached-specific
 define('MEM_HOST',              '127.0.0.1');

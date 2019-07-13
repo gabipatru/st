@@ -1,5 +1,7 @@
 <phpunit
         colors="true"
+
+        processIsolation="false"
         
         stopOnError="true"
         stopOnFailure="false"
