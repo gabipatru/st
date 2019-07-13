@@ -43,6 +43,9 @@ abstract Class AbstractControllerTest extends AbstractTest
         else {
             $oController = new $sClass;
         }
+
+        // we must load all translations
+        $this->loadTranslations();
         
         return $oController;
     }
@@ -83,5 +86,13 @@ abstract Class AbstractControllerTest extends AbstractTest
     protected function mockValidate(bool $value, $mock)
     {
         $mock->method('validate')->willReturn($value);
+    }
+
+    private function loadTranslations()
+    {
+        $oTranslations = \Translations::getSingleton();
+        $oTranslations->resetTranslations();
+        $oTranslations->setLanguage('en_EN');
+        $oTranslations->setModule('common');
     }
 }

@@ -45,11 +45,10 @@ class controller_admin_cache extends ControllerAdminModel {
                 'memcached_key' => $this->__('Please specify the memcached key you want to delete')
             )
         ));
-        
-        $validate = $FV->validate();
+
         if ($this->isPOST()) {
             try {
-                if (!$validate) {
+                if (! $this->validate($FV)) {
                     throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
                 if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
@@ -60,7 +59,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 
                 $memcache = Mcache::getSingleton();
                 $memcache->delete($key);
-                
+
                 $this->setMessage($this->___('Key %s was deleted !', $key));
             }
             catch (Exception $e) {

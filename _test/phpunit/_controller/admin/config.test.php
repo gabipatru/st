@@ -9,17 +9,6 @@ require_once(__DIR__ .'/../../AbstractControllerTest.php');
 
 class controller_admin_config extends AbstractControllerTest
 {
-    public function setUp()
-    {
-        parent::setUp();
-        
-        // load translations
-        $oTranslations = \Translations::getSingleton();
-        $oTranslations->resetTranslations();
-        $oTranslations->setLanguage('en_EN');
-        $oTranslations->setModule('common');
-    }
-    
     /**
      * Test what happens if the request is not post
      * @group slow
