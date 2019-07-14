@@ -159,7 +159,7 @@ class controller_admin_categories extends ControllerAdminModel
             if (! $this->securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
-            if (Config::configByPath(DbData::ALLOW_DELETE_KEY) === Config::CONFIG_VALUE_NO) {
+            if (! $this->deleteIsAllowed()) {
                 throw new Exception($this->__('Delete not allowed'));
             }
             if (! $categoryId) {

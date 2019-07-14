@@ -47,15 +47,13 @@ class controller_admin_series extends ControllerAdminModel
             ]
         ]);
         
-        $validateResult = $FV->validate();
-        
         if ($this->isPOST()) {
             try {
-                if (! $validateResult) {
-                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
+                }
+                if (! $this->validate($FV)) {
+                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 
                 // filter the values
@@ -169,7 +167,7 @@ class controller_admin_series extends ControllerAdminModel
             if (!$this->securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
-            if (Config::configByPath(DbData::ALLOW_DELETE_KEY) === Config::CONFIG_VALUE_NO) {
+            if (! $this->deleteIsAllowed()) {
                 throw new Exception($this->__('Delete not allowed'));
             }
             if (!$seriesId) {
@@ -201,7 +199,9 @@ class controller_admin_series extends ControllerAdminModel
             $this->setMessage($this->__('The series was deleted.'));
         }
         catch (Exception $e) {
-            $this->db->rollbackTransaction();
+            if ($this->db->transactionLevel()) {
+                $this->db->rollbackTransaction();
+            }
             $this->setErrorMessage($e->getMessage());
         }
         

@@ -35,7 +35,8 @@ abstract Class AbstractControllerTest extends AbstractTest
                                     'filterPOST', 
                                     'securityCheckToken', 
                                     'redirect',
-                                    'validate'
+                                    'validate',
+                                    'deleteIsAllowed'
                                 ])
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);
@@ -43,6 +44,8 @@ abstract Class AbstractControllerTest extends AbstractTest
         else {
             $oController = new $sClass;
         }
+
+        $oController->method('deleteIsAllowed')->willReturn(true);
 
         // we must load all translations and init the constants
         $this->loadTranslations();
