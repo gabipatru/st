@@ -89,8 +89,13 @@ class db {
             echo $sql;
             echo'<pre>';print_r($mParams);echo'</pre>';
         }
-        
-        $result = pg_query_params($this->oPDO, $sql, $mParams);
+
+        try {
+            $result = pg_query_params($this->oPDO, $sql, $mParams);
+        }
+        catch (Exception $e) {
+            $result = null;
+        }
         
         $this->incrementQueriesNo();
         $this->addRunQuery($sql);
@@ -100,8 +105,8 @@ class db {
         }
         else {
             if (DEBUGGER_AGENT) {
-                echo'<pre>';print_r($mParams);echo'</pre>';
-                trigger_error($sql);
+                trigger_error(print_r($mParams, 1), E_USER_WARNING);
+                trigger_error($sql, E_USER_WARNING);
             }
             return false;
         }
@@ -141,6 +146,14 @@ class db {
      */
     public function rowCount($result) {
         return pg_num_rows($result);
+    }
+
+    /**
+     * Get the  number of affected rows
+     */
+    public function affectedRows($result)
+    {
+        return pg_affected_rows($result);
     }
     
     /*

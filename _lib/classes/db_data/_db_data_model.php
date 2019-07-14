@@ -195,7 +195,7 @@ abstract class dbDataModel {
         $r = $this->onDelete($iId);
         
         if ($r) {
-            return $this->db->rowCount($res);
+            return $this->db->affectedRows($res);
         }
         return false;
     }
@@ -215,7 +215,7 @@ abstract class dbDataModel {
             return false;
         }
         
-        return $this->db->rowCount($res);
+        return $this->db->affectedRows($res);
     }
     
     /*

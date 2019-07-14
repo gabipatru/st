@@ -45,15 +45,13 @@ class controller_admin_categories extends ControllerAdminModel
             ]
         ]);
         
-        $validateResult = $FV->validate();
-        
         if ($this->isPOST()) {
             try {
-                if (! $validateResult) {
-                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
+                }
+                if (! $this->validate($FV)) {
+                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 
                 // filter the values
@@ -120,7 +118,9 @@ class controller_admin_categories extends ControllerAdminModel
                 $this->redirect(href_admin('categories/list'));
             }
             catch (Exception $e) {
-                $this->db->rollbackTransaction();
+                if ($this->db->transactionLevel()) {
+                    $this->db->rollbackTransaction();
+                }
                 $this->setErrorMessage($e->getMessage());
             }
         }
@@ -191,7 +191,9 @@ class controller_admin_categories extends ControllerAdminModel
             $this->setMessage($this->__('The category was deleted.'));
         }
         catch (Exception $e) {
-            $this->db->rollbackTransaction();
+            if ($this->db->transactionLevel() > 0) {
+                $this->db->rollbackTransaction();
+            }
             $this->setErrorMessage($e->getMessage());
         }
         

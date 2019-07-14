@@ -57,7 +57,7 @@ abstract class AbstractTest extends TestCase {
     
     protected function defineDebuggerAgent() {
         if (!defined('DEBUGGER_AGENT')) {
-            define('DEBUGGER_AGENT', 1);
+            define('DEBUGGER_AGENT', 0);
         }
     }
     

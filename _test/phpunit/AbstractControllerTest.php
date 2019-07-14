@@ -44,8 +44,9 @@ abstract Class AbstractControllerTest extends AbstractTest
             $oController = new $sClass;
         }
 
-        // we must load all translations
+        // we must load all translations and init the constants
         $this->loadTranslations();
+        $this->initConstants();
         
         return $oController;
     }
@@ -57,6 +58,20 @@ abstract Class AbstractControllerTest extends AbstractTest
     {
         $oMock->method('filterPOST')->will($this->returnCallback( function($key, $type) use ($postValues) {
             foreach ($postValues as $name => $value) {
+                if ($key == $name) {
+                    return $value;
+                }
+            }
+        }));
+    }
+
+    /**
+     * Mock the filterGET method to return a value from the $postValues array
+     */
+    protected function setGET(array $getValues, $oMock)
+    {
+        $oMock->method('filterGET')->will($this->returnCallback( function($key, $type) use ($getValues) {
+            foreach ($getValues as $name => $value) {
                 if ($key == $name) {
                     return $value;
                 }
@@ -88,11 +103,24 @@ abstract Class AbstractControllerTest extends AbstractTest
         $mock->method('validate')->willReturn($value);
     }
 
+    /**
+     * Load the default translation settings for the functional tests
+     */
     private function loadTranslations()
     {
         $oTranslations = \Translations::getSingleton();
         $oTranslations->resetTranslations();
         $oTranslations->setLanguage('en_EN');
         $oTranslations->setModule('common');
+    }
+
+    /**
+     * Init the used constants in the functionaal tests
+     */
+    private function initConstants()
+    {
+        if (! defined('MVC_ACTION_URL')) {
+            define('MVC_ACTION_URL', 'test_action');
+        }
     }
 }

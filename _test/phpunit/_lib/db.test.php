@@ -292,9 +292,9 @@ class db extends AbstractTest
     {
         $db = \db::getSingleton();
         
-        $this->expectException(Error::class);
-        
-        $db->query(0);
+        $res = $db->query(0);
+
+        $this->assertFalse($res);
     }
     
     /**
@@ -305,9 +305,9 @@ class db extends AbstractTest
     {
         $db = \db::getSingleton();
         
-        $this->expectException(Error::class);
-        
-        $db->query("x=1");
+        $res = $db->query("x=1");
+
+        $this->assertFalse($res);
     }
     
     /**

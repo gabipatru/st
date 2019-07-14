@@ -150,4 +150,56 @@ class dbDataModel extends AbstractTest
         $this->assertTrue(array_key_exists('last_name', $columns));
         $this->assertTrue(array_key_exists('status', $columns));
     }
+
+    /**
+     * Test what happens when add fails
+     * @group fast
+     */
+    public function testAdd()
+    {
+        // init
+        $this->defineDebuggerAgent();
+        $Test = new \Test();
+        $data = new \SetterGetter();
+
+        // the test
+        $r = $Test->Add($data);
+
+        // assets
+        $this->assertFalse($r);
+    }
+
+    /**
+     * Test what happens when edit fails
+     * @group fast
+     */
+    public function testEdit()
+    {
+        // init
+        $this->defineDebuggerAgent();
+        $Test = new \Test();
+        $data = new \SetterGetter();
+
+        // the test
+        $r = $Test->Edit(1, $data);
+
+        // assets
+        $this->assertFalse($r);
+    }
+
+    /**
+     * Test what happens when Delete fails
+     * @group fast
+     */
+    public function testDelete()
+    {
+        // init
+        $this->defineDebuggerAgent();
+        $Test = new \Test();
+
+        $r = $Test->Delete(1);
+
+        // assets
+        $this->assertFalse($r);
+    }
 }
