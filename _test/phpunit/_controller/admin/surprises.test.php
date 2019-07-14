@@ -7,16 +7,16 @@ use PHPUnit\Framework\Constraint\IsType;
 
 require_once(__DIR__ .'/../../AbstractControllerTest.php');
 
-class categories_admin_series extends AbstractControllerTest
+class categories_admin_surprises extends AbstractControllerTest
 {
     /**
-     * Test what happens when trying to delete a series and providing an invalid token
+     * Test what happens when trying to delete a surprises and providing an invalid token
      * @group fast
      */
     public function test_delete_invalid_token()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/delete');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
         $this->mockSecurityCheckToken(false, $oMockController);
 
         // the test
@@ -33,13 +33,13 @@ class categories_admin_series extends AbstractControllerTest
      * Test what happens when calling delete series with invalid series id
      * @group fast
      */
-    public function test_delete_invalid_series_id()
+    public function test_delete_invalid_surprise_id()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/delete');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
         $this->mockSecurityCheckToken(true, $oMockController);
 
-        $this->setGET([ 'series_id' => '' ], $oMockController);
+        $this->setGET([ 'surprise_id' => '' ], $oMockController);
 
         // the test
         $oMockController->delete();
@@ -48,22 +48,22 @@ class categories_admin_series extends AbstractControllerTest
 
         // asserts
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
-        $this->assertTrue(in_array('Series ID is missing.', array_keys($messages)));
+        $this->assertTrue(in_array('Surprise ID is missing.', array_keys($messages)));
     }
 
     /**
-     * Test what happens when trying to delete a valid series
+     * Test what happens when trying to delete a valid surprise
      * @group slow
      */
     public function test_delete()
     {
-        $this->setUpDB([ 'category', 'series' ]);
+        $this->setUpDB([ 'category', 'series', 'group', 'surprise' ]);
 
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/delete');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
         $this->mockSecurityCheckToken(true, $oMockController);
 
-        $this->setGET([ 'series_id' => '1' ], $oMockController);
+        $this->setGET([ 'surprise_id' => '1' ], $oMockController);
 
         // the test
         $oMockController->delete();
@@ -72,21 +72,21 @@ class categories_admin_series extends AbstractControllerTest
 
         // asserts
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
-        $this->assertTrue(in_array('The series was deleted.', array_keys($messages)));
+        $this->assertTrue(in_array('The surprise was deleted.', array_keys($messages)));
     }
 
     /**
-     * Test what happens when trying to delete a series that does not exist
+     * Test what happens when trying to delete a surprise that does not exist
      * @group slow
      * @depends test_delete
      */
-    public function test_delete_series_does_not_exist()
+    public function test_delete_surprise_does_not_exist()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/delete');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
         $this->mockSecurityCheckToken(true, $oMockController);
 
-        $this->setGET([ 'series_id' => '1' ], $oMockController);
+        $this->setGET([ 'surprise_id' => '1' ], $oMockController);
 
         // the test
         $oMockController->delete();
@@ -99,13 +99,13 @@ class categories_admin_series extends AbstractControllerTest
     }
 
     /**
-     * Test what happens when trying to edit a series and providing an invalid token
+     * Test what happens when trying to edit a surprise and providing an invalid token
      * @group fast
      */
     public function test_edit_invalid_token()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/edit');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
         $this->mockIsPost(true, $oMockController);
         $this->mockSecurityCheckToken(false, $oMockController);
 
@@ -120,13 +120,13 @@ class categories_admin_series extends AbstractControllerTest
     }
 
     /**
-     * Test what happens when trying to edit a series and providing invalid params
+     * Test what happens when trying to edit a surprise and providing invalid params
      * @group fast
      */
     public function test_edit_invalid_params()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/edit');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
         $this->mockIsPost(true, $oMockController);
         $this->mockSecurityCheckToken(true, $oMockController);
 
@@ -141,22 +141,22 @@ class categories_admin_series extends AbstractControllerTest
     }
 
     /**
-     * Test what happens when trying to add a series with the same name as an existing series
+     * Test what happens when trying to add a surprise with the same name as an existing surprise
      * @group slow
      * @depends test_delete
      */
     public function test_edit_add_duplicate_name()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/edit');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
         $this->mockIsPost(true, $oMockController);
         $this->mockSecurityCheckToken(true, $oMockController);
         $this->mockValidate(true, $oMockController);
 
         $this->setPOST(
             [
-                'category_id' => '1',
-                'name' => 'Turbo Classic',
+                'group_id' => '1',
+                'name' => 'Turbo 2',
                 'status' => 'online'
             ],
             $oMockController
@@ -169,31 +169,31 @@ class categories_admin_series extends AbstractControllerTest
 
         // asserts
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
-        $this->assertTrue(in_array('A series with that name already exists!', array_keys($messages)));
+        $this->assertTrue(in_array('A surprise with that name already exists!', array_keys($messages)));
     }
 
     /**
-     * Test what happens when trying to edit a series and ending up with duplicate names
+     * Test what happens when trying to edit a surprise and ending up with duplicate names
      * @group slow
      * @depends test_delete
      */
     public function test_edit_duplicate_name()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/edit');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
         $this->mockIsPost(true, $oMockController);
         $this->mockSecurityCheckToken(true, $oMockController);
         $this->mockValidate(true, $oMockController);
 
         $this->setPOST(
             [
-                'category_id' => '1',
-                'name' => 'Otto Moto',
+                'group_id' => '1',
+                'name' => 'Turbo 3',
                 'status' => 'online'
             ],
             $oMockController
         );
-        $this->setGET([ 'series_id' => '2' ], $oMockController);
+        $this->setGET([ 'surprise_id' => '2' ], $oMockController);
 
         // the test
         $oMockController->edit();
@@ -206,22 +206,22 @@ class categories_admin_series extends AbstractControllerTest
     }
 
     /**
-     * Test add a series
+     * Test add a surprise
      * @group slow
      * @depends test_delete
      */
-    public function test_edit_add_series()
+    public function test_edit_add_surprise()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/edit');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
         $this->mockIsPost(true, $oMockController);
         $this->mockSecurityCheckToken(true, $oMockController);
         $this->mockValidate(true, $oMockController);
 
         $this->setPOST(
             [
-                'category_id' => '1',
-                'name' => 'Turbo',
+                'group_id' => '1',
+                'name' => 'Turbo 1000',
                 'status' => 'online'
             ],
             $oMockController
@@ -234,31 +234,31 @@ class categories_admin_series extends AbstractControllerTest
 
         // asserts
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
-        $this->assertTrue(in_array('The series was saved.', array_keys($messages)));
+        $this->assertTrue(in_array('The surprise was saved.', array_keys($messages)));
     }
 
     /**
-     * Test edit a series
+     * Test edit a surprise
      * @group slow
      * @depends test_delete
      */
-    public function test_edit_series()
+    public function test_edit_surprise()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/admin/series/edit');
+        $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
         $this->mockIsPost(true, $oMockController);
         $this->mockSecurityCheckToken(true, $oMockController);
         $this->mockValidate(true, $oMockController);
 
         $this->setPOST(
             [
-                'category_id' => '1',
-                'name' => 'Turbo1',
+                'group_id' => '1',
+                'name' => 'Turbo 1001',
                 'status' => 'online'
             ],
             $oMockController
         );
-        $this->setGET([ 'series_id' => 2 ], $oMockController);
+        $this->setGET([ 'surprise_id' => 2 ], $oMockController);
 
         // the test
         $oMockController->edit();
@@ -267,6 +267,6 @@ class categories_admin_series extends AbstractControllerTest
 
         // asserts
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
-        $this->assertTrue(in_array('The series was saved.', array_keys($messages)));
+        $this->assertTrue(in_array('The surprise was saved.', array_keys($messages)));
     }
 }

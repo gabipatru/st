@@ -24,7 +24,7 @@ abstract class AbstractController
         return $FV->validate();
     }
 
-    protected function deletsIeAllowed()
+    protected function deleteIsAllowed()
     {
         return Config::configByPath(DbData::ALLOW_DELETE_KEY) === Config::CONFIG_VALUE_YES;
     }

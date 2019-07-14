@@ -75,15 +75,15 @@ class controller_admin_surprises extends ControllerAdminModel {
             ]
         ]);
         
-        $validateResult = $FV->validate();
+        $validateResult = $this->validate($FV);
         
         if ($this->isPOST()) {
             try {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                    throw new Exception($this->__('The page delay was too long'));
+                }
                 if (! $validateResult) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
-                    throw new Exception($this->__('The page delay was too long'));
                 }
                 
                 // filter the values
@@ -168,11 +168,11 @@ class controller_admin_surprises extends ControllerAdminModel {
             if (!$this->securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
-            if (Config::configByPath(DbData::ALLOW_DELETE_KEY) === Config::CONFIG_VALUE_NO) {
+            if (! $this->deleteIsAllowed()) {
                 throw new Exception($this->__('Delete not allowed'));
             }
             if (!$surpriseId) {
-                throw new Exception($this->__('Group ID is missing.'));
+                throw new Exception($this->__('Surprise ID is missing.'));
             }
             
             // delete

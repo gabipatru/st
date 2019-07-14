@@ -44,13 +44,15 @@ class controller_admin_categories extends ControllerAdminModel
                 'status'    => $this->__('Please select a valid status')
             ]
         ]);
+
+        $validate = $this->validate($FV);
         
         if ($this->isPOST()) {
             try {
                 if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
-                if (! $this->validate($FV)) {
+                if (! $validate) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 

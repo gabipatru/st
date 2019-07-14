@@ -45,16 +45,16 @@ class controller_admin_groups extends ControllerAdminModel
                 'status'        => $this->__('Please select a valid status')
             ]
         ]);
-        
-        $validateResult = $FV->validate();
+
+        $validate = $this->validate($FV);
         
         if ($this->isPOST()) {
             try {
-                if (! $validateResult) {
-                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
+                }
+                if (! $validate) {
+                    throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 
                 // filter the values
@@ -136,10 +136,13 @@ class controller_admin_groups extends ControllerAdminModel
         $groupId = $this->filterGET('group_id', 'int');
         
         try {
-            if (!$this->securityCheckToken($this->filterGET('token', 'string'))) {
+            if (! $this->securityCheckToken($this->filterGET('token', 'string'))) {
                 throw new Exception($this->__('The page delay was too long'));
             }
-            if (!$groupId) {
+            if (! $this->deleteIsAllowed()) {
+                throw new Exception($this->__('Delete not allowed'));
+            }
+            if (! $groupId) {
                 throw new Exception($this->__('Group ID is missing.'));
             }
             

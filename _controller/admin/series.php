@@ -46,13 +46,15 @@ class controller_admin_series extends ControllerAdminModel
                 'status'        => $this->__('Please select a valid status')
             ]
         ]);
+
+        $validate = $this->validate($FV);
         
         if ($this->isPOST()) {
             try {
                 if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
-                if (! $this->validate($FV)) {
+                if (! $validate) {
                     throw new Exception($this->__('Please make sure you filled all mandatory values'));
                 }
                 
@@ -61,7 +63,7 @@ class controller_admin_series extends ControllerAdminModel
                 $name           = $this->filterPOST('name', 'clean_html');
                 $description    = $this->filterPOST('description', 'clean_html');
                 $status         = $this->filterPOST('status', 'set[online,offline]');
-                
+
                 if (! $seriesId) {
                     // check if another category with that name exists
                     $filters = [ 'name' => $name ];
