@@ -129,7 +129,7 @@ class controller_website extends AbstractController {
     ###############################################################################
     function contact() {
         $messageSent = false;
-        
+
         $FV = new FormValidation(array(
             'rules' => array(
                 'name'      => 'required',
@@ -144,15 +144,15 @@ class controller_website extends AbstractController {
                 'message'   => $this->__('Please write the message we should receive')
             )
         ));
-        
-        $validateResult = $FV->validate();
-        
+
+        $validateResult = $this->validate($FV);
+
         if ($this->isPOST()) {
             try {
-                if (!$validateResult) {
+                if (! $validateResult) {
                     throw new Exception($this->__('Please make sure you filled all the required fields'));
                 }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
                 
