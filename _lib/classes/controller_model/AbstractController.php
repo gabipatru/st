@@ -28,4 +28,19 @@ abstract class AbstractController
     {
         return Config::configByPath(DbData::ALLOW_DELETE_KEY) === Config::CONFIG_VALUE_YES;
     }
+
+    protected function hrefWebsite($data)
+    {
+        return href_website($data);
+    }
+
+    protected function hrefAdmin($data)
+    {
+        return href_admin($data);
+    }
+
+    protected function setCookie($name, $value, $expire, $path)
+    {
+        setCookie($name, $value, $expire, $path);
+    }
 }

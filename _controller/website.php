@@ -198,9 +198,9 @@ class controller_website extends AbstractController {
     public function save_language() {
         $newLanguage = $this->filterGET('language', 'string');
         $referrer = $this->filterGET('referrer', 'string');
-        
+
         if (!$referrer) {
-            $referrer = $this->redirect('website/homepage');
+            $referrer = $this->hrefWebsite('website/homepage');
         }
         
         $oTranslations = Translations::getSingleton();
@@ -209,7 +209,7 @@ class controller_website extends AbstractController {
             $this->redirect($referrer);
         }
         
-        setcookie(Translations::COOKIE_NAME, $newLanguage, time() + 86400 * 365, "/");
+        $this->setCookie(Translations::COOKIE_NAME, $newLanguage, time() + 86400 * 365, "/");
         
         $this->redirect($referrer);
     }

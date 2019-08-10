@@ -35,8 +35,10 @@ abstract Class AbstractControllerTest extends AbstractTest
                                     'filterPOST', 
                                     'securityCheckToken', 
                                     'redirect',
+                                    'setCookie',
                                     'validate',
-                                    'deleteIsAllowed'
+                                    'deleteIsAllowed',
+                                    'hrefWebsite',
                                 ])
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);

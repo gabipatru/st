@@ -51,4 +51,51 @@ class controller_test_website extends AbstractControllerTest
         $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
         $this->assertTrue(in_array('The page delay was too long', array_keys($messages)));
     }
+
+    /**
+     * Test that the language is set correctly when called with no referrer
+     * @group fast
+     */
+    public function test_save_language_no_referrer()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/save_language');
+        $oMockController->expects($this->once())->method('hrefWebsite')->willReturn(true);
+        $oMockController->expects($this->once())->method('setCookie')->willReturn(true);
+        $this->setGET(
+            [
+                'language' => 'en_EN',
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->save_language();
+    }
+
+    /**
+     * Test if an error is set when trying to set a non-existing language
+     * @group fast
+     */
+    public function test_save_language_incorrect_language()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/save_language');
+        $this->setGET(
+            [
+                'language' => 'klingon/KLINGON',
+                'referrer' => 'test'
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->save_language();
+
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('Could not configure language', array_keys($messages)));
+    }
 }
