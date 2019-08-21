@@ -13,6 +13,9 @@ class Category extends DbData
     
     const IMAGE_WIDTH   = 250;
     const IMAGE_HEIGHT  = 250;
+
+    const SERIES_ONLINE = 'online';
+    const SERIEES_OFFLINE = 'offline';
     
     protected $aFields = array(
         'category_id',

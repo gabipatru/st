@@ -39,15 +39,15 @@ class controller_website extends AbstractController {
     {
         $categoryId = $this->filterGET('category_id', 'int');
         if (!$categoryId) {
-            $this->redirect404();
+            return $this->redirect404();
         }
         
         // load current category
         $oCategoryModel = new Category();
-        $filter = ['category_id' => $categoryId];
+        $filter = [ 'category_id' => $categoryId, 'status' => 'online' ];
         $oCategory = $oCategoryModel->singleGet($filter);
         if (! $oCategory) {
-            $this->redirect404();
+            return $this->redirect404();
         }
         
         // load series
@@ -73,21 +73,23 @@ class controller_website extends AbstractController {
         $seriesId           = $this->filterGET('series_id', 'int');
         $seriesNameFromUrl  = $this->filterGET('series_name', 'string');
         if (! $seriesId || ! $seriesNameFromUrl) {
-            $this->redirect404();
+            return $this->redirect404();
         }
         
         // load the series
         $oSeriesModel = new Series();
-        $filter = [ 'series_id' => $seriesId ];
+        $filter = [ 'series_id' => $seriesId, 'status' => 'online' ];
         $oSeries = $oSeriesModel->singleGet($filter);
         if (! $oSeries) {
-            $this->redirect404();
+            return $this->redirect404();
         }
         if ($this->View->urlFormat($oSeries->getName()) != $seriesNameFromUrl) {
-            $this->redirect404();
+            return $this->redirect404();
         }
-        
+
         try {
+            $oSurpriseCollection = null;
+
             // load the groups of the series
             $oGroupModel = new Group();
             $filter = [ 'series_id' => $seriesId ];

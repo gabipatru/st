@@ -10,6 +10,265 @@ require_once(__DIR__ .'/../AbstractControllerTest.php');
 class controller_test_website extends AbstractControllerTest
 {
     /**
+     * Test that a redirect is done when category id is invalid
+     * @group fast
+     */
+    public function test_category_invalid_id()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/category');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'category_id' => 0
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->category();
+    }
+
+    /**
+     * Test that a redirect is done when the category id is not found in the DB
+     * @group slow
+     */
+    public function test_category_not_found_id()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/category');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'category_id' => 99999
+            ],
+            $oMockController
+        );
+
+        $this->setUpDB([ 'category' ]);
+
+        // the test
+        $oMockController->category();
+    }
+
+    /**
+     * Test that a redirect is done when fetching an offline category
+     * @group slow
+     * @depends test_category_not_found_id
+     */
+    public function test_category_offline()
+    {
+        // add an offline category to DB
+        $db = \db::getSingleton();
+
+        $oCategory = new \Category();
+        $oCollection = new \Collection();
+        $oCollection->setName('Test category');
+        $oCollection->setDescription('Test category');
+        $oCollection->setStatus('offline');
+        $categoryId = $oCategory->Add($oCollection);
+
+        $this->assertGreaterThan(0, $categoryId);
+
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/category');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'category_id' => $categoryId,
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->category();
+    }
+
+    /**
+     * Test that a redirect is done when series id is invalid
+     * @group fast
+     */
+    public function test_series_invalid_id()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'series_id' => 0
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->series();
+    }
+
+    /**
+     * Test that a redirect is done when series is not found in the DB
+     * @group slow
+     */
+    public function test_series_not_found_id()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'series_id' => 9999,
+                'series_name' => 'Turbo'
+            ],
+            $oMockController
+        );
+
+        $this->setUpDB([ 'category', 'series', 'group', 'surprise' ]);
+
+        // the test
+        $oMockController->series();
+    }
+
+    /**
+     * Test that a redirect is done when a offline series is accessed
+     * @group slow
+     * @depends test_series_not_found_id
+     */
+    public function test_series_not_online()
+    {
+        // add data to DB
+        $oSeries = new \Series();
+        $oCollection = new \Collection();
+        $oCollection->setCategoryId(1);
+        $oCollection->setName('Test series offline');
+        $oCollection->setDescription('Test series offline');
+        $oCollection->setStatus('offline');
+        $seriesId = $oSeries->Add($oCollection);
+
+        $this->assertGreaterThan(0, $seriesId);
+
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'series_id' => $seriesId,
+                'series_name' => 'Test-series-offline'
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->series();
+    }
+
+    /**
+     * Test that a redirect is done when the URL name does not match the series name
+     * @group slow
+     * @depends test_series_not_found_id
+     */
+    public function test_series_name_not_matched()
+    {
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
+        $this->setGET(
+            [
+                'series_id' => 1,
+                'series_name' => 'Turbo1'
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->series();
+    }
+
+    /**
+     * Test that an error is shown when a series without groups is accessed
+     * @group slow
+     * @depends test_series_not_found_id
+     */
+    public function test_series_without_groups()
+    {
+        // add data to DB
+        $oSeries = new \Series();
+        $oCollection = new \Collection();
+        $oCollection->setCategoryId(1);
+        $oCollection->setName('Test series');
+        $oCollection->setDescription('Test series');
+        $oCollection->setStatus('online');
+        $seriesId = $oSeries->Add($oCollection);
+
+        $this->assertGreaterThan(0, $seriesId);
+
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/series');
+        $this->setGET(
+            [
+                'series_id' => $seriesId,
+                'series_name' => 'Test-series'
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->series();
+
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('Could not find any groups for the series Test series', array_keys($messages)));
+    }
+
+    /**
+     * Test that an error is shown when a series without surprises is accessed
+     * @group slow
+     * @depends test_series_without_groups
+     */
+    public function test_series_without_surprises()
+    {
+        // add series and group to db
+        $oSeries = new \Series();
+        $oCollection = new \Collection();
+        $oCollection->setCategoryId(1);
+        $oCollection->setName('Test series2');
+        $oCollection->setDescription('Test series2');
+        $oCollection->setStatus('online');
+        $seriesId = $oSeries->Add($oCollection);
+
+        $this->assertGreaterThan(0, $seriesId);
+
+        $oGroup = new \Group();
+        $oCollection = new \Collection();
+        $oCollection->setSeriesId($seriesId);
+        $oCollection->setName('Test group');
+        $oCollection->setDescription('Test group');
+        $oCollection->setStatus('online');
+        $groupId = $oGroup->Add($oCollection);
+
+        $this->assertGreaterThan(0, $groupId);
+
+        // init and mock
+        $oMockController = $this->initController('/admin/index.php/website/series');
+        $this->setGET(
+            [
+                'series_id' => $seriesId,
+                'series_name' => 'Test-series2'
+            ],
+            $oMockController
+        );
+
+        // the test
+        $oMockController->series();
+
+        $messages = $this->invokeMethod($oMockController, 'getMessages', []);
+
+        // asserts
+        $this->assertInternalType(IsType::TYPE_ARRAY, $messages);
+        $this->assertTrue(in_array('Could not find any surprises for the series Test series2', array_keys($messages)));
+    }
+
+    /**
      * Test what happens when contact is called with invalid params
      * @group fast
      */

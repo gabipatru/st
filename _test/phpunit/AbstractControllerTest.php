@@ -25,6 +25,7 @@ abstract Class AbstractControllerTest extends AbstractTest
         require_once(CONTROLLER_DIR .'/'. $sPath .'.php');
         
         // init the controller object
+        $sModule = $sClass;
         $sClass = 'controller_'. $sClass;
         if ($mock) {
             $oController = $this->getMockBuilder($sClass)
@@ -35,6 +36,7 @@ abstract Class AbstractControllerTest extends AbstractTest
                                     'filterPOST', 
                                     'securityCheckToken', 
                                     'redirect',
+                                    'redirect404',
                                     'setCookie',
                                     'validate',
                                     'deleteIsAllowed',
@@ -52,6 +54,9 @@ abstract Class AbstractControllerTest extends AbstractTest
         // we must load all translations and init the constants
         $this->loadTranslations();
         $this->initConstants();
+
+        $oTranslations = \Translations::getSingleton();
+        $oTranslations->setModule($sModule);
         
         return $oController;
     }
