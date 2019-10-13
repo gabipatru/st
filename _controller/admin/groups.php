@@ -8,8 +8,10 @@ class controller_admin_groups extends ControllerAdminModel
         
         $this->View->assign('menu', 'groups');
     }
-    
-    // List series
+
+    ###############################################################################
+    ## LIST GROUPS PAGE
+    ###############################################################################
     function list_groups()
     {
         $oGroupModel = new Group();
@@ -24,8 +26,10 @@ class controller_admin_groups extends ControllerAdminModel
         
         $this->View->addSEOParams($this->__('Groups List :: Admin'), '', '');
     }
-    
-    // Edit a series
+
+    ###############################################################################
+    ## ADD / EDIT SERIES PAGE
+    ###############################################################################
     function edit()
     {
         $groupId = $this->filterGET('group_id', 'int');
@@ -129,8 +133,10 @@ class controller_admin_groups extends ControllerAdminModel
         $this->View->assign('groupId', $groupId);
         $this->View->assign('oSeriesCollection', $oSeriesCollection);
     }
-    
-    // Delete series
+
+    ###############################################################################
+    ## DELETE SERIES PAGE
+    ###############################################################################
     function delete()
     {
         $groupId = $this->filterGET('group_id', 'int');

@@ -8,8 +8,10 @@ class controller_admin_user_groups extends ControllerAdminModel
         
         $this->View->assign('menu', 'users');
     }
-    
-    // List user groups
+
+    ###############################################################################
+    ## LIST USER GROUPS PAGE
+    ###############################################################################
     function list_user_groups()
     {
         $oUserGroupModel = new UserGroup();
@@ -46,8 +48,10 @@ class controller_admin_user_groups extends ControllerAdminModel
         
         $this->View->addSEOParams($this->__('User Groups List :: Admin'), '', '');
     }
-    
-    // Add / edit a user group
+
+    ###############################################################################
+    ## ADD / EDIT USER GROUPS PAGE
+    ###############################################################################
     function edit()
     {
         $userGroupId = $this->filterGET('user_group_id', 'int');
@@ -142,8 +146,10 @@ class controller_admin_user_groups extends ControllerAdminModel
         $this->View->assign('FV', $FV);
         $this->View->assign('userGroupId', $userGroupId);
     }
-    
-    // Delete a user group
+
+    ###############################################################################
+    ## DELETE USER GROUPS PAGE
+    ###############################################################################
     function delete()
     {
         $userGroupId = $this->filterGET('user_group_id', 'int');
@@ -174,8 +180,10 @@ class controller_admin_user_groups extends ControllerAdminModel
         
         $this->redirect(href_admin('user_groups/list'));
     }
-    
-    // Edit the group's permissions
+
+    ###############################################################################
+    ## CHANGE PERMISSIONS ENDPOINT
+    ###############################################################################
     function ajax_change_permission() 
     {
         $groupId = $this->filterPOST('user_group_id', 'int');

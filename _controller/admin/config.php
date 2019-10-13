@@ -5,7 +5,10 @@ class controller_admin_config extends ControllerAdminModel {
         
         $this->View->assign('menu', 'config');
     }
-    
+
+    ###############################################################################
+    ## LIST CONFIG ITEMS PAGE
+    ###############################################################################
     function list_items() {
         // this is the config we will display
         $configName = $this->filterGET('name', 'string');
@@ -28,7 +31,10 @@ class controller_admin_config extends ControllerAdminModel {
         
         $this->View->addSEOParams($this->__('Config List :: Admin'), '', '');
     }
-    
+
+    ###############################################################################
+    ## SAVE ALL CONFIGS PAGE
+    ###############################################################################
     function save_all() {
         $aConfigIds = $this->filterPOST('config_ids', 'array');
         $configName = $this->filterPOST('configName', 'string');
@@ -71,7 +77,10 @@ class controller_admin_config extends ControllerAdminModel {
         $this->setMessage($this->__('All items were saved'));
         $this->redirect(href_admin('config/list_items') . '?name='.$configName);
     }
-    
+
+    ###############################################################################
+    ## ADD A CONFIG PAGE
+    ###############################################################################
     function add() {
         $FV = new FormValidation(array(
             'rules' => array(

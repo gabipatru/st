@@ -1,11 +1,16 @@
 <?php
+
 class controller_admin_users extends ControllerAdminModel {
+
     function _prehook() {
         parent::_prehook();
     
         $this->View->assign('menu', 'users');
     }
-    
+
+    ###############################################################################
+    ## LIST USERS PAGE
+    ###############################################################################
     function list_users() {
         $page       = $this->filterGET('page', 'int|min[1]');
         $search     = $this->filterGET('search', 'string');
@@ -58,7 +63,10 @@ class controller_admin_users extends ControllerAdminModel {
         
         $this->View->addSEOParams($this->__('Users List :: Admin'), '', '');
     }
-    
+
+    ###############################################################################
+    ## CHANGE STATUS ENDPOINT
+    ###############################################################################
     function ajax_change_status() {
         $userId         = $this->filterPOST('user_id', 'int');
         $newStatus      = $this->filterPOST('new_status', 'string');

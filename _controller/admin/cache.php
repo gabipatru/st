@@ -1,4 +1,5 @@
 <?php
+
 class controller_admin_cache extends ControllerAdminModel {
     function _prehook() {
         parent::_prehook();
@@ -8,11 +9,17 @@ class controller_admin_cache extends ControllerAdminModel {
         
         $this->View->assign('menu', 'cache');
     }
-    
+
+    ###############################################################################
+    ## LIST CACHE PAGE
+    ###############################################################################
     function list_cache() {
         $this->View->addSEOParams($this->__('List Cache Items :: Admin'), '', '');
     }
-    
+
+    ###############################################################################
+    ## MEMCACHED PAGE
+    ###############################################################################
     function memcached() {
         $FV = new FormValidation(array(
             'rules' => array(
@@ -35,7 +42,10 @@ class controller_admin_cache extends ControllerAdminModel {
         
         $this->View->addSEOParams($this->__('Memcached :: Admin'), '', '');
     }
-    
+
+    ###############################################################################
+    ## FLUSH PAGE
+    ###############################################################################
     function flush_memcached() {
         $FV = new FormValidation(array(
             'rules' => array(
@@ -69,7 +79,10 @@ class controller_admin_cache extends ControllerAdminModel {
         
         $this->redirect(href_admin('cache/memcached'));
     }
-    
+
+    ###############################################################################
+    ## FLUSH ALL MEMCACHED PAGE
+    ###############################################################################
     function flush_all_memcached() {
         if ($this->isPOST()) {
             try {

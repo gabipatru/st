@@ -1,18 +1,26 @@
 <?php
+
 class controller_admin_email extends ControllerAdminModel {
+
     function _prehook() {
         parent::_prehook();
     
         $this->View->assign('menu', 'email');
     }
-    
+
+    ###############################################################################
+    ## LIST MENU PAGE
+    ###############################################################################
     function list_menu() {
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add($this->__('Email'), MVC_ACTION_URL);
         
         $this->View->addSEOParams($this->__('Email :: Admin'), '', '');
     }
-    
+
+    ###############################################################################
+    ## EMIAL QUEUE PAGE
+    ###############################################################################
     function email_queue() {
         $page       = $this->filterGET('page', 'int|min[1]');
         $search     = $this->filterGET('search', 'string');
@@ -62,7 +70,10 @@ class controller_admin_email extends ControllerAdminModel {
         
         $this->View->addSEOParams($this->__('Email queue :: Admin'), '', '');
     }
-    
+
+    ###############################################################################
+    ## EMAIL LOG PAGE
+    ###############################################################################
     function email_log() {
         $page       = $this->filterGET('page', 'int|min[1]');
         $search     = $this->filterGET('search', 'string');

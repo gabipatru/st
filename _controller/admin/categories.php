@@ -8,8 +8,10 @@ class controller_admin_categories extends ControllerAdminModel
         
         $this->View->assign('menu', 'categories');
     }
-    
-    // List categories
+
+    ###############################################################################
+    ## LIST CATEGORIES PAGE
+    ###############################################################################
     function list_categories()
     {
         $oCategories = new Category();
@@ -24,8 +26,10 @@ class controller_admin_categories extends ControllerAdminModel
         
         $this->View->addSEOParams($this->__('Categories List :: Admin'), '', '');
     }
-    
-    // Add / edit a category
+
+    ###############################################################################
+    ## ADD / EDIT CATEGORIES PAGE
+    ###############################################################################
     function edit()
     {
         $categoryId = $this->filterGET('category_id', 'int');
@@ -151,8 +155,10 @@ class controller_admin_categories extends ControllerAdminModel
         $this->View->assign('oCategory', $oCategory);
         $this->View->assign('categoryId', $categoryId);
     }
-    
-    // Delete a category
+
+    ###############################################################################
+    ## DELETE CATEGORY PAGE
+    ###############################################################################
     function delete()
     {
         $categoryId = $this->filterGET('category_id', 'int');

@@ -8,8 +8,10 @@ class controller_admin_series extends ControllerAdminModel
         
         $this->View->assign('menu', 'series');
     }
-    
-    // List series
+
+    ###############################################################################
+    ## LIST SERIES PAGE
+    ###############################################################################
     function list_series()
     {
         $oSeriesModel = new Series();
@@ -24,8 +26,10 @@ class controller_admin_series extends ControllerAdminModel
         
         $this->View->addSEOParams($this->__('Series List :: Admin'), '', '');
     }
-    
-    // Edit a series
+
+    ###############################################################################
+    ## ADD / EDIT SERIES PAGE
+    ###############################################################################
     function edit()
     {
         $seriesId = $this->filterGET('series_id', 'int');
@@ -159,8 +163,10 @@ class controller_admin_series extends ControllerAdminModel
         $this->View->assign('oSeries', $oSeries);
         $this->View->assign('oCategoriesCollection', $oCategoriesCollection);
     }
-    
-    // Delete series
+
+    ###############################################################################
+    ## DELETE SERIES PAGE
+    ###############################################################################
     function delete()
     {
         $seriesId = $this->filterGET('series_id', 'int');

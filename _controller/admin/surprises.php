@@ -8,8 +8,10 @@ class controller_admin_surprises extends ControllerAdminModel {
         
         $this->View->assign('menu', 'surprises');
     }
-    
-    // List surprises
+
+    ###############################################################################
+    ## LIST SURPRISES PAGE
+    ###############################################################################
     function list_surprises()
     {
         $page       = $this->filterGET('page', 'int|min[1]');
@@ -53,8 +55,10 @@ class controller_admin_surprises extends ControllerAdminModel {
         
         $this->View->addSEOParams($this->__('Surprises List :: Admin'), '', '');
     }
-    
-    // Add / Edit a surprise
+
+    ###############################################################################
+    ## ADD / EDIT SURPRISES PAGE
+    ###############################################################################
     function edit()
     {
         $surpriseId = $this->filterGET('surprise_id', 'int');
@@ -158,8 +162,10 @@ class controller_admin_surprises extends ControllerAdminModel {
         $this->View->assign('surpriseId', $surpriseId);
         $this->View->assign('oGroupsCollection', $oGroupsCollection);
     }
-    
-    // Delete surprises
+
+    ###############################################################################
+    ## DELETE SURPRISE PAGE
+    ###############################################################################
     function delete()
     {
         $surpriseId = $this->filterGET('surprise_id', 'int');
