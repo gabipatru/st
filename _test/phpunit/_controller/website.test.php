@@ -16,7 +16,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_category_invalid_id()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/category');
+        $oMockController = $this->initController('/index.php/website/category');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -36,7 +36,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_category_not_found_id()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/category');
+        $oMockController = $this->initController('/index.php/website/category');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -71,7 +71,7 @@ class controller_test_website extends AbstractControllerTest
         $this->assertGreaterThan(0, $categoryId);
 
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/category');
+        $oMockController = $this->initController('/index.php/website/category');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -91,7 +91,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_series_invalid_id()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController = $this->initController('/index.php/website/series');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -111,7 +111,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_series_not_found_id()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController = $this->initController('/index.php/website/series');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -146,7 +146,7 @@ class controller_test_website extends AbstractControllerTest
         $this->assertGreaterThan(0, $seriesId);
 
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController = $this->initController('/index.php/website/series');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -168,7 +168,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_series_name_not_matched()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController = $this->initController('/index.php/website/series');
         $oMockController->expects($this->once())->method('redirect404')->willReturn(true);
         $this->setGET(
             [
@@ -201,7 +201,7 @@ class controller_test_website extends AbstractControllerTest
         $this->assertGreaterThan(0, $seriesId);
 
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController = $this->initController('/index.php/website/series');
         $this->setGET(
             [
                 'series_id' => $seriesId,
@@ -249,7 +249,7 @@ class controller_test_website extends AbstractControllerTest
         $this->assertGreaterThan(0, $groupId);
 
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/series');
+        $oMockController = $this->initController('/index.php/website/series');
         $this->setGET(
             [
                 'series_id' => $seriesId,
@@ -275,7 +275,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_contact_invalid_params()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/contact');
+        $oMockController = $this->initController('/index.php/website/contact');
         $this->mockIsPost(true, $oMockController);
         $this->mockValidate(false, $oMockController);
 
@@ -296,7 +296,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_contact_invalid_security_token()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/contact');
+        $oMockController = $this->initController('/index.php/website/contact');
         $this->mockIsPost(true, $oMockController);
         $this->mockValidate(true, $oMockController);
         $this->mockSecurityCheckToken(false, $oMockController);
@@ -318,7 +318,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_save_language_no_referrer()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/save_language');
+        $oMockController = $this->initController('/index.php/website/save_language');
         $oMockController->expects($this->once())->method('hrefWebsite')->willReturn(true);
         $oMockController->expects($this->once())->method('setCookie')->willReturn(true);
         $this->setGET(
@@ -339,7 +339,7 @@ class controller_test_website extends AbstractControllerTest
     public function test_save_language_incorrect_language()
     {
         // init and mock
-        $oMockController = $this->initController('/admin/index.php/website/save_language');
+        $oMockController = $this->initController('/index.php/website/save_language');
         $this->setGET(
             [
                 'language' => 'klingon/KLINGON',

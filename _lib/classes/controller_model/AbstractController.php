@@ -43,4 +43,9 @@ abstract class AbstractController
     {
         setCookie($name, $value, $expire, $path);
     }
+
+    protected function isLoggedIn()
+    {
+        return User::isLoggedIn();
+    }
 }

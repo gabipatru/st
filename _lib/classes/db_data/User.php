@@ -175,15 +175,16 @@ class User extends DbData {
     	if (!$userName && !$email) {
     		return false;
     	}
-    	
+
     	// search for the user
     	$sql = "SELECT * FROM ". self::TABLE_NAME
-    			." WHERE status = ?"
-    			." AND (username = ? OR email = ?)";
+    			." WHERE status = $1"
+    			." AND (username = $2 OR email = $3)";
     	$aParams = array($status, $userName, $email);
     	
     	$res = $this->db->query($sql, $aParams);
-    	if (!$res || $res->errorCode() != '00000' || $this->db->rowCount($res) == 0) {
+
+    	if (!$res || $this->db->rowCount($res) == 0) {
     		return false;
     	}
     	else {

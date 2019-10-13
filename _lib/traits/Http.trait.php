@@ -22,11 +22,6 @@ trait Http
         header("Location:".HTTP_MAIN."/website/not_found.html");
         exit();
     }
-        
-    protected function isLoggedIn()
-    {
-        return User::isLoggedIn();
-    }
     
     // format a string for use in URL
     public function urlFormat(string $name) :string

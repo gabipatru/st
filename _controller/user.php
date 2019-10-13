@@ -21,7 +21,7 @@ class controller_user extends AbstractController {
     function login() {
         if ($this->isLoggedIn()) {
             $this->setMessage($this->__('You are already logged in !'));
-            $this->redirect(href_website('website/homepage'));
+            return $this->redirect(href_website('website/homepage'));
         }
         
         $return = $this->filterGET('return', 'urldecode');
@@ -37,17 +37,14 @@ class controller_user extends AbstractController {
             )
          ));
 
-        $validateResult = $FV->validate();
+        $validateResult = $this->validate($FV);
         if ($this->isPOST()) {
             try {
-                if (!$validateResult) {
-                    throw new Exception($this->__('Please fill all the required fields'));
-                }
-                if (User::isLoggedIn()) {
-                    throw new Exception($this->__('You are already logged in !'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
+                }
+                if (! $validateResult) {
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                  
                 $returnUrl = $this->filterPOST('return', 'urldecode');
@@ -74,13 +71,13 @@ class controller_user extends AbstractController {
                     throw new Exception($this->__('Incorect username or password'));
                 }
 
-                $this->redirect($returnUrl ? $returnUrl : href_website('website/homepage'));
+                return $this->redirect($returnUrl ? $returnUrl : href_website('website/homepage'));
             }
             catch (Exception $e) {
                 $this->setErrorMessage($e->getMessage());
             }
         }
-         
+
         $this->View->assign('return', $return);
         $this->View->assign('FV', $FV);
         
@@ -138,17 +135,17 @@ class controller_user extends AbstractController {
         
         $userAdded = false;
         
-        $validateResult = $FV->validate();
+        $validateResult = $this->validate($FV);
         if ($this->isPOST()) {
             try {
-                if (!$validateResult) {
-                    throw new Exception($this->__('Please fill all the required fields'));
-                }
-                if (User::isLoggedIn()) {
-                    throw new Exception($this->__('You are already logged in !'));
-                }
                 if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
+                }
+                if ($this->isLoggedIn()) {
+                    throw new Exception($this->__('You are already logged in !'));
+                }
+                if (! $validateResult) {
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                 
                 // get user-related configs
@@ -275,7 +272,7 @@ class controller_user extends AbstractController {
             
             $this->db->commitTransaction();
             
-            $this->setMessage($this->__('Your account is not active'));
+            $this->setMessage($this->__('Your account is now active'));
         }
         catch (Exception $e) {
             if ($this->db->transactionLevel()) {
@@ -313,15 +310,15 @@ class controller_user extends AbstractController {
             )
         ));
         
-        $validateResult = $FV->validate();
-        
+        $validateResult = $this->validate($FV);
+
         if ($this->isPOST()) {
             try {
-                if (!$validateResult) {
-                    throw new Exception($this->__('Please fill all the required fields'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
+                }
+                if (! $validateResult) {
+                    throw new Exception($this->__('Please fill all the required fields'));
                 }
                 
                 $email = $this->filterPOST('email', 'email');
@@ -404,18 +401,18 @@ class controller_user extends AbstractController {
                 'password2'     => $this->__('Passwords must be identical'),
             )
         ));
-        
-        $validateResult = $FV->validate();
+
+        $validateResult = $this->validate($FV);
         
         if ($this->isPOST()) {
             try {
-                if (!$validateResult) {
-                    throw new Exception($this->__('Please fill all the required fields'));
-                }
-                if (!$this->securityCheckToken($this->filterPOST('token', 'string'))) {
+                if (! $this->securityCheckToken($this->filterPOST('token', 'string'))) {
                     throw new Exception($this->__('The page delay was too long'));
                 }
-                if (!$confirmationCode) {
+                if (! $validateResult) {
+                    throw new Exception($this->__('Please fill all the required fields'));
+                }
+                if (! $confirmationCode) {
                     throw new Exception($this->__('Incorrect code'));
                 }
                 
@@ -468,7 +465,7 @@ class controller_user extends AbstractController {
         }
         
         try {
-            if (!$confirmationCode) {
+            if (! $confirmationCode) {
                 throw new Exception($this->__('Incorrect code'));
             }
             

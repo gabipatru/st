@@ -42,7 +42,7 @@ class UserConfirmation extends DbData {
         
         $sql = " SELECT COUNT(*) AS cnt"
               ." FROM ".UserConfirmation::TABLE_NAME
-              ." WHERE user_id = ?";
+              ." WHERE user_id = $1";
         $res = $this->db->query($sql, array($userId));
         if (!$res) {
             return false;

@@ -20,7 +20,7 @@ abstract Class AbstractControllerTest extends AbstractTest
                         ->getMock();
         $mvcMock->method('serverSelf')->willReturn($controllerPath);
         list($sClass, $sPath, $sFunction) = $this->invokeMethod($mvcMock, 'extract');
-        
+
         // load the controller file
         require_once(CONTROLLER_DIR .'/'. $sPath .'.php');
         
@@ -33,14 +33,16 @@ abstract Class AbstractControllerTest extends AbstractTest
                                     'isGet', 
                                     'isPost', 
                                     'filterGET', 
-                                    'filterPOST', 
+                                    'filterPOST',
+                                    'filterREQUEST',
+                                    'isLoggedIn',
                                     'securityCheckToken', 
                                     'redirect',
                                     'redirect404',
                                     'setCookie',
                                     'validate',
                                     'deleteIsAllowed',
-                                    'hrefWebsite',
+                                    'hrefWebsite'
                                 ])
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);
@@ -76,12 +78,26 @@ abstract Class AbstractControllerTest extends AbstractTest
     }
 
     /**
-     * Mock the filterGET method to return a value from the $postValues array
+     * Mock the filterGET method to return a value from the $getValues array
      */
     protected function setGET(array $getValues, $oMock)
     {
         $oMock->method('filterGET')->will($this->returnCallback( function($key, $type) use ($getValues) {
             foreach ($getValues as $name => $value) {
+                if ($key == $name) {
+                    return $value;
+                }
+            }
+        }));
+    }
+
+    /**
+     * Mock the filterREQUEST method to return a value from the $requestValues array
+     */
+    protected function setREQUEST(array $requestValues, $oMock)
+    {
+        $oMock->method('filterREQUEST')->will($this->returnCallback( function($key, $type) use ($requestValues) {
+            foreach ($requestValues as $name => $value) {
                 if ($key == $name) {
                     return $value;
                 }
@@ -113,6 +129,13 @@ abstract Class AbstractControllerTest extends AbstractTest
         $mock->method('validate')->willReturn($value);
     }
 
+    protected function mockIsLogedIn(bool $value, $mock)
+    {
+        $mock->expects($this->once())
+            ->method('isLoggedIn')
+            ->willReturn($value);
+    }
+
     /**
      * Load the default translation settings for the functional tests
      */
@@ -132,5 +155,14 @@ abstract Class AbstractControllerTest extends AbstractTest
         if (! defined('MVC_ACTION_URL')) {
             define('MVC_ACTION_URL', 'test_action');
         }
+    }
+
+    /**
+     * Initialize the configs
+     */
+    protected function initConfigs()
+    {
+        $oConfig = new \Config();
+        $oConfig->reInit();
     }
 }
