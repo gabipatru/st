@@ -44,13 +44,23 @@ class FormValidation {
 		}
 		$this->_js_code .= '</script>';
 	}
+
+    protected function getField($field)
+    {
+        return (isset($_POST[$field]) ? htmlspecialchars($_POST[$field]) : '');
+    }
+
+    protected function getRequestMethod()
+    {
+        return $_SERVER['REQUEST_METHOD'];
+    }
 	
 	private function validate_field($sField, $sRule, $mOption = false) {
 		$sFieldError = $sField . '_error';
-		$this->$sField = (isset($_POST[$sField]) ? htmlspecialchars($_POST[$sField]) : '');
+		$this->$sField = $this->getField($sField);
 
 		// check if the page is POSTED
-		if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+		if ($this->getRequestMethod() != 'POST') {
 			$this->_bValid = false;
 			$this->$sFieldError = '';
 			return false;
@@ -60,6 +70,7 @@ class FormValidation {
 		if (empty($this->$sFieldError)) {
 			$this->$sFieldError = '';
 		}
+
 		switch ($sRule) {
 			case 'required':
 				if ($mOption === true && strlen($this->$sField) == 0) {
@@ -68,7 +79,10 @@ class FormValidation {
 						$this->_bValid = false;
 						$this->$sFieldError = $this->_aFormConfig['messages'][$sField];
 					}
-				}
+                } elseif (strlen($this->$sField) == 0 && !$mOption) {
+                    $this->_bValid = false;
+                    $this->$sFieldError = $this->_aFormConfig['messages'][$sField];
+                }
 				break;
 			case 'minlength':
 				if (strlen($this->$sField) < $mOption) {
