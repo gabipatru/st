@@ -15,7 +15,7 @@ class HomepageCest extends AbstractAcceptanceCest
     /**
      * Test that all elements are displayed on the homepage
      */
-    public function checkHomepage(AcceptanceTester $I)
+    public function testHomepage(AcceptanceTester $I)
     {
         $I->amOnPage('/');
         $I->seeResponseCodeIs(HttpCode::OK);

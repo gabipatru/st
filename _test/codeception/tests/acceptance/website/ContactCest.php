@@ -15,7 +15,7 @@ class ContactCest extends AbstractAcceptanceCest
     /**
      * Check if all elements are correctly displayed on the contact page
      */
-    public function checkContact(AcceptanceTester $I)
+    public function testContact(AcceptanceTester $I)
     {
         $I->amOnPage('/website/contact.html');
         $I->seeResponseCodeIs(HttpCode::OK);
@@ -91,7 +91,7 @@ class ContactCest extends AbstractAcceptanceCest
         
         $I->seeElement('div.msg-error');
         $I->see('Please make sure you filled all the required fields', '.msg-error');
-        $I->see('Please enter a valid email address');
+        $I->see('Please enter a valid email address', '#email-error');
         $I->dontSee('Please fill in your name');
         $I->dontSee('Please specify a subject');
         $I->dontSee('Please write the message we should receive');

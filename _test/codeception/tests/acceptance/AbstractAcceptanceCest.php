@@ -40,6 +40,17 @@ class AbstractAcceptanceCest
         $I->see('Create account', 'ul.navbar-nav');
         $I->dontSee('Admin', 'ul.navbar-nav');
     }
+
+    /**
+     * Make sure the links for admin are displayed correctly
+     */
+    protected function testLinksForAdmin(AcceptanceTester $I)
+    {
+        $I->canSeeElement('ul.navbar-nav');
+        $I->see('Admin', 'ul.navbar-nav');
+        $I->see('Logout', 'ul.navbar-nav');
+        $I->dontSee('Login', 'ul.navbar-nav');
+    }
     
     /**
      * Make sure the navbar is displayed correctly

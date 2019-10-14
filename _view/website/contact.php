@@ -15,19 +15,19 @@
                     <form id="contact-form" class="contact-form row" name="contact-form" method="post">
                         <div class="form-group col-md-6">
                             <input type="text" id="name" name="name" class="form-control" placeholder="<?php echo $this->__('Name')?>" value="<?php echo $FV->name?>">
-                            <label id="path-error" class="error" for="path"><?php echo $FV->name_error?></label>
+                            <label id="name-error" class="error" for="path"><?php echo $FV->name_error?></label>
                         </div>
                         <div class="form-group col-md-6">
                             <input type="email" id="email" name="email" class="form-control" placeholder="<?php echo $this->__('Email address')?>" value="<?php echo $FV->email?>">
-                            <label id="path-error" class="error" for="path"><?php echo $FV->email_error?></label>
+                            <label id="email-error" class="error" for="path"><?php echo $FV->email_error?></label>
                         </div>
                         <div class="form-group col-md-12">
                             <input type="text" id="subject" name="subject" class="form-control" placeholder="<?php echo $this->__('Subject')?>" value="<?php echo $FV->subject?>">
-                            <label id="path-error" class="error" for="path"><?php echo $FV->subject_error?></label>
+                            <label id="subject-error" class="error" for="path"><?php echo $FV->subject_error?></label>
                         </div>
                         <div class="form-group col-md-12">
                             <textarea name="message" id="message" class="form-control" rows="8" placeholder="<?php echo $this->__('Your Message')?>"><?php echo $FV->message?></textarea>
-                            <label id="path-error" class="error" for="path"><?php echo $FV->message_error?></label>
+                            <label id="message-error" class="error" for="path"><?php echo $FV->message_error?></label>
                         </div>                        
                         <div class="form-group col-md-12">
                             <input type="submit" id="submit-form" name="submit" class="btn btn-primary pull-right" value="<?php echo $this->__('Send')?>">
