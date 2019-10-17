@@ -63,6 +63,36 @@ class AbstractAcceptanceCest
     }
 
     /**
+     * Make sure the admin header is displayed correctly
+     */
+    protected function testAdminHeader(AcceptanceTester $I)
+    {
+        // upper bar
+        $I->seeElement('div#top');
+        $I->see('Admin Surprize Turbo', 'h1');
+        $I->seeElement('div#top-navigation');
+        $I->see('Welcome,', 'div#top-navigation');
+
+        // main menu
+        $I->seeElement('div#navigation');
+
+        // test Breadcrumbs
+        $I->seeElement('div.small-nav');
+    }
+
+    /**
+     * Make sure the admin footer is displayed correctly
+     */
+    protected function testAdminFooter(AcceptanceTester $I)
+    {
+        $I->seeElement('div#footer');
+        $I->seeElement('span.left');
+        $I->see('Copyright © 2017 Surprize Turbo. All rights reserved.', 'span');
+        $I->seeElement('span.right');
+        $I->see('Designed by Sutprize Turbo', 'span.right');
+    }
+
+    /**
      * Make sure the footer is properly displayed
      */
     protected function testFooter(AcceptanceTester $I)
@@ -70,5 +100,34 @@ class AbstractAcceptanceCest
         $I->seeElement('.footer-bottom');
         $I->see('Copyright © 2017 Surprize Turbo. All rights reserved.', 'p.pull-left');
         $I->see('Designed by Surprize Turbo', 'p.pull-right');
+    }
+
+    /**
+     * Perform a login
+     *
+     * @param AcceptanceTester $I
+     */
+    protected function login(AcceptanceTester $I)
+    {
+        $I->amOnPage('/user/login.html');
+
+        // fill in user credentials
+        $I->fillField('#username', 'admin');
+        $I->fillField('#password', 'qwqwqw');
+
+        // submit form
+        $I->click('#submit-form');
+
+        // asserts
+        $this->testUpperBar($I);
+        $this->testLogo($I);
+        $I->see('EN');
+        //$this->testLinksForAdmin($I);
+        $this->testNavBar($I);
+
+        $I->dontSeeElement('div.msg-error');
+        $I->dontSee('Incorect username or password');
+
+        $this->testFooter($I);
     }
 }
