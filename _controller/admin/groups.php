@@ -45,7 +45,7 @@ class controller_admin_groups extends ControllerAdminModel
             ],
             'messages' => [
                 'series_id'     => $this->__('Please choose a series'),
-                'name'          => $this->__('Please specify a series name'),
+                'name'          => $this->__('Please specify a group name'),
                 'status'        => $this->__('Please select a valid status')
             ]
         ]);
