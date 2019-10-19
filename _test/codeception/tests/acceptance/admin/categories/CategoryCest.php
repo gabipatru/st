@@ -62,4 +62,31 @@ class AdminCategoryCest extends AbstractAcceptanceCest
 
         $this->testAdminFooter($I);
     }
+
+    /**
+     * Check if we can Add New Category without name page
+     */
+    public function testAddNewCategoryNoName(AcceptanceTester $I)
+    {
+        // login as Admin
+        $this->login($I);
+
+        $I->amOnPage('/admin/categories/edit.html');
+
+        // fill in category data
+        $I->fillField('#description', 'test@test.com');
+        $I->selectOption('#status', 'online');
+
+        // submit form
+        $I->click('#save-category');
+
+        // asserts
+        $this->testAdminHeader($I);
+
+        $I->seeElement('div.msg-error');
+        $I->see('Please make sure you filled all mandatory values', '.msg-error');
+        $I->see('Please specify a category name', '#name-error');
+
+        $this->testAdminFooter($I);
+    }
 }

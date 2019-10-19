@@ -56,7 +56,7 @@
         <!-- End Form -->
         
         <div class="buttons">
-          <input type="submit" class="button" value="<?php echo $this->__('Save')?>" />
+          <input id="save-category" type="submit" class="button" value="<?php echo $this->__('Save')?>" />
         </div>
         
         <input type="hidden" name="token" value="<?php echo $this->securityGetToken()?>">
