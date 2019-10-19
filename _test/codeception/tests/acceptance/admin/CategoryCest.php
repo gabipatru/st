@@ -5,12 +5,11 @@ namespace Test;
 use \AcceptanceTester;
 use \Codeception\Util\HttpCode;
 
-require_once(__DIR__ .'/../../AbstractAcceptanceCest.php');
+require_once(__DIR__ .'/../AbstractAcceptanceCest.php');
 
 /**
  * Test the Category Admin pages (List, Add, Edit)
  */
-
 class AdminCategoryCest extends AbstractAcceptanceCest
 {
     /**
@@ -86,6 +85,33 @@ class AdminCategoryCest extends AbstractAcceptanceCest
         $I->seeElement('div.msg-error');
         $I->see('Please make sure you filled all mandatory values', '.msg-error');
         $I->see('Please specify a category name', '#name-error');
+
+        $this->testAdminFooter($I);
+    }
+
+    /**
+     * Check if we can Add New Category with same name as another category
+     */
+    public function testAddNewCategoryDuplicateName(AcceptanceTester $I)
+    {
+        // login as Admin
+        $this->login($I);
+
+        $I->amOnPage('/admin/categories/edit.html');
+
+        // fill in category data
+        $I->fillField('#name', 'Turbo');
+        $I->fillField('#description', 'test@test.com');
+        $I->selectOption('#status', 'online');
+
+        // submit form
+        $I->click('#save-category');
+
+        // asserts
+        $this->testAdminHeader($I);
+
+        $I->seeElement('div.msg-error');
+        $I->see('A category with that name already exists!', '.msg-error');
 
         $this->testAdminFooter($I);
     }
