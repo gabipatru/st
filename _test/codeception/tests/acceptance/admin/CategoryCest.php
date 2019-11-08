@@ -2,10 +2,10 @@
 
 namespace Test;
 
-use \AcceptanceTester;
-use \Codeception\Util\HttpCode;
+use AcceptanceTester;
+use Codeception\Util\HttpCode;
 
-require_once(__DIR__ .'/../AbstractAcceptanceCest.php');
+require_once(__DIR__ . '/../AbstractAcceptanceCest.php');
 
 /**
  * Test the Category Admin pages (List, Add, Edit)

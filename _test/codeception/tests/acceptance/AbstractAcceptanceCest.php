@@ -2,8 +2,8 @@
 
 namespace Test;
 
-use \AcceptanceTester;
-use \Codeception\Util\HttpCode;
+use AcceptanceTester;
+use Codeception\Util\HttpCode;
 
 /**
  * Provide a few useful functions for acceptance tests.
