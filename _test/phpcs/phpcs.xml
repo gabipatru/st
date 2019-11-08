@@ -5,6 +5,9 @@
     <arg name="colors"/>
     <arg value="np"/>
 
+    <file>./../codeception/tests/acceptance</file>
+    <file>./../codeception/tests/unit</file>
+
     <rule ref="PSR12">
         <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
         <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
