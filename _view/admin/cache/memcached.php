@@ -47,14 +47,14 @@
             <label>
               <?php echo $this->__('Flush one Memcached key')?> <span>(<?php echo $this->__('Required Field')?>)</span>
             </label>
-            <input type="text" name="memcached_key" class="field size1" />
+            <input type="text" name="memcached_key" id="memcached_key" class="field size1" />
           </p>
         </div>
         <!-- End Form -->
         
         <!-- Form Buttons -->
         <div class="buttons">
-          <input type="submit" class="button" value="<?php echo $this->__('Flush')?> !" />
+          <input type="submit" class="button" id="button-flush-one-memcache-key" value="<?php echo $this->__('Flush')?> !" />
         </div>
         <!-- End Form Buttons -->
         <input type="hidden" name="token" value="<?php echo $this->securityGetToken()?>">
@@ -82,7 +82,7 @@
         
         <!-- Form Buttons -->
         <div class="buttons">
-          <input type="submit" class="button" value="<?php echo $this->__('Flush')?> !" />
+          <input type="submit" class="button" id="button-flush-all-memcache-keys" value="<?php echo $this->__('Flush')?> !" />
         </div>
         <input type="hidden" name="token" value="<?php echo $this->securityGetToken()?>">
         <!-- End Form Buttons -->
