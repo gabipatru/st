@@ -1,14 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Test;
 
-use \Codeception\Test\Unit;
+use Codeception\Test\Unit;
 
-require_once(__DIR__ .'/../../../../_config/paths.php');
-require_once(CLASSES_DIR .'/mvc.php');
+require_once __DIR__ . '/../../../../_config/paths.php';
+require_once CLASSES_DIR . '/mvc.php';
 
-abstract class AbstractTest extends Unit {
+abstract class AbstractTest extends Unit
+{
     
     /**
      * DB constants are used for connecting to test database
@@ -23,21 +25,22 @@ abstract class AbstractTest extends Unit {
     /**
      * Called each time a new test is being run
      */
-    protected function _before() {
+    protected function _before()
+    {
         //register the autoloading class
         spl_autoload_register('mvc::autoload');
     }
     
     protected function _after()
     {
-        
     }
     
     /**
      * Set up the DB by deleting all tables and running the migrations
      * an an empty database
      */
-    public function setUpDB() {
+    public function setUpDB()
+    {
         $this->defineDebuggerAgent();
         
         $db = \db::getSingleton();
@@ -53,7 +56,8 @@ abstract class AbstractTest extends Unit {
         $Migration->runMigrations();
     }
     
-    protected function defineDebuggerAgent() {
+    protected function defineDebuggerAgent()
+    {
         if (!defined('DEBUGGER_AGENT')) {
             define('DEBUGGER_AGENT', 1);
         }

@@ -21,7 +21,7 @@ cd "$path/_test/phpunit"
 wget -O phpunit https://phar.phpunit.de/phpunit-7.phar
 chmod +x phpunit
 
-# check phpunit
+# check phpunit version
 ./phpunit --version
 
 printf "\n\n${YELLOW}Installing CODECEPTION${NOCOLOR}\n\n"
@@ -32,5 +32,13 @@ cd "$path/_test/codeception"
 wget -O codecept https://codeception.com/codecept.phar
 chmod +x codecept
 
-# check verion
+# check version of codeception
 ./codecept --version
+
+# Install PHP code sniffer
+cd "$path/_test/phpcs"
+wget -O phpcs https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+chmod +x phpcs.phar
+
+# check version of phpcs
+./phpcs --version

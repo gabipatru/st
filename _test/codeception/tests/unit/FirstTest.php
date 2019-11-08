@@ -2,11 +2,8 @@
 
 namespace Test;
 
-require_once(__DIR__ .'/AbstractTest.php');
+require_once __DIR__ . '/AbstractTest.php';
 
-/**
- * Test if the DB is initialized correctly
- */
 class FirstTest extends AbstractTest
 {
     /**
@@ -15,15 +12,18 @@ class FirstTest extends AbstractTest
      * migration test will fail.
      */
     const NUM_TABLES = 16;
-    
+
     /**
      * Test running migrations from scratch
      * This will import all migrations on an empty database
+     *
+     * @return null
      */
-    public function testMigrationsFromScratch() {
+    public function testMigrationsFromScratch()
+    {
         $this->setUpDB();
         
-        // check how many tables we have
+        // Check how many tables we have
         $Migration = new \Migration();
         $Tables = $Migration->getTables();
         

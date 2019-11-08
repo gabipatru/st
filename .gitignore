@@ -5,8 +5,10 @@
 _gulp/node_modules/*
 _gulp/package-lock.json
 _js/translations.js
+
 _test/phpunit/phpunit
 _test/codeception/codecept
+_test/phpcs/phpcs
 
 public_html/files/images/categories/*.jpg
 public_html/files/images/categories/*.png
