@@ -23,7 +23,7 @@ abstract class AbstractControllerTest extends AbstractTest
         list($sClass, $sPath, $sFunction) = $this->invokeMethod($mvcMock, 'extract');
 
         // load the controller file
-        require_once(CONTROLLER_DIR . '/ ' . $sPath . '.php');
+        require_once(CONTROLLER_DIR . '/' . $sPath . '.php');
         
         // init the controller object
         $sModule = $sClass;
@@ -48,7 +48,7 @@ abstract class AbstractControllerTest extends AbstractTest
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);
         } else {
-            $oController = new($sClass);
+            $oController = new $sClass();
         }
 
         $oController->method('deleteIsAllowed')->willReturn(true);
