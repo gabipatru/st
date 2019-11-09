@@ -11,5 +11,6 @@ $aMigrationsConfig = array(
     'group'         => '001',
     'surprise'      => '001',
     'acl'           => '002',
-    'test'          => '001'
+    'test'          => '001',
+    'schedule'      => '002'
 );
