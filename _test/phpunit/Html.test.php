@@ -1,10 +1,11 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/AbstractTest.php');
-require_once(TRAITS_DIR .'/Html.trait.php');
+require_once(__DIR__ . '/AbstractTest.php');
+require_once(TRAITS_DIR . '/Html.trait.php');
 
 /**
  * This class tests the methods in Html trait

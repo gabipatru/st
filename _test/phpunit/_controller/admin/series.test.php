@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../../AbstractControllerTest.php');
+require_once(__DIR__ . '/../../AbstractControllerTest.php');
 
-class categories_admin_series extends AbstractControllerTest
+class ControllerAdminSeries extends AbstractControllerTest
 {
     /**
      * Test what happens when trying to delete a series and providing an invalid token
      * @group fast
      */
-    public function test_delete_invalid_token()
+    public function testDeleteInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/delete');
@@ -33,7 +33,7 @@ class categories_admin_series extends AbstractControllerTest
      * Test what happens when calling delete series with invalid series id
      * @group fast
      */
-    public function test_delete_invalid_series_id()
+    public function testDeleteInvalidSeriesId()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/delete');
@@ -55,7 +55,7 @@ class categories_admin_series extends AbstractControllerTest
      * Test what happens when trying to delete a valid series
      * @group slow
      */
-    public function test_delete()
+    public function testDelete()
     {
         $this->setUpDB([ 'category', 'series' ]);
 
@@ -78,9 +78,9 @@ class categories_admin_series extends AbstractControllerTest
     /**
      * Test what happens when trying to delete a series that does not exist
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_delete_series_does_not_exist()
+    public function testDeleteSeriesDoesNotExist()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/delete');
@@ -102,7 +102,7 @@ class categories_admin_series extends AbstractControllerTest
      * Test what happens when trying to edit a series and providing an invalid token
      * @group fast
      */
-    public function test_edit_invalid_token()
+    public function testEditInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/edit');
@@ -123,7 +123,7 @@ class categories_admin_series extends AbstractControllerTest
      * Test what happens when trying to edit a series and providing invalid params
      * @group fast
      */
-    public function test_edit_invalid_params()
+    public function testEditInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/edit');
@@ -143,9 +143,9 @@ class categories_admin_series extends AbstractControllerTest
     /**
      * Test what happens when trying to add a series with the same name as an existing series
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_duplicate_name()
+    public function testEditAddDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/edit');
@@ -175,9 +175,9 @@ class categories_admin_series extends AbstractControllerTest
     /**
      * Test what happens when trying to edit a series and ending up with duplicate names
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_duplicate_name()
+    public function testEditDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/edit');
@@ -208,9 +208,9 @@ class categories_admin_series extends AbstractControllerTest
     /**
      * Test add a series
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_series()
+    public function testEditAddSeries()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/edit');
@@ -240,9 +240,9 @@ class categories_admin_series extends AbstractControllerTest
     /**
      * Test edit a series
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_series()
+    public function testEditSeries()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/series/edit');

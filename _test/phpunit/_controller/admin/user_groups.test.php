@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../../AbstractControllerTest.php');
+require_once(__DIR__ . '/../../AbstractControllerTest.php');
 
-class controller_admin_user_groups extends AbstractControllerTest
+class ControllerAdminUserGroups extends AbstractControllerTest
 {
     /**
      * Test what happens when trying to delete a user group and providing an invalid token
      * @group fast
      */
-    public function test_delete_invalid_token()
+    public function testDeleteInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/delete');
@@ -33,7 +33,7 @@ class controller_admin_user_groups extends AbstractControllerTest
      * Test what happens when calling delete user group with invalid series id
      * @group fast
      */
-    public function test_delete_invalid_user_group_id()
+    public function testDeleteInvalidUserGroupId()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/delete');
@@ -55,7 +55,7 @@ class controller_admin_user_groups extends AbstractControllerTest
      * Test what happens when trying to delete a valid user group
      * @group slow
      */
-    public function test_delete()
+    public function testDelete()
     {
         $this->setUpDB([ 'users' ]);
 
@@ -87,9 +87,9 @@ class controller_admin_user_groups extends AbstractControllerTest
     /**
      * Test what happens when trying to delete a user group that does not exist
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_delete_group_does_not_exist()
+    public function testDeleteGroupDoesNotExist()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/delete');
@@ -111,7 +111,7 @@ class controller_admin_user_groups extends AbstractControllerTest
      * Test what happens when trying to edit a user group and providing an invalid token
      * @group fast
      */
-    public function test_edit_invalid_token()
+    public function testEditInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/edit');
@@ -132,7 +132,7 @@ class controller_admin_user_groups extends AbstractControllerTest
      * Test what happens when trying to edit a user group and providing invalid params
      * @group fast
      */
-    public function test_edit_invalid_params()
+    public function testEditInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/edit');
@@ -152,9 +152,9 @@ class controller_admin_user_groups extends AbstractControllerTest
     /**
      * Test what happens when trying to add a user group with the same name as an existing user group
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_duplicate_name()
+    public function testEditAddDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/edit');
@@ -183,9 +183,9 @@ class controller_admin_user_groups extends AbstractControllerTest
     /**
      * Test what happens when trying to edit a user group and ending up with duplicate names
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_duplicate_name()
+    public function testEditDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/edit');
@@ -215,9 +215,9 @@ class controller_admin_user_groups extends AbstractControllerTest
     /**
      * Test add a user group
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_group()
+    public function testEditAddGSroup()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/edit');
@@ -246,9 +246,9 @@ class controller_admin_user_groups extends AbstractControllerTest
     /**
      * Test edit a user group
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_group()
+    public function testEditGroup()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/user_groups/edit');

@@ -1,10 +1,11 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/AbstractTest.php');
-require_once(TRAITS_DIR .'/Http.trait.php');
+require_once(__DIR__ . '/AbstractTest.php');
+require_once(TRAITS_DIR . '/Http.trait.php');
 
 /**
  * Test the Http trait by using the View object

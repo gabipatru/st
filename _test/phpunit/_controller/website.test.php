@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../AbstractControllerTest.php');
+require_once(__DIR__ . '/../AbstractControllerTest.php');
 
-class controller_test_website extends AbstractControllerTest
+class ControllerTestWebsite extends AbstractControllerTest
 {
     /**
      * Test that a redirect is done when category id is invalid
      * @group fast
      */
-    public function test_category_invalid_id()
+    public function testCategoryInvalidId()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/category');
@@ -33,7 +33,7 @@ class controller_test_website extends AbstractControllerTest
      * Test that a redirect is done when the category id is not found in the DB
      * @group slow
      */
-    public function test_category_not_found_id()
+    public function testCategoryNotFoundId()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/category');
@@ -54,9 +54,9 @@ class controller_test_website extends AbstractControllerTest
     /**
      * Test that a redirect is done when fetching an offline category
      * @group slow
-     * @depends test_category_not_found_id
+     * @depends testCategoryNotFoundId
      */
-    public function test_category_offline()
+    public function testCategoryOffline()
     {
         // add an offline category to DB
         $db = \db::getSingleton();
@@ -88,7 +88,7 @@ class controller_test_website extends AbstractControllerTest
      * Test that a redirect is done when series id is invalid
      * @group fast
      */
-    public function test_series_invalid_id()
+    public function testSeriesInvalidId()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/series');
@@ -108,7 +108,7 @@ class controller_test_website extends AbstractControllerTest
      * Test that a redirect is done when series is not found in the DB
      * @group slow
      */
-    public function test_series_not_found_id()
+    public function testSeriesNotFoundId()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/series');
@@ -130,9 +130,9 @@ class controller_test_website extends AbstractControllerTest
     /**
      * Test that a redirect is done when a offline series is accessed
      * @group slow
-     * @depends test_series_not_found_id
+     * @depends testSeriesNotFoundId
      */
-    public function test_series_not_online()
+    public function testSeriesNotOnline()
     {
         // add data to DB
         $oSeries = new \Series();
@@ -163,9 +163,9 @@ class controller_test_website extends AbstractControllerTest
     /**
      * Test that a redirect is done when the URL name does not match the series name
      * @group slow
-     * @depends test_series_not_found_id
+     * @depends testSeriesNotFoundId
      */
-    public function test_series_name_not_matched()
+    public function testSeriesNameNotMatched()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/series');
@@ -185,9 +185,9 @@ class controller_test_website extends AbstractControllerTest
     /**
      * Test that an error is shown when a series without groups is accessed
      * @group slow
-     * @depends test_series_not_found_id
+     * @depends testSeriesNotFoundId
      */
-    public function test_series_without_groups()
+    public function testSeriesWithoutGroups()
     {
         // add data to DB
         $oSeries = new \Series();
@@ -223,9 +223,9 @@ class controller_test_website extends AbstractControllerTest
     /**
      * Test that an error is shown when a series without surprises is accessed
      * @group slow
-     * @depends test_series_without_groups
+     * @depends testSeriesNotFoundId
      */
-    public function test_series_without_surprises()
+    public function testSeriesWithoutSurprises()
     {
         // add series and group to db
         $oSeries = new \Series();
@@ -272,7 +272,7 @@ class controller_test_website extends AbstractControllerTest
      * Test what happens when contact is called with invalid params
      * @group fast
      */
-    public function test_contact_invalid_params()
+    public function testContactInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/contact');
@@ -293,7 +293,7 @@ class controller_test_website extends AbstractControllerTest
      * Test what happens when contact is called with an invalid security token
      * @group fast
      */
-    public function test_contact_invalid_security_token()
+    public function testContactInvalidSecurityToken()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/contact');
@@ -315,7 +315,7 @@ class controller_test_website extends AbstractControllerTest
      * Test that the language is set correctly when called with no referrer
      * @group fast
      */
-    public function test_save_language_no_referrer()
+    public function testSaveLanguageNoReferrer()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/save_language');
@@ -336,7 +336,7 @@ class controller_test_website extends AbstractControllerTest
      * Test if an error is set when trying to set a non-existing language
      * @group fast
      */
-    public function test_save_language_incorrect_language()
+    public function testSaveLanguageIncorrectLanguage()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/website/save_language');

@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../../AbstractControllerTest.php');
+require_once(__DIR__ . '/../../AbstractControllerTest.php');
 
-class controller_admin_config extends AbstractControllerTest
+class ControllerAdminConfig extends AbstractControllerTest
 {
     /**
      * Test what happens if the request is not post
      * @group slow
      */
-    public function test_add_not_post()
+    public function testAddNotPost()
     {
         $this->setUpDB([ 'config' ]);
         
@@ -38,7 +38,7 @@ class controller_admin_config extends AbstractControllerTest
      * Test what happens if the form does not validate
      * @group fast
      */
-    public function test_add_invalid_validation()
+    public function testAddInvalidValidation()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/add');
         $this->mockIsPost(true, $oMockController);
@@ -58,7 +58,7 @@ class controller_admin_config extends AbstractControllerTest
      * Test what happens if the security token is invalid
      * @group fast
      */
-    public function test_add_invalid_token()
+    public function testAddInvalidToken()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/add');
         $this->mockIsPost(true, $oMockController);
@@ -79,7 +79,7 @@ class controller_admin_config extends AbstractControllerTest
      * Test what happens if the config path is invalid
      * @group fast
      */
-    public function test_add_invalid_config_path()
+    public function testAddInvalidConfigPath()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/add');
         $this->mockIsPost(true, $oMockController);
@@ -102,14 +102,21 @@ class controller_admin_config extends AbstractControllerTest
      * Test what happens if we try to add a config which has the same path as another config
      * @group fast
      */
-    public function test_add_duplicate_path()
+    public function testAddDuplicatePath()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/add');
         $this->mockIsPost(true, $oMockController);
         $this->mockValidate(true, $oMockController);
         $this->mockSecurityCheckToken(true, $oMockController);
         
-        $this->setPOST(['path'=>'/Website/Pagination/Per Page', 'value'=>'test', 'type'=>'text'], $oMockController);
+        $this->setPOST(
+            [
+                'path' => '/Website/Pagination/Per Page',
+                'value' => 'test',
+                'type' => 'text'
+            ],
+            $oMockController
+        );
         
         // the test
         $oMockController->add();
@@ -124,9 +131,9 @@ class controller_admin_config extends AbstractControllerTest
     /**
      * Try adding a config with correct data
      * @group slow
-     * @depends test_add_not_post
+     * @depends testAddNotPost
      */
-    public function test_add()
+    public function testAdd()
     {
         // clear memcache
         $oMemcache = \Mcache::getSingleton();
@@ -162,7 +169,7 @@ class controller_admin_config extends AbstractControllerTest
      * Test what happens when the config ids are not present
      * @group fast
      */
-    public function test_save_all_invalid_config_ids()
+    public function testSaveAllInvalidConfigIds()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/save_all');
         $this->setPOST([ 'config_ids' => null ], $oMockController);
@@ -181,7 +188,7 @@ class controller_admin_config extends AbstractControllerTest
      * Test what happens when the token is invalid
      * @group fast
      */
-    public function test_save_all_invalid_token()
+    public function testSaveAllInvalidToken()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/save_all');
         $this->setPOST([ 'config_ids' => [1] ], $oMockController);
@@ -200,9 +207,9 @@ class controller_admin_config extends AbstractControllerTest
     /**
      * Test saving new values for configs
      * @group slow
-     * @depends test_add_not_post
+     * @depends testAddNotPost
      */
-    public function test_save_all()
+    public function testSaveAll()
     {
         $oMockController = $this->initController('/admin/index.php/admin/config/save_all');
         $this->mockSecurityCheckToken(true, $oMockController);

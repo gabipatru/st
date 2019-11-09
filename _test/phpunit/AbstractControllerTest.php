@@ -1,12 +1,13 @@
 <?php
+
 namespace Test;
 
-require_once(__DIR__ .'/AbstractTest.php');
+require_once(__DIR__ . '/AbstractTest.php');
 
 /**
  * All controller tests should extend this class
  */
-abstract Class AbstractControllerTest extends AbstractTest
+abstract class AbstractControllerTest extends AbstractTest
 {
     /**
      * This class will initiaalise a controller based on it's path
@@ -22,21 +23,21 @@ abstract Class AbstractControllerTest extends AbstractTest
         list($sClass, $sPath, $sFunction) = $this->invokeMethod($mvcMock, 'extract');
 
         // load the controller file
-        require_once(CONTROLLER_DIR .'/'. $sPath .'.php');
+        require_once(CONTROLLER_DIR . '/ ' . $sPath . '.php');
         
         // init the controller object
         $sModule = $sClass;
-        $sClass = 'controller_'. $sClass;
+        $sClass = 'controller_' . $sClass;
         if ($mock) {
             $oController = $this->getMockBuilder($sClass)
-                                ->setMethods([ 
-                                    'isGet', 
-                                    'isPost', 
-                                    'filterGET', 
+                                ->setMethods([
+                                    'isGet',
+                                    'isPost',
+                                    'filterGET',
                                     'filterPOST',
                                     'filterREQUEST',
                                     'isLoggedIn',
-                                    'securityCheckToken', 
+                                    'securityCheckToken',
                                     'redirect',
                                     'redirect404',
                                     'setCookie',
@@ -46,9 +47,8 @@ abstract Class AbstractControllerTest extends AbstractTest
                                 ])
                                 ->getMock();
             $oController->method('redirect')->willReturn(true);
-        }
-        else {
-            $oController = new $sClass;
+        } else {
+            $oController = new($sClass);
         }
 
         $oController->method('deleteIsAllowed')->willReturn(true);
@@ -68,7 +68,7 @@ abstract Class AbstractControllerTest extends AbstractTest
      */
     protected function setPOST(array $postValues, $oMock)
     {
-        $oMock->method('filterPOST')->will($this->returnCallback( function($key, $type) use ($postValues) {
+        $oMock->method('filterPOST')->will($this->returnCallback(function ($key, $type) use ($postValues) {
             foreach ($postValues as $name => $value) {
                 if ($key == $name) {
                     return $value;
@@ -82,7 +82,7 @@ abstract Class AbstractControllerTest extends AbstractTest
      */
     protected function setGET(array $getValues, $oMock)
     {
-        $oMock->method('filterGET')->will($this->returnCallback( function($key, $type) use ($getValues) {
+        $oMock->method('filterGET')->will($this->returnCallback(function ($key, $type) use ($getValues) {
             foreach ($getValues as $name => $value) {
                 if ($key == $name) {
                     return $value;
@@ -96,7 +96,7 @@ abstract Class AbstractControllerTest extends AbstractTest
      */
     protected function setREQUEST(array $requestValues, $oMock)
     {
-        $oMock->method('filterREQUEST')->will($this->returnCallback( function($key, $type) use ($requestValues) {
+        $oMock->method('filterREQUEST')->will($this->returnCallback(function ($key, $type) use ($requestValues) {
             foreach ($requestValues as $name => $value) {
                 if ($key == $name) {
                     return $value;

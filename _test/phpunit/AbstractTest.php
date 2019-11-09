@@ -1,16 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../../_config/paths.php');
-require_once(CLASSES_DIR .'/mvc.php');
-require_once(CONFIG_DIR .'/links.php');
+require_once(__DIR__ . '/../../_config/paths.php');
+require_once(CLASSES_DIR . '/mvc.php');
+require_once(CONFIG_DIR . '/links.php');
 
-abstract class AbstractTest extends TestCase {
-    
+abstract class AbstractTest extends TestCase
+{
     /**
      * DB constants are used for connecting to test database
      */
@@ -18,12 +19,13 @@ abstract class AbstractTest extends TestCase {
     const DB_USER       = 'st_test';
     const DB_PASS       = 'qwqwqw';
     const DB_DATABASE   = 'surprize_turbo_test';
-    const RESOURCE_PATH = BASE_DIR .'/_test/resource/testfiles';
+    const RESOURCE_PATH = BASE_DIR . '/_test/resource/testfiles';
     
     /**
      * Called each time a new test is being run
      */
-    public function setUp() {
+    public function setUp()
+    {
         //register the autoloading class
         spl_autoload_register('mvc::autoload');
     }
@@ -32,7 +34,8 @@ abstract class AbstractTest extends TestCase {
      * Set up the DB by deleting all tables and running the migrations
      * an an empty database
      */
-    public function setUpDB($migrations = null) {
+    public function setUpDB($migrations = null)
+    {
         $this->defineDebuggerAgent();
         
         $db = \db::getSingleton();
@@ -51,11 +54,12 @@ abstract class AbstractTest extends TestCase {
     /**
      * Called each time a test ends
      */
-    public function tearDown() {
-        
+    public function tearDown()
+    {
     }
     
-    protected function defineDebuggerAgent() {
+    protected function defineDebuggerAgent()
+    {
         if (!defined('DEBUGGER_AGENT')) {
             define('DEBUGGER_AGENT', 0);
         }

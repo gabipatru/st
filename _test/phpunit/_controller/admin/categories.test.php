@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../../AbstractControllerTest.php');
+require_once(__DIR__ . '/../../AbstractControllerTest.php');
 
-class categories_admin_categories extends AbstractControllerTest
+class ControllerAdminCategories extends AbstractControllerTest
 {
     /**
      * Test what happens when trying to delete a category and providing an invalid token
      * @group fast
      */
-    public function test_delete_invalid_token()
+    public function testDeleteInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/delete');
@@ -33,7 +33,7 @@ class categories_admin_categories extends AbstractControllerTest
      * Test what whappens when calling delete category with invalid category id
      * @group fast
      */
-    public function test_delete_invalid_category_id()
+    public function testDeleteInvalidCategoryId()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/delete');
@@ -55,7 +55,7 @@ class categories_admin_categories extends AbstractControllerTest
      * Test what happens when trying to delete a valid category
      * @group slow
      */
-    public function test_delete()
+    public function testDelete()
     {
         $this->setUpDB([ 'category' ]);
 
@@ -78,9 +78,9 @@ class categories_admin_categories extends AbstractControllerTest
     /**
      * Test what happens when trying to delete a category that does not exist
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_delete_category_does_not_exist()
+    public function testDeleteCategoryDoesNotExist()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/delete');
@@ -102,7 +102,7 @@ class categories_admin_categories extends AbstractControllerTest
      * Test what happens when trying to edit a category and providing an invalid token
      * @group fast
      */
-    public function test_edit_invalid_token()
+    public function testEditInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/edit');
@@ -123,7 +123,7 @@ class categories_admin_categories extends AbstractControllerTest
      * Test what happens when trying to edit a category and providing invalid params
      * @group fast
      */
-    public function test_edit_invalid_params()
+    public function testEditInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/edit');
@@ -143,9 +143,9 @@ class categories_admin_categories extends AbstractControllerTest
     /**
      * Test what happens when trying to add a category with the same name as an existing category
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_duplicate_name()
+    public function testEditAddDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/edit');
@@ -168,9 +168,9 @@ class categories_admin_categories extends AbstractControllerTest
     /**
      * Test what happens when trying to edit a category and ending up with duplicate names
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_duplicate_name()
+    public function testEditDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/edit');
@@ -194,9 +194,9 @@ class categories_admin_categories extends AbstractControllerTest
     /**
      * Test add a category
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_category()
+    public function testEditAddCategory()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/edit');
@@ -219,9 +219,9 @@ class categories_admin_categories extends AbstractControllerTest
     /**
      * Test edit a category
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_category()
+    public function testEditCategory()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/categories/edit');

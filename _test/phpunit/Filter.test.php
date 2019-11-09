@@ -1,10 +1,11 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/AbstractTest.php');
-require_once(TRAITS_DIR .'/Filter.trait.php');
+require_once(__DIR__ . '/AbstractTest.php');
+require_once(TRAITS_DIR . '/Filter.trait.php');
 
 /**
  * This class tests the filters
@@ -96,13 +97,13 @@ class FilterTest extends AbstractTest
      * @group fast
      * @dataProvider providerString
      */
-    public function testString($var, $expected) 
+    public function testString($var, $expected)
     {
         // the filtering
         $result = $this->filterString($var);
         
         // asserts
-        $this->assertEquals($expected, $result);;
+        $this->assertEquals($expected, $result);
     }
     
     public function providerString()
@@ -279,7 +280,7 @@ class FilterTest extends AbstractTest
      * @group fast
      * @dataProvider providerInterval
      */
-    public function testInterval($var, $value1, $value2, $expected) 
+    public function testInterval($var, $value1, $value2, $expected)
     {
         // the filtering
         $result = $this->filterInterval($var, $value1, $value2);
@@ -398,7 +399,7 @@ class FilterTest extends AbstractTest
      * @group fast
      * @dataProvider providerIsEmail
      */
-    public function testIsEmail($var, $expected) 
+    public function testIsEmail($var, $expected)
     {
         // the validating
         $result = $this->isEmail($var);
@@ -449,7 +450,7 @@ class FilterTest extends AbstractTest
      * @group fast
      * @dataProvider providerIsIp
      */
-    public function testIsIp($var, $expected) 
+    public function testIsIp($var, $expected)
     {
         // the validation
         $result = $this->isIp($var);
@@ -502,7 +503,7 @@ class FilterTest extends AbstractTest
      * @dataProvider providerIsUrl
      */
     public function testIsUrl($var, $expected)
-    {        
+    {
         // the validation
         $result = $this->isUrl($var);
         

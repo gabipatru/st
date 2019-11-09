@@ -5,14 +5,19 @@
     <arg name="colors"/>
     <arg value="np"/>
 
+    <file>./../../_config</file>
+    <file>./../../_migrations</file>
+
     <file>./../codeception/tests/acceptance</file>
     <file>./../codeception/tests/unit</file>
-    <file>./../phpunit/_lib</file>
+    <file>./../phpunit</file>
 
     <rule ref="PSR12">
         <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
         <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
+        <exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.TerminatingComment"/>
     </rule>
 
 </ruleset>

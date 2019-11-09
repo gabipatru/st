@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../../AbstractControllerTest.php');
+require_once(__DIR__ . '/../../AbstractControllerTest.php');
 
-class categories_admin_groups extends AbstractControllerTest
+class ControllerAdminGroups extends AbstractControllerTest
 {
     /**
      * Test what happens when trying to delete a group and providing an invalid token
      * @group fast
      */
-    public function test_delete_invalid_token()
+    public function testDeleteInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/delete');
@@ -33,7 +33,7 @@ class categories_admin_groups extends AbstractControllerTest
      * Test what happens when calling delete group with invalid series id
      * @group fast
      */
-    public function test_delete_invalid_group_id()
+    public function testDeleteInvalidGroupId()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/delete');
@@ -55,7 +55,7 @@ class categories_admin_groups extends AbstractControllerTest
      * Test what happens when trying to delete a valid group
      * @group slow
      */
-    public function test_delete()
+    public function testDelete()
     {
         $this->setUpDB([ 'category', 'series', 'group' ]);
 
@@ -78,9 +78,9 @@ class categories_admin_groups extends AbstractControllerTest
     /**
      * Test what happens when trying to delete a group that does not exist
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_delete_group_does_not_exist()
+    public function testDeleteGroupDoesNotExist()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/delete');
@@ -102,7 +102,7 @@ class categories_admin_groups extends AbstractControllerTest
      * Test what happens when trying to edit a group and providing an invalid token
      * @group fast
      */
-    public function test_edit_invalid_token()
+    public function testEditInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/edit');
@@ -123,7 +123,7 @@ class categories_admin_groups extends AbstractControllerTest
      * Test what happens when trying to edit a group and providing invalid params
      * @group fast
      */
-    public function test_edit_invalid_params()
+    public function testEditInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/edit');
@@ -143,9 +143,9 @@ class categories_admin_groups extends AbstractControllerTest
     /**
      * Test what happens when trying to add a group with the same name as an existing group
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_duplicate_name()
+    public function testEditAddDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/edit');
@@ -175,9 +175,9 @@ class categories_admin_groups extends AbstractControllerTest
     /**
      * Test what happens when trying to edit a group and ending up with duplicate names
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_duplicate_name()
+    public function testEditDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/edit');
@@ -208,9 +208,9 @@ class categories_admin_groups extends AbstractControllerTest
     /**
      * Test add a group
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_group()
+    public function testEditAddGroup()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/edit');
@@ -240,9 +240,9 @@ class categories_admin_groups extends AbstractControllerTest
     /**
      * Test edit a group
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_group()
+    public function testEditGroup()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/groups/edit');

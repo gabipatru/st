@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../../AbstractControllerTest.php');
+require_once(__DIR__ . '/../../AbstractControllerTest.php');
 
-class categories_admin_surprises extends AbstractControllerTest
+class ControllerAdminSurprises extends AbstractControllerTest
 {
     /**
      * Test what happens when trying to delete a surprises and providing an invalid token
      * @group fast
      */
-    public function test_delete_invalid_token()
+    public function testDeleteInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
@@ -33,7 +33,7 @@ class categories_admin_surprises extends AbstractControllerTest
      * Test what happens when calling delete series with invalid series id
      * @group fast
      */
-    public function test_delete_invalid_surprise_id()
+    public function testDeleteInvalidSurpriseId()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
@@ -55,7 +55,7 @@ class categories_admin_surprises extends AbstractControllerTest
      * Test what happens when trying to delete a valid surprise
      * @group slow
      */
-    public function test_delete()
+    public function testDelete()
     {
         $this->setUpDB([ 'category', 'series', 'group', 'surprise' ]);
 
@@ -78,9 +78,9 @@ class categories_admin_surprises extends AbstractControllerTest
     /**
      * Test what happens when trying to delete a surprise that does not exist
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_delete_surprise_does_not_exist()
+    public function testDeleteSurpriseDoesNotExist()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/delete');
@@ -102,7 +102,7 @@ class categories_admin_surprises extends AbstractControllerTest
      * Test what happens when trying to edit a surprise and providing an invalid token
      * @group fast
      */
-    public function test_edit_invalid_token()
+    public function testEditInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
@@ -123,7 +123,7 @@ class categories_admin_surprises extends AbstractControllerTest
      * Test what happens when trying to edit a surprise and providing invalid params
      * @group fast
      */
-    public function test_edit_invalid_params()
+    public function testEditInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
@@ -143,9 +143,9 @@ class categories_admin_surprises extends AbstractControllerTest
     /**
      * Test what happens when trying to add a surprise with the same name as an existing surprise
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_duplicate_name()
+    public function testEditAddDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
@@ -175,9 +175,9 @@ class categories_admin_surprises extends AbstractControllerTest
     /**
      * Test what happens when trying to edit a surprise and ending up with duplicate names
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_duplicate_name()
+    public function testEditDuplicateName()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
@@ -208,9 +208,9 @@ class categories_admin_surprises extends AbstractControllerTest
     /**
      * Test add a surprise
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_add_surprise()
+    public function testEditAddSurprise()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');
@@ -240,9 +240,9 @@ class categories_admin_surprises extends AbstractControllerTest
     /**
      * Test edit a surprise
      * @group slow
-     * @depends test_delete
+     * @depends testDelete
      */
-    public function test_edit_surprise()
+    public function testEditSurprise()
     {
         // init and mock
         $oMockController = $this->initController('/admin/index.php/admin/surprises/edit');

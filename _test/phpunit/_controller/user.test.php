@@ -5,15 +5,15 @@ namespace Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Constraint\IsType;
 
-require_once(__DIR__ .'/../AbstractControllerTest.php');
+require_once(__DIR__ . '/../AbstractControllerTest.php');
 
-class controller_user extends AbstractControllerTest
+class ControllerUser extends AbstractControllerTest
 {
     /**
      * Test what happens when a logged in user tries to log in again
      * @group fast
      */
-    public function test_login_logged_user()
+    public function testLoginLoggedUser()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/login');
@@ -36,7 +36,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when the login is called with invalid token
      * @group fast
      */
-    public function test_login_invalid_token()
+    public function testLoginInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/login');
@@ -58,7 +58,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when the login is called with invalid params
      * @group fast
      */
-    public function test_login_invalid_params()
+    public function testLoginInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/login');
@@ -80,7 +80,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when trying to log in with a non-activated user
      * @group slow
      */
-    public function test_login_inactive_user()
+    public function testLoginInactiveUser()
     {
         // init and mock
         define('WEBSITE_SALT', md5('gunpowder'));
@@ -129,9 +129,9 @@ class controller_user extends AbstractControllerTest
     /**
      * Test what happens when trying to log in with a banned user
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_login_banned_user()
+    public function testLoginBannedUser()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/login');
@@ -172,9 +172,9 @@ class controller_user extends AbstractControllerTest
     /**
      * Test what happens when trying to log in with a incorrect usernamed
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_login_incorrect_username_password()
+    public function testLoginIncorrectUsernamePassword()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/login');
@@ -215,9 +215,9 @@ class controller_user extends AbstractControllerTest
     /**
      * Test what happens when trying to log in with a incorrect password
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_login_incorrect_password()
+    public function testLoginIncorrectPassword()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/login');
@@ -258,7 +258,7 @@ class controller_user extends AbstractControllerTest
     /**
      * Test what happens when the login is successful
      * @group slow
-     * @depends test_login_incorrect_password
+     * @depends testLoginIncorrectPassword
      */
     public function testLogin()
     {
@@ -288,7 +288,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when a new user creation is called with an invalid token
      * @group fast
      */
-    public function test_newuser_invalid_token()
+    public function testNewuserInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/newuser');
@@ -309,7 +309,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when a logged in user is trying to create a new user
      * @group fast
      */
-    public function test_newuser_logged_user()
+    public function testNewuserLoggedUser()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/newuser');
@@ -331,7 +331,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when the submitted params are not valid
      * @group fast
      */
-    public function test_newuser_invalid_params()
+    public function testNewuserInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/newuser');
@@ -354,9 +354,9 @@ class controller_user extends AbstractControllerTest
      * Test what happens when trying to add a user with the same username as an
      * existing user
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_newuser_duplicate_username()
+    public function testNewuserDuplicateUsername()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/newuser');
@@ -391,9 +391,9 @@ class controller_user extends AbstractControllerTest
      * Test what happens when trying to add a user with the same email as an
      * existing user
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_newuser_duplicate_email()
+    public function testNewuserDuplicateEmail()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/newuser');
@@ -427,9 +427,9 @@ class controller_user extends AbstractControllerTest
     /**
      * Test what happens when trying to add a user with the correct credentials
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_newuser()
+    public function testNewuser()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/newuser');
@@ -464,7 +464,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when the user confirmation is called without a code
      * @group fast
      */
-    public function test_confirm_no_code()
+    public function testConfirmNoCode()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/confirm');
@@ -483,7 +483,7 @@ class controller_user extends AbstractControllerTest
      * Test what happens when the use confirmation code is not correct
      * @group fast
      */
-    public function test_confirm_wrong_code()
+    public function testConfirmWrongCode()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/confirm');
@@ -508,9 +508,9 @@ class controller_user extends AbstractControllerTest
     /**
      * Test what happens when the use confirmation code is correct
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_confirm()
+    public function testConfirm()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/confirm');
@@ -550,7 +550,7 @@ class controller_user extends AbstractControllerTest
      * while loggeed in
      * @group fast
      */
-    public function test_forgot_password_logged_in()
+    public function testForgotPasswordLoggedIn()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/forgot_password');
@@ -574,7 +574,7 @@ class controller_user extends AbstractControllerTest
      * without a valid token
      * @group fast
      */
-    public function test_forgot_password_invalid_token()
+    public function testForgotPasswordInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/forgot_password');
@@ -598,7 +598,7 @@ class controller_user extends AbstractControllerTest
      * with invalid params
      * @group fast
      */
-    public function test_forgot_passowrd_invalid_params()
+    public function testForgotPassowrdInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/forgot_password');
@@ -621,9 +621,9 @@ class controller_user extends AbstractControllerTest
      * Test what happens when calling the forgot password controller
      * with a wrong email
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_forgot_password_wrong_email()
+    public function testForgotPasswordWrongEmail()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/forgot_password');
@@ -653,9 +653,9 @@ class controller_user extends AbstractControllerTest
      * Test what happens when calling the forgot password controller
      * with correct data
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_forgot_password()
+    public function testForgotPassword()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/forgot_password');
@@ -686,7 +686,7 @@ class controller_user extends AbstractControllerTest
      * while loggeed in
      * @group fast
      */
-    public function test_reset_password_logged_in()
+    public function testResetPasswordLoggedIn()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/reset_password');
@@ -710,7 +710,7 @@ class controller_user extends AbstractControllerTest
      * without a valid token
      * @group fast
      */
-    public function test_reset_password_invalid_token()
+    public function testResetPasswordInvalidToken()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/reset_password');
@@ -734,7 +734,7 @@ class controller_user extends AbstractControllerTest
      * with invalid params
      * @group fast
      */
-    public function test_reset_passowrd_invalid_params()
+    public function testResetPassowrdInvalidParams()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/reset_password');
@@ -756,7 +756,7 @@ class controller_user extends AbstractControllerTest
     /**
      * Data provider for test_reset_passowrd_invalid_confirmation_code
      */
-    public function provider_reset_passowrd_invalid_confirmation_code()
+    public function providerResetPassowrdInvalidConfirmationCode()
     {
         return [
             [''],
@@ -768,9 +768,9 @@ class controller_user extends AbstractControllerTest
      * Test what happens when calling the reset password controller
      * with invalid confirmation code
      * @group fast
-     * @dataProvider provider_reset_passowrd_invalid_confirmation_code
+     * @dataProvider providerResetPassowrdInvalidConfirmationCode
      */
-    public function test_reset_passowrd_invalid_confirmation_code($code)
+    public function testResetPassowrdInvalidConfirmationCode($code)
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/reset_password');
@@ -799,9 +799,9 @@ class controller_user extends AbstractControllerTest
     /**
      * Test the password reset with correct data
      * @group slow
-     * @depends test_login_inactive_user
+     * @depends testLoginInactiveUser
      */
-    public function test_reset_passowrd()
+    public function testResetPassowrd()
     {
         // init and mock
         $oMockController = $this->initController('/index.php/user/reset_password');
