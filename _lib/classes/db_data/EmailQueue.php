@@ -41,7 +41,7 @@ class EmailQueue extends DbData {
         $sql = "SELECT *"
               ." FROM email_queue"
               ." WHERE status = 'not sent'"
-              ." AND send_attempts < ?"
+              ." AND send_attempts < $1"
               ." ORDER BY priority DESC"
               ." LIMIT ".$emailLimit;
         $res = $this->db->query($sql, [$maxSendAttempts]);

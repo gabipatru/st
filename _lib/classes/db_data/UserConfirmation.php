@@ -20,7 +20,7 @@ class UserConfirmation extends DbData {
                 ." FROM ".UserConfirmation::TABLE_NAME
                 ." WHERE expires_at < NOW()";
         $res = $this->db->query($sql);
-        if (!$res || $res->errorCode() != '00000') {
+        if (!$res) {
             return new Collection();
         }
         

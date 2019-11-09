@@ -5,14 +5,16 @@
  * Don't forget to modify the log config in common/config
  */
 
-require_once(TRAITS_DIR .'/Html.trait.php');
-require_once(TRAITS_DIR .'/Log.trait.php');
-require_once(TRAITS_DIR .'/Email.trait.php');
+namespace Cron;
 
-abstract class AbstractCron extends SetterGetter {
-    
-    use Log;
-    use Email;
+require_once(TRAITS_DIR . '/Html.trait.php');
+require_once(TRAITS_DIR . '/Log.trait.php');
+require_once(TRAITS_DIR . '/Email.trait.php');
+
+abstract class AbstractCron extends \SetterGetter
+{
+    use \Log;
+    use \Email;
     
     protected $db;
     
@@ -20,46 +22,49 @@ abstract class AbstractCron extends SetterGetter {
     // Overwrite in child classes to send to a different address if needed
     protected $warningEmailAddress = 'crons@mvc.ro';
     
-    abstract function run();
+    abstract public function run();
     
     /*
      * Constructor for scripts / crons
      */
-    public function __construct() {
+    public function __construct()
+    {
         // autoload
         require_once(CLASSES_DIR . '/mvc.php');
         spl_autoload_register('mvc::autoload');
         
         $this->checkDebugOption();
         
-        $this->displayMsg('*******************************');
-        $this->displayMsg('Cron started at ' . date('Y-m-d H:i:s'));
+        $this->displayMsg("\n*******************************");
+        $this->displayMsg('Cron started at ' . date('Y-m-d H:i:s') . "\n");
         
-        $db = db::getSingleton();
-        $db->connect();
+        $this->db = \db::getSingleton();
+        $this->db->connect();
         
         // config setup
-        $oConfig = new Config();
+        $oConfig = new \Config();
         $oConfigCollection = $oConfig->Get();
         $aConfigIndex = $oConfig->indexByPath();
         
-        $oRegsitry = Registry::getSingleton();
-        $oRegsitry->set(Config::REGISTRY_KEY, $oConfigCollection);
-        $oRegsitry->set(Config::REGISTRY_KEY_PATH, $aConfigIndex);
+        $oRegsitry = \Registry::getSingleton();
+        $oRegsitry->set(\Config::REGISTRY_KEY, $oConfigCollection);
+        $oRegsitry->set(\Config::REGISTRY_KEY_PATH, $aConfigIndex);
     }
     
     /*
      * Destructor for scripts / crons
      */
-    public function __destruct() {
-        $this->displayMsg('Cron ended at ' . date('Y-m-d H:i:s'));
-        $this->displayMsg('********************************');
+    public function __destruct()
+    {
+        $this->displayMsg("\nCron ended at " . date('Y-m-d H:i:s'));
+        $this->displayMsg("********************************\n");
     }
     
     /*
      * This function will stop php execution if environment from which it is run is not command line interface
      */
-    protected function onlyRunFromCommandLine() {
+    protected function onlyRunFromCommandLine()
+    {
         if (php_sapi_name() != 'cli') {
             die("Please run this from the commandline.\n");
         }
@@ -68,13 +73,13 @@ abstract class AbstractCron extends SetterGetter {
     /*
      * Check if the script received the debug option, and set the debug to appropriate value
      */
-    protected function checkDebugOption() {
+    protected function checkDebugOption()
+    {
         global $argv;
         
         if (!empty($argv[1]) && $argv[1] === 'debug') {
             $this->setDebug(true);
-        }
-        else {
+        } else {
             $this->setDebug(false);
         }
     }
@@ -82,7 +87,8 @@ abstract class AbstractCron extends SetterGetter {
     /*
      * Use this function to display a message or log it to file
      */
-    public function displayMsg($message) {
+    public function displayMsg($message)
+    {
         if ($this->getDebug()) {
             echo $message . "\n";
         } else {
@@ -93,7 +99,8 @@ abstract class AbstractCron extends SetterGetter {
     /*
      * Get the warning email address
      */
-    public function getWarningEmailAddress() {
+    public function getWarningEmailAddress()
+    {
         return $this->warningEmailAddress;
     }
     
@@ -101,7 +108,8 @@ abstract class AbstractCron extends SetterGetter {
      * Send a warning email to it@dred.com.
      * Use in case error occur in the script and company staff must be notified
      */
-    public function sendWarningEmail($subject, $message) {
-        $this->sendEmail($this->getWarningEmailAddress(), $subject, $body);
+    public function sendWarningEmail($subject, $message)
+    {
+        $this->sendEmail($this->getWarningEmailAddress(), $subject, $message);
     }
 }

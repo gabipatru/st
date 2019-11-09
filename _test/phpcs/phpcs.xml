@@ -7,6 +7,7 @@
 
     <file>./../../_config</file>
     <file>./../../_migrations</file>
+    <file>./../../_script</file>
 
     <file>./../codeception/tests/acceptance</file>
     <file>./../codeception/tests/unit</file>

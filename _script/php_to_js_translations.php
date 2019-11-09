@@ -1,23 +1,26 @@
 <?php
+
 /*
- * This file will create jsvascript translations 
+ * This file will create jsvascript translations
  * based on php translations
  */
 
+namespace Cron;
+
 require_once(__DIR__ . '/_config.php');
 
-class PHPtoJStranslations extends AbstractCron {
+class PHPtoJStranslations extends AbstractCron
+{
+    use \Html;
+
+    const JS_TRANSLATION_FILE = JS_CODE_DIR . '/translations.js';
     
-    const JS_TRANSLATION_FILE = JS_CODE_DIR. '/translations.js';
-    
-    use Html;
-    
-    private function deleteOldJStranslations() {
+    private function deleteOldJStranslations()
+    {
         if (file_exists(self::JS_TRANSLATION_FILE)) {
             unlink(self::JS_TRANSLATION_FILE);
             $this->displayMsg('Old translation file deleted');
-        }
-        else {
+        } else {
             $this->displayMsg('No translation file to delete');
         }
     }
@@ -25,13 +28,14 @@ class PHPtoJStranslations extends AbstractCron {
     /**
      * Check if the translation files actually exist
      */
-    private function checkTranslationFiles() {
-        $languages = Translations::LANGUAGES;
-        $translationModules = Translations::MODULES;
+    private function checkTranslationFiles()
+    {
+        $languages = \Translations::LANGUAGES;
+        $translationModules = \Translations::MODULES;
         
         foreach ($languages as $currentLang) {
             foreach ($translationModules as $currentModule) {
-                if (!file_exists(TRANSLATIONS_DIR. '/' .$currentLang. '/' .$currentModule. '.csv')) {
+                if (!file_exists(TRANSLATIONS_DIR . "/$currentLang/$currentModule.csv")) {
                     $this->displayMsg("Translation file not found ! Module $currentModule language $currentLang");
                     return false;
                 }
@@ -44,11 +48,12 @@ class PHPtoJStranslations extends AbstractCron {
     /**
      * Transform php translations to js, return a prepared js string
      */
-    public function phpTOjs() {
-        $oTranslations = Translations::getSingleton();
+    public function phpTOjs()
+    {
+        $oTranslations = \Translations::getSingleton();
         
-        $languages = Translations::LANGUAGES;
-        $translationModules = Translations::MODULES;
+        $languages = \Translations::LANGUAGES;
+        $translationModules = \Translations::MODULES;
         
         // process translations for all langiages
         $allLangs = [];
@@ -76,10 +81,10 @@ class PHPtoJStranslations extends AbstractCron {
             
             // one single string with all $untranslated:$translated pairs
             $processed = implode(',', $processed);
-            $processed = '{'.$processed.'}';
+            $processed = '{' . $processed . '}';
             
             // now we have the all translations for a language
-            $processed = "'" .$currentLang. "':" .$processed;
+            $processed = "'" . $currentLang . "':" . $processed;
             
             // save it to the array
             $allLangs[] = $processed;
@@ -91,19 +96,20 @@ class PHPtoJStranslations extends AbstractCron {
         }
         
         $allLangs = implode(',', $allLangs);
-        $allLangs = 'var Translations={' .$allLangs. '};';
+        $allLangs = 'var Translations={' . $allLangs . '};';
         
         return $allLangs;
     }
     
-    public function run() {
-        $oTranslations = Translations::getSingleton();
+    public function run()
+    {
+        $oTranslations = \Translations::getSingleton();
         
         // we don't want the old translations
         $this->deleteOldJStranslations();
         
-        $languages = Translations::LANGUAGES;
-        $translationModules = Translations::MODULES;
+        $languages = \Translations::LANGUAGES;
+        $translationModules = \Translations::MODULES;
         
         // check if all files exist
         if (! $this->checkTranslationFiles()) {
@@ -117,9 +123,8 @@ class PHPtoJStranslations extends AbstractCron {
         $r = file_put_contents(self::JS_TRANSLATION_FILE, $jsString);
         
         if ($r) {
-            $this->displayMsg("New translations are saved. New size: ". $this->displayBytes($r));
-        }
-        else {
+            $this->displayMsg("New translations are saved. New size: " . $this->displayBytes($r));
+        } else {
             $this->displayMsg("Could not save translations to HDD!");
         }
     }
