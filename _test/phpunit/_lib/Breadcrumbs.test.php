@@ -1,17 +1,19 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class Breadcrumbs extends AbstractTest {
-    
+class Breadcrumbs extends AbstractTest
+{
     /**
      * Basic test for breadcrumbs
      * @group fast
      */
-    public function testBasic() {
+    public function testBasic()
+    {
         $br1 = \Breadcrumbs::getSingleton();
         
         $this->assertInstanceOf(\Breadcrumbs::class, $br1);
@@ -23,7 +25,8 @@ class Breadcrumbs extends AbstractTest {
      * Test if the breadcrumbs function is a singleton
      * @group fast
      */
-    public function testSingleton() {
+    public function testSingleton()
+    {
         $br1 = \Breadcrumbs::getSingleton();
         $br1->Add('test', 'test');
         

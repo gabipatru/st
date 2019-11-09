@@ -1,14 +1,15 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
 /**
  * Test the mvc class
  */
-class mvc extends AbstractTest
+class Mvc extends AbstractTest
 {
     /**
      * Test singleton and controllerFunction
@@ -51,7 +52,7 @@ class mvc extends AbstractTest
         $mvc->setControllerFile('admin');
         
         // assert
-        $this->assertEquals(CONTROLLER_DIR. '/admin.php', $mvc->getControllerFile());
+        $this->assertEquals(CONTROLLER_DIR . '/admin.php', $mvc->getControllerFile());
     }
     
     public function providerExtract()

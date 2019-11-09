@@ -1,17 +1,19 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class Collection extends AbstractTest {
-    
+class Collection extends AbstractTest
+{
     /**
      * Test adding some items to a Collection
      * @group fast
      */
-    public function testCollection() {
+    public function testCollection()
+    {
         $Collection = new \Collection();
         
         $row = ['name' => 'apple juice', 'type' => 'natural'];
@@ -32,7 +34,8 @@ class Collection extends AbstractTest {
      * Create a collection and then transform it into an array
      * @group fast
      */
-    public function testCollectionToArray() {
+    public function testCollectionToArray()
+    {
         $Collection = new \Collection();
         
         $row = ['name' => 'apple juice', 'type' => 'natural'];
@@ -63,7 +66,8 @@ class Collection extends AbstractTest {
      * Test creating a collection from an array
      * @group fast
      */
-    public function testCollectionFromArray() {
+    public function testCollectionFromArray()
+    {
         $Collection = new \Collection();
         
         // the array
@@ -86,7 +90,8 @@ class Collection extends AbstractTest {
      * Try getting an item from an empty collection
      * @group fast
      */
-    public function testGetItemEmptyCollection() {
+    public function testGetItemEmptyCollection()
+    {
         $Collection = new \Collection();
         
         $Item = $Collection->getItem();
@@ -100,7 +105,8 @@ class Collection extends AbstractTest {
      * Test getting a collection column
      * @group fast
      */
-    public function testCollectionColumn() {
+    public function testCollectionColumn()
+    {
         $Collection = new \Collection();
         
         // the data

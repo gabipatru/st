@@ -1,9 +1,10 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
 class ImageUpload extends AbstractTest
 {
@@ -70,8 +71,8 @@ class ImageUpload extends AbstractTest
     {
         $uploader = new \ImageUpload();
         
-        $uploader->setSourceFileName(BASE_DIR .'/_test/resource/testfiles/file.jpg');
-        $uploader->setUploadPath(BASE_DIR .'/_test/resource/testfiles');
+        $uploader->setSourceFileName(BASE_DIR . '/_test/resource/testfiles/file.jpg');
+        $uploader->setUploadPath(BASE_DIR . '/_test/resource/testfiles');
         $uploader->setFileName('file_resized');
         $uploader->ResizeTo($width, $height);
         $uploader->setStretch($stretch);
@@ -80,14 +81,14 @@ class ImageUpload extends AbstractTest
         
         // asserts
         $this->assertTrue($result);
-        $this->assertTrue( file_exists(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.jpg') );
+        $this->assertTrue(file_exists(BASE_DIR . '/_test/resource/testfiles/file_resized' . '.jpg'));
         
         // check image size
-        list( $width, $height ) = getimagesize(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.jpg');
+        list( $width, $height ) = getimagesize(BASE_DIR . '/_test/resource/testfiles/file_resized' . '.jpg');
         $this->assertEquals($expectedWidth, $width);
         $this->assertEquals($expectedHeight, $height);
         
-        unlink(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.jpg');
+        unlink(BASE_DIR . '/_test/resource/testfiles/file_resized' . '.jpg');
     }
     
     public function providerJPGResize()
@@ -110,8 +111,8 @@ class ImageUpload extends AbstractTest
     {
         $uploader = new \ImageUpload();
         
-        $uploader->setSourceFileName(BASE_DIR .'/_test/resource/testfiles/file.png');
-        $uploader->setUploadPath(BASE_DIR .'/_test/resource/testfiles');
+        $uploader->setSourceFileName(BASE_DIR . '/_test/resource/testfiles/file.png');
+        $uploader->setUploadPath(BASE_DIR . '/_test/resource/testfiles');
         $uploader->setFileName('file_resized');
         $uploader->ResizeTo($width, $height);
         $uploader->setStretch($stretch);
@@ -120,14 +121,14 @@ class ImageUpload extends AbstractTest
         
         // asserts
         $this->assertTrue($result);
-        $this->assertTrue( file_exists(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.png') );
+        $this->assertTrue(file_exists(BASE_DIR . '/_test/resource/testfiles/file_resized' . '.png'));
         
         // check image size
-        list( $width, $height ) = getimagesize(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.png');
+        list( $width, $height ) = getimagesize(BASE_DIR . '/_test/resource/testfiles/file_resized' . '.png');
         $this->assertEquals($expectedWidth, $width);
         $this->assertEquals($expectedHeight, $height);
         
-        unlink(BASE_DIR .'/_test/resource/testfiles/file_resized' .'.png');
+        unlink(BASE_DIR . '/_test/resource/testfiles/file_resized' . '.png');
     }
     
     public function providerPNGResize()

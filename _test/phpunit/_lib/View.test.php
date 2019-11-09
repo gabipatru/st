@@ -1,9 +1,10 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
 class View extends AbstractTest
 {
@@ -32,15 +33,15 @@ class View extends AbstractTest
     {
         $View = \View::getSingleton();
         
-        $View->setViewFile(VIEW_DIR .'/website/homepage.php');
+        $View->setViewFile(VIEW_DIR . '/website/homepage.php');
         $View->setViewDir('website');
         $View->setDecorations('website');
         
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header.php'));
-        $this->assertTrue(file_exists(DECORATIONS_DIR .'/'. $View->getDecorations() .'/header.php'));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/header.php'));
+        $this->assertTrue(file_exists(DECORATIONS_DIR . '/' . $View->getDecorations() . '/header.php'));
         $this->assertTrue(file_exists($View->getViewFile()));
-        $this->assertTrue(file_exists(DECORATIONS_DIR .'/'. $View->getDecorations() .'/footer.php'));
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/footer.php'));
+        $this->assertTrue(file_exists(DECORATIONS_DIR . '/' . $View->getDecorations() . '/footer.php'));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/footer.php'));
     }
     
     /**
@@ -157,9 +158,9 @@ class View extends AbstractTest
         
         // asserts
         $this->assertCount(1, $newArr);
-        $this->assertEquals('test&quot;test',$newArr['key'][0]);
-        $this->assertEquals('test&gt;',$newArr['key'][1]);
-        $this->assertEquals('&lt;test',$newArr['key'][2]);
+        $this->assertEquals('test&quot;test', $newArr['key'][0]);
+        $this->assertEquals('test&gt;', $newArr['key'][1]);
+        $this->assertEquals('&lt;test', $newArr['key'][2]);
     }
     
     /**
@@ -169,19 +170,19 @@ class View extends AbstractTest
     public function testViewFilesAndFolders()
     {
         // check if the main header and footer exist
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header.php'));
-        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header.php')));
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header_css.php'));
-        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header_css.php')));
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header_js.php'));
-        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header_js.php')));
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/header_meta.php'));
-        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/header_meta.php')));
-        $this->assertTrue(file_exists(VIEW_DIR.'/_core/footer.php'));
-        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR.'/_core/footer.php')));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/header.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR . '/_core/header.php')));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/header_css.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR . '/_core/header_css.php')));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/header_js.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR . '/_core/header_js.php')));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/header_meta.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR . '/_core/header_meta.php')));
+        $this->assertTrue(file_exists(VIEW_DIR . '/_core/footer.php'));
+        $this->assertEquals('100644', sprintf('%o', fileperms(VIEW_DIR . '/_core/footer.php')));
         
         // check some folders
-        $this->assertTrue(is_dir(VIEW_DIR.'/_core/decorations'));
-        $this->assertEquals('40755', sprintf('%o', fileperms(VIEW_DIR.'/_core/decorations')));
+        $this->assertTrue(is_dir(VIEW_DIR . '/_core/decorations'));
+        $this->assertEquals('40755', sprintf('%o', fileperms(VIEW_DIR . '/_core/decorations')));
     }
 }

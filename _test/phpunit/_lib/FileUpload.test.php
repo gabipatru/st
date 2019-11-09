@@ -1,9 +1,10 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
 class FileUpload extends AbstractTest
 {
@@ -53,13 +54,13 @@ class FileUpload extends AbstractTest
     
     public function providerGetExtension()
     {
-        $path = BASE_DIR .'/_test/resource/testfiles';
+        $path = BASE_DIR . '/_test/resource/testfiles';
         
         return [
-            [$path .'/4933.mp3', 'mp3'],
-            [$path .'/file.txt', 'txt'],
-            [$path .'/file.html', 'html'],
-            [$path .'/file.php', 'php']
+            [$path . '/4933.mp3', 'mp3'],
+            [$path . '/file.txt', 'txt'],
+            [$path . '/file.html', 'html'],
+            [$path . '/file.php', 'php']
         ];
     }
     
@@ -105,18 +106,18 @@ class FileUpload extends AbstractTest
     
     public function providerFileExists()
     {
-        $path = BASE_DIR .'/_test/resource/testfiles';
+        $path = BASE_DIR . '/_test/resource/testfiles';
         
         return [
-            [$path .'/4933.mp3', true],
-            [$path .'/file.txt', true],
-            [$path .'/file.html', true],
-            [$path .'/file.php', true],
-            [$path .'/file.jpg', true],
-            [$path .'/file.png', true],
-            [$path .'/file.gif', true],
-            [$path .'/file.ext', false],
-            [$path .'/test.jpg', false]
+            [$path . '/4933.mp3', true],
+            [$path . '/file.txt', true],
+            [$path . '/file.html', true],
+            [$path . '/file.php', true],
+            [$path . '/file.jpg', true],
+            [$path . '/file.png', true],
+            [$path . '/file.gif', true],
+            [$path . '/file.ext', false],
+            [$path . '/test.jpg', false]
         ];
     }
     
@@ -185,21 +186,21 @@ class FileUpload extends AbstractTest
     public function providerGetMimeType()
     {
         return [
-            [self::RESOURCE_PATH .'/4933.mp3', 'audio/mpeg', 'internal'],
-            [self::RESOURCE_PATH .'/file.txt', 'text/plain', 'php'],
-            [self::RESOURCE_PATH .'/file.html', 'text/html', 'php'],
-            [self::RESOURCE_PATH .'/file.php', 'text/x-php', 'php'],
-            [self::RESOURCE_PATH .'/4933.mp3', 'audio/mpeg', 'php'],
-            [self::RESOURCE_PATH .'/file.gif', 'image/gif', 'php'],
-            [self::RESOURCE_PATH .'/file.png', 'image/png', 'php'],
-            [self::RESOURCE_PATH .'/file.jpg', 'image/jpeg', 'php'],
-            [self::RESOURCE_PATH .'/file.txt', 'text/plain', 'linux-file'],
-            [self::RESOURCE_PATH .'/file.html', 'text/html', 'linux-file'],
-            [self::RESOURCE_PATH .'/file.php', 'text/x-php', 'linux-file'],
-            [self::RESOURCE_PATH .'/4933.mp3', 'audio/mpeg', 'linux-file'],
-            [self::RESOURCE_PATH .'/file.gif', 'image/gif', 'linux-file'],
-            [self::RESOURCE_PATH .'/file.png', 'image/png', 'linux-file'],
-            [self::RESOURCE_PATH .'/file.jpg', 'image/jpeg', 'linux-file']
+            [self::RESOURCE_PATH . '/4933.mp3', 'audio/mpeg', 'internal'],
+            [self::RESOURCE_PATH . '/file.txt', 'text/plain', 'php'],
+            [self::RESOURCE_PATH . '/file.html', 'text/html', 'php'],
+            [self::RESOURCE_PATH . '/file.php', 'text/x-php', 'php'],
+            [self::RESOURCE_PATH . '/4933.mp3', 'audio/mpeg', 'php'],
+            [self::RESOURCE_PATH . '/file.gif', 'image/gif', 'php'],
+            [self::RESOURCE_PATH . '/file.png', 'image/png', 'php'],
+            [self::RESOURCE_PATH . '/file.jpg', 'image/jpeg', 'php'],
+            [self::RESOURCE_PATH . '/file.txt', 'text/plain', 'linux-file'],
+            [self::RESOURCE_PATH . '/file.html', 'text/html', 'linux-file'],
+            [self::RESOURCE_PATH . '/file.php', 'text/x-php', 'linux-file'],
+            [self::RESOURCE_PATH . '/4933.mp3', 'audio/mpeg', 'linux-file'],
+            [self::RESOURCE_PATH . '/file.gif', 'image/gif', 'linux-file'],
+            [self::RESOURCE_PATH . '/file.png', 'image/png', 'linux-file'],
+            [self::RESOURCE_PATH . '/file.jpg', 'image/jpeg', 'linux-file']
         ];
     }
 }

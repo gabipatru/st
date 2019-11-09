@@ -1,9 +1,10 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../../AbstractTest.php');
+require_once(__DIR__ . '/../../AbstractTest.php');
 
 class Category extends AbstractTest
 {
@@ -11,7 +12,8 @@ class Category extends AbstractTest
      * Basic test for Category
      * @group fast
      */
-    public function testBasic() {
+    public function testBasic()
+    {
         $Category = new \Category();
         
         $this->assertInstanceOf(\Category::class, $Category);
@@ -21,7 +23,8 @@ class Category extends AbstractTest
      * Check if the email log table exists
      * @group slow
      */
-    public function testBasicDB() {
+    public function testBasicDB()
+    {
         $this->setUpDB(['category']);
         
         $Migration = new \Migration();
@@ -35,7 +38,8 @@ class Category extends AbstractTest
      * @group slow
      * @depends testBasicDB
      */
-    public function testAddToDB() {
+    public function testAddToDB()
+    {
         $Category = new \Category();
         
         // add some data to db
@@ -62,7 +66,8 @@ class Category extends AbstractTest
      * @group slow
      * @depends testAddToDB
      */
-    public function testEditInDB() {
+    public function testEditInDB()
+    {
         $Category = new \Category();
         
         // get data from db
@@ -94,7 +99,8 @@ class Category extends AbstractTest
      * @group slow
      * @depends testEditInDB
      */
-    public function testDeleteInDB() {
+    public function testDeleteInDB()
+    {
         $Category = new \Category();
         
         // get data from db

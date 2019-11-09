@@ -1,18 +1,20 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Warning;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class Registry extends AbstractTest {
-    
+class Registry extends AbstractTest
+{
     /**
      * Test Registry in action
      * @group fast
      */
-    public function testRegistry() {
+    public function testRegistry()
+    {
         $reg1 = \Registry::getSingleton();
         $reg1->set('key1', 'abc');
         
@@ -23,7 +25,8 @@ class Registry extends AbstractTest {
      * Test warning on overwriting key
      * @group fast
      */
-    public function testRegistryOverride() {
+    public function testRegistryOverride()
+    {
         $this->expectException(Warning::class);
         
         $reg1 = \Registry::getSingleton();
@@ -35,7 +38,8 @@ class Registry extends AbstractTest {
      * tets overwriting key with no warning
      * @group fast
      */
-    public function testRegistryOverridingNoWarning() {
+    public function testRegistryOverridingNoWarning()
+    {
         $reg1 = \Registry::getSingleton();
         $reg1->setShowWarning(false);
         
@@ -49,7 +53,8 @@ class Registry extends AbstractTest {
      * Test Registry singleton
      * @group fast
      */
-    public function testRegistrySingleton() {
+    public function testRegistrySingleton()
+    {
         $this->expectException(Warning::class);
         
         $reg1 = \Registry::getSingleton();

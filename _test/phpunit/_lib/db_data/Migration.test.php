@@ -1,9 +1,10 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../../AbstractTest.php');
+require_once(__DIR__ . '/../../AbstractTest.php');
 
 class Migration extends AbstractTest
 {
@@ -11,7 +12,8 @@ class Migration extends AbstractTest
      * Test the version incrementing
      * @group fast
      */
-    public function testGetNextVersion() {
+    public function testGetNextVersion()
+    {
         $Migration = new \Migration();
         
         $this->assertInstanceOf(\Migration::class, $Migration);
@@ -45,7 +47,8 @@ class Migration extends AbstractTest
      * Check if the migration table exists
      * @group slow
      */
-    public function testBasicDB() {
+    public function testBasicDB()
+    {
         $this->setUpDB(['migrations']);
         
         $Migration = new \Migration();
@@ -59,7 +62,8 @@ class Migration extends AbstractTest
      * @group slow
      * @depends testBasicDB
      */
-    public function testAddToDB() {
+    public function testAddToDB()
+    {
         $Migration = new \Migration();
         
         // add some data to db
@@ -84,7 +88,8 @@ class Migration extends AbstractTest
      * @group slow
      * @depends testAddToDB
      */
-    public function testEditInDB() {
+    public function testEditInDB()
+    {
         $Migration = new \Migration();
         
         // get data from db
@@ -115,7 +120,8 @@ class Migration extends AbstractTest
      * @group slow
      * @depends testEditInDB
      */
-    public function testDeleteInDB() {
+    public function testDeleteInDB()
+    {
         $Migration = new \Migration();
         
         // get data from db
@@ -153,19 +159,20 @@ class Migration extends AbstractTest
      * migration sql is an array
      * @group slow
      */
-    public function testDeployMigrations1() {
+    public function testDeployMigrations1()
+    {
         $this->setUpDB(['migrations']);
         
         // mock what we need
         $MockMigrations = $this->getMockBuilder('\Migration')
         ->setMethods([ 'fetchMigrationSQL', 'checkMigrationFile' ])
         ->getMock();
-        $MockMigrations->method('fetchMigrationSQL')->willReturn( ['SELECT 1'] );
+        $MockMigrations->method('fetchMigrationSQL')->willReturn(['SELECT 1']);
         $MockMigrations->method('checkMigrationFile')
-        ->will($this->returnValueMap( [
-            [MIGRATIONS_DIR. '/' .'migrations', '002', true],
-            [MIGRATIONS_DIR. '/' .'migrations', '003', false]
-        ] ));
+        ->will($this->returnValueMap([
+            [MIGRATIONS_DIR . '/' . 'migrations', '002', true],
+            [MIGRATIONS_DIR . '/' . 'migrations', '003', false]
+        ]));
         
         // run the migration
         $this->invokeMethod($MockMigrations, 'deployMigrations', [ 'migrations', '001' ]);
@@ -190,7 +197,8 @@ class Migration extends AbstractTest
      * migration sql is a string
      * @group slow
      */
-    public function testDeployMigrations2() {
+    public function testDeployMigrations2()
+    {
         $this->setUpDB(['migrations']);
         
         // mock what we need
@@ -199,10 +207,10 @@ class Migration extends AbstractTest
         ->getMock();
         $MockMigrations->method('fetchMigrationSQL')->willReturn('SELECT 1');
         $MockMigrations->method('checkMigrationFile')
-        ->will($this->returnValueMap( [
-            [MIGRATIONS_DIR. '/' .'migrations', '002', true],
-            [MIGRATIONS_DIR. '/' .'migrations', '003', false]
-        ] ));
+        ->will($this->returnValueMap([
+            [MIGRATIONS_DIR . '/' . 'migrations', '002', true],
+            [MIGRATIONS_DIR . '/' . 'migrations', '003', false]
+        ]));
         
         // run the migration
         $this->invokeMethod($MockMigrations, 'deployMigrations', [ 'migrations', '001' ]);
@@ -227,7 +235,8 @@ class Migration extends AbstractTest
      * migration sql is an array
      * @group slow
      */
-    public function testDeployMigrations3() {
+    public function testDeployMigrations3()
+    {
         $this->setUpDB(['migrations']);
         
         // mock what we need
@@ -236,10 +245,10 @@ class Migration extends AbstractTest
         ->getMock();
         $MockMigrations->method('fetchMigrationSQL')->willReturn('SELECT 1');
         $MockMigrations->method('checkMigrationFile')
-        ->will($this->returnValueMap( [
-            [MIGRATIONS_DIR. '/' .'phpunit_migration_test', '001', true],
-            [MIGRATIONS_DIR. '/' .'phpunit_migration_test', '002', false]
-        ] ));
+        ->will($this->returnValueMap([
+            [MIGRATIONS_DIR . '/' . 'phpunit_migration_test', '001', true],
+            [MIGRATIONS_DIR . '/' . 'phpunit_migration_test', '002', false]
+        ]));
         
         // run the migration
         $this->invokeMethod($MockMigrations, 'deployMigrations', [ 'phpunit_migration_test', '000' ]);

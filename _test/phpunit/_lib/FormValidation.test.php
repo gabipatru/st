@@ -1,9 +1,10 @@
-<?php 
+<?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
 class FormValidation extends AbstractTest
 {
@@ -69,7 +70,7 @@ class FormValidation extends AbstractTest
         $this->assertEquals('Desc', $FV->description);
     }
 
-    public function provider_validate_field()
+    public function providerValidateField()
     {
         return [
             ['required', 'string', '', true],
@@ -100,9 +101,9 @@ class FormValidation extends AbstractTest
     /**
      * Test the validate_field method with different values
      * @group fast
-     * @dataProvider provider_validate_field
+     * @dataProvider providerValidateField
      */
-    public function test_validate_field($type, $value, $option, $result)
+    public function testValidateField($type, $value, $option, $result)
     {
         // init and mock
         $oFVMock = $this->getMockBuilder('\FormValidation')

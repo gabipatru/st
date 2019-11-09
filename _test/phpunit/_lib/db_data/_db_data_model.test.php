@@ -1,15 +1,16 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../../AbstractTest.php');
+require_once(__DIR__ . '/../../AbstractTest.php');
 
 /**
  * Test some basic functionality of db data model
  * We are testing it with the help of User model
  */
-class dbDataModel extends AbstractTest
+class DbDataModel extends AbstractTest
 {
     /**
      * Basic test

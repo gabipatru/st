@@ -1,17 +1,19 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class SetterGetter extends AbstractTest {
-    
+class SetterGetter extends AbstractTest
+{
     /**
      * Basic test for SetterGetter
      * @group fast
      */
-    public function testSetterGetter() {
+    public function testSetterGetter()
+    {
         $Var = new \SetterGetter();
         
         $Var->setVar(5);

@@ -1,30 +1,32 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class EmailTemplate extends AbstractTest {
-    
+class EmailTemplate extends AbstractTest
+{
     /**
      * Test setting view file and decorations
      * @group fast
      */
-    public function testSetters() {
+    public function testSetters()
+    {
         $Email = new \EmailTemplate('test');
         
         // assert data and files and folders exist
         $this->assertEquals('test', $Email->getViewFile());
         $this->assertEquals('_default', $Email->getDecorations());
         
-        $this->assertTrue(is_dir(EMAIL_VIEW_DIR. '/_core'));
-        $this->assertTrue(file_exists(EMAIL_VIEW_DIR. '/_core/header.php'));
-        $this->assertTrue(file_exists(EMAIL_VIEW_DIR. '/_core/footer.php'));
+        $this->assertTrue(is_dir(EMAIL_VIEW_DIR . '/_core'));
+        $this->assertTrue(file_exists(EMAIL_VIEW_DIR . '/_core/header.php'));
+        $this->assertTrue(file_exists(EMAIL_VIEW_DIR . '/_core/footer.php'));
         
-        $this->assertTrue(is_dir(EMAIL_DECORATIONS_DIR. '/' .$Email->getDecorations()));
-        $this->assertTrue(file_exists(EMAIL_DECORATIONS_DIR .'/'. $Email->getDecorations() .'/header.php'));
-        $this->assertTrue(file_exists(EMAIL_DECORATIONS_DIR .'/'. $Email->getDecorations() .'/footer.php'));
+        $this->assertTrue(is_dir(EMAIL_DECORATIONS_DIR . '/' . $Email->getDecorations()));
+        $this->assertTrue(file_exists(EMAIL_DECORATIONS_DIR . '/' . $Email->getDecorations() . '/header.php'));
+        $this->assertTrue(file_exists(EMAIL_DECORATIONS_DIR . '/' . $Email->getDecorations() . '/footer.php'));
         
         $Email->setViewFile('testx');
         $Email->setDecorations('testy');
@@ -38,7 +40,8 @@ class EmailTemplate extends AbstractTest {
      * Test adding an email to the email queue
      * @group slow
      */
-    public function testAddToQueue() {
+    public function testAddToQueue()
+    {
         $this->setUpDB(['email']);
         
         $Email = new \EmailTemplate('test');
@@ -65,7 +68,8 @@ class EmailTemplate extends AbstractTest {
      * Test adding an email to email queue with wrong data
      * @group fast
      */
-    public function testAddToQueueNoEmailAddress() {
+    public function testAddToQueueNoEmailAddress()
+    {
         $Email = new \EmailTemplate('test');
         
         // Add the message to queue
@@ -93,5 +97,4 @@ class EmailTemplate extends AbstractTest {
         $this->assertFalse($r1);
         $this->assertFalse($r2);
     }
-
 }

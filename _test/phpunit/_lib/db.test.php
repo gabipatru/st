@@ -1,13 +1,13 @@
 <?php
+
 namespace Test;
 
-use mysql_xdevapi\Exception;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Error\Error;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class db extends AbstractTest
+class Db extends AbstractTest
 {
     private static $bTestTableInitialised = false;
     
@@ -33,7 +33,8 @@ class db extends AbstractTest
      * Test database connection with correct credentials
      * @group fast
      */
-    public function testDbConnectionGoodCredentials() {
+    public function testDbConnectionGoodCredentials()
+    {
         $this->defineDebuggerAgent();
         
         $db = \db::getSingleton();
@@ -47,7 +48,8 @@ class db extends AbstractTest
      * Test database connection with correct credentials
      * @group fast
      */
-    public function testDbConnectionBadCredentials() {
+    public function testDbConnectionBadCredentials()
+    {
         $this->defineDebuggerAgent();
 
         $this->expectException(\Exception::class);

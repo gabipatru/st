@@ -1,17 +1,18 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class Translations extends AbstractTest 
+class Translations extends AbstractTest
 {
     /**
      * Test if the Translations class is a singleton
      * @group fast
      */
-    public function testSingleton() 
+    public function testSingleton()
     {
         $tr1 = \Translations::getSingleton();
         $tr1->setModule('common', false);
@@ -34,7 +35,7 @@ class Translations extends AbstractTest
      * Test if a langiage exists or not
      * @group fast
      */
-    public function testLanguageExists() 
+    public function testLanguageExists()
     {
         $tr = \Translations::getSingleton();
         
@@ -50,7 +51,7 @@ class Translations extends AbstractTest
      * are the same
      * @group fast
      */
-    public function testTranslationIntegrity() 
+    public function testTranslationIntegrity()
     {
         $tr = \Translations::getSingleton();
         
@@ -77,7 +78,7 @@ class Translations extends AbstractTest
      * Test some translations in action
      * @group fast
      */
-    public function testTranslations() 
+    public function testTranslations()
     {
         // set up language and module
         $tr = \Translations::getSingleton();

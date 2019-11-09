@@ -1,11 +1,12 @@
 <?php
+
 namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ .'/../AbstractTest.php');
+require_once(__DIR__ . '/../AbstractTest.php');
 
-class Pagination extends AbstractTest 
+class Pagination extends AbstractTest
 {
     /**
      * Test pagination generation with simple data - first page

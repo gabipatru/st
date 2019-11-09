@@ -7,6 +7,7 @@
 
     <file>./../codeception/tests/acceptance</file>
     <file>./../codeception/tests/unit</file>
+    <file>./../phpunit/_lib</file>
 
     <rule ref="PSR12">
         <exclude name="PSR12.Properties.ConstantVisibility.NotFound"/>
