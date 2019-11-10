@@ -18,7 +18,8 @@ class AclTask extends DbData
         'admin/series'          => 7,
         'admin/surprises'       => 8,
         'admin/user_groups'     => 9,
-        'admin/users'           => 10
+        'admin/users'           => 10,
+        'admin/cron'            => 11
     ];
     
     protected $aFields = array(

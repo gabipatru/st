@@ -12,5 +12,5 @@ $aMigrationsConfig = array(
     'surprise'      => '001',
     'acl'           => '002',
     'test'          => '001',
-    'schedule'      => '002'
+    'cron'          => '002'
 );

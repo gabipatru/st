@@ -136,5 +136,10 @@ function href_admin($sName, $sData = '')
                 case 'delete':
                     return HTTP_MAIN . '/admin/user_groups/delete.html' . ($sData ? "?user_group_id=$sData&token=" . $mvc->securityGetToken() : '');
             }
+        case 'cron':
+            switch ($aPath[1]) {
+                case 'list_items':
+                    return HTTP_MAIN . '/admin/cron/list_items.html';
+            }
     }
 }

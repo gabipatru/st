@@ -26,6 +26,7 @@
                 <li><a href="<?php echo href_admin('cache/list_cache')?>" class="<?php echo ($menu == 'cache' ? 'active' : '')?>"><span><?php echo $this->__('Cache')?></span></a></li>
                 <li><a href="<?php echo href_admin('users/list_users')?>" class="<?php echo ($menu == 'users' ? 'active' : '')?>"><span><?php echo $this->__('Users')?></span></a></li>
                 <li><a href="<?php echo href_admin('email/list_menu')?>" class="<?php echo ($menu == 'email' ? 'active' : '')?>"><span><?php echo $this->__('Email')?></span></a></li>
+                <li><a href="<?php echo href_admin('cron/list_items')?>" class="<?php echo ($menu == 'cron' ? 'active' : '')?>"><span><?php echo $this->__('Cron')?></span></a></li>
             </ul>
         </div>
         <!-- End Main Nav -->

@@ -5,7 +5,7 @@ addAction('controller_admin_users', 'list_users', {
     $( ".js-user-list-edit" ).each( function() {
       $( this ).click( function() {
         userId = $( this ).attr( 'data-user-id' );
-        $( "#dialog-username" ).html( $( this ).attr( 'data-user-username' ) );
+        $( "#dialog-script" ).html( $( this ).attr( 'data-user-username' ) );
         $( "#dialog-email" ).html( $( this ).attr( 'data-user-email' ) );
         $( "#dialog-status" ).html( $( this ).attr( 'data-user-status' ) );
         $( "#dialog-new-status" ).val( $( this ).attr( 'data-user-status' ) );
