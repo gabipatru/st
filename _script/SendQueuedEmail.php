@@ -17,6 +17,7 @@ class SendQueuedEmail extends AbstractCron
         $oEmails = $oEmailQueue->GetEmailsToProcess();
 
         $this->displayMsg('Found ' . count($oEmails) . ' emails to send');
+        sleep(20);
         
         foreach ($oEmails as $oCurrentEmail) {
             $r = $this->sendEmail(
@@ -38,6 +39,3 @@ class SendQueuedEmail extends AbstractCron
         }
     }
 }
-
-$cron = new SendQueuedEmail();
-$cron->run();

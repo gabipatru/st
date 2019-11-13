@@ -34,6 +34,3 @@ class DeleteExpiredConfirmations extends AbstractCron
         }
     }
 }
-
-$cron = new DeleteExpiredConfirmations();
-//$cron->run();

@@ -27,6 +27,9 @@
         <testsuite name="controller">
             <directory suffix=".test.php">./_controller</directory>
         </testsuite>
+        <testsuite name="script">
+            <directory suffix=".test.php">./_script</directory>
+        </testsuite>
     </testsuites>
     
     <groups>

@@ -20,7 +20,7 @@ abstract class AbstractCron extends \SetterGetter
     
     // Warning emails will be sent to this address by the sendWarningEmail function
     // Overwrite in child classes to send to a different address if needed
-    protected $warningEmailAddress = 'crons@mvc.ro';
+    protected $warningEmailAddress = CRON_WARNING_EMAIL_ADDRESS;
     
     abstract public function run();
     
@@ -35,7 +35,7 @@ abstract class AbstractCron extends \SetterGetter
         
         $this->checkDebugOption();
         
-        $this->displayMsg("\n*******************************");
+        $this->displayMsg("*******************************");
         $this->displayMsg('Cron started at ' . date('Y-m-d H:i:s') . "\n");
         
         $this->db = \db::getSingleton();
@@ -47,6 +47,8 @@ abstract class AbstractCron extends \SetterGetter
         $aConfigIndex = $oConfig->indexByPath();
         
         $oRegsitry = \Registry::getSingleton();
+        $oRegsitry->clear(\Config::REGISTRY_KEY);
+        $oRegsitry->clear(\Config::REGISTRY_KEY_PATH);
         $oRegsitry->set(\Config::REGISTRY_KEY, $oConfigCollection);
         $oRegsitry->set(\Config::REGISTRY_KEY_PATH, $aConfigIndex);
     }
@@ -56,7 +58,7 @@ abstract class AbstractCron extends \SetterGetter
      */
     public function __destruct()
     {
-        $this->displayMsg("\nCron ended at " . date('Y-m-d H:i:s'));
+        $this->displayMsg("Cron ended at " . date('Y-m-d H:i:s'));
         $this->displayMsg("********************************\n");
     }
     

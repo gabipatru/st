@@ -83,7 +83,10 @@ class ControllerUser extends AbstractControllerTest
     public function testLoginInactiveUser()
     {
         // init and mock
-        define('WEBSITE_SALT', md5('gunpowder'));
+        if (! defined('WEBSITE_SALT')) {
+            define('WEBSITE_SALT', md5('gunpowder'));
+        }
+
         $oMockController = $this->initController('/index.php/user/login');
         $this->mockIsPost(true, $oMockController);
         $this->mockValidate(true, $oMockController);

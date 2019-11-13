@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__ . '/../_config/paths.php');
 
+require_once(CONFIG_DIR . '/constants.php');
+
 require_once(TRAITS_DIR . '/Singleton.trait.php');
 require_once(TRAITS_DIR . '/Messages.trait.php');
 require_once(TRAITS_DIR . '/Translation.trait.php');
