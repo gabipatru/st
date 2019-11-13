@@ -12,19 +12,18 @@ class SendQueuedEmail extends AbstractCron
 {
     public function run()
     {
-        // fetch the emails to send
-        $oEmailQueue = new \EmailQueue();
-        $oEmails = $oEmailQueue->GetEmailsToProcess();
+        $collectionEmails = $this->getEmailsToProcess();
 
-        $this->displayMsg('Found ' . count($oEmails) . ' emails to send');
-        sleep(20);
+        $this->displayMsg('Found ' . count($collectionEmails) . ' emails to send');
         
-        foreach ($oEmails as $oCurrentEmail) {
+        foreach ($collectionEmails as $oCurrentEmail) {
+            $emailQueueId = $oCurrentEmail->getEmailQueueId();
+
             $r = $this->sendEmail(
                 $oCurrentEmail->getToo(),
                 $oCurrentEmail->getSubject(),
                 $oCurrentEmail->getBody(),
-                $oCurrentEmail->getEMailQueueId()
+                $emailQueueId
             );
             
             $oItem = new \SetterGetter();
@@ -35,7 +34,36 @@ class SendQueuedEmail extends AbstractCron
             }
             $oItem->setSendAttempts($oCurrentEmail->getSendAttempts() + 1);
             $oItem->setUpdatedAt(date('Y-m-d H:i:s'));
-            $oEmailQueue->Edit($oCurrentEmail->getEmailQueueId(), $oItem);
+
+            $r = $this->updateEmailQueue($emailQueueId, $oItem);
+            if (! $r) {
+                $this->displayMsg('Failed to update queue status for item with id ' . $emailQueueId);
+            }
         }
+    }
+
+    /**
+     * Get the emails which have to be sent
+     *
+     * @return \Collection
+     */
+    protected function getEmailsToProcess(): \Collection
+    {
+        $oEmailQueue = new \EmailQueue();
+        return $oEmailQueue->GetEmailsToProcess();
+    }
+
+    /**
+     * Update the email queue when an email is sent
+     *
+     * @param int $emailQueueId
+     * @param \SetterGetter $oItem - the item to be updated
+     *
+     * @return bool - true if the update was successful, false otherwise
+     */
+    protected function updateEmailQueue(int $emailQueueId, \SetterGetter $oItem): bool
+    {
+        $oEmailQueue = new \EmailQueue();
+        return $oEmailQueue->Edit($emailQueueId, $oItem);
     }
 }

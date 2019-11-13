@@ -9,7 +9,7 @@ require_once SCRIPT_DIR . '/_config.php';
 require_once SCRIPT_DIR . '/_cron.php';
 
 /**
- * This the Cron class and the AbstractCron class it extends
+ * This tests the Cron class and the AbstractCron class it extends
  */
 class Cron extends AbstractTest
 {

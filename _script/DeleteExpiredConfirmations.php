@@ -13,15 +13,14 @@ class DeleteExpiredConfirmations extends AbstractCron
     public function run()
     {
         // fetch the expired confirmations
-        $oUserConfirmation = new \UserConfirmation();
-        $oConfirmations = $oUserConfirmation->getExpiredUserConfirmations();
+        $collectionConfirmarions = $this->getExpiredConfirmations();
         
-        $this->displayMsg('Found ' . count($oConfirmations) . ' confirmations');
+        $this->displayMsg('Found ' . count($collectionConfirmarions) . ' confirmations');
         
         try {
             $this->db->startTransaction();
-            foreach ($oConfirmations as $oConf) {
-                $r = $oUserConfirmation->Delete($oConf->getConfirmationId());
+            foreach ($collectionConfirmarions as $oConf) {
+                $r = $this->deleteConfirmation($oConf);
                 if (!$r) {
                     throw new Exception('Failed to delete confirmation with id ' . $oConf->getConfirmationId());
                 }
@@ -32,5 +31,29 @@ class DeleteExpiredConfirmations extends AbstractCron
             $this->displayMsg($e->getMessage());
             $this->db->rollbackTransaction();
         }
+    }
+
+    /**
+     * This function fetches the expired confirmations
+     *
+     * @return \Collection
+     */
+    protected function getExpiredConfirmations(): \Collection
+    {
+        $oUserConfirmation = new \UserConfirmation();
+        return $oUserConfirmation->getExpiredUserConfirmations();
+    }
+
+    /**
+     * Delete a user confirmation
+     *
+     * @param \SetterGetter $confirmation - the confirmation to be deleted
+     *
+     * @return bool - if the delete was successful or not
+     */
+    protected function deleteConfirmation(\SetterGetter $confirmation): bool
+    {
+        $oUserConfirmation = new \UserConfirmation();
+        return $oUserConfirmation->Delete($confirmation->getConfirmationId());
     }
 }
