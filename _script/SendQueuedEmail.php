@@ -25,7 +25,7 @@ class SendQueuedEmail extends AbstractCron
                 $oCurrentEmail->getBody(),
                 $emailQueueId
             );
-            
+
             $oItem = new \SetterGetter();
             if ($r) {
                 $oItem->setStatus(\EmailQueue::STATUS_SENT);

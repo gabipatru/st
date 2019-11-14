@@ -15,4 +15,6 @@ require_once(FUNCTIONS_DIR . '/html_functions.php');
 
 require_once(SCRIPT_DIR . '/_abstractcron.php');
 
-define('DEBUGGER_AGENT', 0);
+if (! defined('DEBUGGER_AGENT')) {
+    define('DEBUGGER_AGENT', 0);
+}

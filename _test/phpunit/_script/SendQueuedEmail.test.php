@@ -13,7 +13,7 @@ require_once SCRIPT_DIR . '/SendQueuedEmail.php';
 class SendQueuedEmail extends AbstractTest
 {
     /**
-     * Tets what happens when there are no emails to send
+     * Test what happens when there are no emails to send
      * @group fast
      */
     public function testNoEmails()
@@ -40,7 +40,7 @@ class SendQueuedEmail extends AbstractTest
     }
 
     /**
-     * Tets what happens when there are 2 emails to send
+     * Test what happens when there are 2 emails to send
      * @group fast
      */
     public function testSend2Emails()

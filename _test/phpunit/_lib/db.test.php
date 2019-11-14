@@ -28,6 +28,20 @@ class Db extends AbstractTest
         $this->assertFalse($db1->getDebug());
         $this->assertFalse($db2->getDebug());
     }
+
+    /**
+     * Check the DB connection before making a connection
+     * @group fast
+     */
+    public function testDbConnectionBeforeConnect()
+    {
+        $db = \db::getSingleton();
+        $db->disconnect();
+
+        $result = $db->isConnected();
+
+        $this->assertFalse($result);
+    }
     
     /**
      * Test database connection with correct credentials
@@ -42,6 +56,20 @@ class Db extends AbstractTest
         
         // assert no exception happned
         $this->assertTrue(true);
+    }
+
+    /**
+     * Check the DB connection after making a connection
+     * @depends testDbConnectionGoodCredentials
+     * @group fast
+     */
+    public function testDbConnectionAfterConnect()
+    {
+        $db = \db::getSingleton();
+
+        $result = $db->isConnected();
+
+        $this->assertTrue($result);
     }
     
     /**

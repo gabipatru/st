@@ -68,6 +68,25 @@ class db {
         }
     }
 
+    /**
+     * Check if the database connection is established
+     *
+     * @return bool
+     */
+    public function isConnected(): bool
+    {
+        try {
+            $status = pg_connection_status($this->oPDO);
+        } catch (Exception $e) {
+            return false;
+        }
+        if ($status === PGSQL_CONNECTION_OK) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /*
      * Disconnect from the database
      */

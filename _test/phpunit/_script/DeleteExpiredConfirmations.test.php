@@ -13,7 +13,7 @@ require_once SCRIPT_DIR . '/DeleteExpiredConfirmations.php';
 class DeleteExpiredConfirmations extends AbstractTest
 {
     /**
-     * Tets what happens when there are no confirmations to delete
+     * Test what happens when there are no confirmations to delete
      * @group fast
      */
     public function testNoConfirmations()
@@ -36,7 +36,7 @@ class DeleteExpiredConfirmations extends AbstractTest
     }
 
     /**
-     * ets what happens when there are 2 confirmations to delete
+     * Test what happens when there are 2 confirmations to delete
      * @group fast
      */
     public function test2Confirmations()
