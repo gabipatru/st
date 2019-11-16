@@ -139,7 +139,9 @@ function href_admin($sName, $sData = '')
         case 'cron':
             switch ($aPath[1]) {
                 case 'list_items':
-                    return HTTP_MAIN . '/admin/cron/list_items.html';
+                    return HTTP_MAIN . '/admin/cron/list_crons.html';
+                case 'list_run':
+                    return HTTP_MAIN . '/admin/cron/list_run.html' . ($sData ? '?cron_id=' . $sData : '');
             }
     }
 }

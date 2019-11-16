@@ -1,4 +1,4 @@
-addAction('controller_admin_cron', 'list_items', {
+addAction('controller_admin_cron', 'list_crons', {
   run: function() {
     var cronId;
     // display dialog when clicking on modify link

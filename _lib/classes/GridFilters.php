@@ -20,10 +20,7 @@ class GridFilters {
         
         // set up the values
         foreach ($aGF as $sFieldName => $aData) {
-            if (!is_array($this->aConfig[$sFieldName]['valid_values'])) {
-                continue;
-            }
-            if (!empty($_REQUEST[$sFieldName]) && in_array($_REQUEST[$sFieldName], $this->aConfig[$sFieldName]['valid_values'])) {
+            if (!empty($_REQUEST[$sFieldName])) {
                 $this->$sFieldName = $_REQUEST[$sFieldName];
             }
             else {

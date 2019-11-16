@@ -37,8 +37,8 @@ class controller_admin_surprises extends ControllerAdminModel {
             'per_page'      => $perPage,
             'search'        => $search,
             'search_fields' => ['name'],
-            'order_field' => $sort,
-            'order_type' => $sort_crit
+            'order_field'   => $sort,
+            'order_type'    => $sort_crit
         ];
         $oSurprisesCollection = $oSurpriseModel->Get($filters, $options);
         

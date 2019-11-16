@@ -36,36 +36,6 @@ class ContactCest extends AbstractAcceptanceCest
     }
     
     /**
-     * Test the contact page by submitting correct data
-     */
-    public function testContactPageWithCorrectData(AcceptanceTester $I)
-    {
-        $I->amOnPage('/website/contact.html');
-        
-        // fill in some data and a wrong email address
-        $I->fillField('#name', 'Gabi');
-        $I->fillField('#email', 'gabipatru@gmail.com');
-        $I->fillField('#subject', 'Test');
-        $I->fillField('#message', 'test msg');
-        
-        // submit form
-        $I->click('#submit-form');
-        
-        // asserts
-        $this->testUpperBar($I);
-        $this->testLogo($I);
-        $I->see('EN');
-        $this->testLinksForGuest($I);
-        $this->testNavBar($I);
-        $I->see('Contact', '.active');
-        
-        $I->dontSeeElement('div.msg-error');
-        $I->see('The message was sent. Thank you.', 'h3');
-        
-        $this->testFooter($I);
-    }
-    
-    /**
      * Test contact page with incorrect email
      */
     public function testContactWithIncorrectEmail(AcceptanceTester $I)
