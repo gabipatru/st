@@ -30,6 +30,19 @@ class Db extends AbstractTest
     }
 
     /**
+     * Try disconnecting 2 times, make sure it works and there is no error
+     * @group fast
+     */
+    public function testDisconnect()
+    {
+        $db = \db::getSingleton();
+        $db->disconnect();
+        $result = $db->disconnect();
+
+        $this->assertNull($result);
+    }
+
+    /**
      * Check the DB connection before making a connection
      * @group fast
      */
@@ -371,17 +384,28 @@ class Db extends AbstractTest
         
         $this->assertEquals($iNumberOfQueries + 1, $iNewNumberOfQueries);
     }
-    
+
+    public function providerQuerySaving()
+    {
+        return [
+            ["SELECT 5", true],
+            ["BEGIN", false],
+            ["COMMIT", false],
+            ["ROLLBACK", false]
+        ];
+    }
+
     /**
      * Test if the query is saved to a variable once it is run
+     * @dataProvider providerQuerySaving
      * @group fast
      */
-    public function testQuerySaving()
+    public function testQuerySaving($sql, $expected)
     {
         $db = \db::getSingleton();
-        $db->query("SELECT 5");
-        
+        $db->query($sql);
+
         $aQueries = $db->getRunQueries();
-        $this->assertTrue(in_array("SELECT 5", $aQueries));
+        $this->assertEquals($expected, in_array($sql, $aQueries));
     }
 }

@@ -92,7 +92,11 @@ class db {
      */
     public function disconnect()
     {
-        pg_close($this->oPDO);
+        try {
+            pg_close($this->oPDO);
+        } catch (Exception $e) {
+            return null;
+        }
     }
     
     /*
@@ -115,9 +119,11 @@ class db {
         catch (Exception $e) {
             $result = null;
         }
-        
-        $this->incrementQueriesNo();
-        $this->addRunQuery($sql);
+
+        if ($sql != "BEGIN" && $sql != "COMMIT" && $sql != "ROLLBACK") {
+            $this->incrementQueriesNo();
+            $this->addRunQuery($sql);
+        }
         
         if ($result) {
             return $result;
