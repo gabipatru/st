@@ -44,6 +44,15 @@
             <input name="search" type="text" class="field small-field" value="<?php echo $search?>" />
             <input type="submit" class="button" value="<?php echo $this->__('Search')?>" />
           </div>
+
+          <div class="cl">&nbsp;</div>
+          <div class="box-continue">
+            <h2 class="left"><?php echo $this->__('Filter')?></h2>
+            <div class="right">
+              <label><?php echo $this->__('Filter by status')?></label>
+              <span class="GF-select"><?php echo $GF->GFSelect('status');?></span>
+            </div>
+          </div>
         </form>
       </div>
       
@@ -52,12 +61,30 @@
       
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <th><?php echo $this->__('Surprise ID')?></th>
-            <th><?php echo $this->__('Surprise Name')?></th>
-            <th><?php echo $this->__('Series_sg')?></th>
-            <th><?php echo $this->__('Group')?></th>
-            <th><?php echo $this->__('Status')?></th>
-            <th><?php echo $this->__('Actions')?></th>
+            <th>
+              <?php echo ($sort == 'surprise_id' ? '<span class="' . ($sort_crit == 'asc' ? 'sortAsc' : 'sortDesc' ) . '"></span>' : '')?>
+              <a href="<?php echo MVC_ACTION_URL . '?' . $GF->GFHref(true, true, false) . $GF->sortParams('surprise_id', $sort_crit)?>">
+                <?php echo $this->__('Surprise ID')?>
+              </a>
+            </th>
+            <th>
+              <?php echo ($sort == 'name' ? '<span class="' . ($sort_crit == 'asc' ? 'sortAsc' : 'sortDesc' ) . '"></span>' : '')?>
+              <a href="<?php echo MVC_ACTION_URL . '?' . $GF->GFHref(true, true, false) . $GF->sortParams('name', $sort_crit)?>">
+                <?php echo $this->__('Surprise Name')?>
+              </a>
+            </th>
+            <th>
+              <?php echo $this->__('Series_sg')?>
+            </th>
+            <th>
+              <?php echo $this->__('Group')?>
+            </th>
+            <th>
+              <?php echo $this->__('Status')?>
+            </th>
+            <th>
+              <?php echo $this->__('Actions')?>
+            </th>
           </tr>
           
         <?php foreach ($oSurprisesCollection as $oCat) : ?>

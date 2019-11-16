@@ -14,15 +14,37 @@ class controller_admin_categories extends ControllerAdminModel
     ###############################################################################
     function list_categories()
     {
+        $search     = $this->filterGET('search', 'string');
+        $sort       = $this->filterGET('sort', 'string');
+        $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
+
+        $GF = new GridFilters([
+            'status' => [
+                'default' => false,
+                'valid_values' => [ Category::SERIES_ONLINE, Category::SERIEES_OFFLINE ]
+            ]
+        ]);
+
         $oCategories = new Category();
         
-        // get all the categories
-        $oCategoriesCollection = $oCategories->Get([], []);
+        // get the categories
+        $filters = $GF->filters();
+        $options = [
+            'search' => $search,
+            'search_fields' => [ 'name' ],
+            'order_field' => $sort,
+            'order_type' => $sort_crit
+        ];
+        $oCategoriesCollection = $oCategories->Get($filters, $options);
         
         $Breadcrumbs = Breadcrumbs::getSingleton();
         $Breadcrumbs->Add($this->__('Categories'), MVC_ACTION_URL);
         
         $this->View->assign('oCategoriesCollection', $oCategoriesCollection);
+        $this->View->assign('search', $search);
+        $this->View->assign('GF', $GF);
+        $this->View->assign('sort', $sort);
+        $this->View->assign('sort_crit', $sort_crit);
         
         $this->View->addSEOParams($this->__('Categories List :: Admin'), '', '');
     }

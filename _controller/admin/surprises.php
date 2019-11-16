@@ -16,25 +16,29 @@ class controller_admin_surprises extends ControllerAdminModel {
     {
         $page       = $this->filterGET('page', 'int|min[1]');
         $search     = $this->filterGET('search', 'string');
+        $sort       = $this->filterGET('sort', 'string');
+        $sort_crit  = $this->filterGET('sort_crit', 'set[asc,desc]');
         
         $perPage = Config::configByPath(Pagination::PER_PAGE_KEY);
         
         $GF = new GridFilters([ 
             'status' => [
                 'default' => false,
-                'valid_values' => []
+                'valid_values' => [ Category::SERIES_ONLINE, Category::SERIEES_OFFLINE ]
             ]
         ]);
         
         $oSurpriseModel = new Surprise();
         
         // get all the categories
-        $filters = [];
+        $filters = $GF->filters();
         $options = [
             'page'          => $page,
             'per_page'      => $perPage,
             'search'        => $search,
-            'search_fields' => ['name']
+            'search_fields' => ['name'],
+            'order_field' => $sort,
+            'order_type' => $sort_crit
         ];
         $oSurprisesCollection = $oSurpriseModel->Get($filters, $options);
         
@@ -52,6 +56,8 @@ class controller_admin_surprises extends ControllerAdminModel {
         $this->View->assign('oPagination', $oPagination);
         $this->View->assign('search', $search);
         $this->View->assign('GF', $GF);
+        $this->View->assign('sort', $sort);
+        $this->View->assign('sort_crit', $sort_crit);
         
         $this->View->addSEOParams($this->__('Surprises List :: Admin'), '', '');
     }

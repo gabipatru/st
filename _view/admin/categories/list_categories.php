@@ -37,7 +37,26 @@
     <div class="box">
     
       <div class="box-head">
-        <h2 class="left"><?php echo $this->__('Categories list')?></h2>
+        <form id="searchAndFilters" method="get" action="<?php echo MVC_ACTION_URL?>" >
+          <h2 class="left"><?php echo $this->__('Categories list')?></h2>
+          <div class="right">
+            <label><?php echo $this->__('Search for categories')?></label>
+            <input name="search" type="text" class="field small-field" value="<?php echo $search?>" />
+            <input type="submit" class="button" value="<?php echo $this->__('Search')?>" />
+          </div>
+
+          <div class="cl">&nbsp;</div>
+          <div class="box-continue">
+            <h2 class="left"><?php echo $this->__('Filter')?></h2>
+            <div class="right">
+              <label><?php echo $this->__('Filter by status')?></label>
+              <span class="GF-select"><?php echo $GF->GFSelect('status');?></span>
+            </div>
+          </div>
+
+          <input type="hidden" name="sort" value="<?php echo $sort?>" />
+          <input type="hidden" name="sort_crit" value="<?php echo $sort_crit?>" />
+        </form>
       </div>
       
       <!-- Table -->
@@ -45,11 +64,27 @@
       
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <th><?php echo $this->__('Image')?></th>
-            <th><?php echo $this->__('Category ID')?></th>
-            <th><?php echo $this->__('Category Name')?></th>
-            <th><?php echo $this->__('Status')?></th>
-            <th><?php echo $this->__('Actions')?></th>
+            <th>
+              <?php echo $this->__('Image')?>
+            </th>
+            <th>
+              <?php echo ($sort == 'category_id' ? '<span class="' . ($sort_crit == 'asc' ? 'sortAsc' : 'sortDesc' ) . '"></span>' : '')?>
+              <a href="<?php echo MVC_ACTION_URL . '?' . $GF->GFHref(true, true, false) . $GF->sortParams('category_id', $sort_crit)?>">
+                <?php echo $this->__('Category ID')?>
+              </a>
+            </th>
+            <th>
+              <?php echo ($sort == 'name' ? '<span class="' . ($sort_crit == 'asc' ? 'sortAsc' : 'sortDesc' ) . '"></span>' : '')?>
+              <a href="<?php echo MVC_ACTION_URL . '?' . $GF->GFHref(true, true, false) . $GF->sortParams('name', $sort_crit)?>">
+                <?php echo $this->__('Category Name')?>
+              </a>
+            </th>
+            <th>
+              <?php echo $this->__('Status')?>
+            </th>
+            <th>
+              <?php echo $this->__('Actions')?>
+            </th>
           </tr>
           
         <?php foreach ($oCategoriesCollection as $oCat) : ?>
