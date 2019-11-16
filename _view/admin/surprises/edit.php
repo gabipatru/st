@@ -20,7 +20,7 @@
             <label><?php echo $this->__('Group')?> <span>(<?php echo $this->__('Required Field')?>)</span></label>
             <select id="group_id" name="group_id" class="field size4">
                 <option value=""><?php echo $this->__('-- Choose one --')?></option>
-              <?php foreach ($oGroupsCollection as $oCat):?>
+              <?php foreach ($oGroupsCollection as $oCat) : ?>
                 <option <?php $this->selected($FV->group_id, $oCat->getGroupId())?> value="<?php echo $oCat->getGroupId()?>"><?php echo $oCat->getName()?></option>
               <?php endforeach;?>
             </select>

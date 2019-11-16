@@ -2,7 +2,7 @@
 
 <footer id="footer">
   <div class="footer-bottom">
-    <?php if (DEBUGGER_AGENT && Config::configByPath('HTML/Footer Debug/Display in website')):?>
+    <?php if (DEBUGGER_AGENT && Config::configByPath('HTML/Footer Debug/Display in website')) : ?>
       <div class="container">
         <div><?php echo $this->__('Script footprint')?>: <?php echo $this->displayBytes($memFootprint)?></div>
         <div><?php echo $this->__('Generated in')?> <?php printf("%5.1f", $executionTime)?> ms</div>
@@ -11,7 +11,7 @@
           <a class="yellow-text" id="js-query-display" href="#">+</a>
         </div>
         <div class="class-hidden" id="js-query-container">
-          <?php foreach ($_queriesRun as $sql):?>
+          <?php foreach ($_queriesRun as $sql) : ?>
             <div class="debug-item"><?php echo $sql; ?></div>
           <?php endforeach;?>
         </div>
@@ -26,6 +26,6 @@
   </div>
 </footer>
 
-<?php require_once(VIEW_DIR.'/_core/header_js.php');?>
+<?php require_once(VIEW_DIR . '/_core/header_js.php');?>
 
 </body>

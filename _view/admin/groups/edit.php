@@ -20,7 +20,7 @@
             <label><?php echo $this->__('Series_sg')?> <span>(<?php echo $this->__('Required Field')?>)</span></label>
             <select id="series_id" name="series_id" class="field size4">
                 <option value=""><?php echo $this->__('-- Choose one --')?></option>
-              <?php foreach ($oSeriesCollection as $oCat):?>
+              <?php foreach ($oSeriesCollection as $oCat) : ?>
                 <option <?php $this->selected($FV->series_id, $oCat->getSeriesId())?> value="<?php echo $oCat->getSeriesId()?>"><?php echo $oCat->getName()?></option>
               <?php endforeach;?>
             </select>

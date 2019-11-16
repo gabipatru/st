@@ -20,7 +20,7 @@
             <label><?php echo $this->__('Category')?> <span>(<?php echo $this->__('Required Field')?>)</span></label>
             <select id="category_id" name="category_id" class="field size4">
                 <option value=""><?php echo $this->__('-- Choose one --')?></option>
-              <?php foreach ($oCategoriesCollection as $oCat):?>
+              <?php foreach ($oCategoriesCollection as $oCat) : ?>
                 <option <?php $this->selected($FV->category_id, $oCat->getCategoryId())?> value="<?php echo $oCat->getCategoryId()?>"><?php echo $oCat->getName()?></option>
               <?php endforeach;?>
             </select>
@@ -49,10 +49,10 @@
           
           <p>
             <label><?php echo $this->__('Image')?></label>
-            <?php if ($oSeries->getFile()):?>
+            <?php if ($oSeries->getFile()) : ?>
               <img 
                   alt="<?php echo $oSeries->getFile()?>" 
-                  src="<?php echo Series::HTTP_DIR .'/'. $oSeries->getFile()?>"
+                  src="<?php echo Series::HTTP_DIR . '/' . $oSeries->getFile()?>"
               >
             <?php endif;?>
           </p>

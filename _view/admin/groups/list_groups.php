@@ -32,7 +32,7 @@
   <!-- Content -->
   <div id="content">
   
-  <?php if (count($oGroupsCollection)):?>
+  <?php if (count($oGroupsCollection)) : ?>
     <!-- Box -->
     <div class="box">
     
@@ -52,7 +52,7 @@
             <th><?php echo $this->__('Actions')?></th>
           </tr>
           
-        <?php foreach ($oGroupsCollection as $oCat):?>
+        <?php foreach ($oGroupsCollection as $oCat) : ?>
           <tr>
             <td><?php echo $oCat->getGroupId()?></td>
             <td><?php echo $oCat->getName()?></td>
@@ -85,7 +85,7 @@
     
     </div>
     <!-- End Box -->
-  <?php else:?>
+  <?php else : ?>
     <h2><?php echo $this->__('No groups could be found.');?></h2>
   <?php endif;?>
   

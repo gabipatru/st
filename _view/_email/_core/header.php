@@ -4,5 +4,5 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<?php require_once(EMAIL_VIEW_DIR.'/_core/header_meta.php');?>
+    <?php require_once(EMAIL_VIEW_DIR . '/_core/header_meta.php');?>
 </head>

@@ -38,10 +38,10 @@
           
           <p>
             <label><?php echo $this->__('Image')?></label>
-            <?php if ($oCategory->getFile()):?>
+            <?php if ($oCategory->getFile()) : ?>
               <img 
                   alt="<?php echo $oCategory->getFile()?>" 
-                  src="<?php echo Category::HTTP_DIR .'/'. $oCategory->getFile()?>"
+                  src="<?php echo Category::HTTP_DIR . '/' . $oCategory->getFile()?>"
               >
             <?php endif;?>
           </p>

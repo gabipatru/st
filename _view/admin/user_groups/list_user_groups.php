@@ -7,7 +7,7 @@
   
   <div class="cl">&nbsp;</div>
   
-  <?php include(VIEW_DIR. '/admin/_include/user_sidebar.php');?>
+  <?php include(VIEW_DIR . '/admin/_include/user_sidebar.php');?>
   
   <!-- Sidebar -->
   <div id="sidebar">
@@ -42,7 +42,7 @@
   <!-- Content -->
   <div id="content">
   
-  <?php if (count($oGroupsCollection)):?>
+  <?php if (count($oGroupsCollection)) : ?>
     <!-- Box -->
     <div class="box">
     
@@ -61,7 +61,7 @@
             <th><?php echo $this->____('Actions')?></th>
           </tr>
           
-        <?php foreach ($oGroupsCollection as $oCat):?>
+        <?php foreach ($oGroupsCollection as $oCat) : ?>
           <tr>
             <td><?php echo $oCat->getUserGroupId()?></td>
             <td><?php echo $oCat->getName()?></td>
@@ -92,10 +92,10 @@
                 >
                   <?php echo $this->__('Permissions')?>
                 </a>
-                <?php foreach ($aPermission[$oCat->getUserGroupId()] as $permission):?>
+                <?php foreach ($aPermission[$oCat->getUserGroupId()] as $permission) : ?>
                   <input 
                       type="hidden" 
-                      id="permission-<?php echo $oCat->getUserGroupId().'-'.$permission?>" 
+                      id="permission-<?php echo $oCat->getUserGroupId() . '-' . $permission?>"
                       value="set" 
                   />
                 <?php endforeach;?>
@@ -111,7 +111,7 @@
     
     </div>
     <!-- End Box -->
-  <?php else:?>
+  <?php else : ?>
     <h2><?php echo $this->__('No user groups could be found.');?></h2>
   <?php endif;?>
   
@@ -125,7 +125,7 @@
 <!-- Dialog for editing permissions -->
 <div id="user-permission-dialog" class="hidden" title="<?php echo $this->__('Edit psermissions')?>">
   <table class="dialog-table">
-    <?php foreach ($aAclTasks as $task => $taskId):?>
+    <?php foreach ($aAclTasks as $task => $taskId) : ?>
       <tr>
         <td><?php echo $task?></td>
         <td>

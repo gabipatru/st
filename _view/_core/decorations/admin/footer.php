@@ -2,7 +2,7 @@
     </div> <!-- shell -->
 </div> <!-- container -->
 
-<?php if (Config::configByPath('HTML/Footer Debug/Dsiplay in admin')):?>
+<?php if (Config::configByPath('HTML/Footer Debug/Dsiplay in admin')) : ?>
 <!-- Shell-debug -->
 <div class="shell-debug">
   <div><?php echo $this->__('Script footprint')?>: <?php echo $this->displayBytes($memFootprint)?></div>
@@ -17,7 +17,7 @@
     <a class="yellow-text" id="js-query-display" href="#">+</a>
   </div>
   <div class="hidden" id="js-query-container">
-    <?php foreach ($_queriesRun as $sql):?>
+    <?php foreach ($_queriesRun as $sql) : ?>
       <div class="shell-debug-item"><?php echo $sql; ?></div>
     <?php endforeach;?>
   </div>
@@ -27,15 +27,15 @@
 
 <!-- Footer -->
 <div id="footer">
-    <div class="shell">
-        <span class="left"><?php echo $this->__('Copyright © 2017 Surprize Turbo. All rights reserved.')?></span>
-        <span class="right">
-            <?php echo $this->__('Designed by Sutprize Turbo')?>
-        </span>
-    </div>
+  <div class="shell">
+    <span class="left"><?php echo $this->__('Copyright © 2017 Surprize Turbo. All rights reserved.')?></span>
+    <span class="right">
+      <?php echo $this->__('Designed by Sutprize Turbo')?>
+    </span>
+  </div>
 </div>
 <!-- End Footer -->
 
-<?php require_once(VIEW_DIR.'/_core/header_js.php');?>
+<?php require_once(VIEW_DIR . '/_core/header_js.php');?>
 
 </body>

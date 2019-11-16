@@ -32,7 +32,7 @@
   <!-- Content -->
   <div id="content">
   
-  <?php if (count($oSeriesCollection)):?>
+  <?php if (count($oSeriesCollection)) : ?>
     <!-- Box -->
     <div class="box">
     
@@ -53,17 +53,17 @@
             <th><?php echo $this->__('Actions')?></th>
           </tr>
           
-        <?php foreach ($oSeriesCollection as $oCat):?>
+        <?php foreach ($oSeriesCollection as $oCat) : ?>
           <tr>
             <td>
-              <?php if ($oCat->getFile()):?>
+              <?php if ($oCat->getFile()) : ?>
                 <span class="js-image-cell" data-image-div="image-div-<?php echo $oCat->getSeriesId()?>">
                   <?php echo $this->__('Image')?>
                 </span>
                 <div id="image-div-<?php echo $oCat->getSeriesId()?>" class="hidden absolute">
-                  <img src="<?php echo Series::HTTP_DIR .'/'. $oCat->getFile()?>">
+                  <img src="<?php echo Series::HTTP_DIR . '/ ' . $oCat->getFile()?>">
                 </div>
-              <?php else: ?>
+              <?php else : ?>
                 &nbsp;
               <?php endif;?>
             </td>
@@ -98,7 +98,7 @@
     
     </div>
     <!-- End Box -->
-  <?php else:?>
+  <?php else : ?>
     <h2><?php echo $this->__('No series could be found.');?></h2>
   <?php endif;?>
   

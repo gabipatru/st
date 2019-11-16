@@ -17,7 +17,7 @@
       <!-- Table -->
       <div class="table">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <?php foreach ($aMemcacheStats as $statName => $statValue):?>
+        <?php foreach ($aMemcacheStats as $statName => $statValue) : ?>
         <tr>
           <td><h3><?php echo $statName?></h3></td>
           <td><?php echo $statValue?></td>

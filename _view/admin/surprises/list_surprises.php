@@ -32,7 +32,7 @@
   <!-- Content -->
   <div id="content">
   
-  <?php if (count($oSurprisesCollection)):?>
+  <?php if (count($oSurprisesCollection)) : ?>
     <!-- Box -->
     <div class="box">
     
@@ -60,7 +60,7 @@
             <th><?php echo $this->__('Actions')?></th>
           </tr>
           
-        <?php foreach ($oSurprisesCollection as $oCat):?>
+        <?php foreach ($oSurprisesCollection as $oCat) : ?>
           <tr>
             <td><?php echo $oCat->getSurpriseId()?></td>
             <td><?php echo $oCat->getName()?></td>
@@ -97,7 +97,7 @@
     
     </div>
     <!-- End Box -->
-  <?php else:?>
+  <?php else : ?>
     <h2><?php echo $this->__('No surprises could be found.');?></h2>
   <?php endif;?>
   

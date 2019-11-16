@@ -8,6 +8,7 @@
     <file>./../../_config</file>
     <file>./../../_migrations</file>
     <file>./../../_script</file>
+    <file>./../../_view</file>
 
     <file>./../codeception/tests/acceptance</file>
     <file>./../codeception/tests/unit</file>
@@ -19,6 +20,7 @@
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
         <exclude name="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma"/>
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.TerminatingComment"/>
+        <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect"/>
     </rule>
 
 </ruleset>

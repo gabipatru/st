@@ -27,7 +27,7 @@
             <th><?php echo $this->__('Actions')?></th>
           </tr>
 
-        <?php foreach ($collectionCron as $col):?>
+        <?php foreach ($collectionCron as $col) : ?>
           <tr>
             <td><?php echo $col->getCronId()?></td>
             <td><?php echo $col->getScript()?></td>

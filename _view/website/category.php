@@ -7,14 +7,14 @@
     </div> <!-- End row -->
     
     <div class="row">
-      <?php foreach ($oSeriesCollection as $oSeries):?>
+      <?php foreach ($oSeriesCollection as $oSeries) : ?>
         <div class="col-sm-3 margin-bottom-30">
           <div class="category-box height-210">
-            <?php if ($oSeries->getFile()):?>
+            <?php if ($oSeries->getFile()) :?>
               <a href="<?php echo href_website('website/series', [$oSeries->getName() => $oSeries->getSeriesId()])?>">
-                <img alt="" src="<?php echo Series::HTTP_DIR .'/'. $oSeries->getFile();?>">
+                <img alt="" src="<?php echo Series::HTTP_DIR . '/' . $oSeries->getFile();?>">
               </a>
-            <?php else:?>
+            <?php else : ?>
               <div class="no-image-category"></div>
             <?php endif;?>
           </div>

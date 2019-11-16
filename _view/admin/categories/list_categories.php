@@ -32,7 +32,7 @@
   <!-- Content -->
   <div id="content">
   
-  <?php if (count($oCategoriesCollection)):?>
+  <?php if (count($oCategoriesCollection)) : ?>
     <!-- Box -->
     <div class="box">
     
@@ -52,17 +52,17 @@
             <th><?php echo $this->__('Actions')?></th>
           </tr>
           
-        <?php foreach ($oCategoriesCollection as $oCat):?>
+        <?php foreach ($oCategoriesCollection as $oCat) : ?>
           <tr>
             <td>
-              <?php if ($oCat->getFile()):?>
+              <?php if ($oCat->getFile()) : ?>
                 <span class="js-image-cell" data-image-div="image-div-<?php echo $oCat->getCategoryId()?>">
                   <?php echo $this->__('Image')?>
                 </span>
                 <div id="image-div-<?php echo $oCat->getCategoryId()?>" class="hidden absolute">
-                  <img src="<?php echo Category::HTTP_DIR .'/'. $oCat->getFile()?>">
+                  <img src="<?php echo Category::HTTP_DIR . '/' . $oCat->getFile()?>">
                 </div>
-              <?php else: ?>
+              <?php else : ?>
                 &nbsp;
               <?php endif;?>
             </td>
@@ -96,7 +96,7 @@
     
     </div>
     <!-- End Box -->
-  <?php else:?>
+  <?php else : ?>
     <h2><?php echo $this->__('No categories could be found.');?></h2>
   <?php endif;?>
   

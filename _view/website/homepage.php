@@ -7,14 +7,14 @@
     </div>
     
     <div class="row">
-      <?php foreach ($oCategoriesCollection as $oCat):?>
+      <?php foreach ($oCategoriesCollection as $oCat) : ?>
         <div class="col-sm-3 margin-bottom-30">
           <div class="category-box">
-            <?php if ($oCat->getFile()):?>
+            <?php if ($oCat->getFile()) : ?>
               <a href="<?php echo href_website('website/category', [$oCat->getName() => $oCat->getCategoryId()])?>">
-                <img alt="" src="<?php echo Category::HTTP_DIR .'/'. $oCat->getFile();?>">
+                <img alt="" src="<?php echo Category::HTTP_DIR . '/' . $oCat->getFile();?>">
               </a>
-            <?php else:?>
+            <?php else : ?>
               <div class="no-image-category"></div>
             <?php endif;?>
           </div>
