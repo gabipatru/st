@@ -1,6 +1,8 @@
 <?php
 $migrationSql = [];
 
+$migrationSql[] = "DROP TYPE IF EXISTS surprise_status";
+
 $migrationSql[] = "
 CREATE TYPE surprise_status AS ENUM ('online', 'offline');
 ";

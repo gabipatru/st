@@ -1,6 +1,8 @@
 <?php
 $migrationSql = [];
 
+$migrationSql[] = "DROP TYPE IF EXISTS group_status";
+
 $migrationSql[] = "
 CREATE TYPE group_status AS ENUM ('online', 'offline');
 ";

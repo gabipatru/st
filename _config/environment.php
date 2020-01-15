@@ -16,6 +16,10 @@ define('DB_USER',           'st');
 define('DB_PASS',           'qwqwqw');
 define('DB_DATABASE',       'surprize_turbo');
 
+// elasticsearch-specific
+define('ELASTIC_HOST',      'localhost');
+define('ELASTIC_PORT',      9200);
+
 // memcached-specific
 define('MEM_HOST',          '127.0.0.1');
 define('MEM_PORT',          11211);

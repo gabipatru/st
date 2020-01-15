@@ -1,6 +1,8 @@
 <?php
 $migrationSql = array();
 
+$migrationSql[] = "DROP TYPE IF EXISTS email_queue_status";
+
 $migrationSql[] = "
 CREATE TYPE email_queue_status AS ENUM ('sent', 'not sent');
 ";

@@ -1,6 +1,8 @@
 <?php
 $migrationSql = array();
 
+$migrationSql[] = "DROP TYPE IF EXISTS config_type";
+
 $migrationSql[] = "
 CREATE TYPE config_type AS ENUM ('text', 'textarea', 'yesno');
 ";

@@ -1,6 +1,8 @@
 <?php
 $migrationSql = array();
 
+$migrationSql[] = "DROP TYPE IF EXISTS user_status";
+
 $migrationSql[] = "
 CREATE TYPE user_status AS ENUM ('active', 'new', 'banned');
 ";

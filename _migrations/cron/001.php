@@ -1,6 +1,8 @@
 <?php
 $migrationSql = [];
 
+$migrationSql[] = "DROP TYPE IF EXISTS cron_status";
+
 $migrationSql[] = "
 CREATE TYPE cron_status AS ENUM ('enabled', 'disabled');
 ";
@@ -27,4 +29,10 @@ $nextRuntime = date('Y-m-d H:i:s', time() + 300);
 $migrationSql[] = "
 INSERT INTO cron (script, interval, next_runtime, status)
 VALUES ('SendQueuedEmail', '1', '$nextRuntime', 'enabled')
+";
+
+$nextRuntime = date('Y-m-d H:i:s', time() + 7200);
+$migrationSql[] = "
+INSERT INTO cron (script, interval, next_runtime, status)
+VALUES ('IndexDataInElasticsearch', '120', '$nextRuntime', 'enabled')
 ";
