@@ -10,12 +10,14 @@ class HTTPClient
 
     const REQUEST_TYPE_GET = 'GET';
     const REQUEST_TYPE_POST = 'POST';
+    const REQUEST_TYPE_POST_JSON = "POSTJSON";
     const REQUEST_TYPE_PUT = 'PUT';
     const REQUEST_TYPE_PATCH = 'PATCH';
     const REQUEST_TYPE_OPIONS = 'OPTIONS';
     const REQUEST_TYPE_DELETE = 'DELETE';
 
     private $requestType;
+    private $requestHeaders;
     private $url;
     private $params;
 
@@ -77,6 +79,7 @@ class HTTPClient
     {
         if ($requestType != self::REQUEST_TYPE_GET
                 && $requestType != self::REQUEST_TYPE_POST
+                && $requestType != self::REQUEST_TYPE_POST_JSON
                 && $requestType != self::REQUEST_TYPE_PUT
                 && $requestType != self::REQUEST_TYPE_PATCH
                 && $requestType != self::REQUEST_TYPE_OPIONS
@@ -91,6 +94,31 @@ class HTTPClient
     public function getRequestType()
     {
         return $this->requestType;
+    }
+
+    #############################################################################
+    ## SETTER AND GETTER FUNCTIONS FOR REQUEST HEADER
+    #############################################################################
+    public function setRequestHeaders($headers)
+    {
+        if (! is_array($headers)) {
+            throw new Exception('Request headers must be an array');
+        }
+
+        foreach ($headers as $headerName => $headerValue) {
+            if (! $headerName) {
+                throw new Exception('Invalid header name');
+            }
+
+            $this->requestHeaders[] = "$headerName: $headerValue";
+        }
+
+        return $this;
+    }
+
+    public function getRequestHeaders()
+    {
+        return $this->requestHeaders;
     }
 
     #############################################################################
@@ -116,13 +144,6 @@ class HTTPClient
             throw new Exception('The Request parameters must be an array');
         }
 
-        // make sure all parameters have keys
-        foreach ($params as $paramName => $paramValue) {
-            if (! $paramName) {
-                throw new Exception('All parameters must have valid names as array keys');
-            }
-        }
-
         $this->params = $params;
         return $this;
     }
@@ -137,10 +158,15 @@ class HTTPClient
         return http_build_query($this->params);
     }
 
+    public function getParamsForJsonPost()
+    {
+        return $this->params[0];
+    }
+
     #############################################################################
     ## SETTER AND GETTER FUNCTIONS FOR RESPONSE BODY
     #############################################################################
-    public function setResponseBody($body)
+    protected function setResponseBody($body)
     {
         $this->responseBody = $body;
         return $this;
@@ -154,7 +180,7 @@ class HTTPClient
     #############################################################################
     ## SETTER AND GETTER FUNCTIONS FOR RESPONSE CODE
     #############################################################################
-    public function setResponseCode($code)
+    protected function setResponseCode($code)
     {
         $this->responseCode = $code;
         return $this;
@@ -168,7 +194,7 @@ class HTTPClient
     #############################################################################
     ## SETTER AND GETTER FUNCTIONS FOR RESPONSE HEADER SIZE
     #############################################################################
-    public function setResponseHeaderSize($size)
+    protected function setResponseHeaderSize($size)
     {
         $this->responseHeaderSize = $size;
         return $this;
@@ -182,7 +208,7 @@ class HTTPClient
     #############################################################################
     ## SETTER AND GETTER FUNCTIONS FOR RESPONSE HEADER
     #############################################################################
-    public function setResponseHeader($header)
+    protected function setResponseHeader($header)
     {
         $this->responseHeader = $this->processResponseHeader($header);;
         return $this;
@@ -208,12 +234,25 @@ class HTTPClient
 
         $ch = curl_init();
 
+        // set the HTTP Headers
+        if ($this->getRequestHeaders()) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->getRequestHeaders());
+        }
+
         // check if the request must be POST
         if ($this->getRequestType() == self::REQUEST_TYPE_POST) {
             curl_setopt($ch, CURLOPT_URL, $this->getUrl());
 
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParamsForQuery());
+        }
+
+        // check if the request must be POST and the params must be in JSON format
+        if ($this->getRequestType() == self::REQUEST_TYPE_POST_JSON) {
+            curl_setopt($ch, CURLOPT_URL, $this->getUrl());
+
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParamsForJsonPost());
         }
 
         // if the request is get we must set the params as part of the url

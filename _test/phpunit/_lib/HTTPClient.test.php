@@ -88,7 +88,7 @@ class HTTPClient extends AbstractTest
     }
 
     /**
-     * Test Params setter and getters
+     * Test Params setter and getter
      * @group fast
      */
     public function testParamsSetterAndGetterCorrectData()
@@ -108,6 +108,26 @@ class HTTPClient extends AbstractTest
     }
 
     /**
+     * Test Params setter and get params for JSON post
+     * @group fast
+     */
+    public function testParamsSetterAndJsonGetter()
+    {
+        // init
+        $oHttpClient = new \HTTPClient();
+
+        // the test
+        $return = $oHttpClient->setParams(['value1']);
+
+        // asserts
+        $this->assertInstanceOf(\HTTPClient::class, $return);
+
+        $params = $oHttpClient->getParams();
+        $this->assertInternalType(IsType::TYPE_ARRAY, $params);
+        $this->assertNotNull($oHttpClient->getParamsForJsonPost());
+    }
+
+    /**
      * Test Params setter by passing a non-array as params
      * @group fast
      */
@@ -124,25 +144,6 @@ class HTTPClient extends AbstractTest
     }
 
     /**
-     * Test Params setter by passing an array without a key as params
-     * @group fast
-     */
-    public function testParamsSetterAndGetterIncorrectParams()
-    {
-        // init
-        $oHttpClient = new \HTTPClient();
-
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('All parameters must have valid names as array keys');
-
-        // the test
-        $return = $oHttpClient->setParams([
-            'key1' => 'value1',
-            'value2'
-        ]);
-    }
-
-    /**
      * Test Response Body setter and getter
      * @group fast
      */
@@ -152,7 +153,7 @@ class HTTPClient extends AbstractTest
         $oHttpClient = new \HTTPClient();
 
         // the test
-        $return = $oHttpClient->setResponseBody('test');
+        $return = $this->invokeMethod($oHttpClient, 'setResponseBody', ['test']);
 
         // asserts
         $this->assertInstanceOf(\HTTPClient::class, $return);
@@ -169,7 +170,7 @@ class HTTPClient extends AbstractTest
         $oHttpClient = new \HTTPClient();
 
         // the test
-        $return = $oHttpClient->setResponseCode(200);
+        $return = $this->invokeMethod($oHttpClient, 'setResponseCode', [200]);
 
         // asserts
         $this->assertInstanceOf(\HTTPClient::class, $return);
@@ -186,7 +187,7 @@ class HTTPClient extends AbstractTest
         $oHttpClient = new \HTTPClient();
 
         // the test
-        $return = $oHttpClient->setResponseHeaderSize(200);
+        $return = $this->invokeMethod($oHttpClient, 'setResponseHeaderSize', [200]);
 
         // asserts
         $this->assertInstanceOf(\HTTPClient::class, $return);
@@ -203,7 +204,7 @@ class HTTPClient extends AbstractTest
         $oHttpClient = new \HTTPClient();
 
         // the test
-        $return = $oHttpClient->setResponseHeader('Content-length: 1000');
+        $return = $this->invokeMethod($oHttpClient, 'setResponseHeader', ['Content-length: 1000']);
 
         // asserts
         $this->assertInstanceOf(\HTTPClient::class, $return);
