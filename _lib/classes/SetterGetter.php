@@ -28,4 +28,24 @@ class SetterGetter {
             }
         }
     }
+
+    /**
+     * Get all the values of some fields. The fields for which values will be
+     * returned will be found in the array passed to the function. Thiese values
+     * can come directly from DB Data Model, so we have to strip _
+     */
+    public function allFieldsByArray($arrFields)
+    {
+        if (! $arrFields || ! is_array($arrFields)) {
+            return false;
+        }
+
+        $arr = [];
+        foreach ($arrFields as $field) {
+            $property = str_replace('_', '', $field);
+            $arr[$field] = $this->$property;
+        }
+
+        return $arr;
+    }
 }
