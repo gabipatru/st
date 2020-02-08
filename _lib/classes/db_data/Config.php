@@ -26,7 +26,7 @@ class Config extends DbData {
         parent::__construct($table, $id, $status);
     }
     
-    public function onAdd($insertId) {
+    public function onAdd($insertId, $oItem) {
         $Memcache = Mcache::getSingleton();
         $Memcache->delete(self::MEMCACHE_KEY);
         

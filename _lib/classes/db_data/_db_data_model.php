@@ -8,6 +8,8 @@ abstract class dbDataModel {
     private $tableName;
     private $idField;
     private $statusField;
+
+    protected $aElasticFields = [];
     
     protected $db;
     
@@ -25,7 +27,7 @@ abstract class dbDataModel {
     abstract protected function onBeforeAdd($oItem);
     
     abstract protected function onBeforeEdit($iId, $oItem);
-    abstract protected function onEdit($iId, $res);
+    abstract protected function onEdit($iId, $oItem);
     
     abstract protected function onBeforeDelete($iId);
     abstract protected function onDelete($iId);
@@ -38,16 +40,24 @@ abstract class dbDataModel {
     /*
      * Some get functions for class data
      */
-    public function getTableName() {
+    public function getTableName()
+    {
         return $this->tableName;
     }
     
-    public function getIdField() {
+    public function getIdField()
+    {
         return $this->idField;
     }
     
-    public function getStatusField() {
+    public function getStatusField()
+    {
         return $this->statusField;
+    }
+
+    public function getElasticFields()
+    {
+        return $this->aElasticFields;
     }
     
     /*
@@ -114,10 +124,11 @@ abstract class dbDataModel {
         $iLastId = $this->db->lastInsertId($this->getTableName(), $this->getIdField());
 
         // call abstract function onAdd
-        return $this->onAdd($iLastId);
+        return $this->onAdd($iLastId, $oItem);
     }
     
-    protected function onAdd($iLastId) {
+    protected function onAdd($iLastId, $oItem)
+    {
         return $iLastId;
     }
     
@@ -166,7 +177,7 @@ abstract class dbDataModel {
             return false;
         }
         
-        return $this->onEdit($iId, $res);
+        return $this->onEdit($iId, $oItem);
     }
     
     /*

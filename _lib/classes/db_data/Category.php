@@ -16,15 +16,23 @@ class Category extends DbData
 
     const SERIES_ONLINE = 'online';
     const SERIEES_OFFLINE = 'offline';
+
+    protected $elasticSearchIndex = 'category';
+    protected $elasticSearchType = 'category';
     
-    protected $aFields = array(
+    protected $aFields = [
         'category_id',
         'name',
         'description',
         'file',
         'status',
         'created_at'
-    );
+    ];
+    protected $aElasticFields = [
+        'name',
+        'description',
+        'status'
+    ];
     
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = 'status') {
         parent::__construct($table, $id, $status);

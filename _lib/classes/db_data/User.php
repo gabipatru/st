@@ -43,7 +43,7 @@ class User extends DbData {
     }
     
     // add user confirmation
-    protected function onAdd($userId) {
+    protected function onAdd($userId, $oItem) {
         $configConfirmation = Config::configByPath(self::CONFIG_USER_CONFIRMATION);
         
         if ($configConfirmation === Config::CONFIG_VALUE_NO) {

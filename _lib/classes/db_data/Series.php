@@ -13,8 +13,11 @@ class Series extends DbData
     
     const IMAGE_WIDTH   = 250;
     const IMAGE_HEIGHT  = 250;
-    
-    protected $aFields = array(
+
+    protected $elasticSearchIndex = 'series';
+    protected $elasticSearchType = 'series';
+
+    protected $aFields = [
         'series_id',
         'category_id',
         'name',
@@ -22,7 +25,12 @@ class Series extends DbData
         'file',
         'status',
         'created_at'
-    );
+    ];
+    protected $aElasticFields = [
+        'name',
+        'description',
+        'status'
+    ];
     
     function __construct($table = self::TABLE_NAME, $id = self::ID_FIELD, $status = 'status') {
         parent::__construct($table, $id, $status);
