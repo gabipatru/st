@@ -12,8 +12,9 @@ class HTTPClient
     const REQUEST_TYPE_POST = 'POST';
     const REQUEST_TYPE_POST_JSON = "POSTJSON";
     const REQUEST_TYPE_PUT = 'PUT';
+    const REQUEST_TYPE_PUT_JSON = 'PUTJSON';
     const REQUEST_TYPE_PATCH = 'PATCH';
-    const REQUEST_TYPE_OPIONS = 'OPTIONS';
+    const REQUEST_TYPE_OPTIONS = 'OPTIONS';
     const REQUEST_TYPE_DELETE = 'DELETE';
 
     private $requestType;
@@ -81,8 +82,9 @@ class HTTPClient
                 && $requestType != self::REQUEST_TYPE_POST
                 && $requestType != self::REQUEST_TYPE_POST_JSON
                 && $requestType != self::REQUEST_TYPE_PUT
+                && $requestType != self::REQUEST_TYPE_PUT_JSON
                 && $requestType != self::REQUEST_TYPE_PATCH
-                && $requestType != self::REQUEST_TYPE_OPIONS
+                && $requestType != self::REQUEST_TYPE_OPTIONS
                 && $requestType != self::REQUEST_TYPE_DELETE) {
             throw new Exception('Invalid request type');
         }
@@ -253,6 +255,20 @@ class HTTPClient
 
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParamsForJsonPost());
+        }
+
+        // check if the request must be PUT and the params must be in JSON format
+        if ($this->getRequestType() == self::REQUEST_TYPE_PUT_JSON) {
+            curl_setopt($ch, CURLOPT_URL, $this->getUrl());
+
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getParamsForJsonPost());
+        }
+
+        // check if the request must be DELETE
+        if ($this->getRequestType() == self::REQUEST_TYPE_DELETE) {
+            curl_setopt($ch, CURLOPT_URL, $this->getUrl());
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
         }
 
         // if the request is get we must set the params as part of the url
