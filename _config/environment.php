@@ -30,3 +30,7 @@ define('SMTP_HOST',         'smtp.mailtrap.io');
 define('SMTP_PORT',         '2525');
 define('SMTP_USERNAME',     '89ee358b9ac8f5');
 define('SMTP_PASSWORD',     'a1ec8e63feb328');
+
+if (! defined('USE_ELASTIC_IN_DB_DATA')) {
+    define('USE_ELASTIC_IN_DB_DATA', 1);
+}

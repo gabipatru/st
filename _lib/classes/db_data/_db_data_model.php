@@ -127,11 +127,6 @@ abstract class dbDataModel {
         return $this->onAdd($iLastId, $oItem);
     }
     
-    protected function onAdd($iLastId, $oItem)
-    {
-        return $iLastId;
-    }
-    
     /*
      * EDIT function - performs updates in the database
      */

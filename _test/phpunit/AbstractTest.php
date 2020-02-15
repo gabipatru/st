@@ -6,6 +6,10 @@ namespace Test;
 
 use PHPUnit\Framework\TestCase;
 
+if (! defined('USE_ELASTIC_IN_DB_DATA')) {
+    define('USE_ELASTIC_IN_DB_DATA', 0);
+}
+
 require_once(__DIR__ . '/../../_config/paths.php');
 require_once(CLASSES_DIR . '/mvc.php');
 require_once(CONFIG_DIR . '/links.php');

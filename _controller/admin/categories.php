@@ -157,7 +157,7 @@ class controller_admin_categories extends ControllerAdminModel
         if ($categoryId) {
             $filters = [ 'category_id' => $categoryId ];
             $oCategory = $oCategoryModel->singleGet($filters, []);
-                
+
             $FV->initDefault($oCategory);
         }
         

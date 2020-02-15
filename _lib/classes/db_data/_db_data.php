@@ -47,7 +47,7 @@ class DbData extends dbDataModel
      * @param int $iLastId - the last inserted id
      * @param SetterGetter $oItem - the item that was inserted in the DB
      *
-     * @return bool
+     * @return int - the id of the inserted element
      *
      * @throws Exception
      */
@@ -56,18 +56,24 @@ class DbData extends dbDataModel
         if (! USE_ELASTIC_IN_DB_DATA
                 || ! $this->constantElasticSearchType()
                 || ! $this->constantElasticSearchIndex()) {
-            return true;
+            return $iLastId;
         }
 
         $elastic = ElasticSearch::getSingleton();
         $arrItem = $oItem->allFieldsByArray($this->getElasticFields());
 
-        return $elastic->AddItem(
+        $result = $elastic->AddItem(
             $iLastId,
             $arrItem,
             $this->constantElasticSearchType(),
             $this->constantElasticSearchIndex()
         );
+
+        if ($result) {
+            return $iLastId;
+        }
+
+        return 0;
     }
     
     protected function onBeforeEdit($iId, $oItem) {
