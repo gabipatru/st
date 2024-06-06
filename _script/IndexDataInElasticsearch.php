@@ -8,7 +8,7 @@ namespace Cron;
 
 require_once(__DIR__ . '/_config.php');
 
-class IndexDataInElasticsearch extends AbstractCron
+class IndexDataInElasticsearch extends AbstractScript
 {
     public function run()
     {

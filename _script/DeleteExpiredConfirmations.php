@@ -8,7 +8,7 @@ namespace Cron;
 
 require_once(__DIR__ . '/_config.php');
 
-class DeleteExpiredConfirmations extends AbstractCron
+class DeleteExpiredConfirmations extends AbstractScript
 {
     public function run()
     {

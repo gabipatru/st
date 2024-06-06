@@ -10,11 +10,13 @@ namespace Cron;
 require_once(TRAITS_DIR . '/Html.trait.php');
 require_once(TRAITS_DIR . '/Log.trait.php');
 require_once(TRAITS_DIR . '/Email.trait.php');
+require_once(__DIR__ . '/cron.trait.php');
 
 abstract class AbstractCron extends \SetterGetter
 {
     use \Log;
     use \Email;
+    use CronDisplayMsg;
     
     protected $db;
     
@@ -35,7 +37,7 @@ abstract class AbstractCron extends \SetterGetter
         
         $this->checkDebugOption();
         
-        $this->displayMsg("*******************************");
+        $this->displayMsg("\n***********************************");
         $this->displayMsg('Cron started at ' . date('Y-m-d H:i:s') . "\n");
         
         $this->db = \db::getSingleton();
@@ -60,8 +62,8 @@ abstract class AbstractCron extends \SetterGetter
      */
     public function __destruct()
     {
-        $this->displayMsg("Cron ended at " . date('Y-m-d H:i:s'));
-        $this->displayMsg("********************************\n");
+        $this->displayMsg("\nCron ended at " . date('Y-m-d H:i:s'));
+        $this->displayMsg("***********************************\n");
     }
     
     /*
@@ -71,32 +73,6 @@ abstract class AbstractCron extends \SetterGetter
     {
         if (php_sapi_name() != 'cli') {
             die("Please run this from the commandline.\n");
-        }
-    }
-    
-    /*
-     * Check if the script received the debug option, and set the debug to appropriate value
-     */
-    protected function checkDebugOption()
-    {
-        global $argv;
-        
-        if (!empty($argv[1]) && $argv[1] === 'debug') {
-            $this->setDebug(true);
-        } else {
-            $this->setDebug(false);
-        }
-    }
-    
-    /*
-     * Use this function to display a message or log it to file
-     */
-    public function displayMsg($message)
-    {
-        if ($this->getDebug()) {
-            echo $message . "\n";
-        } else {
-            $this->logMessage($message);
         }
     }
     

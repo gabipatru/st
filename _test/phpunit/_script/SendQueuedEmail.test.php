@@ -19,7 +19,11 @@ class SendQueuedEmail extends AbstractTest
     public function testNoEmails()
     {
         // init and mock
+        $MockDb = $this->getMockBuilder('\db')
+            ->disableOriginalConstructor()
+            ->getMock();
         $MockCron = $this->getMockBuilder('\Cron\SendQueuedEmail')
+            ->setConstructorArgs([$MockDb])
             ->setMethods([ 'displayMsg', 'getEmailsToProcess', 'updateEmailQueue', 'sendEmail' ])
             ->getMock();
         $MockCron->expects($this->once())
@@ -46,7 +50,11 @@ class SendQueuedEmail extends AbstractTest
     public function testSend2Emails()
     {
         // init and mock
+        $MockDb = $this->getMockBuilder('\db')
+            ->disableOriginalConstructor()
+            ->getMock();
         $MockCron = $this->getMockBuilder('\Cron\SendQueuedEmail')
+            ->setConstructorArgs([$MockDb])
             ->setMethods([ 'displayMsg', 'getEmailsToProcess', 'updateEmailQueue', 'sendEmail' ])
             ->getMock();
         $MockCron->expects($this->once())

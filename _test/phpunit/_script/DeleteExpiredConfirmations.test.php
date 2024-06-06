@@ -19,7 +19,11 @@ class DeleteExpiredConfirmations extends AbstractTest
     public function testNoConfirmations()
     {
         // init and mock
+        $MockDb = $this->getMockBuilder('\db')
+            ->disableOriginalConstructor()
+            ->getMock();
         $MockCron = $this->getMockBuilder('\Cron\DeleteExpiredConfirmations')
+            ->setConstructorArgs([$MockDb])
             ->setMethods([ 'displayMsg', 'getExpiredConfirmations', 'deleteConfirmation' ])
             ->getMock();
         $MockCron->expects($this->exactly(2))
@@ -42,7 +46,11 @@ class DeleteExpiredConfirmations extends AbstractTest
     public function test2Confirmations()
     {
         // init and mock
+        $MockDb = $this->getMockBuilder('\db')
+            ->disableOriginalConstructor()
+            ->getMock();
         $MockCron = $this->getMockBuilder('\Cron\DeleteExpiredConfirmations')
+            ->setConstructorArgs([$MockDb])
             ->setMethods([ 'displayMsg', 'getExpiredConfirmations', 'deleteConfirmation' ])
             ->getMock();
         $MockCron->expects($this->exactly(2))

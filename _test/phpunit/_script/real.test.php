@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . './../AbstractTest.php';
 
-
 /**
  * This class will do real tests with the crons - with db connection and db data
  */
@@ -39,8 +38,9 @@ class RealCronTests extends AbstractTest
         $this->assertCount(2, $collection);
 
         // prepare the test
+        $db = \db::getSingleton();
         require_once SCRIPT_DIR . '/DeleteExpiredConfirmations.php';
-        $oCron = new \Cron\DeleteExpiredConfirmations();
+        $oCron = new \Cron\DeleteExpiredConfirmations($db);
 
         // run the test
         $oCron->run();
@@ -78,8 +78,10 @@ class RealCronTests extends AbstractTest
         $oEmailQueue->Add($oItem);
 
         // prepare the test
+        $db = \db::getSingleton();
         require_once SCRIPT_DIR . '/SendQueuedEmail.php';
         $MockCron = $this->getMockBuilder('\Cron\SendQueuedEmail')
+            ->setConstructorArgs([$db])
             ->setMethods([ 'displayMsg', 'sendEmail' ])
             ->getMock();
         $MockCron->method('displayMsg')

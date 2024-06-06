@@ -1,13 +1,16 @@
 <?php
 
 /*
- * This class will run an individual cron when called
+ * This class will run an individual cron when called.
  */
 
 namespace Cron;
 
 require_once(__DIR__ . '/_config.php');
 
+/**
+ * This script will run all the scripts which have database records.
+ */
 class Script extends AbstractCron
 {
     public function run()
@@ -48,7 +51,7 @@ class Script extends AbstractCron
 
         $this->displayMsg("Cron $scriptName started");
 
-        $Cron = new $className();
+        $Cron = new $className($this->db);
         $Cron->run();
 
         // save the cron run

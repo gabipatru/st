@@ -14,6 +14,7 @@ require_once(CLASSES_DIR . '/db.php');
 require_once(FUNCTIONS_DIR . '/html_functions.php');
 
 require_once(SCRIPT_DIR . '/_abstractcron.php');
+require_once(SCRIPT_DIR . '/_abstractscript.php');
 
 if (! defined('DEBUGGER_AGENT')) {
     define('DEBUGGER_AGENT', 0);

@@ -8,7 +8,7 @@ namespace Cron;
 
 require_once(__DIR__ . '/_config.php');
 
-class SendQueuedEmail extends AbstractCron
+class SendQueuedEmail extends AbstractScript
 {
     public function run()
     {
