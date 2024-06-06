@@ -11,11 +11,16 @@ trait CronDisplayMsg
     {
         global $argv;
 
-        if (!empty($argv[1]) && $argv[1] === 'debug') {
-            $this->setDebug(true);
-        } else {
-            $this->setDebug(false);
+        if (is_array($argv)) {
+            foreach ($argv as $arg) {
+                if ($arg === 'debug') {
+                    $this->setDebug(true);
+                    return;
+                }
+            }
         }
+
+        $this->setDebug(false);
     }
 
     /*

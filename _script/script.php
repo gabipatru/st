@@ -16,13 +16,13 @@ class Script extends AbstractCron
     public function run()
     {
         global $argv;
-        $scriptName = ($argv[2] ?? null);
+        $scriptName = ($argv[1] ?? null);
         if (! $scriptName) {
             $this->displayMsg('No script name found !');
             return;
         }
 
-        $cronId = ($argv[3] ?? null);
+        $cronId = ($argv[2] ?? null);
         if (! $cronId) {
             $this->displayMsg('No script id found !');
             return;
