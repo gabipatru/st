@@ -132,7 +132,7 @@ class controller_admin_cache extends ControllerAdminModel {
                 if (isset($index['store.size'])) {
                     $data['storage'] = $index['store.size'];
                 }
-                
+
                 $aElasticData[] = $data;
             }
 
@@ -171,5 +171,24 @@ class controller_admin_cache extends ControllerAdminModel {
         }
 
         $this->redirect(href_admin('cache/elasticsearch'));
+    }
+
+    ###############################################################################
+    ## REINDEX THE DATABASE CONTENTS INTO ELASTICSEARCH
+    ###############################################################################
+    public function reindex_elastic()
+    {
+        $referrer = $this->filterGET('referrer', 'string');
+        if (! $referrer) {
+            $referrer = $this->hrefAdmin('cache/list_cache');
+        }
+
+        $pathToScript = SCRIPT_DIR . '/script.php IndexDataInElasticsearch 3';
+
+        // run the script in background
+        shell_exec('php ' . $pathToScript . ' &');
+
+        $this->setMessage($this->__('Reindexing of data in Elasticsearch started'));
+        $this->redirect($referrer);
     }
 }

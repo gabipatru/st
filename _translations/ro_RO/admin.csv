@@ -155,6 +155,7 @@
 "Please specify a user group name","Specifica numele grupei de utilizatori"
 "Please specify the config path","Te rog specifica o cale de config"
 "Please specify the memcached key you want to delete","Specifica cheia memcahed pe care vrei sa o stergi"
+"Reindexing of data in Elasticsearch started","Reindexarea datelor in Elasticsearch a inceput."
 "Required Field","Camp obligatoriu"
 "Run at","Rulat la"
 "Save","Salveaza"

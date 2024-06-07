@@ -155,6 +155,7 @@
 "Please specify a user group name","Please specify a user group name"
 "Please specify the config path","Please specify the config path"
 "Please specify the memcached key you want to delete","Please specify the memcached key you want to delete"
+"Reindexing of data in Elasticsearch started","Reindexing of data in Elasticsearch started."
 "Required Field","Required Field"
 "Run at","Run at"
 "Save","Save"

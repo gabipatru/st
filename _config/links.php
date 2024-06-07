@@ -116,6 +116,8 @@ function href_admin($sName, $sData = '')
                     return HTTP_MAIN . '/admin/cache/elasticsearch.html';
                 case 'delete_elastic_index':
                     return HTTP_MAIN . '/admin/cache/delete_elastic_index.html' . ($sData ? '?index_name=' . $sData .'&token=' . $mvc->securityGetToken() : '');
+                case 'reindex_elastic':
+                    return HTTP_MAIN . '/admin/cache/reindex_elastic.html' . ($sData ? '?referrer=' . urldecode($sData) : '');
             }
         case 'users':
             switch ($aPath[1]) {
