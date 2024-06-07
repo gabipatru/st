@@ -26,8 +26,10 @@ class AdminCacheCest extends AbstractAcceptanceCest
         $this->testAdminHeader($I);
 
         $I->seeElement('div#main');
+
         $I->seeElement('div#sidebar');
         $I->see('Cache Management', 'h2');
+        $I->see('Cache Scripts', 'h2');
 
         $this->testAdminFooter($I);
     }
@@ -48,6 +50,10 @@ class AdminCacheCest extends AbstractAcceptanceCest
         $I->seeElement('div#main');
         $I->seeElement('div#content');
         $I->seeElement('div.table table');
+
+        $I->seeElement('div#sidebar');
+        $I->see('Cache Management', 'h2');
+        $I->see('Cache Scripts', 'h2');
 
         $this->testAdminFooter($I);
     }
@@ -105,5 +111,31 @@ class AdminCacheCest extends AbstractAcceptanceCest
         $I->see('Memcached keys flushed', 'div.msg-ok');
 
         $this->testAdminFooter($I);
+    }
+
+    /**
+     * Test that the memcache page is loaded correctly.
+     *
+     * @param $I
+     *
+     * @return void
+     */
+    public function testElasticsearchList($I)
+    {
+        // login as Admin
+        $this->login($I);
+
+        $I->amOnPage('/admin/cache/elasticsearch.html');
+
+        // asserts
+        $this->testAdminHeader($I);
+
+        $I->seeElement('div#main');
+        $I->seeElement('div#content');
+        $I->seeElement('div.table table');
+
+        $I->seeElement('div#sidebar');
+        $I->see('Cache Management', 'h2');
+        $I->see('Cache Scripts', 'h2');
     }
 }
