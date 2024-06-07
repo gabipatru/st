@@ -22,6 +22,30 @@ class ElasticSearch
     }
 
     /**
+     * Fetch information about the Elasticsearch indices.
+     *
+     * @return string
+     *
+     * @throws Exception
+     */
+    public function elasticStats(): string
+    {
+        $oHTTPClient = new HTTPClient();
+        $oHTTPClient->setUrl($this->getUrl() .'/_cat/indices')
+            ->setRequestType(HTTPClient::REQUEST_TYPE_GET)
+            ->setRequestHeaders(['Content-Type' => 'application/json'])
+            ->setParams(['format' => 'json']);
+
+        $oHTTPClient->sendRequest();
+
+        if ($oHTTPClient->getResponseCode() != self::CODE_INDEX_BULK_SUCCESSFUL) {
+            throw new Exception($oHTTPClient->getResponseBody());
+        }
+
+        return $oHTTPClient->getResponseBody();
+    }
+
+    /**
      * Add an element to ElasticSearch
      *
      * @param int $id - the id of the item
@@ -147,6 +171,37 @@ class ElasticSearch
 
         if ($oHTTPClient->getResponseCode() != self::CODE_INDEX_BULK_SUCCESSFUL) {
             throw new Exception($oHTTPClient->getResponseBody());
+        }
+
+        return true;
+    }
+
+    /**
+     * Delete an Elasticsearch Index.
+     *
+     * @param string $indexName
+     *
+     * @return mixed
+     *
+     * @throws Exception
+     */
+    public function DeleteIndex(string $indexName): bool
+    {
+        $expectedResponse = '{"acknowledged":true}';
+
+        $oHTTPClient = new HTTPClient();
+        $oHTTPClient->setUrl($this->getUrl() .'/' . $indexName)
+            ->setRequestHeaders(['Content-Type' => 'application/json'])
+            ->setRequestType(HTTPClient::REQUEST_TYPE_DELETE);
+
+        $oHTTPClient->sendRequest();
+
+        if ($oHTTPClient->getResponseCode() != self::CODE_DELETE_SUCCESSFUL) {
+            throw new Exception($oHTTPClient->getResponseBody());
+        }
+
+        if ($expectedResponse != $oHTTPClient->getResponseBody()) {
+            return false;
         }
 
         return true;

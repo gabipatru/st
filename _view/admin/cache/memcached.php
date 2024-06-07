@@ -1,6 +1,8 @@
 <!-- Main -->
 <div id="main">
   <div class="cl">&nbsp;</div>
+
+  <?php include(VIEW_DIR . '/admin/_include/cache_sidebar.php');?>
   
   <!-- Content -->
   <div id="content">
@@ -18,10 +20,10 @@
       <div class="table">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <?php foreach ($aMemcacheStats as $statName => $statValue) : ?>
-        <tr>
-          <td><h3><?php echo $statName?></h3></td>
-          <td><?php echo $statValue?></td>
-        </tr>
+          <tr>
+            <td><h3><?php echo $statName?></h3></td>
+            <td><?php echo $statValue?></td>
+          </tr>
         <?php endforeach;?>
         </table>
       </div>

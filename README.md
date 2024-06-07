@@ -11,3 +11,4 @@ Contains:
 - Translations
 - Images embedded in CSS files
 - Memcached support
+- Elasticsearch Support

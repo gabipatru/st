@@ -102,4 +102,74 @@ class controller_admin_cache extends ControllerAdminModel {
         
         $this->redirect(href_admin('cache/memcached'));
     }
+
+    ###############################################################################
+    ## ELASTICSEARCH PAGE
+    ###############################################################################
+    function elasticsearch()
+    {
+        $oElastic = ElasticSearch::getSingleton();
+
+        try {
+            // get elasticsearch stats
+            $indexInfo = $oElastic->elasticStats();
+
+            $indexInfo = json_decode($indexInfo, true);
+
+            $aElasticData = [];
+            foreach ($indexInfo as $index) {
+                // prepare the data to be displayed
+                $data = [];
+                if (isset($index['health'])) {
+                    $data['status'] = $index['health'];
+                }
+                if (isset($index['index'])) {
+                    $data['name'] = $index['index'];
+                }
+                if (isset($index['docs.count'])) {
+                    $data['docs_no'] = $index['docs.count'];
+                }
+                if (isset($index['store.size'])) {
+                    $data['storage'] = $index['store.size'];
+                }
+                
+                $aElasticData[] = $data;
+            }
+
+            $this->View->assign_by_ref('aElasticData', $aElasticData);
+        }
+        catch (Exception $e) {
+            $this->setErrorMessage($e->getMessage());
+        }
+    }
+
+    ###############################################################################
+    ## DELETE INDEX FROM ELASTICSEARCH
+    ###############################################################################
+    public function delete_elastic_index()
+    {
+        $oElastic = ElasticSearch::getSingleton();
+        $indexName = $this->filterGET('index_name', 'string');
+
+        try {
+            if (! $this->securityCheckToken($this->filterGET('token', 'string'))) {
+                throw new Exception($this->__('The page delay was too long'));
+            }
+            if (! $indexName) {
+                throw new Exception($this->__('Index name is missing'));
+            }
+
+            $r = $oElastic->DeleteIndex($indexName);
+            if ($r === false) {
+                throw new Exception($this->__('Error while deleting index from Elasticsearch'));
+            }
+
+            $this->setMessage($this->__('Index was deleted'));
+        }
+        catch (Exception $e) {
+            $this->setErrorMessage($e->getMessage());
+        }
+
+        $this->redirect(href_admin('cache/elasticsearch'));
+    }
 }
